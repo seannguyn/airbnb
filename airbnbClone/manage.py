@@ -2,6 +2,8 @@
 import os
 import sys
 
+# command added to test
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "airbnbClone.settings")
     try:
