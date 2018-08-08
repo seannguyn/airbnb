@@ -37,35 +37,28 @@
       {% csrf_token %}
       {{loginForm.as_p}}
       <input class="btn btn-primary" type="submit" name="" value="Login">
-    </form>
-
-    <div class="">
-      <a class="btn btn-primary" href="{% provider_login_url 'github' %}">
-        <span class="fa fa-github"></span> Sign in with GitHub
-      </a>
-    </div>
-
-    <div class="">
-      <a class="btn btn-primary" href="{% provider_login_url 'facebook' %}">
-        <span class="fa fa-facebook"></span> Sign in with Facebook
-      </a>
-    </div>
-    
-    <div class="">
       <a class="btn btn-primary" href="{% url 'basic_func:User_register' %}">
         <span class="fa fa-id-card"></span> Register
       </a>
-    </div>
+    </form>
 
-    <div class="">
-      <a class="btn btn-primary" href="{% url 'account_reset_password' %}">
+  <div>
+   Or you can login with:
+   <a href="{% provider_login_url 'facebook' %}" class="btn btn-md fa fa-facebook"></a>
+   <a href="{% provider_login_url 'github' %}" class="btn btn-md fa fa-github"></a>
+   </div>
+
+    <div>
+      <a href="{% url 'account_reset_password' %}">
         <span class="fa fa-id-badge"></span> Forgot your password ?
       </a>
+      </div>
 
-      </a>
     </div>
 
   </div>
-  {% endif %}
+
+
+{% endif %}
 
 {% endblock body_block %}
