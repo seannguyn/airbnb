@@ -44,6 +44,13 @@
         <span class="fa fa-github"></span> Sign in with GitHub
       </a>
     </div>
+
+    <div class="">
+      <a class="btn btn-primary" href="{% provider_login_url 'facebook' %}">
+        <span class="fa fa-facebook"></span> Sign in with Facebook
+      </a>
+    </div>
+    
     <div class="">
       <a class="btn btn-primary" href="{% url 'basic_func:User_register' %}">
         <span class="fa fa-id-card"></span> Register
