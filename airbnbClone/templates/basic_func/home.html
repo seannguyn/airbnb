@@ -2,7 +2,7 @@
 
 {% block body_block %}
   {% load socialaccount %}
-  <h1>Django Allauth Tutorial</h1>
+  <h1>3900 Project</h1>
 
   {% if user.is_authenticated %}
 
@@ -47,6 +47,14 @@
     <div class="">
       <a class="btn btn-primary" href="{% url 'basic_func:User_register' %}">
         <span class="fa fa-id-card"></span> Register
+      </a>
+    </div>
+
+    <div class="">
+      <a class="btn btn-primary" href="{% url 'account_reset_password' %}">
+        <span class="fa fa-id-badge"></span> Forgot your password ?
+      </a>
+
       </a>
     </div>
 

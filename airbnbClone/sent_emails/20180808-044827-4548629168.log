@@ -1,0 +1,21 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [ex] Password Reset E-mail
+From: webmaster@localhost
+To: seannguyen5696@gmail.com
+Date: Wed, 08 Aug 2018 04:48:27 -0000
+Message-ID: <153370370720.70250.326441323632044720@Seans-MacBook-Pro.local>
+
+Hello from ex!
+
+You're receiving this e-mail because you or someone else has requested a password for your user account.
+It can be safely ignored if you did not request a password reset. Click the link below to reset your password.
+
+http://127.0.0.1:8000/accounts/password/reset/key/l-4yk-19138e33c6f32bfa1af7/
+
+In case you forgot, your username is seany.
+
+Thank you for using ex!
+127.0.0.1
+-------------------------------------------------------------------------------
