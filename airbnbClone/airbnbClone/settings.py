@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github', # new
     'allauth.socialaccount.providers.facebook', # new
     'django_extensions',
+    'django_adminlte',
+    'django_adminlte_theme',
 ]
 
 # myproject/settings.py
