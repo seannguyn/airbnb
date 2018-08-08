@@ -48,17 +48,20 @@ INSTALLED_APPS = [
     'allauth.account', # new
     'allauth.socialaccount', # new
     'allauth.socialaccount.providers.github', # new
+    'allauth.socialaccount.providers.facebook', # new
+    'django_extensions',
 ]
 
 # myproject/settings.py
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
+    # "social_core.backends.github.GithubOAuth2",
 )
 
-SITE_ID = 3         # WTF IS THIS NUMBER SRS
+SITE_ID = 7        # WTF IS THIS NUMBER SRS
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/basic_func/'
 # LOGIN_URL = '/basic_func/home'
 
 MIDDLEWARE = [
