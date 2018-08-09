@@ -3,3 +3,4 @@ django-tawkto
 pyOpenSSL
 bcrypt
 django[argon2]
+django-adminlte2

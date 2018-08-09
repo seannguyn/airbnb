@@ -19,18 +19,7 @@ def User_login(request):
         if ('user_name' in request.session and 'user_password' in request.session):
             User_authenticate(request,request.session['user_name'],request.session['user_password'])
             print("enter")
-<<<<<<< HEAD
 
-        else:
-
-            loginDetail = LoginForm(request.POST)
-
-            if loginDetail.is_valid():
-                User_authenticate(request,loginDetail.cleaned_data['user_name'],loginDetail.cleaned_data['password'])
-            else:
-                print(loginDetail.errors)
-=======
->>>>>>> 092a513fb66ea43f1e8027d1ad8812823858e46a
 
         else:
 
