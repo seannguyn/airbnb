@@ -1,4 +1,4 @@
-# portNbN - An Amazing Accommodation Renting Application
+# portBnB - An Amazing Accommodation Renting Application
 ## Front-End UI: HTML, CSS, Javascript, React, VueJs
 ## Back-End: Django
 
