@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from basic_func.forms import UserInfoForm, UserForm, LoginForm
 
@@ -8,13 +9,28 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 # Create your views here.
-def index(request):
+def home(request):
+    return render(request, 'basic_func/home.html', {})
+
+def User_login(request):
     loginForm = LoginForm()
 
     if (request.method == 'POST'):
         if ('user_name' in request.session and 'user_password' in request.session):
             User_authenticate(request,request.session['user_name'],request.session['user_password'])
             print("enter")
+<<<<<<< HEAD
+
+        else:
+
+            loginDetail = LoginForm(request.POST)
+
+            if loginDetail.is_valid():
+                User_authenticate(request,loginDetail.cleaned_data['user_name'],loginDetail.cleaned_data['password'])
+            else:
+                print(loginDetail.errors)
+=======
+>>>>>>> 092a513fb66ea43f1e8027d1ad8812823858e46a
 
         else:
 
@@ -25,7 +41,8 @@ def index(request):
             else:
                 print(loginDetail.errors)
 
-    return render(request,'basic_func/home.html',{'loginForm':loginForm})
+    return render(request,'basic_func/login.html', {'loginForm':loginForm})
+
 
 def User_authenticate(request,user_name,user_password):
     user = authenticate(username=user_name, password=user_password)
@@ -33,6 +50,8 @@ def User_authenticate(request,user_name,user_password):
         #Check it the account is active
         if user.is_active:
             # Log the user in.
+            request.session['user_name'] = user_name
+            request.session['user_password'] = user_password
             login(request,user)
         else:
             # If account is not active:
@@ -82,7 +101,8 @@ def User_register(request):
     return render(request,'basic_func/register.html',
                 {'user_form':form_0,'profile_form':form_1,'registered':registered})
 
+
 @login_required
 def User_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('basic_func:User_index'))
+    return HttpResponseRedirect(reverse('basic_func:User_login'))

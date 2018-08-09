@@ -1,17 +1,16 @@
-# airbnb
-1-8-2018
-### Discusion about the design of Project:
-## Front-End UI:
+# portBnB - An Amazing Accommodation Renting Application
+## Front-End UI: HTML, CSS, Javascript, React, VueJs
 ## Back-End: Django
 
 Setup guide:
+* Run these commands on terminal
 ```
-pip install django-allauth
-pip install django-tawkto
 pip install django-extensions Werkzeug pyOpenSSL
+pip install -r requirements.txt
 ```
 
 Run server:  
 ```
 python manage.py runserver_plus --cert-file /tmp/cert
 ```
+Access this link on web browser https://localhost:8000/basic_func 

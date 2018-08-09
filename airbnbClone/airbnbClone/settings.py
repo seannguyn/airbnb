@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github', # new
     'allauth.socialaccount.providers.facebook', # new
     'django_extensions',
+    'django_adminlte',
+    'django_adminlte_theme',
 ]
 
 # myproject/settings.py
@@ -61,7 +63,7 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 7        # WTF IS THIS NUMBER SRS
 
-LOGIN_REDIRECT_URL = '/basic_func/'
+LOGIN_REDIRECT_URL = '/basic_func/home'
 # LOGIN_URL = '/basic_func/home'
 
 MIDDLEWARE = [
@@ -101,7 +103,6 @@ WSGI_APPLICATION = 'airbnbClone.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -112,9 +113,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
-
-
-
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
