@@ -12,18 +12,18 @@ def index(request):
     loginForm = LoginForm()
 
     if (request.method == 'POST'):
-        print(request.session['user_name'], request.session['user_password'])
-        if (request.session['user_name'] and request.session['user_password']):
+        if ('user_name' in request.session and 'user_password' in request.session):
             User_authenticate(request,request.session['user_name'],request.session['user_password'])
             print("enter")
-        # else:
-        #
-        #     loginDetail = LoginForm(request.POST)
-        #
-        #     if loginDetail.is_valid():
-        #         User_authenticate(request,loginDetail.cleaned_data['user_name'],loginDetail.cleaned_data['password'])
-        #     else:
-        #         print(loginDetail.errors)
+
+        else:
+
+            loginDetail = LoginForm(request.POST)
+
+            if loginDetail.is_valid():
+                User_authenticate(request,loginDetail.cleaned_data['user_name'],loginDetail.cleaned_data['password'])
+            else:
+                print(loginDetail.errors)
 
     return render(request,'basic_func/home.html',{'loginForm':loginForm})
 
