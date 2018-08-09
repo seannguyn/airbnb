@@ -7,7 +7,7 @@
 
     {% if registered %}
 
-      <form action="{% url 'basic_func:User_index' %}" method="post">
+      <form action="{% url 'basic_func:home' %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="" value="{{user_name}}">
         <input type="hidden" name="" value="{{user_password}}">
@@ -15,10 +15,10 @@
           thanks for registering, click to
           <button class="btn btn-primary" type="submit">Submit</button>
         </h1>
-
       </form>
 
     {% else %}
+
       <h1>You are here to register </h1>
       <form enctype="multipart/form-data" method="post">
         {% csrf_token %}
@@ -26,6 +26,7 @@
         {{profile_form.as_p}}
         <input type="submit" class="btn btn-green" name="registerBtn" value="register">
       </form>
+    
     {% endif %}
 
   </div>

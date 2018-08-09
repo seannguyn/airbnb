@@ -1,0 +1,71 @@
+{% extends 'basic_func/base.html' %}
+
+{% block body_block %}
+{% load socialaccount %}
+
+  <center><h1>portBnB</h1></center>
+
+    {% if user.is_authenticated %}   
+        <p>Welcome {{ user.username }} !!!</p>
+        {% csrf_token %}
+
+        <a href="{% url 'basic_func:home' %}">Click here to redirect to your Home Page</a>
+        
+        <div class="">
+            <a class="btn btn-primary" href="{% url 'basic_func:User_logout' %}">
+                <span class="fa fa-id-card"></span> Logout
+            </a>
+        </div>
+
+    {% else %}
+
+      <div class="jumbotron">
+        {% if loginForm.errors %}
+          {% for field in form %}
+              {% for error in field.errors %}
+                  <div class="alert alert-danger">
+                      <strong>{{ error|escape }}</strong>
+                  </div>
+              {% endfor %}
+          {% endfor %}
+        
+          {% for error in form.non_field_errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+        
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{loginForm.as_p}}
+            <input class="btn btn-primary" type="submit" name="" value="Login">
+            <a class="btn btn-primary" href="{% url 'basic_func:User_register' %}">
+                <span class="fa fa-id-card"></span>Register
+            </a>
+        </form>
+
+      <!-- Social Media Authentication -->
+        <div>
+            Or you can login with:
+            <a href="{% provider_login_url 'facebook' %}" class="btn btn-md fa fa-facebook"></a>
+            <a href="{% provider_login_url 'github' %}" class="btn btn-md fa fa-github"></a>
+        </div>
+       <!-- end Social Media Authentication -->
+
+
+        <div>
+            <a href="{% url 'account_reset_password' %}">
+                <span class="fa fa-id-badge"></span> Forgot your password ?
+            </a>
+        </div>
+
+        </div>
+
+      </div>
+
+
+{% endif %}
+
+{% endblock body_block %}

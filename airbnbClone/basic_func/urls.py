@@ -20,7 +20,9 @@ from basic_func import views
 app_name = 'basic_func'
 
 urlpatterns = [
-    path('', views.index,name='User_index'),
+    path('', views.User_login, name='index'),
+    path('home/', views.home, name='home'),
+    path('login/', views.User_login,name='User_login'),
     path('register/', views.User_register,name='User_register'),
     path('logout/', views.User_logout,name='User_logout'),
 ]
