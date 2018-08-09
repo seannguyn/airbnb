@@ -40,5 +40,6 @@ class UserInfoForm(forms.ModelForm):
         fields = ('profile_pic',)
 
 class LoginForm(forms.Form):
-    user_name = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput())
+
+    user_name = forms.CharField(min_length=3, label="Username")
+    password = forms.CharField(widget=forms.PasswordInput, label="Password")
