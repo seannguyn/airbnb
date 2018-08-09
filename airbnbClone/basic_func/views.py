@@ -20,7 +20,6 @@ def User_login(request):
             User_authenticate(request,request.session['user_name'],request.session['user_password'])
             print("enter")
 
-
         else:
 
             loginDetail = LoginForm(request.POST)
@@ -30,8 +29,7 @@ def User_login(request):
             else:
                 print(loginDetail.errors)
 
-    return render(request,'basic_func/login.html', {'loginForm':loginForm})
-
+    return render(request, 'basic_func/home.html', {}) if (request.user.is_authenticated) else render(request,'basic_func/login.html', {'loginForm':loginForm})
 
 def User_authenticate(request,user_name,user_password):
     user = authenticate(username=user_name, password=user_password)
@@ -49,6 +47,7 @@ def User_authenticate(request,user_name,user_password):
         print("Someone tried to login and failed.")
         print("They used username: {} and password: {}".format(user_name,user_password))
         return HttpResponse("Invalid login details supplied.")
+
 
 
 def User_register(request):
