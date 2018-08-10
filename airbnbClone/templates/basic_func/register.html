@@ -7,7 +7,7 @@
 
     {% if registered %}
 
-      <form action="{% url 'basic_func:home' %}" method="post">
+      <form action="{% url 'basic_func:User_login' %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="" value="{{user_name}}">
         <input type="hidden" name="" value="{{user_password}}">
@@ -26,7 +26,7 @@
         {{profile_form.as_p}}
         <input type="submit" class="btn btn-green" name="registerBtn" value="register">
       </form>
-    
+
     {% endif %}
 
   </div>
