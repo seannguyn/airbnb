@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 # Create your views here.
+@login_required
 def home(request):
     return render(request, 'basic_func/home.html', {})
 
