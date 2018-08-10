@@ -9,7 +9,11 @@ pip install django-extensions Werkzeug pyOpenSSL
 pip install -r requirements.txt
 ```
 
-Run server:  
+Run server:
+```
+./run.sh
+```
+or
 ```
 python manage.py runserver_plus --cert-file /tmp/cert
 ```
