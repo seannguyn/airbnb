@@ -39,10 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    
+    'rest_auth',
+    'api',
     'basic_func',
     'tawkto',
     'django.contrib.sites', # new
+    'rest_auth.registration', #new
+    'rest_framework.authtoken', #new
 
     'allauth', # new
     'allauth.account', # new
@@ -52,7 +56,15 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_adminlte',
     'django_adminlte_theme',
+    'rest_framework',
+   
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 
 # myproject/settings.py
 AUTHENTICATION_BACKENDS = (

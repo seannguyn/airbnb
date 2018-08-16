@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from basic_func import views
+from rest_framework import routers
 
 app_name = 'basic_func'
 

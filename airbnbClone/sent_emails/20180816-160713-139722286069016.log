@@ -1,0 +1,18 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [https://localhost:8000] Please Confirm Your E-mail Address
+From: webmaster@localhost
+To: tdnam3999@gmail.com
+Date: Thu, 16 Aug 2018 16:07:13 -0000
+Message-ID: <153443563386.1597.18159168503866362619@NamTran.localdomain>
+
+Hello from https://localhost:8000!
+
+You're receiving this e-mail because user admin1235 has given yours as an e-mail address to connect their account.
+
+To confirm this is correct, go to https://localhost:8000/users/rest-auth/registration/account-confirm-email/NQ:1fqKnp:m6bj2p7S_f9nI_CuycSwYl-0lds/
+
+Thank you from https://localhost:8000!
+https://localhost:8000
+-------------------------------------------------------------------------------

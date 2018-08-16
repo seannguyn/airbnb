@@ -17,11 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from basic_func import views
+from django.conf.urls import url
 
 app_name = 'main'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('basic_func/', include('basic_func.urls')),
+    path('api/', include('api.urls')),
+    # path('basic_func/', include('basic_func.urls')),
+
+    path('api/v1/', include('api.urls')), #api urls
+    url(r'^users/', include('api.urls')),
+    
+
 ]
