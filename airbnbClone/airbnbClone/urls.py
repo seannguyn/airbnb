@@ -26,9 +26,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # old stuffs
-    # path('accounts/', include('allauth.urls')),
-    # path('api/', include('api.urls')),
-    # path('basic_func/', include('basic_func.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('api/', include('api.urls')),
+    path('basic_func/', include('basic_func.urls')),
 
     path('api/v1/', include('api.urls')), #api urls
     url(r'^users/', include('api.urls')),
