@@ -20,11 +20,17 @@ from basic_func import views
 from django.conf.urls import url
 from api import views
 
+from api import views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register('accommodation',views.AccommodationView)
+
 app_name = 'main'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+
     # old stuffs
     path('accounts/', include('allauth.urls')),
     path('api/', include('api.urls')),
@@ -32,6 +38,7 @@ urlpatterns = [
 
     path('api/v1/', include('api.urls')), #api urls
     url(r'^users/', include('api.urls')),
-    
+    path('',include('api.urls')),
+
 
 ]
