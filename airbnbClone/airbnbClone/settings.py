@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount', # new
     'allauth.socialaccount.providers.github', # new
     'allauth.socialaccount.providers.facebook', # new
+    'allauth.socialaccount.providers.twitter', #new
     'django_extensions',
     'django_adminlte',
     'django_adminlte_theme',
