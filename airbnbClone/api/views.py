@@ -34,17 +34,62 @@ class AccommodationView(viewsets.ModelViewSet):
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationSerializer
 
+    def get_queryset(self):
+        """ allow rest api to filter by submissions """
+        queryset = Accommodation.objects.all()
+        user = self.request.query_params.get('user', None)
+        if user is not None:
+            queryset = queryset.filter(user=user)
+
+        return queryset
+
 class AccommodationImageView(viewsets.ModelViewSet):
     queryset = AccommodationImage.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationImageSerializer
+
+    def get_queryset(self):
+        """ allow rest api to filter by submissions """
+        queryset = AccommodationImage.objects.all()
+        accommodation = self.request.query_params.get('accommodation', None)
+        if accommodation is not None:
+            queryset = queryset.filter(accommodation=accommodation)
+
+        return queryset
 
 class AccommodationHostingView(viewsets.ModelViewSet):
     queryset = AccommodationHosting.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
 
+    def get_queryset(self):
+        """ allow rest api to filter by submissions """
+        queryset_1 = Accommodation.objects.all()
+        queryset_2 = AccommodationHosting.objects.all()
+
+        user = self.request.query_params.get('user', None)
+
+        if user is not None:
+            ids = queryset_1.values_list('id', flat=True).filter(user=user)
+            queryset_2 = queryset_2.filter(accommodation__in=set(ids))
+
+        return queryset_2
+
 class BookingView(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = BookingSerializer
+
+    def get_queryset(self):
+        """ allow rest api to filter by submissions """
+        queryset = Booking.objects.all()
+        booker = self.request.query_params.get('booker', None)
+        host = self.request.query_params.get('host', None)
+
+        if booker is not None:
+            queryset = queryset.filter(booker=booker)
+
+        if host is not None:
+            queryset = queryset.filter(hosting=host)
+
+        return queryset
