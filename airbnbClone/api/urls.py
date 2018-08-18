@@ -9,6 +9,7 @@ router = routers.DefaultRouter()
 router.register('accommodation',views.AccommodationView)
 router.register('accommodationImage',views.AccommodationImageView)
 router.register('accommodationHosting',views.AccommodationHostingView)
+router.register('booking',views.BookingView)
 
 
 urlpatterns = [

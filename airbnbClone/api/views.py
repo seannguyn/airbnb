@@ -5,8 +5,8 @@ from rest_framework import status
 # from api.serializers import UserSerializer
 from rest_framework import viewsets
 from django.contrib.auth.models import User
-from api.models import Accommodation, AccommodationImage, AccommodationHosting
-from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer
+from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking
+from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer,BookingSerializer
 
 
 from api import views
@@ -43,3 +43,8 @@ class AccommodationHostingView(viewsets.ModelViewSet):
     queryset = AccommodationHosting.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
+
+class BookingView(viewsets.ModelViewSet):
+    queryset = Booking.objects.all()
+    # queryset = Accomodation.objects.filter(user__username__exact="sean")
+    serializer_class = BookingSerializer

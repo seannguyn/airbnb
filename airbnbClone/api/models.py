@@ -55,9 +55,23 @@ class AccommodationHosting(models.Model):
     price = models.PositiveIntegerField(blank=False)
     description = models.TextField(blank=True)
 
+    def __str__(self):
+        return self.accommodation.__str__() + "_" + str(self.date_start) + "_" + str(self.date_end);
+
+
 class AccommodationHostingArchive(models.Model):
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
     date_start = models.DateField(default=datetime.datetime.today)
     date_end = models.DateField(default=datetime.datetime.today)
     price = models.PositiveIntegerField(blank=False)
     description = models.TextField(blank=True)
+
+class Booking(models.Model):
+
+    hosting = models.ForeignKey(AccommodationHosting, on_delete=models.CASCADE)
+    booker = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    date_start = models.DateField(default=datetime.datetime.today)
+    date_end = models.DateField(default=datetime.datetime.today)
+
+    note  = models.TextField(blank=True)
