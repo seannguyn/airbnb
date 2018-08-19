@@ -6,6 +6,12 @@ import datetime
 
 # Create your models here.
 
+class UserInfo(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
 class Accommodation(models.Model):
 
     ACCOMMODATION_TYPES = (
@@ -57,7 +63,6 @@ class AccommodationHosting(models.Model):
 
     def __str__(self):
         return self.accommodation.__str__() + "_" + str(self.date_start) + "_" + str(self.date_end);
-
 
 class AccommodationHostingArchive(models.Model):
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)

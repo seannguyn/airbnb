@@ -122,6 +122,7 @@ class BookingView(viewsets.ModelViewSet):
 
         return queryset
 
+
 class ReviewView(viewsets.ModelViewSet):
 
     queryset = Review.objects.all()
@@ -129,16 +130,16 @@ class ReviewView(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        queryset = None #initialise queryset
+        queryset = Review.objects.all() #initialise queryset
 
         """ Get reviews for a specific accommodation """
         """ GET accommodation/{accomodation_pk}/review """
         accommodation_pk = self.kwargs['accommodation_pk']
         if accommodation_pk is not None:
-            try:
-                queryset = queryset.filter(accommodation=accommodation_pk)
-            except:
+            queryset = queryset.filter(accommodation=accommodation_pk)
+            if not queryset:
                 raise Http404('Review does not exist for this accommodation')
+            
             return queryset
 
         # TODO: GET USER REVIEW
