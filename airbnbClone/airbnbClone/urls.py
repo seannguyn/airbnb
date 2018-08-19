@@ -20,8 +20,8 @@ from basic_func import views
 from django.conf.urls import url
 from api import views
 
-from api import views
 from rest_framework import routers
+from rest_framework.authtoken import views as authviews
 
 router = routers.DefaultRouter()
 router.register('accommodation',views.AccommodationView)
@@ -39,6 +39,5 @@ urlpatterns = [
     path('api/v1/', include('api.urls')), #api urls
     url(r'^users/', include('api.urls')),
     path('',include('api.urls')),
-
-
+    path('api-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
 ]
