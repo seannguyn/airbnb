@@ -75,3 +75,21 @@ class Booking(models.Model):
     date_end = models.DateField(default=datetime.datetime.today)
 
     note  = models.TextField(blank=True)
+
+class Review(models.Model):
+    
+    SCALE = ( 
+        ('Very Bad', 0),
+        ('Bad', 1),
+        ('Ok', 2),
+        ('Good',3),
+        ('Very Good', 4),
+        ('Excellent', 5)
+        )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+
+    star = models.CharField(max_length=10, choices=SCALE)
+    review = models.TextField(blank=True)
+
