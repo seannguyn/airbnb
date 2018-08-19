@@ -39,5 +39,5 @@ urlpatterns = [
     path('api/v1/', include('api.urls')), #api urls
     url(r'^users/', include('api.urls')),
     path('',include('api.urls')),
-    path('api-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
+    # path('api-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
 ]
