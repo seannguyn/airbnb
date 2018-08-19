@@ -22,9 +22,18 @@ class Accommodation(models.Model):
         ('Villa', 'Villa'),
     )
 
+    STATES = (
+        ('NSW', 'NSW'),
+    )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     Accomodation_Type = models.CharField(max_length=10, choices=ACCOMMODATION_TYPES)
+
+    addr_number = models.PositiveIntegerField(blank=False, default=1)
+    addr_street = models.CharField(blank=False, max_length=100,default='dedault')
+    addr_city   = models.CharField(blank=False, max_length=100,default='default')
+    addr_state  = models.CharField(max_length=10, choices=STATES,default='NSW')
 
     area            = models.IntegerField(default=1, blank=False)
     floors          = models.IntegerField(default=1, blank=False)
@@ -82,8 +91,8 @@ class Booking(models.Model):
     note  = models.TextField(blank=True)
 
 class Review(models.Model):
-    
-    SCALE = ( 
+
+    SCALE = (
         ('Very Bad', 0),
         ('Bad', 1),
         ('Ok', 2),
@@ -97,4 +106,3 @@ class Review(models.Model):
 
     star = models.CharField(max_length=10, choices=SCALE)
     review = models.TextField(blank=True)
-

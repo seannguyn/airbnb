@@ -35,3 +35,4 @@ text-unidecode==1.2
 urllib3==1.23
 Werkzeug==0.14.1
 django-rest-auth
+drf-nested-routers
