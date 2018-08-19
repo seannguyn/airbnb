@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
-from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review
+from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo
 
 class AccommodationSerializer(serializers.ModelSerializer):
 
@@ -35,3 +35,8 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ('id', 'user', 'accommodation', 'star', 'review')
+
+class UserInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserInfo
+        fields = ('id', 'user', 'location', 'birth_date',)
