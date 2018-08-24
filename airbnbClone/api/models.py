@@ -2,6 +2,7 @@ from django.db import models
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 from rest_framework import serializers
+import uuid
 import datetime
 
 # Create your models here.
@@ -27,6 +28,7 @@ class Accommodation(models.Model):
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    id = models.CharField(primary_key=True, max_length=100, editable=False)
 
     Accomodation_Type = models.CharField(max_length=10, choices=ACCOMMODATION_TYPES)
 
