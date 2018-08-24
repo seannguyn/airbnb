@@ -38,8 +38,9 @@ class Accommodation(models.Model):
     area            = models.IntegerField(default=1, blank=False)
     bedroom_master  = models.IntegerField(default=1, blank=False)
     bedroom         = models.IntegerField(default=1, blank=False)
-    kitchen         = models.IntegerField(default=1, blank=False)
     bathroom        = models.IntegerField(default=1, blank=False)
+    kitchen         = models.IntegerField(default=1, blank=False)
+
 
     pool            = models.IntegerField(default=0, blank=False)
     gym             = models.IntegerField(default=0, blank=False)
