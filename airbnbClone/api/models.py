@@ -36,16 +36,13 @@ class Accommodation(models.Model):
     addr_state  = models.CharField(max_length=10, choices=STATES,default='NSW')
 
     area            = models.IntegerField(default=1, blank=False)
-    floors          = models.IntegerField(default=1, blank=False)
     bedroom_master  = models.IntegerField(default=1, blank=False)
     bedroom         = models.IntegerField(default=1, blank=False)
     kitchen         = models.IntegerField(default=1, blank=False)
     bathroom        = models.IntegerField(default=1, blank=False)
 
     pool            = models.IntegerField(default=0, blank=False)
-    laundry         = models.IntegerField(default=0, blank=False)
     gym             = models.IntegerField(default=0, blank=False)
-    entertainment   = models.IntegerField(default=0, blank=False)
     carpark         = models.IntegerField(default=0, blank=False)
 
     description     = models.TextField(blank=True)
