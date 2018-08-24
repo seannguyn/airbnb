@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sites', # new
     'rest_auth.registration', #new
     'rest_framework.authtoken', #new
+    'corsheaders', #cross origin
 
     'allauth', # new
     'allauth.account', # new
@@ -93,7 +94,26 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    '127.0.0.1:3000'
+)
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
 
 ROOT_URLCONF = 'airbnbClone.urls'
 
