@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
-const Context = React.createContext();
+import axios from 'axios';
 
+const Context = React.createContext();
 
 const reducer = (state,action) => {
   switch(action.type) {
@@ -22,8 +23,14 @@ const reducer = (state,action) => {
       return {
         ...state,
         HouseList: state.HouseList.map((eachHouse) => eachHouse.id === action.payload.id ? (eachHouse = action.payload) : eachHouse)
-
       }
+
+      case 'LOGIN':
+        console.log('login user login');
+        return {
+          ...state,
+          currentUser: [action.payload, ...state.currentUser]
+        };
       default:
         return state;
   }
@@ -36,7 +43,7 @@ export class Provider extends Component {
     super();
     this.state = {
       HouseList : [],
-
+      currentUser: {},
       dispatch: (action) => {
         this.setState((state) => reducer(state,action))
       }
@@ -44,42 +51,10 @@ export class Provider extends Component {
     };
   }
 
-  componentWillMount() {
-    this.fakeHouse();
+  async componentDidMount(){
+    const res = await axios.get('https://localhost:8000/accommodation/');
+    this.setState({HouseList: res.data});
   }
-
-  AxiosDataBase() {
-    // get actual data from db
-  }
-
-  fakeHouse() {
-    this.setState({HouseList: [
-      {
-        id: uuid.v4(),
-        user:'sean',
-        Accommodation_Type: 'House',
-
-        addr_number: 88,
-        addr_street: 'George Street',
-        addr_city: 'Sydney',
-        addr_state: 'NSW',
-
-        area: '100',
-        bedroom_master: '1',
-        bedroom:'1',
-        bathroom:'1',
-        kitchen:'1',
-
-        gym:'1',
-        pool: '1',
-        carpark: '1',
-        description:'nice house'
-
-      }
-    ]})
-  }
-
-
 
   render () {
     return(

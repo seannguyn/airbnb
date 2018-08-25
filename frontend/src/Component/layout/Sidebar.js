@@ -29,15 +29,15 @@ const Sidebar = (props) => {
                 </ul>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/">
+                <Link to="/myhouses" className="nav-link">
                   <span data-feather="file"></span>
-                  Hosting 
-                </a>
+                  My Houses 
+                </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/">
                   <span data-feather="shopping-cart"></span>
-                  Booking
+                  My Bookings
                 </a>
               </li>
               <li className="nav-item">
