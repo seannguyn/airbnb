@@ -5,9 +5,11 @@ from django.contrib.auth.models import User
 from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo
 from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer,BookingSerializer, ReviewSerializer, UserInfoSerializer
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-from django.http import Http404
 
+from django.http import HttpResponse, HttpResponseNotFound, Http404
 from api import views
+
+from .functions import compareDate
 
 # Facebook
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
@@ -98,12 +100,28 @@ class AccommodationHostingView(viewsets.ModelViewSet):
     queryset = AccommodationHosting.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
+    
+    def create(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        
+        date_start = request.data['date_start']
+        date_end = request.data['date_end']
+        
+        check_valid = compareDate(date_start, date_end)    
+
+        if serializer.is_valid():
+
+            if check_valid <= 0:
+                return Response({"date": "start date must be before end date"}, status=status.HTTP_400_BAD_REQUEST)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
         """ allow rest api to filter by submissions """
         queryset_1 = Accommodation.objects.all()
         queryset_2 = AccommodationHosting.objects.all()
-
+        print("GET REQUEST OKOKOKOK ")
         user = self.request.query_params.get('user', None)
         
         if user is not None:
@@ -111,7 +129,6 @@ class AccommodationHostingView(viewsets.ModelViewSet):
             queryset_2 = queryset_2.filter(accommodation__in=set(ids))
 
         return queryset_2
-
 
 
 class BookingView(viewsets.ModelViewSet):

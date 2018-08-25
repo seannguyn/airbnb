@@ -12,12 +12,15 @@ const Sidebar = (props) => {
                   My Property <span className="sr-only">(current)</span>
                 </a>
                 <ul>
+                  <div>
                   <li className="nav-item">
                     <Link to="/viewHouse" className="nav-link">
                       <i className="fas fa-binoculars" style={{cursor: 'pointer',float:'right'}}> </i>
                     </Link>
                     View
                   </li>
+                  </div>
+                  
                   <li className="nav-item">
                     <Link to="/addHouse" className="nav-link">
                       <i className="fas fa-plus" style={{cursor: 'pointer',float:'right'}}> </i>

@@ -7,6 +7,7 @@ import Header from './Component/layout/Header.js';
 import Sidebar from './Component/layout/Sidebar.js';
 import Login from './Component/Authentication/Login';
 import MyHouses from './Component/Function/MyHouses';
+import Hosting from './Component/Function/Hosting';
 
 import {Provider} from './Context';
 import ContextApi from './Component/layout/Context_api.js';
@@ -35,6 +36,7 @@ class App extends Component {
                   <Route exact path="/myhouses" component={MyHouses}></Route>
                   <Route exact path="/addHouse" component={AddHouse}></Route>
                   <Route exact path="/editHouse/:id" component={ContextApi}></Route>
+                  <Route exact path="/hosting/:id" component={Hosting}></Route>
                 </Switch>
 
             </div>

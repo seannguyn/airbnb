@@ -29,12 +29,11 @@ class EditHouse extends Component {
       error: {}
     }
   }
-
+  
   componentDidMount() {
 
     const {HouseList} = this.props;
     const {id} = this.props;
-
 
     var result = HouseList.find(obj => {
       return obj.id === id
@@ -69,7 +68,6 @@ class EditHouse extends Component {
     // console.log(res.data);
     // this.setState({name: res.data.name, website: res.data.website, email: res.data.email})
 
-
   }
 
   onChange(e) {
@@ -82,7 +80,6 @@ class EditHouse extends Component {
 
     const {id, user, Accommodation_Type, number, street, city, state} = this.state;
     const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
-
 
     const editHouse ={
       id: id,
@@ -162,7 +159,6 @@ class EditHouse extends Component {
 
   }
 
-
   render () {
 
     const {number, street, city, state} = this.state;
@@ -174,7 +170,6 @@ class EditHouse extends Component {
         {value =>{
 
           const {dispatch} = value;
-
 
           return (
             <div className="card-body mb-3">
@@ -229,14 +224,15 @@ class EditHouse extends Component {
                     />
 
 
-                    <TextInputGroup
-                      label="bedroom"
-                      name="bedroom"
-                      placeholder="Enter # of bedroom"
-                      value={bedroom}
-                      onChange={this.onChange.bind(this)}
-                      error={this.state.error.bedroom}
-                      />
+                  <TextInputGroup
+                    label="bedroom"
+                    name="bedroom"
+                    placeholder="Enter # of bedroom"
+                    value={bedroom}
+                    onChange={this.onChange.bind(this)}
+                    error={this.state.error.bedroom}
+                    />
+                    
                     <TextInputGroup
                       label="bedroom_master"
                       name="bedroom_master"
@@ -244,7 +240,7 @@ class EditHouse extends Component {
                       value={bedroom_master}
                       onChange={this.onChange.bind(this)}
                       error={this.state.error.blank}
-                      />
+                    />
 
                     <TextInputGroup
                       label="bathroom"
@@ -254,6 +250,7 @@ class EditHouse extends Component {
                       onChange={this.onChange.bind(this)}
                       error={this.state.error.bathroom}
                       />
+
                     <TextInputGroup
                       label="kitchen"
                       name="kitchen"
@@ -262,6 +259,7 @@ class EditHouse extends Component {
                       onChange={this.onChange.bind(this)}
                       error={this.state.error.blank}
                       />
+
                     <TextInputGroup
                       label="gym"
                       name="gym"
@@ -270,6 +268,7 @@ class EditHouse extends Component {
                       onChange={this.onChange.bind(this)}
                       error={this.state.error.blank}
                       />
+
                     <TextInputGroup
                       label="pool"
                       name="pool"
@@ -278,6 +277,7 @@ class EditHouse extends Component {
                       onChange={this.onChange.bind(this)}
                       error={this.state.error.blank}
                       />
+
                     <TextInputGroup
                       label="carpark"
                       name="carpark"
@@ -286,6 +286,7 @@ class EditHouse extends Component {
                       onChange={this.onChange.bind(this)}
                       error={this.state.error.blank}
                       />
+
                     <TextInputGroup
                       label="description"
                       name="description"

@@ -2,13 +2,14 @@ import React from 'react'
 import {Consumer} from '../../Context'
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import Hosting from './Hosting';
 
 class House extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      showDetail: false,
+      showDetail: false, // flag to toggle house detail
     }
   }
 
@@ -16,7 +17,6 @@ class House extends React.Component {
     this.setState({showDetail : !this.state.showDetail }, () => {
       console.log(this.state.showDetail);
     })
-
   }
 
   // pass an axios to backend, requesting for delete
@@ -34,25 +34,52 @@ class House extends React.Component {
     }
 
   render () {
+    
     const {addr_number, addr_street, addr_city} = this.props.houseDetail;
     const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.props.houseDetail;
+    const {user} = this.props.houseDetail; //user id in each house
     const {showDetail} = this.state;
+
+    const isMyHouse = false // flag check if which current user's houses - for hosting button    
+
     return (
       <Consumer>
         { value => {
           const {dispatch} = value;
+          // console.log("in HOUSE.js current user", value.currentUser);
+          
           const {id} = this.props.houseDetail;
+          
+          if(value.currentUser[0] != null){
+            const {user_id} = value.currentUser[0];
+            
+            if(user_id == user){
+              this.isMyHouse = true;
+            }
+          }
+          
           return (
 
             <div className="card card-body mb-3">
-              <h4>
-                {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
+              <h5>
 
+                {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
                 <i  className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)} style={{cursor:'pointer', float:'right',color:'red'}}/>
+                
                 <Link to={`editHouse/${id}`}>
                   <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
                 </Link>
-              </h4>
+              
+              {this.isMyHouse === true ? 
+                <div>
+                  <Link to={`/hosting/${id}`}>
+                    <i>Your Accommodation detail</i> 
+                  </Link>
+                </div>
+              : null
+              }
+                              
+              </h5>
 
               {showDetail === true ?
               <ul className="list-group">
@@ -68,7 +95,6 @@ class House extends React.Component {
                 <li className="list-group-item">Description :{description} </li>
               </ul>
               : null}
-
 
             </div>
           )

@@ -31,11 +31,17 @@ const reducer = (state,action) => {
           ...state,
           currentUser: [action.payload, ...state.currentUser]
         };
+
+        case 'HOST':
+        console.log("host context",action.payload);
+        return {
+          HouseList: [action.payload,...state.myHostingList]
+        }
+
       default:
         return state;
   }
 }
-
 
 export class Provider extends Component {
 
@@ -44,6 +50,7 @@ export class Provider extends Component {
     this.state = {
       HouseList : [],
       currentUser: {},
+      myHostingList: [],
       dispatch: (action) => {
         this.setState((state) => reducer(state,action))
       }
@@ -57,7 +64,9 @@ export class Provider extends Component {
   }
 
   render () {
+    console.log("CONTEX USER: ", this.state.currentUser);
     return(
+     
       <Context.Provider value={this.state}>
         {this.props.children}
       </Context.Provider>
