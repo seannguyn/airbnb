@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Houses from './Component/Function/Houses.js'
 import AddHouse from './Component/Function/AddHouse.js'
-import Header from './Component/layout/Header.js'
-import Sidebar from './Component/layout/Sidebar.js'
+import Dashboard from "layouts/Dashboard.jsx"
 import {Provider} from './Context';
 import ContextApi from './Component/layout/Context_api.js'
 
@@ -11,12 +10,9 @@ class App extends Component {
   render() {
     return (
       <Provider>
-        <Header/>
         <Router>
           <div className="container-fluid">
             <div className="row">
-
-              <Sidebar/>
 
             <div>
 
