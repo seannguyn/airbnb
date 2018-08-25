@@ -4,13 +4,23 @@ import House from './House.js'
 
 class MyHouses extends Component {
     
+    constructor(){
+        super();
+        currentUser : {}
+    }
+
     render() { 
         return ( 
            <Consumer>
+
                {value => {
-                   const {HouseList} = value;
-                   console.log("CURRENT USER ", value["currentUser"]);
+                   const {HouseList, currentUser, myHostingList} = value;
                    
+                   console.log("CURRENT USER ", value["currentUser"]);
+                   console.log("VALUEUE IN MYHOUSES: ", value)
+
+                
+                // CHECK USER LOGIN OR NOT 
                 //  nested objects - and by default user detail store at index [0] 
                    if(value["currentUser"][0] == null){ 
                         return (
@@ -25,12 +35,17 @@ class MyHouses extends Component {
                         
                         // Someone help me to do this by map and filter
                         const myHouses = [];
-                        let i = 0 
+                        let i = 0;
+ 
                         for(i=0; i<HouseList.length; i++){
+                            
                             if(HouseList[i].user == value["currentUser"][0].user_id){
                                 myHouses.push(HouseList[i]);
                             }
                         }
+                // END CHECK USER LOGIN OR NOT
+
+
                         return (
                             <React.Fragment>
                             <h1>My Houses</h1>
@@ -42,7 +57,9 @@ class MyHouses extends Component {
                             </React.Fragment>
                         );
                    }
-               }}
+               }
+
+               }
            </Consumer>
          );
     }

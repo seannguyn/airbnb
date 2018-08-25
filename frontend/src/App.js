@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-import Houses from './Component/Function/Houses.js';
-import AddHouse from './Component/Function/AddHouse.js';
-import Header from './Component/layout/Header.js';
-import Sidebar from './Component/layout/Sidebar.js';
+import Houses from './Component/Function/Houses';
+import AddHouse from './Component/Function/AddHouse';
+import Header from './Component/layout/Header';
+import Sidebar from './Component/layout/Sidebar';
 import Login from './Component/Authentication/Login';
 import MyHouses from './Component/Function/MyHouses';
 import Hosting from './Component/Function/Hosting';
+import EditHosting from './Component/Function/EditHosting';
 
 import {Provider} from './Context';
 import ContextApi from './Component/layout/Context_api.js';
+
 
 class App extends Component {
   render() {
@@ -37,6 +39,7 @@ class App extends Component {
                   <Route exact path="/addHouse" component={AddHouse}></Route>
                   <Route exact path="/editHouse/:id" component={ContextApi}></Route>
                   <Route exact path="/hosting/:id" component={Hosting}></Route>
+                  <Route exact path="/edithosting/:id" component={EditHosting}></Route>
                 </Switch>
 
             </div>

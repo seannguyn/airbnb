@@ -5,6 +5,7 @@ import axios from 'axios';
 const Context = React.createContext();
 
 const reducer = (state,action) => {
+
   switch(action.type) {
     case 'DELETE_HOUSE':
       console.log("deleting house",action.payload);
@@ -27,6 +28,7 @@ const reducer = (state,action) => {
 
       case 'LOGIN':
         console.log('login user login');
+        
         return {
           ...state,
           currentUser: [action.payload, ...state.currentUser]
@@ -44,7 +46,7 @@ const reducer = (state,action) => {
 }
 
 export class Provider extends Component {
-
+  
   constructor() {
     super();
     this.state = {
@@ -61,12 +63,36 @@ export class Provider extends Component {
   async componentDidMount(){
     const res = await axios.get('https://localhost:8000/accommodation/');
     this.setState({HouseList: res.data});
+    console.log("HELLO DIDMOUNT");
+    console.log(this.state.currentUser);
+
   }
 
+  async componentDidUpdate(){
+      console.log("DID UPDATE: ", this.state.currentUser);
+      if(this.state.currentUser[0] != null){
+        const {token} = this.state.currentUser[0];
+        const res = await axios.get('https://localhost:8000/accommodationHosting/',
+        {
+          headers:{
+            'Authorization': {token}
+          }
+        }
+      )
+      
+      if(this.state.myHostingList.length == 0 ){
+        this.setState({myHostingList: res.data});
+        console.log(this.state.myHostingList);
+      }
+    }
+    return ; 
+  }
+  
+
   render () {
-    console.log("CONTEX USER: ", this.state.currentUser);
+    // const fh = this.findHostingAccommodation(this.state.currentUser);
+    console.log(this.state.myHostingList);
     return(
-     
       <Context.Provider value={this.state}>
         {this.props.children}
       </Context.Provider>
