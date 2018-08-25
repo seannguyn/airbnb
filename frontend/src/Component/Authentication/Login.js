@@ -92,7 +92,7 @@ class Login extends Component {
                         <input type="submit" className="btn btn-block btn-light" value="Login"></input>
                     </form> 
                     
-                    <Link className="">
+                    <Link to="" className="">
                     <i className="fab fa-facebook-square">Login with Facebook</i>
                     </Link>       
                     
