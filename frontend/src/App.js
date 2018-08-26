@@ -11,8 +11,8 @@ import Hosting from './Component/Function/Hosting';
 import EditHosting from './Component/Function/EditHosting';
 
 import {Provider} from './Context';
-import ContextApi from './Component/layout/Context_api.js';
-
+import ContextApi from './Component/Contexts/Context_api.js';
+import EditHostingContext from './Component/Contexts/EditHostContext';
 
 class App extends Component {
   render() {
@@ -39,7 +39,7 @@ class App extends Component {
                   <Route exact path="/addHouse" component={AddHouse}></Route>
                   <Route exact path="/editHouse/:id" component={ContextApi}></Route>
                   <Route exact path="/hosting/:id" component={Hosting}></Route>
-                  <Route exact path="/edithosting/:id" component={EditHosting}></Route>
+                  <Route exact path="/edithosting/:id" component={EditHostingContext}></Route>
                 </Switch>
 
             </div>

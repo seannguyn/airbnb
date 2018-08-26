@@ -34,6 +34,9 @@ urlpatterns = [
 	path('', include(accommodation_router.urls)),
 	path('', include(user_router.urls)),
 
+	# url('^accommodationHosting/(?P<id>.+)/$', views.AccommodationHostingView.as_view({'get': 'list'})),
+	# path('accommodationHosting/<id>/$', views.AccommodationHostingView.as_view()),
+
 	path('rest-auth/', include('rest_auth.urls')),
 	url(r'^api-token-auth/', views.CustomAuthToken.as_view()),
 ]

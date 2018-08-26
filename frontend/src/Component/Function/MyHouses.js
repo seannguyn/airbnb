@@ -14,12 +14,9 @@ class MyHouses extends Component {
            <Consumer>
 
                {value => {
-                   const {HouseList, currentUser, myHostingList} = value;
                    
-                   console.log("CURRENT USER ", value["currentUser"]);
-                   console.log("VALUEUE IN MYHOUSES: ", value)
+                   const {HouseList, currentUser, myHostingList} = value;
 
-                
                 // CHECK USER LOGIN OR NOT 
                 //  nested objects - and by default user detail store at index [0] 
                    if(value["currentUser"][0] == null){ 
@@ -42,9 +39,9 @@ class MyHouses extends Component {
                             if(HouseList[i].user == value["currentUser"][0].user_id){
                                 myHouses.push(HouseList[i]);
                             }
+                            
                         }
                 // END CHECK USER LOGIN OR NOT
-
 
                         return (
                             <React.Fragment>
@@ -53,7 +50,7 @@ class MyHouses extends Component {
                             {myHouses.map(house => (
                                 <House key={house.id} houseDetail={house}></House>
                             ))}
-                        </main>       
+                        </main>
                             </React.Fragment>
                         );
                    }

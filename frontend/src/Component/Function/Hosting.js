@@ -62,22 +62,17 @@ class Hosting extends Component {
 
         // push back to myhosts page
     }
-
-    componentDidMount(){
-        console.log(this.props);
-    }
     
     render() { 
-        console.log("OKOKO: ", this.props);
         return (
             <Consumer>
-                {value => {
-
+                {value => {    
                     const {dispatch} = value;
                     const {currentUser} = value;
                     console.log(currentUser);
-                    return (
-                        <div className="card-body mb-3">
+                return (
+                
+                <div className="card-body mb-3">
 
                 <div className="card-header">Host Accommodation</div>
 

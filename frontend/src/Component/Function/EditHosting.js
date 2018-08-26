@@ -7,6 +7,7 @@ class EditHosting extends Component {
     constructor() {
         super();
         this.state = {
+            id: '', //accomodation hosting id itself
             accommodation: '', //accommodation id
             user: '', //user id
             date_start: '',
@@ -17,6 +18,27 @@ class EditHosting extends Component {
         }
     }
 
+    componentDidMount(){
+        console.log("from edithousingjs: ", this.props);
+        const{HouseList, currentUser, myHostingList} = this.props;
+        const{id} = this.props;
+        
+        var result = myHostingList.find(obj => {
+            return obj.accommodation === id
+        });
+
+        console.log("FILTER EDITHOUSING: ", result);
+        console.log("FILTER EDITHOUSING: ", result.date_start);
+        this.setState({
+            id: result.id,
+            accommodation: result.accommodation,
+            date_start: result.date_start,
+            date_end: result.date_end,
+            description: result.description,
+            price: result.price
+        })
+    }
+
     //set State when changing text
     onChange = (e) => {
         this.setState({[e.target.name] : e.target.value});
@@ -25,7 +47,9 @@ class EditHosting extends Component {
     // handle when form is submitted
     onSubmit = async (dispatch, currUser, e) => {
         e.preventDefault();
-        console.log('propsss: ', currUser);
+        console.log('propsss: ', this.props);
+        const {id} = this.state;
+        
         const {accommodation,
                 user,
                 date_start,
@@ -35,26 +59,27 @@ class EditHosting extends Component {
 
         const hostingHouse = {
             // user: should be the current login user
-            accommodation: this.props.match.params.id, //accommodation id
+            id: id,
+            accommodation: this.props.id, //accommodation id
             date_start: date_start,
             date_end: date_end,
             price: price,
             description: description
         }
-        console.log(hostingHouse);
+
 
         // AXIOS call here - PUT REQUEST
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
-        const res = await axios.put('https://localhost:8000/accommodationHosting/', hostingHouse,
+        const res = await axios.put(`https://localhost:8000/accommodationHosting/24/`, hostingHouse,
                 {headers:{
                     'Authorization': {token}
                 }
             }
         ) 
 
-        dispatch({type:'HOSTING', payload:hostingHouse});
+        dispatch({type:'EDITHOST', payload:hostingHouse});
 
         // Add error handling here
         // ......
@@ -63,11 +88,8 @@ class EditHosting extends Component {
         // push back to myhosts page
     }
 
-    componentDidMount(){
-        console.log("from edithousingjs: ", this.props);
-    }    
-    
     render() { 
+        const {date_start, date_end, price, description} = this.state;
         return (
             <Consumer>
                 {value => {    
@@ -87,7 +109,7 @@ class EditHosting extends Component {
                     <div className="form-group">
                         <input type="date" 
                                name="date_start" 
-                               placeholder="Start Date ..."
+                               value={date_start}
                                onChange={this.onChange.bind(this)}/>
                     </div>
                     
@@ -96,7 +118,7 @@ class EditHosting extends Component {
                         
                         <input type="date" 
                                name="date_end" 
-                               placeholder="End Date ..."
+                               value={date_end}
                                onChange={this.onChange.bind(this)}/>
                     </div>
 
@@ -105,7 +127,7 @@ class EditHosting extends Component {
                         <input type="number"
                                 min="1" 
                                 name="price" 
-                                placeholder="Choose Price ..."
+                                value={price}
                                 onChange={this.onChange.bind(this)}/>
                     </div>
                     
@@ -113,7 +135,7 @@ class EditHosting extends Component {
                     <div className="form-group">
                         <input type="text" 
                                 name="description" 
-                                placeholder="Enter Description ..."
+                                value={description}
                                 onChange={this.onChange.bind(this)}/>
                     </div>
 

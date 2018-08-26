@@ -24,7 +24,7 @@ from rest_auth.social_serializers import TwitterLoginSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework import viewsets
@@ -101,6 +101,38 @@ class AccommodationHostingView(viewsets.ModelViewSet):
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
     
+    def get_object(self, pk):
+        try:
+            return AccommodationHosting.objects.get(pk=pk)
+        except AccommodationHosting.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        myHostObject = self.get_object(pk)
+        serializer = self.serializer_class(myHostObject)
+        return Response(serializer.data)
+
+    """ handling PUT request and backend validation"""
+    def update(self, request, pk, format=None):
+    
+        new_date_start = request.data['date_start']
+        new_date_end = request.data['date_end']
+        new_price = request.data['price']
+        new_description = request.data['description']
+        
+        myHostObject = self.get_object(pk)
+        
+        myHostObject.date_start = new_date_start
+        myHostObject.date_end = new_date_end
+        myHostObject.price = new_price
+        myHostObject.description = new_description
+
+        myHostObject.save()
+
+        return Response(request.data, status=status.HTTP_200_OK)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    """ handling POST request backend validation"""
     def create(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
         
@@ -119,17 +151,28 @@ class AccommodationHostingView(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """ allow rest api to filter by submissions """
+        print("TO ACC HOST QUEYR")
         queryset_1 = Accommodation.objects.all()
         queryset_2 = AccommodationHosting.objects.all()
         print("GET REQUEST OKOKOKOK ")
+
         user = self.request.query_params.get('user', None)
-        
+    
         if user is not None:
             ids = queryset_1.values_list('id', flat=True).filter(user=user)
             queryset_2 = queryset_2.filter(accommodation__in=set(ids))
 
         return queryset_2
 
+
+    # user_pk = self.kwargs['user_pk']
+        
+    #     if user_pk is not None:
+    #         queryset = queryset.filter(user=user_pk)
+    #         if not queryset:
+    #             raise Http404('Review does not exist for this accommodation')
+
+    #         return queryset
 
 class BookingView(viewsets.ModelViewSet):
     queryset = Booking.objects.all()

@@ -34,11 +34,16 @@ const reducer = (state,action) => {
           currentUser: [action.payload, ...state.currentUser]
         };
 
-        case 'HOST':
-        console.log("host context",action.payload);
+        case 'HOSTING':
+          console.log("host context",action.payload);
         return {
-          HouseList: [action.payload,...state.myHostingList]
+          myHostingList: [action.payload,...state.myHostingList]
         }
+
+        case 'EDITHOST': 
+          return {
+            myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
+          }
 
       default:
         return state;
@@ -65,6 +70,22 @@ export class Provider extends Component {
     this.setState({HouseList: res.data});
     console.log("HELLO DIDMOUNT");
     console.log(this.state.currentUser);
+
+    if(this.state.currentUser[0] != null){
+      const {token} = this.state.currentUser[0];
+      const res = await axios.get('https://localhost:8000/accommodationHosting/',
+      {
+        headers:{
+          'Authorization': {token}
+        }
+      }
+    )
+    
+    if(this.state.myHostingList.length == 0 ){
+      this.setState({myHostingList: res.data});
+      console.log(this.state.myHostingList);
+    }
+  }
 
   }
 

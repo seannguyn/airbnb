@@ -31,7 +31,6 @@ class EditHouse extends Component {
   }
   
   componentDidMount() {
-    console.log('fomr edithouse: ', this.props);
     const {HouseList} = this.props;
     const {id} = this.props;
 
