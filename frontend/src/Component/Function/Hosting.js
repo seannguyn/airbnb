@@ -61,6 +61,7 @@ class Hosting extends Component {
         // error handling
 
         // push back to myhosts page
+        this.props.history.push("/myHouses");
     }
     
     render() { 
