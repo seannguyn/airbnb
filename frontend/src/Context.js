@@ -13,6 +13,7 @@ const reducer = (state,action) => {
         HouseList: state.HouseList.filter((eachHouse) => eachHouse.id !== action.payload),
       }
 
+
     case 'ADD_HOUSE':
       console.log("adding house",action.payload);
       return {
@@ -44,6 +45,11 @@ const reducer = (state,action) => {
           return {
             myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
           }
+        case 'DELETE_HOST':
+          console.log("deleting hosting",action.payload);
+          return {
+            myHostingList: state.myHostingList.filter((host) => host.id !== action.payload),
+          }
 
       default:
         return state;
@@ -56,6 +62,7 @@ export class Provider extends Component {
     super();
     this.state = {
       HouseList : [],
+      myHouseList: [],
       currentUser: {},
       myHostingList: [],
       AllHostingList: [],
@@ -67,6 +74,7 @@ export class Provider extends Component {
   }
 
   async componentDidMount(){
+
     const res = await axios.get('https://localhost:8000/accommodation/');
     this.setState({HouseList: res.data});
     console.log(this.state.currentUser);
@@ -75,17 +83,17 @@ export class Provider extends Component {
     this.setState({AllHostingList: allHosting.data});
 
 
-    if(this.state.currentUser[0] != null){
-      const {token} = this.state.currentUser[0];
+    if(this.state.currentUser[0] != null) {
+      const {token,user_id} = this.state.currentUser[0];
       const res = await axios.get('https://localhost:8000/accommodationHosting/',
       {
         headers:{
           'Authorization': {token}
         }
-      }
-    )
+      })
 
     if(this.state.myHostingList.length === 0 ){
+      console.log("MY HOUSEEEEEE__");
       this.setState({myHostingList: res.data});
       console.log(this.state.myHostingList);
     }
@@ -96,7 +104,7 @@ export class Provider extends Component {
   async componentDidUpdate(){
       console.log("DID UPDATE: ", this.state.currentUser);
       if(this.state.currentUser[0] != null){
-        const {token} = this.state.currentUser[0];
+        const {token,user_id} = this.state.currentUser[0];
         const res = await axios.get('https://localhost:8000/accommodationHosting/',
         {
           headers:{
@@ -106,6 +114,8 @@ export class Provider extends Component {
       )
 
       if(this.state.myHostingList.length == 0 ){
+        const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
+        this.setState({myHouseList: myHouse.data});
         this.setState({myHostingList: res.data});
         console.log(this.state.myHostingList);
       }

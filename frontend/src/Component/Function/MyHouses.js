@@ -47,7 +47,11 @@ class MyHouses extends Component {
                             <h1>My Houses</h1>
                             <main className="col-md-9 ml-sm-auto col-lg-10 px-4">
                             {myHouses.map(house => (
-                                <House key={house.id} houseDetail={house}></House>
+                                <House key={house.id}
+                                  houseDetail={house}
+                                  value={value}
+                                  myHouses={myHouses}>
+                                </House>
                             ))}
                         </main>
                             </React.Fragment>

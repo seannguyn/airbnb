@@ -99,8 +99,20 @@ class EditHosting extends Component {
         // push back to myhosts page
     }
 
+    handleAlternate(id,dispatch,e) {
+      e.preventDefault();
+      console.log("stop hosting",id);
+
+      axios.delete(`https://localhost:8000/accommodationHosting/${id}/`)
+      .then(res => {
+        dispatch({type: "DELETE_HOST", payload: id})
+      })
+
+
+    }
+
     render() {
-        const {date_start, date_end, price, description} = this.state;
+        const {id, date_start, date_end, price, description} = this.state;
         return (
             <Consumer>
                 {value => {
@@ -151,7 +163,9 @@ class EditHosting extends Component {
                     </div>
 
                     <input type="submit" className="btn btn-block btn-light" value="Host this accommodationn"></input>
-                </form>
+                    <input type="submit" className="btn btn-block btn-danger" onClick={this.handleAlternate.bind(this, id, dispatch)} value="Stop Hosting this accommodationn"></input>
+
+              </form>
 
                 </div>
             </div>

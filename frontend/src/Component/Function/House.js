@@ -21,15 +21,26 @@ class House extends React.Component {
 
   // pass an axios to backend, requesting for delete
     async handleDelete(id, dispatch) {
-      console.log('delete');
-  // const deletable = axios.post('',id)
 
-      const deletable = false;
+      // console.log('delete',this.props.value,this.props.myHouses,id);
+
+      const {myHostingList} = this.props.value;
+      let i =0;
+      var deletable=true;
+
+      for(i=0; i<myHostingList.length; i++){
+        if(myHostingList[i].accommodation == id){
+          deletable =false;
+          break;
+        }
+      }
+
       if (deletable === true) {
-        dispatch({type:'DELETE_HOUSE',payload:id})
+        alert("can delete")
+        // dispatch({type:'DELETE_HOUSE',payload:id})
       }
       else {
-        alert("cant delete")
+        alert("cant delete, have hosting")
       }
     }
 

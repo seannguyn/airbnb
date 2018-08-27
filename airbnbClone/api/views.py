@@ -58,14 +58,12 @@ class AccommodationView(viewsets.ModelViewSet):
     def get_queryset(self):
         """ allow rest api to filter by submissions """
         queryset = Accommodation.objects.all()
+
         user = self.request.query_params.get('user', None)
-        id = self.request.query_params.get('id', None)
-        
+
+        print("get user")
         if user is not None:
             queryset = queryset.filter(user=user)
-
-        if id is not None:
-            queryset = queryset.filter(id=id)
 
         return queryset
 
@@ -75,10 +73,25 @@ class AccommodationView(viewsets.ModelViewSet):
     queryset = Accommodation.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationSerializer
-    
+
     @action(methods=['get'], detail=False)
     def review(self, request, pk=True):
         print('Go to review')
+
+    def get_queryset(self):
+        """ allow rest api to filter by submissions """
+        queryset = Accommodation.objects.all()
+
+        user = self.request.query_params.get('user', None)
+        id = self.request.query_params.get('id', None)
+        print("get user")
+        if user is not None:
+            queryset = queryset.filter(user=user)
+
+        if id is not None:
+            queryset = queryset.filter(id=id)
+
+        return queryset
 
 
 class AccommodationImageView(viewsets.ModelViewSet):
@@ -100,7 +113,7 @@ class AccommodationHostingView(viewsets.ModelViewSet):
     queryset = AccommodationHosting.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
-    
+
     def get_object(self, pk):
         try:
             return AccommodationHosting.objects.get(pk=pk)
@@ -114,14 +127,14 @@ class AccommodationHostingView(viewsets.ModelViewSet):
 
     """ handling PUT request and backend validation"""
     def update(self, request, pk, format=None):
-    
+
         new_date_start = request.data['date_start']
         new_date_end = request.data['date_end']
         new_price = request.data['price']
         new_description = request.data['description']
-        
+
         myHostObject = self.get_object(pk)
-        
+
         myHostObject.date_start = new_date_start
         myHostObject.date_end = new_date_end
         myHostObject.price = new_price
@@ -135,11 +148,11 @@ class AccommodationHostingView(viewsets.ModelViewSet):
     """ handling POST request backend validation"""
     def create(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
-        
+
         date_start = request.data['date_start']
         date_end = request.data['date_end']
-        
-        check_valid = compareDate(date_start, date_end)    
+
+        check_valid = compareDate(date_start, date_end)
 
         if serializer.is_valid():
 
@@ -157,7 +170,7 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         print("GET REQUEST OKOKOKOK ")
 
         user = self.request.query_params.get('user', None)
-    
+
         if user is not None:
             ids = queryset_1.values_list('id', flat=True).filter(user=user)
             queryset_2 = queryset_2.filter(accommodation__in=set(ids))
@@ -166,7 +179,7 @@ class AccommodationHostingView(viewsets.ModelViewSet):
 
 
     # user_pk = self.kwargs['user_pk']
-        
+
     #     if user_pk is not None:
     #         queryset = queryset.filter(user=user_pk)
     #         if not queryset:
@@ -200,7 +213,7 @@ class GetReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
 
     serializer_class = ReviewSerializer
-    
+
     def get_queryset(self):
         queryset = Review.objects.all()
         return queryset
@@ -212,12 +225,12 @@ class UserReviews(viewsets.ModelViewSet):
 
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    
+
     def get_queryset(self):
 
         queryset = Review.objects.all()
         user_pk = self.kwargs['user_pk']
-        
+
         if user_pk is not None:
             queryset = queryset.filter(user=user_pk)
             if not queryset:
@@ -236,13 +249,13 @@ class AccomodationReviews(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Review.objects.all() #initialise queryset
         accommodation_pk = self.kwargs['accommodation_pk']
-        
+
         if accommodation_pk is not None:
             queryset = queryset.filter(accommodation=accommodation_pk)
-            
+
             if not queryset:
                 raise Http404('Review does not exist for this accommodation')
-            
+
             return queryset
 
 
@@ -259,7 +272,7 @@ class Users(viewsets.ModelViewSet):
         return queryset
 
     # def get_queryset(self):
-    #     """ get the current login user """    
+    #     """ get the current login user """
     #     user = self.request.user
     #     return UserInfo.objects.filter(user=user)
 
