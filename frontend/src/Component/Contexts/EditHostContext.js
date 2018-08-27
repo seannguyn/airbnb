@@ -11,13 +11,12 @@ const EditHostContext = (props) => {
   <Consumer>
     {value => {
       const {HouseList, currentUser, myHostingList} = value;
-      
+
       return (
         <div>
-          <EditHosting 
-                    // history={props.history} 
+          <EditHosting
                     id={id} 
-                    HouseList={HouseList} 
+                    HouseList={HouseList}
                     currentUser={currentUser}
                     myHostingList={myHostingList}/>
         </div>
