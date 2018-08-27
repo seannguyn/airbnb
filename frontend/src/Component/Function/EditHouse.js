@@ -8,8 +8,11 @@ class EditHouse extends Component {
   constructor() {
     super();
     this.state = {
+
+      currentUser: {},
+
       id: '',
-      user:'',
+      user: '',
       Accommodation_Type: '',
 
       number: '',
@@ -29,37 +32,45 @@ class EditHouse extends Component {
       error: {}
     }
   }
-  
+
   componentDidMount() {
-    const {HouseList} = this.props;
+    const {HouseList, currentUser} = this.props;
     const {id} = this.props;
 
-    var result = HouseList.find(obj => {
-      return obj.id === id
-    })
+    this.setState({currentUser: currentUser}, () => {
+      console.log("current user", currentUser[0]);
+    });
 
-    console.log(result);
+    let i =0;
+    var result;
+    for(i=0; i<HouseList.length; i++){
+      if(HouseList[i].id == id){
+        result = HouseList[i];
+      }
+    }
+
+    console.log("here",result);
 
     this.setState({
-    id: result.id,
-    user: result.user,
-    Accommodation_Type: result.Accommodation_Type,
+      id: result.id,
+      user: result.user,
+      Accommodation_Type: result.Accomodation_Type,
 
-    number: result.addr_number,
-    street: result.addr_street,
-    city:  result.addr_city,
-    state: result.addr_state,
+      number: result.addr_number,
+      street: result.addr_street,
+      city:  result.addr_city,
+      state: result.addr_state,
 
-    area: result.area,
-    bedroom_master: result.bedroom_master,
-    bedroom: result.bedroom,
-    bathroom: result.bathroom,
-    kitchen: result.kitchen,
-    gym: result.gym,
-    pool: result.pool,
-    carpark: result.carpark,
-    description: result.description,
-  })
+      area: result.area,
+      bedroom_master: result.bedroom_master,
+      bedroom: result.bedroom,
+      bathroom: result.bathroom,
+      kitchen: result.kitchen,
+      gym: result.gym,
+      pool: result.pool,
+      carpark: result.carpark,
+      description: result.description,
+    })
 
     // axios call ???
     // const {id} = this.props.match.params;
@@ -83,7 +94,7 @@ class EditHouse extends Component {
     const editHouse ={
       id: id,
       user:user,
-      Accommodation_Type: Accommodation_Type,
+      Accomodation_Type: Accommodation_Type,
 
       addr_number: number,
       addr_street: street,
@@ -106,6 +117,13 @@ class EditHouse extends Component {
     console.log(editHouse);
 
     // const res = await axios.put(`${id}`,editHouse)
+    const {token} = this.state.currentUser; //GET TOKEN FROM CURRENT USER
+    const res = await axios.put(`https://localhost:8000/accommodation/${id}/`, editHouse,
+            {headers:{
+                'Authorization': {token}
+            }
+        }
+    )
 
     dispatch({type:'EDIT_HOUSE', payload:editHouse})
 
@@ -154,15 +172,15 @@ class EditHouse extends Component {
       error:{}
     })
 
-    this.props.history.push("/viewHouse")
+    this.props.history.push("/myhouses")
 
   }
 
   render () {
 
-    const {number, street, city, state} = this.state;
+    const {Accommodation_Type,number, street, city, state} = this.state;
     const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
-
+    console.log(Accommodation_Type,"accomm type");
     return (
 
       <Consumer>
@@ -178,6 +196,13 @@ class EditHouse extends Component {
               <div className="card-body">
                 <form onSubmit={this.onSubmit.bind(this, dispatch)}>
 
+                  <ul>
+                    <li><input onChange={this.onChange.bind(this)} type="radio" name="Accommodation_Type" value="Room"      checked={Accommodation_Type === "Room" ? true : false}/>Room</li>
+                    <li><input onChange={this.onChange.bind(this)} type="radio" name="Accommodation_Type" value="Studio"    checked={Accommodation_Type === "Studio" ? true : false}/>Studio</li>
+                    <li><input onChange={this.onChange.bind(this)} type="radio" name="Accommodation_Type" value="Apartment" checked={Accommodation_Type === "Apartment" ? true : false}/>Apartment</li>
+                    <li><input onChange={this.onChange.bind(this)} type="radio" name="Accommodation_Type" value="House"     checked={Accommodation_Type === "House" ? true : false}/>House</li>
+                    <li><input onChange={this.onChange.bind(this)} type="radio" name="Accommodation_Type" value="Villa"     checked={Accommodation_Type === "Villa" ? true : false}/>Villa<br/></li>
+                  </ul>
 
                   <TextInputGroup
                     label="number"
@@ -231,7 +256,7 @@ class EditHouse extends Component {
                     onChange={this.onChange.bind(this)}
                     error={this.state.error.bedroom}
                     />
-                    
+
                     <TextInputGroup
                       label="bedroom_master"
                       name="bedroom_master"

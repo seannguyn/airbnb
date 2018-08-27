@@ -9,10 +9,10 @@ const ContextApi = (props) => {
   return(
   <Consumer>
     {value => {
-      const {HouseList} = value;
+      const {HouseList, currentUser} = value;
       return (
         <div>
-          <EditHouse history={props.history} id={id} HouseList={HouseList} />
+          <EditHouse history={props.history} id={id} currentUser={currentUser} HouseList={HouseList} />
         </div>
       )
     }}

@@ -28,8 +28,6 @@ class Accommodation(models.Model):
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    id = models.CharField(primary_key=True, max_length=100, editable=False)
-
     Accomodation_Type = models.CharField(max_length=10, choices=ACCOMMODATION_TYPES)
 
     addr_number = models.PositiveIntegerField(blank=False, default=1)

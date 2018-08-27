@@ -6,21 +6,26 @@ const Sidebar = (props) => {
     <nav className="col-md-2 d-none d-md-block bg-light sidebar">
           <div className="sidebar-sticky">
             <ul className="nav flex-column">
+              <Link to="/">
+                <li className="nav-item">
+                   Explore
+                  <i className="fas fa-binoculars" style={{float:'right'}}></i>
+                </li>
+              </Link>
+
+
               <li className="nav-item">
-                <a className="nav-link active" href="/">
-                  <i className="fas fa-home" style={{float:'right'}}></i>
-                  My Property <span className="sr-only">(current)</span>
-                </a>
+                  My Houses
                 <ul>
                   <div>
                   <li className="nav-item">
-                    <Link to="/viewHouse" className="nav-link">
+                    <Link to="/myhouses" className="nav-link">
                       <i className="fas fa-binoculars" style={{cursor: 'pointer',float:'right'}}> </i>
                     </Link>
                     View
                   </li>
                   </div>
-                  
+
                   <li className="nav-item">
                     <Link to="/addHouse" className="nav-link">
                       <i className="fas fa-plus" style={{cursor: 'pointer',float:'right'}}> </i>
@@ -30,12 +35,6 @@ const Sidebar = (props) => {
                   </li>
 
                 </ul>
-              </li>
-              <li className="nav-item">
-                <Link to="/myhouses" className="nav-link">
-                  <span data-feather="file"></span>
-                  My Houses 
-                </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/">

@@ -2,7 +2,7 @@ import React from 'react'
 import {Consumer} from '../../Context'
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import Hosting from './Hosting';
+import AddHosting from './AddHosting';
 
 class House extends React.Component {
 
@@ -34,65 +34,65 @@ class House extends React.Component {
     }
 
   render () {
-    
+
     const {addr_number, addr_street, addr_city} = this.props.houseDetail;
     const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.props.houseDetail;
-    
+
     const {user} = this.props.houseDetail; //-- from houses.js -- user id in each house in houselist
     const {id} = this.props.houseDetail;
     console.log("HDT: ", this.props.houseDetail);
-    
+
     const {showDetail} = this.state;
 
-    const isMyHouse = false; // flag to check if which current user's houses - for hosting button    
+    const isMyHouse = false; // flag to check if which current user's houses - for hosting button
     const isHosting = false;// flag to check if the accom is hosting
     return (
       <Consumer>
         { value => {
           const {dispatch} = value;
           // console.log("in HOUSE.js current user", value.currentUser);
-  
+
           const {currentUser, myHostingList} = value;
 
           // console.log("IN HOUSEJSL ", myHostingList);
 
-          if(currentUser[0] != null){
+          if(currentUser[0] !== null){
             const {user_id} = currentUser[0];
-            
-            if(user_id == user){
+
+            if(user_id === user){
               this.isMyHouse = true;
             }
 
             let i = 0;
             for(i=0; i < myHostingList.length; i++){
-              if(myHostingList[i].accommodation == id){
+              if(myHostingList[i].accommodation === id){
                 this.isHosting = true;
               }
             }
           }
-          
+
           return (
 
             <div className="card card-body mb-3">
               <h5>
                 {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
                 <i  className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)} style={{cursor:'pointer', float:'right',color:'red'}}/>
-                
+
                 <Link to={`editHouse/${id}`}>
                   <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
                 </Link>
-              
-              {this.isMyHouse === true && this.isHosting === true? 
+
+              {this.isMyHouse === true && this.isHosting === true?
                 <div>
                   <Link to={`/edithosting/${id}`}>
-                    <i>Edit hosting</i> 
+                    <i>Edit hosting</i>
                   </Link>
                 </div>
               : <Link to={`/hosting/${id}`}>
-                    <i>Hosting</i> 
+                    <i>Hosting</i>
                   </Link>
-                
-              }                  
+
+              }
               </h5>
 
               {showDetail === true ?

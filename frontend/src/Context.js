@@ -28,7 +28,7 @@ const reducer = (state,action) => {
 
       case 'LOGIN':
         console.log('login user login');
-        
+
         return {
           ...state,
           currentUser: [action.payload, ...state.currentUser]
@@ -40,7 +40,7 @@ const reducer = (state,action) => {
           myHostingList: [action.payload,...state.myHostingList]
         }
 
-        case 'EDITHOST': 
+        case 'EDITHOST':
           return {
             myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
           }
@@ -51,13 +51,14 @@ const reducer = (state,action) => {
 }
 
 export class Provider extends Component {
-  
+
   constructor() {
     super();
     this.state = {
       HouseList : [],
       currentUser: {},
       myHostingList: [],
+      AllHostingList: [],
       dispatch: (action) => {
         this.setState((state) => reducer(state,action))
       }
@@ -68,8 +69,11 @@ export class Provider extends Component {
   async componentDidMount(){
     const res = await axios.get('https://localhost:8000/accommodation/');
     this.setState({HouseList: res.data});
-    console.log("HELLO DIDMOUNT");
     console.log(this.state.currentUser);
+
+    const allHosting = await axios.get('https://localhost:8000/accommodationHosting/');
+    this.setState({AllHostingList: allHosting.data});
+
 
     if(this.state.currentUser[0] != null){
       const {token} = this.state.currentUser[0];
@@ -80,8 +84,8 @@ export class Provider extends Component {
         }
       }
     )
-    
-    if(this.state.myHostingList.length == 0 ){
+
+    if(this.state.myHostingList.length === 0 ){
       this.setState({myHostingList: res.data});
       console.log(this.state.myHostingList);
     }
@@ -100,15 +104,15 @@ export class Provider extends Component {
           }
         }
       )
-      
+
       if(this.state.myHostingList.length == 0 ){
         this.setState({myHostingList: res.data});
         console.log(this.state.myHostingList);
       }
     }
-    return ; 
+    return ;
   }
-  
+
 
   render () {
     // const fh = this.findHostingAccommodation(this.state.currentUser);
