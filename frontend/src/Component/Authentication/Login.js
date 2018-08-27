@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Consumer} from '../../Context.js';
 import {Link} from 'react-router-dom';
+import TextInputGroup from '../Function/TextInputGroup'
 
 class Login extends Component {
 
@@ -11,7 +12,7 @@ class Login extends Component {
             username : '',
             password : '',
             token: '',
-            errors:{}
+            error:{}
         }
     }
 
@@ -21,15 +22,22 @@ class Login extends Component {
 
     onSubmit = async (dispatch, e) => {
         e.preventDefault();
+<<<<<<< HEAD
 
         const {username, password} = this.state;
 
+=======
+        
+        const {username, password, error} = this.state;
+        
+>>>>>>> dc03845703a451cd079cee6285cdd6515ef53b8a
         if (username === '' ) {
-          this.setState({errors:{username:"username is required"}})
+          console.log("EMTYRSUER");
+          this.setState({error:{username:"username is required"}});
           return;
         }
         if (password === '' ) {
-          this.setState({errors:{password:"password is required"}})
+          this.setState({error:{password:"password is required"}});
           return;
         }
 
@@ -62,6 +70,7 @@ class Login extends Component {
         // console.log("loggin check",res.data);
 
         //GET USER AUTH TOKEN - DJANGO
+<<<<<<< HEAD
         // const res = await axios.post('https://localhost:8000/api-token-auth/', account )
         // console.log(res.data,"dataaa");
         // dispatch({type:'LOGIN', payload:res.data});
@@ -74,6 +83,41 @@ class Login extends Component {
 
         this.props.history.push("/")
       }
+=======
+        let res;
+        let err;
+        await axios.post('https://localhost:8000/api-token-auth/', account)
+            .then(response => {
+                res = response.data;
+                dispatch({type:'LOGIN', payload:response.data});
+            })
+            .catch(error => {
+                console.log("ERR: ", error.response);
+                err = error.response;
+                this.setState({error:{username:"Check your username again", password:"Check your password again"}});
+            });
+
+        console.log("ERROR: ", err);
+        if( err != null){
+            console.log(error);
+            this.props.history.push("/login");
+            return;
+        }
+
+        console.log("RES: ", res);
+        if( res != null){
+            
+            
+            this.setState({
+                username:'',
+                password:'',
+                error:{}
+            });
+
+            this.props.history.push("/");
+        }
+    }
+>>>>>>> dc03845703a451cd079cee6285cdd6515ef53b8a
 
       socialSubmit = async(dispatch, e) => {
         //   TODO: OAUTH login facebook
@@ -84,12 +128,14 @@ class Login extends Component {
             <Consumer>
             {value =>{
                 const {dispatch} = value;
+                const {error} = this.state;
                 return (
                     <React.Fragment>
                     <div className="card-header">Login</div>
                     <div className="card-body">
                     <div className="container">
                     <form onSubmit={this.onSubmit.bind(this, dispatch)}>
+<<<<<<< HEAD
                         <div className="form-group">
                             <label htmlFor="username">Username</label>
                             <input
@@ -111,6 +157,27 @@ class Login extends Component {
                                 onChange={this.onChange}
                                 error={this.state.errors.password}/>
                         </div>
+=======
+                  
+                        <TextInputGroup
+                            label="Username"
+                            type="text" 
+                            name="username" 
+                            className="form-control form-control-lg" 
+                            placeholder="Enter username..."
+                            onChange={this.onChange}
+                            error={this.state.error.username}/>
+            
+                        <TextInputGroup
+                            label="Password" 
+                            type="password" 
+                            name="password" 
+                            className="form-control form-control-lg" 
+                            placeholder="Enter password..."
+                            onChange={this.onChange}
+                            error={this.state.error.password}/>
+                       
+>>>>>>> dc03845703a451cd079cee6285cdd6515ef53b8a
                         <input type="submit" className="btn btn-block btn-light" value="Login"></input>
                     </form>
 

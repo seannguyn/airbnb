@@ -18,9 +18,10 @@ import AddHouseContext from './Component/Contexts/AddHouseContext';
 
 class App extends Component {
   render() {
+    console.log("IN APP>JS<: ", this.props);
     return (
       <Provider>
-        <Header/>
+        <Header />
         <Router>
           <div className="container-fluid">
             <div className="row">

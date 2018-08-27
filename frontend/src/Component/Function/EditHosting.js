@@ -18,6 +18,11 @@ class EditHosting extends Component {
         }
     }
 
+    // componentWillUpdate(nextProps, nextState){
+    //     console.log("WILL UPDATE: ", this.state.currentUser);
+    //     localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
+    // }
+
     componentDidMount(){
         console.log("from edithousingjs: ", this.props);
         const{HouseList, currentUser, myHostingList} = this.props;
@@ -25,11 +30,6 @@ class EditHosting extends Component {
 
         console.log('PROPSSSShosting: ', myHostingList, id);
 
-        // var result = myHostingList.find( (obj) => {
-        //     if (obj.accommodation === id) {
-        //       return obj;
-        //     }
-        // });
 
         let i =0;
         var result;

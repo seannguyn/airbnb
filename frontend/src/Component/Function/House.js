@@ -61,11 +61,8 @@ class House extends React.Component {
       <Consumer>
         { value => {
           const {dispatch} = value;
-          // console.log("in HOUSE.js current user", value.currentUser);
 
           const {currentUser, myHostingList} = value;
-
-          // console.log("IN HOUSEJSL ", myHostingList);
 
           if(currentUser[0] !== null){
             const {user_id} = currentUser[0];
@@ -73,11 +70,18 @@ class House extends React.Component {
             if(user_id === user){
               this.isMyHouse = true;
             }
-
+            let counter = 0;
             let i = 0;
+            // this.isHosting = false;
             for(i=0; i < myHostingList.length; i++){
-              if(myHostingList[i].accommodation === id){
+              console.log("counter: ", i);
+              console.log("cp: ", 0 + parseInt(myHostingList[i].accommodation), id);
+              if( (0 + parseInt(myHostingList[i].accommodation)) === id){
                 this.isHosting = true;
+                break;
+              }else{
+                this.isHosting = false;
+
               }
             }
           }
