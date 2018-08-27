@@ -6,4 +6,11 @@ airbnbClone\airbnbClone\__pycache__\*
 airbnbClone/basic_func/__pycache__/forms.cpython-37.pyc
 *.pyc
 airbnbClone/airbnbClone/__pycache__/settings.cpython-37.pyc
-airbnbClone/basic_func/__pycache__/forms.cpython-37.pyc
+airbnbClone/tmp
+
+.vscode
+.idea
+.idea/*
+
+venv
+venv/*
