@@ -75,7 +75,6 @@ export class Provider extends Component {
     const allHosting = await axios.get('https://localhost:8000/accommodationHosting/');
     this.setState({AllHostingList: allHosting.data});
 
-
     if(this.state.currentUser[0] != null){
       const {token} = this.state.currentUser[0];
       const res = await axios.get('https://localhost:8000/accommodationHosting/',
@@ -86,30 +85,44 @@ export class Provider extends Component {
       }
     )
 
-    if(this.state.myHostingList.length === 0 ){
-      this.setState({myHostingList: res.data});
-      console.log(this.state.myHostingList);
+      if(this.state.myHostingList.length === 0 ){
+        this.setState({myHostingList: res.data});
+        console.log("did mount my hostung lis: ", this.state.myHostingList);
+      }
     }
-  }
 
   }
 
-  componentWillUpdate(){
-    console.log("will UPDATE: ", this.state.currentUser);
+  // WARNING! To be deprecated in React v17. Use componentDidMount instead.
+  componentWillMount() {
+    localStorage.getItem('currentUser') && localStorage.getItem('HouseList')
+    localStorage.getItem('myHostingList') && localStorage.getItem('AllHostingList')
+    && this.setState({
+      currentUser: JSON.parse(localStorage.getItem('currentUser')),
+      HouseList: JSON.parse(localStorage.getItem('HouseList')),
+      myHostingList: JSON.parse(localStorage.getItem('myHostingList')),
+      AllHostingList: JSON.parse(localStorage.getItem('AllHostingList')),
+    });
+    
   }
 
-  componentDidCatch(){
-    console.log("DID Catch: ", this.state.currentUser);
-  }
-
-  componentWillReceiveProps(){
-    console.log("will recieve: ", this.state.currentUser);
+  componentWillUpdate(nextProps, nextState){
+    console.log("WILL UPDATE: ", this.state);
+    localStorage.setItem('HouseList', JSON.stringify(nextState.HouseList)); 
+    localStorage.setItem('myHostingList', JSON.stringify(this.state.myHostingList));
+    localStorage.setItem('AllHostingList', JSON.stringify(nextState.AllHostingList));
+    localStorage.setItem('currentUser', JSON.stringify(this.state.currentUser));
   }
 
   async componentDidUpdate(){
       console.log("DID UPDATE: ", this.state.currentUser);
+      if(localStorage.getItem('currentUser')){
+        console.log('User data from local storage');
+      } 
+
       if(this.state.currentUser[0] != null){
         const {token} = this.state.currentUser[0];
+
         const res = await axios.get('https://localhost:8000/accommodationHosting/',
         {
           headers:{
@@ -118,14 +131,13 @@ export class Provider extends Component {
         }
       )
 
-      if(this.state.myHostingList.length == 0 ){
+      if (this.state.myHostingList.length == 0 ){
         this.setState({myHostingList: res.data});
         console.log(this.state.myHostingList);
       }
     }
     return ;
   }
-
 
   render () {
     // const fh = this.findHostingAccommodation(this.state.currentUser);

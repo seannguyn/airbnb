@@ -43,18 +43,15 @@ class House extends React.Component {
     console.log("HDT: ", this.props.houseDetail);
 
     const {showDetail} = this.state;
-
+    
     const isMyHouse = false; // flag to check if which current user's houses - for hosting button
     const isHosting = false;// flag to check if the accom is hosting
     return (
       <Consumer>
         { value => {
           const {dispatch} = value;
-          // console.log("in HOUSE.js current user", value.currentUser);
 
           const {currentUser, myHostingList} = value;
-
-          // console.log("IN HOUSEJSL ", myHostingList);
 
           if(currentUser[0] !== null){
             const {user_id} = currentUser[0];
@@ -62,15 +59,22 @@ class House extends React.Component {
             if(user_id === user){
               this.isMyHouse = true;
             }
-
+            let counter = 0;        
             let i = 0;
+            // this.isHosting = false;
             for(i=0; i < myHostingList.length; i++){
-              if(myHostingList[i].accommodation === id){
+              console.log("counter: ", i);
+              console.log("cp: ", 0 + parseInt(myHostingList[i].accommodation), id);
+              if( (0 + parseInt(myHostingList[i].accommodation)) === id){
                 this.isHosting = true;
+                break;
+              }else{
+                this.isHosting = false;
+               
               }
             }
           }
-
+      
           return (
 
             <div className="card card-body mb-3">
