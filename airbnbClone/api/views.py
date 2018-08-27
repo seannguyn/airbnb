@@ -3,7 +3,8 @@ from django.shortcuts import render
 
 from django.contrib.auth.models import User
 from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo
-from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer,BookingSerializer, ReviewSerializer, UserInfoSerializer
+from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer, \
+    BookingSerializer, ReviewSerializer, UserInfoSerializer
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 
 from django.http import HttpResponse, HttpResponseNotFound, Http404
@@ -16,7 +17,7 @@ from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from rest_auth.social_serializers import TwitterLoginSerializer
 from rest_auth.registration.views import SocialLoginView
 
-#Twitter
+# Twitter
 from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
 from rest_auth.registration.views import SocialLoginView
 from rest_auth.social_serializers import TwitterLoginSerializer
@@ -35,7 +36,6 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
     HTTP_200_OK
 )
-
 
 
 class FacebookLogin(SocialLoginView):
@@ -60,7 +60,7 @@ class AccommodationView(viewsets.ModelViewSet):
         queryset = Accommodation.objects.all()
         user = self.request.query_params.get('user', None)
         id = self.request.query_params.get('id', None)
-        
+
         if user is not None:
             queryset = queryset.filter(user=user)
 
@@ -71,11 +71,13 @@ class AccommodationView(viewsets.ModelViewSet):
 
 
 """ Get accomodation review """
+
+
 class AccommodationView(viewsets.ModelViewSet):
     queryset = Accommodation.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationSerializer
-    
+
     @action(methods=['get'], detail=False)
     def review(self, request, pk=True):
         print('Go to review')
@@ -100,7 +102,7 @@ class AccommodationHostingView(viewsets.ModelViewSet):
     queryset = AccommodationHosting.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
-    
+
     def get_object(self, pk):
         try:
             return AccommodationHosting.objects.get(pk=pk)
@@ -113,15 +115,16 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     """ handling PUT request and backend validation"""
+
     def update(self, request, pk, format=None):
-    
+
         new_date_start = request.data['date_start']
         new_date_end = request.data['date_end']
         new_price = request.data['price']
         new_description = request.data['description']
-        
+
         myHostObject = self.get_object(pk)
-        
+
         myHostObject.date_start = new_date_start
         myHostObject.date_end = new_date_end
         myHostObject.price = new_price
@@ -133,13 +136,14 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     """ handling POST request backend validation"""
+
     def create(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
-        
+
         date_start = request.data['date_start']
         date_end = request.data['date_end']
-        
-        check_valid = compareDate(date_start, date_end)    
+
+        check_valid = compareDate(date_start, date_end)
 
         if serializer.is_valid():
 
@@ -157,22 +161,22 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         print("GET REQUEST OKOKOKOK ")
 
         user = self.request.query_params.get('user', None)
-    
+
         if user is not None:
             ids = queryset_1.values_list('id', flat=True).filter(user=user)
             queryset_2 = queryset_2.filter(accommodation__in=set(ids))
 
         return queryset_2
 
-
     # user_pk = self.kwargs['user_pk']
-        
+
     #     if user_pk is not None:
     #         queryset = queryset.filter(user=user_pk)
     #         if not queryset:
     #             raise Http404('Review does not exist for this accommodation')
 
     #         return queryset
+
 
 class BookingView(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
@@ -196,11 +200,13 @@ class BookingView(viewsets.ModelViewSet):
 
 
 """ get all the reviews """
+
+
 class GetReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
 
     serializer_class = ReviewSerializer
-    
+
     def get_queryset(self):
         queryset = Review.objects.all()
         return queryset
@@ -208,16 +214,17 @@ class GetReviews(viewsets.ModelViewSet):
 
 """ GET the reviews made by an user """
 """ GET /users/{user_id}/reviews """
-class UserReviews(viewsets.ModelViewSet):
 
+
+class UserReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    
+
     def get_queryset(self):
 
         queryset = Review.objects.all()
         user_pk = self.kwargs['user_pk']
-        
+
         if user_pk is not None:
             queryset = queryset.filter(user=user_pk)
             if not queryset:
@@ -228,32 +235,35 @@ class UserReviews(viewsets.ModelViewSet):
 
 """ Get reviews for a specific accommodation """
 """ GET accommodation/{accomodation_pk}/reviews/ """
-class AccomodationReviews(viewsets.ModelViewSet):
 
+
+class AccomodationReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        queryset = Review.objects.all() #initialise queryset
+        queryset = Review.objects.all()  # initialise queryset
         accommodation_pk = self.kwargs['accommodation_pk']
-        
+
         if accommodation_pk is not None:
             queryset = queryset.filter(accommodation=accommodation_pk)
-            
+
             if not queryset:
                 raise Http404('Review does not exist for this accommodation')
-            
+
             return queryset
 
 
 """ GET all current users """
 """ /users/ """
-class Users(viewsets.ModelViewSet):
 
+
+class Users(viewsets.ModelViewSet):
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
 
     """ This would get all users """
+
     def get_queryset(self):
         queryset = UserInfo.objects.all()
         return queryset
@@ -265,11 +275,13 @@ class Users(viewsets.ModelViewSet):
 
 
 """ Custom authentication - return Token, username and email """
+
+
 class CustomAuthToken(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
-                                         context={'request': request})
+                                           context={'request': request})
         print("DATA: ", request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']

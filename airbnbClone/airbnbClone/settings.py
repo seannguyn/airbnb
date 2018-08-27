@@ -14,12 +14,8 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEMPLATES_DIR = os.path.join(BASE_DIR,'templates')
-STATIC_DIR = os.path.join(BASE_DIR,'static')
-MEDIA_DIR = os.path.join(BASE_DIR,'media')
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
+RES_DIR = os.path.join(BASE_DIR, 'res')
+BUILD_DIR = os.path.join(BASE_DIR, 'frontend', 'build')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'ue!i-$cs-p!kk$aq6h(&%=1n35jez7=*pispf9va78(6k3e7@a'
@@ -29,6 +25,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 7  # WTF IS THIS NUMBER SRS
 
 # Application definition
 
@@ -39,92 +36,34 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'rest_auth',
     'api',
-    'basic_func',
     'tawkto',
-    'django.contrib.sites', # new
-    'rest_auth.registration', #new
-    'rest_framework.authtoken', #new
-    'corsheaders', #cross origin
+    'django.contrib.sites',
+    'rest_auth.registration',
+    'rest_framework.authtoken',
+    'corsheaders',  # cross origin
 
-    'allauth', # new
-    'allauth.account', # new
-    'allauth.socialaccount', # new
-    'allauth.socialaccount.providers.github', # new
-    'allauth.socialaccount.providers.facebook', # new
-    'allauth.socialaccount.providers.twitter', #new
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
     'django_extensions',
     'django_adminlte',
     'django_adminlte_theme',
     'rest_framework',
-   
+
 ]
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.AllowAny',
-        # 'rest_framework.permissions.IsAuthenticated', # uncomment this line to enable authentication
-    ],
-
-    'DEFAULT_AUTHENTICATION_CLASSES': [   
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-
-}
-
-# myproject/settings.py
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-    # "social_core.backends.github.GithubOAuth2",
-)
-
-SITE_ID = 7        # WTF IS THIS NUMBER SRS
-
-LOGIN_REDIRECT_URL = '/basic_func/home'
-# LOGIN_URL = '/basic_func/home'
-
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-]
-
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-    '127.0.0.1:3000'
-)
-
-CORS_ALLOW_METHODS = (
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
-)
-
 
 ROOT_URLCONF = 'airbnbClone.urls'
-
-TAWKTO_ID_SITE='<tawkto id site>'
-TAWKTO_API_KEY='<tawkto api key>'
-TAWKTO_IS_SECURE=True
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR,os.path.join(BASE_DIR, 'templates', 'allauth')],
+        'DIRS': [BUILD_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -137,8 +76,53 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'airbnbClone.wsgi.application'
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.AllowAny',
+        # 'rest_framework.permissions.IsAuthenticated', # uncomment this line to enable authentication
+    ],
 
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+# myproject/settings.py
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+    # "social_core.backends.github.GithubOAuth2",
+)
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    '127.0.0.1:3000'
+)
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+TAWKTO_ID_SITE = '<tawkto id site>'
+TAWKTO_API_KEY = '<tawkto api key>'
+TAWKTO_IS_SECURE = True
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -148,7 +132,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -175,29 +158,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR,]
+STATICFILES_DIRS = [
+    os.path.join(BUILD_DIR, 'static')
+]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = MEDIA_DIR
+MEDIA_ROOT = os.path.join(RES_DIR, 'media')
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_FILE_PATH = os.path.join(RES_DIR, "emails")
