@@ -16,9 +16,10 @@ import EditHostingContext from './Component/Contexts/EditHostContext';
 
 class App extends Component {
   render() {
+    console.log("IN APP>JS<: ", this.props);
     return (
       <Provider>
-        <Header/>
+        <Header />
         <Router>
           <div className="container-fluid">
             <div className="row">

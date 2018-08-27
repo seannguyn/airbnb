@@ -66,6 +66,7 @@ export class Provider extends Component {
   }
 
   async componentDidMount(){
+    console.log("DID MOunt: ", this.state.currentUser);
     const res = await axios.get('https://localhost:8000/accommodation/');
     this.setState({HouseList: res.data});
     console.log("HELLO DIDMOUNT");
@@ -87,6 +88,18 @@ export class Provider extends Component {
     }
   }
 
+  }
+
+  componentWillUpdate(){
+    console.log("will UPDATE: ", this.state.currentUser);
+  }
+
+  componentDidCatch(){
+    console.log("DID Catch: ", this.state.currentUser);
+  }
+
+  componentWillReceiveProps(){
+    console.log("will recieve: ", this.state.currentUser);
   }
 
   async componentDidUpdate(){
@@ -112,6 +125,7 @@ export class Provider extends Component {
 
   render () {
     // const fh = this.findHostingAccommodation(this.state.currentUser);
+    console.log("IN REDNER CONTEXt: ", this.state.currentUser);
     console.log(this.state.myHostingList);
     return(
       <Context.Provider value={this.state}>

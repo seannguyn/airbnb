@@ -24,7 +24,9 @@ class EditHosting extends Component {
         const{id} = this.props;
         
         var result = myHostingList.find(obj => {
-            return obj.accommodation === id
+            if(obj.accommodation === id){
+                return obj;
+            }
         });
 
         console.log("FILTER EDITHOUSING: ", result);
@@ -72,7 +74,8 @@ class EditHosting extends Component {
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
-        const res = await axios.put(`https://localhost:8000/accommodationHosting/24/`, hostingHouse,
+
+        const res = await axios.put(`https://localhost:8000/accommodationHosting/${id}/`, hostingHouse,
                 {headers:{
                     'Authorization': {token}
                 }
