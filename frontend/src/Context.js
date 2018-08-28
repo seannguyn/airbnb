@@ -88,7 +88,7 @@ export class Provider extends Component {
     if(this.state.currentUser[0] != null) {
       const {token,user_id} = this.state.currentUser[0];
 
-      const res = await axios.get('https://localhost:8000/accommodationHosting/',
+      const res = await axios.get(`https://localhost:8000/accommodationHosting/?user=${user_id}`,
       {
         headers:{
           'Authorization': {token}
@@ -106,22 +106,23 @@ export class Provider extends Component {
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
-    localStorage.getItem('currentUser') && localStorage.getItem('HouseList')
-    localStorage.getItem('myHostingList') && localStorage.getItem('AllHostingList')
+    localStorage.getItem('currentUser')
+    // && localStorage.getItem('HouseList')
+    // localStorage.getItem('myHostingList') && localStorage.getItem('AllHostingList')
     && this.setState({
       currentUser: JSON.parse(localStorage.getItem('currentUser')),
-      HouseList: JSON.parse(localStorage.getItem('HouseList')),
-      myHostingList: JSON.parse(localStorage.getItem('myHostingList')),
-      AllHostingList: JSON.parse(localStorage.getItem('AllHostingList')),
+      // HouseList: JSON.parse(localStorage.getItem('HouseList')),
+      // myHostingList: JSON.parse(localStorage.getItem('myHostingList')),
+      // AllHostingList: JSON.parse(localStorage.getItem('AllHostingList')),
     });
 
   }
 
   componentWillUpdate(nextProps, nextState){
     console.log("WILL UPDATE: ", this.state);
-    localStorage.setItem('HouseList', JSON.stringify(nextState.HouseList));
-    localStorage.setItem('myHostingList', JSON.stringify(this.state.myHostingList));
-    localStorage.setItem('AllHostingList', JSON.stringify(nextState.AllHostingList));
+    // localStorage.setItem('HouseList', JSON.stringify(nextState.HouseList));
+    // localStorage.setItem('myHostingList', JSON.stringify(this.state.myHostingList));
+    // localStorage.setItem('AllHostingList', JSON.stringify(nextState.AllHostingList));
     localStorage.setItem('currentUser', JSON.stringify(this.state.currentUser));
   }
 
