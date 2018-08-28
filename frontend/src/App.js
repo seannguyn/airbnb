@@ -6,6 +6,7 @@ import AddHouse from './Component/Function/AddHouse';
 import Header from './Component/layout/Header';
 import Sidebar from './Component/layout/Sidebar';
 import Login from './Component/Authentication/Login';
+import Registration from './Component/Authentication/Registration';
 import MyHouses from './Component/Function/MyHouses';
 import AddHosting from './Component/Function/AddHosting';
 import EditHosting from './Component/Function/EditHosting';
@@ -16,25 +17,26 @@ import EditHostingContext from './Component/Contexts/EditHostContext';
 import AllHostingContext from './Component/Contexts/AllHostingContext';
 import AddHouseContext from './Component/Contexts/AddHouseContext';
 
+
 class App extends Component {
   render() {
-    console.log("IN APP>JS<: ", this.props);
     return (
       <Provider>
-        <Header />
+        
+      <Header />
         <Router>
+          
           <div className="container-fluid">
             <div className="row">
 
               <Sidebar/>
 
             <div>
-
-              <h1>SHOWING</h1>
                 <Switch>
 
                   {/* Router for authentication */}
                   <Route exact path="/login" component={Login}></Route>
+                  <Route exact path="/registration" component={Registration}></Route>
 
                   {/* Router for accommodation/house */}
                   <Route exact path="/" component={AllHostingContext}></Route>

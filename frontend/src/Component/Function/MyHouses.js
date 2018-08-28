@@ -16,7 +16,7 @@ class MyHouses extends Component {
                {value => {
 
                    const {HouseList, currentUser, myHostingList} = value;
-
+                   console.log(myHostingList,HouseList,"my hosting");
                 // CHECK USER LOGIN OR NOT
                 //  nested objects - and by default user detail store at index [0]
                    if(value["currentUser"][0] == null){

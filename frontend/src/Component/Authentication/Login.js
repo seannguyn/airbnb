@@ -12,7 +12,7 @@ class Login extends Component {
             username : '',
             password : '',
             token: '',
-            errors:{}
+            error:{}
         }
     }
 

@@ -14,7 +14,6 @@ const Header = (props) => {
           <li className="nav-item text-nowrap">  
             <a className="nav-link" href="/login">Sign out</a>
           </li>
-
         </ul>
       </nav>
   );
