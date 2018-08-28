@@ -75,7 +75,10 @@ class Hosting extends React.Component {
 
           {reviews.length > 0 ?
           <div>
-            <Rating readonly="true" initialRating={avgRating}/>
+            <Rating 
+                readonly="true" 
+                initialRating={avgRating}
+            />
             <p>({reviews.length})</p>
           </div>
           : <p>No reviews yet</p> 
