@@ -1,0 +1,18 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [example.com] Please Confirm Your E-mail Address
+From: webmaster@localhost
+To: hello@yahoo.com
+Date: Tue, 28 Aug 2018 07:35:06 -0000
+Message-ID: <153544170666.10095.15776255405261860817@NamTran.localdomain>
+
+Hello from example.com!
+
+You're receiving this e-mail because user test has given yours as an e-mail address to connect their account.
+
+To confirm this is correct, go to https://localhost:8000/rest-auth/registration/account-confirm-email/Mw:1fuYWo:sxFrr_2Gj1NK2nsMTxsmjD1eLK0/
+
+Thank you from example.com!
+example.com
+-------------------------------------------------------------------------------

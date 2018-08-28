@@ -26,11 +26,11 @@ class Login extends Component {
         const {username, password, error} = this.state;
         
         if (username === '' ) {
-          this.setState({errors:{username:"username is required"}})
+          this.setState({error:{username:"username is required"}})
           return;
         }
         if (password === '' ) {
-          this.setState({errors:{password:"password is required"}})
+          this.setState({error:{password:"password is required"}})
           return;
         }
 
@@ -38,20 +38,6 @@ class Login extends Component {
             username,
             password
         }
-
-
-        axios.post('https://localhost:8000/api-token-auth/', account )
-        .then((response) => {
-          dispatch({type:'LOGIN', payload:response.data});
-
-        })
-        .catch(function (error) {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          }
-        });
 
         // console.log("loggin check",res.data);
 
@@ -96,13 +82,14 @@ class Login extends Component {
       }
 
     render() {
+        localStorage.clear();
         return(
             <Consumer>
             {value =>{
                 const {dispatch} = value;
                 return (
                     <React.Fragment>
-                    <div className="card-header">Login</div>
+                    <h1>Login</h1>
                     <div className="card-body">
                     <div className="container">
                     <form onSubmit={this.onSubmit.bind(this, dispatch)}>
@@ -124,14 +111,19 @@ class Login extends Component {
                             placeholder="Enter password..."
                             onChange={this.onChange}
                             error={this.state.error.password}/>
-                       
+                        
                         <input type="submit" className="btn btn-block btn-light" value="Login"></input>
                     </form>
-
+                    <div>
+                       <Link to="/registration" className="">
+                           <i className="fas fa-registered">Register</i>
+                       </Link>
+                    </div>
+                        
                     <Link to="" className="">
-                    <i className="fab fa-facebook-square">Login with Facebook</i>
+                        <i className="fab fa-facebook-square">Login with Facebook</i>
                     </Link>
-
+                    
                     </div>
                     </div>
 
