@@ -20,7 +20,7 @@ const Header = (props) => {
           {currentUser[0] != null ?
           <div style={{color:'white'}}>
             <i class="fas fa-user-astronaut"></i>
-            Welcome {currentUser[0].username}
+            Welcome, {currentUser[0].username}
           </div>
           : null
           }   

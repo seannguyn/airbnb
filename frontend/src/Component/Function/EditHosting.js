@@ -24,18 +24,22 @@ class EditHosting extends Component {
     // }
 
     componentDidMount(){
-
-        const{myHostingList} = this.props;
+        console.log("from edithousingjs: ", this.props);
+        const{HouseList, currentUser, myHostingList} = this.props;
         const{id} = this.props;
+
+        console.log('PROPSSSShosting: ', myHostingList, id);
+
 
         let i =0;
         var result;
         for(i=0; i<myHostingList.length; i++){
-          if(myHostingList[i].accommodation === id){
+          if(myHostingList[i].accommodation == id){
             result = myHostingList[i];
           }
         }
-
+        console.log("FILTER EDITHOUSING: ", result);
+        console.log("FILTER EDITHOUSING: ", result.date_start);
         this.setState({
             id: result.id,
             accommodation: result.accommodation,
@@ -57,12 +61,12 @@ class EditHosting extends Component {
 
         const {id} = this.state;
 
-        const {
+        const {accommodation,
+                user,
                 date_start,
                 date_end,
                 price,
-                description
-              } = this.state;
+                description} = this.state;
 
         const hostingHouse = {
             // user: should be the current login user
@@ -79,7 +83,7 @@ class EditHosting extends Component {
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
-        await axios.put(`https://localhost:8000/accommodationHosting/${id}/`, hostingHouse,
+        const res = await axios.put(`https://localhost:8000/accommodationHosting/${id}/`, hostingHouse,
                 {headers:{
                     'Authorization': {token}
                 }
@@ -92,7 +96,8 @@ class EditHosting extends Component {
         // ......
         // error handling
 
-        // push back to myhosts page
+
+        this.props.history.push("/myhouses")
     }
 
     handleAlternate(id,dispatch,e) {
@@ -103,6 +108,9 @@ class EditHosting extends Component {
       .then(res => {
         dispatch({type: "DELETE_HOST", payload: id})
       })
+
+      console.log(this.props.history,"historyyyy");
+      this.props.history.push("/myhouses")
 
 
     }

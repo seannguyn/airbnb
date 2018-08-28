@@ -15,9 +15,11 @@ const reducer = (state,action) => {
 
 
     case 'ADD_HOUSE':
-      console.log("adding house",action.payload);
+      console.log("ADD_HOUSE");
+
       return {
-        HouseList: [action.payload,...state.HouseList]
+        ...state,
+        HouseList: action.payload
       }
 
     case 'EDIT_HOUSE':
@@ -38,7 +40,8 @@ const reducer = (state,action) => {
         case 'HOSTING':
           console.log("host context",action.payload);
         return {
-          myHostingList: [action.payload,...state.myHostingList]
+          myHostingList: [action.payload,...state.myHostingList],
+          AllHostingList: [action.payload,...state.AllHostingList],
         }
 
         case 'EDITHOST':
@@ -49,6 +52,7 @@ const reducer = (state,action) => {
           console.log("deleting hosting",action.payload);
           return {
             myHostingList: state.myHostingList.filter((host) => host.id !== action.payload),
+            AllHostingList: state.AllHostingList.filter((host) => host.id !== action.payload),
           }
 
       default:
@@ -118,16 +122,15 @@ export class Provider extends Component {
 
   }
 
-  componentWillUpdate(nextProps, nextState){
+  async componentWillUpdate(nextProps, nextState){
+
     console.log("WILL UPDATE: ", this.state);
-    // localStorage.setItem('HouseList', JSON.stringify(nextState.HouseList));
-    // localStorage.setItem('myHostingList', JSON.stringify(this.state.myHostingList));
-    // localStorage.setItem('AllHostingList', JSON.stringify(nextState.AllHostingList));
+
     localStorage.setItem('currentUser', JSON.stringify(this.state.currentUser));
   }
 
   async componentDidUpdate(){
-      console.log("DID UPDATE: ", this.state.currentUser);
+        console.log("DID UPDATE: ", this.state.currentUser);
       if(localStorage.getItem('currentUser')){
         console.log('User data from local storage');
       }
