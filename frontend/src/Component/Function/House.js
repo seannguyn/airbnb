@@ -22,7 +22,7 @@ class House extends React.Component {
   // pass an axios to backend, requesting for delete
     async handleDelete(id, dispatch) {
 
-      // console.log('delete',this.props.value,this.props.myHouses,id);
+      console.log('delete',this.props.value,this.props.myHouses,id);
 
       const {myHostingList} = this.props.value;
       let i =0;

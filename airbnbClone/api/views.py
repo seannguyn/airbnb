@@ -114,14 +114,19 @@ class AccommodationHostingView(viewsets.ModelViewSet):
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
 
-    def get_object(self, pk):
-        try:
-            return AccommodationHosting.objects.get(pk=pk)
-        except AccommodationHosting.DoesNotExist:
-            raise Http404
+    # def get_object(self, pk):
+    #     try:
+    #         return AccommodationHosting.objects.get(pk=pk)
+    #     except AccommodationHosting.DoesNotExist:
+    #         raise Http404
 
-    def get(self, request, pk, format=None):
-        myHostObject = self.get_object(pk)
+    # def get(self, request, pk, format=None):
+    #     myHostObject = self.get_object(pk)
+    #     serializer = self.serializer_class(myHostObject)
+    #     return Response(serializer.data)
+    def get(self, request):
+        pk = request.GET.get('pk')
+        myHostObject = AccommodationHosting.objects.get(pk=pk)
         serializer = self.serializer_class(myHostObject)
         return Response(serializer.data)
 
@@ -133,7 +138,7 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         new_price = request.data['price']
         new_description = request.data['description']
 
-        myHostObject = self.get_object(pk)
+        myHostObject = AccommodationHosting.objects.get(pk=pk) #self.get_object(pk)
 
         myHostObject.date_start = new_date_start
         myHostObject.date_end = new_date_end

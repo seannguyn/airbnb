@@ -111,12 +111,12 @@ export class Provider extends Component {
       myHostingList: JSON.parse(localStorage.getItem('myHostingList')),
       AllHostingList: JSON.parse(localStorage.getItem('AllHostingList')),
     });
-    
+
   }
 
   componentWillUpdate(nextProps, nextState){
     console.log("WILL UPDATE: ", this.state);
-    localStorage.setItem('HouseList', JSON.stringify(nextState.HouseList)); 
+    localStorage.setItem('HouseList', JSON.stringify(nextState.HouseList));
     localStorage.setItem('myHostingList', JSON.stringify(this.state.myHostingList));
     localStorage.setItem('AllHostingList', JSON.stringify(nextState.AllHostingList));
     localStorage.setItem('currentUser', JSON.stringify(this.state.currentUser));
@@ -126,7 +126,7 @@ export class Provider extends Component {
       console.log("DID UPDATE: ", this.state.currentUser);
       if(localStorage.getItem('currentUser')){
         console.log('User data from local storage');
-      } 
+      }
 
       if(this.state.currentUser[0] != null){
         const {token,user_id} = this.state.currentUser[0];

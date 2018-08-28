@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Consumer} from '../../Context.js';
 import {Link} from 'react-router-dom';
-import TextInputGroup from '../Function/TextInputGroup'
+import TextInputGroup from '../Function/TextInputGroup';
 
 class Login extends Component {
 
@@ -12,7 +12,7 @@ class Login extends Component {
             username : '',
             password : '',
             token: '',
-            error:{}
+            errors:{}
         }
     }
 
@@ -26,12 +26,11 @@ class Login extends Component {
         const {username, password, error} = this.state;
         
         if (username === '' ) {
-          console.log("EMTYRSUER");
-          this.setState({error:{username:"username is required"}});
+          this.setState({errors:{username:"username is required"}})
           return;
         }
         if (password === '' ) {
-          this.setState({error:{password:"password is required"}});
+          this.setState({errors:{password:"password is required"}})
           return;
         }
 
@@ -44,13 +43,6 @@ class Login extends Component {
         axios.post('https://localhost:8000/api-token-auth/', account )
         .then((response) => {
           dispatch({type:'LOGIN', payload:response.data});
-
-          const {user_id} = response.data;
-
-          axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
-          .then(res => {
-            dispatch({type:'GET_MY_HOUSE',payload:res.data});
-          })
 
         })
         .catch(function (error) {
@@ -108,7 +100,6 @@ class Login extends Component {
             <Consumer>
             {value =>{
                 const {dispatch} = value;
-                const {error} = this.state;
                 return (
                     <React.Fragment>
                     <div className="card-header">Login</div>
