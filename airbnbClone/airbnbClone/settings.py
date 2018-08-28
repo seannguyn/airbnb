@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'rest_auth',
     'rest_auth.registration',
     'tawkto',
+
     'corsheaders',  # cross origin
 
     'allauth',
@@ -58,8 +59,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
-    'django_adminlte',
-    'django_adminlte_theme',
+    #'django_adminlte',
+    #'django_adminlte_theme',
     'django_extensions',
 ]
 

@@ -52,7 +52,6 @@ class AccommodationView(viewsets.ModelViewSet):
         queryset = Accommodation.objects.all()
 
         user = self.request.query_params.get('user', None)
-
         print("get user")
         if user is not None:
             queryset = queryset.filter(user=user)
@@ -108,16 +107,6 @@ class AccommodationHostingView(viewsets.ModelViewSet):
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
 
-    # def get_object(self, pk):
-    #     try:
-    #         return AccommodationHosting.objects.get(pk=pk)
-    #     except AccommodationHosting.DoesNotExist:
-    #         raise Http404
-
-    # def get(self, request, pk, format=None):
-    #     myHostObject = self.get_object(pk)
-    #     serializer = self.serializer_class(myHostObject)
-    #     return Response(serializer.data)
     def get(self, request):
         pk = request.GET.get('pk')
         myHostObject = AccommodationHosting.objects.get(pk=pk)
@@ -177,15 +166,6 @@ class AccommodationHostingView(viewsets.ModelViewSet):
             queryset_2 = queryset_2.filter(accommodation__in=set(ids))
 
         return queryset_2
-
-    # user_pk = self.kwargs['user_pk']
-
-    #     if user_pk is not None:
-    #         queryset = queryset.filter(user=user_pk)
-    #         if not queryset:
-    #             raise Http404('Review does not exist for this accommodation')
-
-    #         return queryset
 
 
 class BookingView(viewsets.ModelViewSet):
