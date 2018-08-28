@@ -49,7 +49,7 @@ class Accommodation(models.Model):
     description     = models.TextField(blank=True)
 
     def __str__(self):
-        return self.user.username + "_"+self.Accomodation_Type+"_" + str(self.id);
+        return self.user.username + "_"+self.Accomodation_Type+"_" + str(self.id)
 
 class AccommodationImage(models.Model):
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
@@ -58,8 +58,7 @@ class AccommodationImage(models.Model):
     a_image = models.ImageField(upload_to="accommodation/", height_field='url_height', width_field='url_width')
 
     def save(self, *args, **kwargs):
-        # self.revision += 1
-        return super(AccommodationImage, self).save(*args, **kwargs) #
+        return super(AccommodationImage, self).save(*args, **kwargs)
 
 class AccommodationHosting(models.Model):
     accommodation = models.OneToOneField(Accommodation, on_delete=models.CASCADE)
