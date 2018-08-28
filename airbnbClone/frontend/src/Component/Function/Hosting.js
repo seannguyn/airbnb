@@ -8,7 +8,7 @@ class Hosting extends Component {
         super();
         this.state = {
             accommodation: '', //accommodation id
-            user: '', //user id
+            user: '', //account id
             date_start: '',
             date_end: '',
             price: '',
@@ -34,7 +34,7 @@ class Hosting extends Component {
                 description} = this.state;
 
         const hostingHouse = {
-            // user: should be the current login user
+            // account: should be the current login account
             accommodation: this.props.match.params.id, //accommodation id
             date_start: date_start,
             date_end: date_end,

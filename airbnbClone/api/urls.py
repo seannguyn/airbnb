@@ -1,45 +1,39 @@
-from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from api import views
 from django.conf.urls import url
-from rest_framework import routers
 from rest_framework_nested import routers
+
+from .views import *
 
 router = routers.DefaultRouter()
 
-router.register('accommodation',views.AccommodationView)
-router.register('accommodationImage',views.AccommodationImageView)
-router.register('accommodationHosting',views.AccommodationHostingView)
-router.register('booking',views.BookingView)
-router.register('users', views.Users)
-router.register('reviews', views.GetReviews)
+router.register('accommodation', AccommodationView)
+router.register('accommodationImage', AccommodationImageView)
+router.register('accommodationHosting', AccommodationHostingView)
+router.register('booking', BookingView)
+router.register('users', Users)
+router.register('reviews', GetReviews)
 
 """ accomodation nested resources setup """
 accommodation_router = routers.NestedSimpleRouter(router, r'accommodation', lookup='accommodation')
-accommodation_router.register(r'reviews', views.AccomodationReviews)
+accommodation_router.register(r'reviews', AccomodationReviews)
 
 """ users nested resources setup """
 user_router = routers.NestedSimpleRouter(router, r'users', lookup='user')
-user_router.register(r'reviews', views.UserReviews)
-
+user_router.register(r'reviews', UserReviews)
 
 urlpatterns = [
-	path('rest-auth/', include('rest_auth.urls')),
-	url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
-	url(r'^rest-auth/facebook/$', views.FacebookLogin.as_view(), name='fb_login'),
-	url(r'^rest-auth/twitter/$', views.TwitterLogin.as_view(), name='twitter_login'),
-	
-	path('', include(router.urls)),
-	path('', include(accommodation_router.urls)),
-	path('', include(user_router.urls)),
+    path('rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
+    url(r'^rest-auth/twitter/$', TwitterLogin.as_view(), name='twitter_login'),
 
-	# url('^accommodationHosting/(?P<id>.+)/$', views.AccommodationHostingView.as_view({'get': 'list'})),
-	# path('accommodationHosting/<id>/$', views.AccommodationHostingView.as_view()),
+    path('', include(router.urls)),
+    path('', include(accommodation_router.urls)),
+    path('', include(user_router.urls)),
 
-	path('rest-auth/', include('rest_auth.urls')),
-	url(r'^api-token-auth/', views.CustomAuthToken.as_view()),
+    # url('^accommodationHosting/(?P<id>.+)/$', views.AccommodationHostingView.as_view({'get': 'list'})),
+    # path('accommodationHosting/<id>/$', views.AccommodationHostingView.as_view()),
+
+    path('rest-auth/', include('rest_auth.urls')),
+    url(r'^api-token-auth/', CustomAuthToken.as_view()),
 ]
-
-
-# urlpatterns = format_suffix_patterns(urlpatterns)

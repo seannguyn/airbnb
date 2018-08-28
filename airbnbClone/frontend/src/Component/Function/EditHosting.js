@@ -7,9 +7,9 @@ class EditHosting extends Component {
     constructor() {
         super();
         this.state = {
-            id: '', //accomodation hosting id itself
+            id: '', //accommodation hosting id itself
             accommodation: '', //accommodation id
-            user: '', //user id
+            user: '', //account id
             date_start: '',
             date_end: '',
             price: '',
@@ -58,7 +58,7 @@ class EditHosting extends Component {
                 description} = this.state;
 
         const hostingHouse = {
-            // user: should be the current login user
+            // account: should be the current login account
             id: id,
             accommodation: this.props.id, //accommodation id
             date_start: date_start,

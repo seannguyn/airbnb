@@ -29,22 +29,27 @@ SITE_ID = 7  # WTF IS THIS NUMBER SRS
 
 # Application definition
 
+ROOT_URLCONF = 'airbnbClone.urls'
+
 INSTALLED_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
 
+    # put django your backend here
+    'api',
+
+    # then everything else
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
     'rest_auth',
-    'api',
-    'tawkto',
-    'django.contrib.sites',
     'rest_auth.registration',
-    'rest_framework.authtoken',
+    'tawkto',
     'corsheaders',  # cross origin
 
     'allauth',
@@ -53,12 +58,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
-    'django_extensions',
     'django_adminlte',
     'django_adminlte_theme',
+    'django_extensions',
 ]
-
-ROOT_URLCONF = 'airbnbClone.urls'
 
 TEMPLATES = [
     {

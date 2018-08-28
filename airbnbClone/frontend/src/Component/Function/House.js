@@ -38,19 +38,19 @@ class House extends React.Component {
     const {addr_number, addr_street, addr_city} = this.props.houseDetail;
     const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.props.houseDetail;
     
-    const {user} = this.props.houseDetail; //-- from houses.js -- user id in each house in houselist
+    const {user} = this.props.houseDetail; //-- from houses.js -- account id in each house in houselist
     const {id} = this.props.houseDetail;
     console.log("HDT: ", this.props.houseDetail);
     
     const {showDetail} = this.state;
 
-    const isMyHouse = false; // flag to check if which current user's houses - for hosting button    
+    const isMyHouse = false; // flag to check if which current account's houses - for hosting button
     const isHosting = false;// flag to check if the accom is hosting
     return (
       <Consumer>
         { value => {
           const {dispatch} = value;
-          // console.log("in HOUSE.js current user", value.currentUser);
+          // console.log("in HOUSE.js current account", value.currentUser);
   
           const {currentUser, myHostingList} = value;
 

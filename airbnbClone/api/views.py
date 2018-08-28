@@ -1,16 +1,5 @@
-from django.shortcuts import render
-# from api.serializers import UserSerializer
-
-from django.contrib.auth.models import User
-from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo
-from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer, \
-    BookingSerializer, ReviewSerializer, UserInfoSerializer
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from api import views
-
-from .functions import compareDate
 
 # Facebook
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
@@ -37,6 +26,9 @@ from rest_framework.status import (
     HTTP_200_OK
 )
 
+from .serializers import *
+from .functions import compareDate
+
 
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
@@ -58,14 +50,12 @@ class AccommodationView(viewsets.ModelViewSet):
     def get_queryset(self):
         """ allow rest api to filter by submissions """
         queryset = Accommodation.objects.all()
-        user = self.request.query_params.get('user', None)
-        id = self.request.query_params.get('id', None)
 
+        user = self.request.query_params.get('user', None)
+
+        print("get user")
         if user is not None:
             queryset = queryset.filter(user=user)
-
-        if id is not None:
-            queryset = queryset.filter(id=id)
 
         return queryset
 
@@ -81,6 +71,21 @@ class AccommodationView(viewsets.ModelViewSet):
     @action(methods=['get'], detail=False)
     def review(self, request, pk=True):
         print('Go to review')
+
+    def get_queryset(self):
+        """ allow rest api to filter by submissions """
+        queryset = Accommodation.objects.all()
+
+        user = self.request.query_params.get('user', None)
+        id = self.request.query_params.get('id', None)
+        print("get user")
+        if user is not None:
+            queryset = queryset.filter(user=user)
+
+        if id is not None:
+            queryset = queryset.filter(id=id)
+
+        return queryset
 
 
 class AccommodationImageView(viewsets.ModelViewSet):
@@ -103,14 +108,19 @@ class AccommodationHostingView(viewsets.ModelViewSet):
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
 
-    def get_object(self, pk):
-        try:
-            return AccommodationHosting.objects.get(pk=pk)
-        except AccommodationHosting.DoesNotExist:
-            raise Http404
+    # def get_object(self, pk):
+    #     try:
+    #         return AccommodationHosting.objects.get(pk=pk)
+    #     except AccommodationHosting.DoesNotExist:
+    #         raise Http404
 
-    def get(self, request, pk, format=None):
-        myHostObject = self.get_object(pk)
+    # def get(self, request, pk, format=None):
+    #     myHostObject = self.get_object(pk)
+    #     serializer = self.serializer_class(myHostObject)
+    #     return Response(serializer.data)
+    def get(self, request):
+        pk = request.GET.get('pk')
+        myHostObject = AccommodationHosting.objects.get(pk=pk)
         serializer = self.serializer_class(myHostObject)
         return Response(serializer.data)
 
@@ -123,7 +133,7 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         new_price = request.data['price']
         new_description = request.data['description']
 
-        myHostObject = self.get_object(pk)
+        myHostObject = AccommodationHosting.objects.get(pk=pk)  # self.get_object(pk)
 
         myHostObject.date_start = new_date_start
         myHostObject.date_end = new_date_end
@@ -269,7 +279,7 @@ class Users(viewsets.ModelViewSet):
         return queryset
 
     # def get_queryset(self):
-    #     """ get the current login user """    
+    #     """ get the current login user """
     #     user = self.request.user
     #     return UserInfo.objects.filter(user=user)
 

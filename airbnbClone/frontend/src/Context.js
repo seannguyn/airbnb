@@ -27,7 +27,7 @@ const reducer = (state,action) => {
       }
 
       case 'LOGIN':
-        console.log('login user login');
+        console.log('login account login');
         
         return {
           ...state,

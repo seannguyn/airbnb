@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('entertainment', models.IntegerField(default=0)),
                 ('carpark', models.IntegerField(default=0)),
                 ('description', models.TextField(blank=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('account', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -89,7 +89,7 @@ class Migration(migrations.Migration):
                 ('star', models.CharField(choices=[('Very Bad', 0), ('Bad', 1), ('Ok', 2), ('Good', 3), ('Very Good', 4), ('Excellent', 5)], max_length=10)),
                 ('review', models.TextField(blank=True)),
                 ('accommodation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.Accommodation')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('account', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -98,7 +98,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('location', models.CharField(blank=True, max_length=30)),
                 ('birth_date', models.DateField(blank=True, null=True)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('account', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]
