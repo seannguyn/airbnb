@@ -1,30 +1,20 @@
-from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from rest_framework import viewsets, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action, api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 
 # Facebook
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from rest_auth.social_serializers import TwitterLoginSerializer
-from rest_auth.registration.views import SocialLoginView
 
 # Twitter
 from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
 from rest_auth.registration.views import SocialLoginView
 from rest_auth.social_serializers import TwitterLoginSerializer
 
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, generics
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import action, api_view, permission_classes
-from rest_framework import viewsets
-from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.status import (
-    HTTP_400_BAD_REQUEST,
-    HTTP_404_NOT_FOUND,
-    HTTP_200_OK
-)
+from django.http import Http404
 
 from .serializers import *
 from .functions import compareDate
@@ -52,6 +42,7 @@ class AccommodationView(viewsets.ModelViewSet):
         queryset = Accommodation.objects.all()
 
         user = self.request.query_params.get('user', None)
+
         print("get user")
         if user is not None:
             queryset = queryset.filter(user=user)
@@ -189,9 +180,7 @@ class BookingView(viewsets.ModelViewSet):
         return queryset
 
 
-""" get all the reviews """
-
-
+# get all the reviews
 class GetReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
 
@@ -202,10 +191,8 @@ class GetReviews(viewsets.ModelViewSet):
         return queryset
 
 
-""" GET the reviews made by an user """
-""" GET /users/{user_id}/reviews """
-
-
+# GET the reviews made by an user #
+# GET /users/{user_id}/reviews #
 class UserReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
@@ -223,10 +210,8 @@ class UserReviews(viewsets.ModelViewSet):
             return queryset
 
 
-""" Get reviews for a specific accommodation """
-""" GET accommodation/{accomodation_pk}/reviews/ """
-
-
+# Get reviews for a specific accommodation
+# GET accommodation/{accomodation_pk}/reviews/
 class AccomodationReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
@@ -244,24 +229,15 @@ class AccomodationReviews(viewsets.ModelViewSet):
             return queryset
 
 
-""" GET all current users """
-""" /users/ """
-
-
+# GET all current users
 class Users(viewsets.ModelViewSet):
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
 
-    """ This would get all users """
-
+    # This would get all users
     def get_queryset(self):
         queryset = UserInfo.objects.all()
         return queryset
-
-    # def get_queryset(self):
-    #     """ get the current login user """
-    #     user = self.request.user
-    #     return UserInfo.objects.filter(user=user)
 
 
 """ Custom authentication - return Token, username and email """

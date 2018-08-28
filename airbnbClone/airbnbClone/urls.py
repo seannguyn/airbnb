@@ -29,7 +29,7 @@ app_name = 'main'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path('', TemplateView.as_view(template_name='index.html')),
+    path('home/', TemplateView.as_view(template_name='index.html')),
 
     # old stuffs
     # path('api-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),

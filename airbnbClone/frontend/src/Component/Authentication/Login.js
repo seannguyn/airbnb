@@ -4,7 +4,7 @@ import {Consumer} from '../../Context.js';
 import {Link} from 'react-router-dom';
 
 class Login extends Component {
-    
+
     constructor(){
         super();
         this.state = {
@@ -21,9 +21,9 @@ class Login extends Component {
 
     onSubmit = async (dispatch, e) => {
         e.preventDefault();
-        
+
         const {username, password} = this.state;
-        
+
         if (username === '' ) {
           this.setState({errors:{username:"username is required"}})
           return;
@@ -32,30 +32,45 @@ class Login extends Component {
           this.setState({errors:{password:"password is required"}})
           return;
         }
-        
+
         const account = {
             username,
             password
         }
 
+
+        axios.post('https://localhost:8000/api-token-auth/', account )
+        .then((response) => {
+          dispatch({type:'LOGIN', payload:response.data});
+
+        })
+        .catch(function (error) {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          }
+        });
+
+        // console.log("loggin check",res.data);
+
         //GET USER AUTH TOKEN - DJANGO
-        const res = await axios.post('https://localhost:8000/api-token-auth/', account )
-        console.log(res.data);
-        
-        dispatch({type:'LOGIN', payload:res.data});
-        
+        // const res = await axios.post('https://localhost:8000/api-token-auth/', account )
+        // console.log(res.data,"dataaa");
+        // dispatch({type:'LOGIN', payload:res.data});
+
         this.setState({
           username:'',
           password:'',
           errors:{}
         })
-        
+
         this.props.history.push("/")
       }
 
       socialSubmit = async(dispatch, e) => {
         //   TODO: OAUTH login facebook
-      } 
+      }
 
     render() {
         return(
@@ -70,35 +85,35 @@ class Login extends Component {
                     <form onSubmit={this.onSubmit.bind(this, dispatch)}>
                         <div className="form-group">
                             <label htmlFor="username">Username</label>
-                            <input 
-                                type="text" 
-                                name="username" 
-                                className="form-control form-control-lg" 
+                            <input
+                                type="text"
+                                name="username"
+                                className="form-control form-control-lg"
                                 placeholder="Enter username..."
                                 onChange={this.onChange}
                                 error={this.state.errors.username}/>
-                        </div> 
-        
+                        </div>
+
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
-                            <input 
-                                type="password" 
-                                name="password" 
-                                className="form-control form-control-lg" 
+                            <input
+                                type="password"
+                                name="password"
+                                className="form-control form-control-lg"
                                 placeholder="Enter password..."
                                 onChange={this.onChange}
                                 error={this.state.errors.password}/>
-                        </div> 
+                        </div>
                         <input type="submit" className="btn btn-block btn-light" value="Login"></input>
-                    </form> 
-                    
+                    </form>
+
                     <Link to="" className="">
                     <i className="fab fa-facebook-square">Login with Facebook</i>
-                    </Link>       
-                    
+                    </Link>
+
                     </div>
                     </div>
-            
+
                 </React.Fragment>
                 );
             }}
@@ -107,5 +122,5 @@ class Login extends Component {
 
     }
 }
- 
+
 export default Login;

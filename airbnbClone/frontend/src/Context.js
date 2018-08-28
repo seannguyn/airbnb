@@ -13,6 +13,7 @@ const reducer = (state,action) => {
         HouseList: state.HouseList.filter((eachHouse) => eachHouse.id !== action.payload),
       }
 
+
     case 'ADD_HOUSE':
       console.log("adding house",action.payload);
       return {
@@ -27,8 +28,13 @@ const reducer = (state,action) => {
       }
 
       case 'LOGIN':
+<<<<<<< HEAD:airbnbClone/frontend/src/Context.js
         console.log('login account login');
         
+=======
+        console.log('login user login');
+
+>>>>>>> 525e9dfc2ecfa6bdc7bc2acc6164ded7495d8159:frontend/src/Context.js
         return {
           ...state,
           currentUser: [action.payload, ...state.currentUser]
@@ -40,9 +46,14 @@ const reducer = (state,action) => {
           myHostingList: [action.payload,...state.myHostingList]
         }
 
-        case 'EDITHOST': 
+        case 'EDITHOST':
           return {
             myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
+          }
+        case 'DELETE_HOST':
+          console.log("deleting hosting",action.payload);
+          return {
+            myHostingList: state.myHostingList.filter((host) => host.id !== action.payload),
           }
 
       default:
@@ -51,13 +62,15 @@ const reducer = (state,action) => {
 }
 
 export class Provider extends Component {
-  
+
   constructor() {
     super();
     this.state = {
       HouseList : [],
+      myHouseList: [],
       currentUser: {},
       myHostingList: [],
+      AllHostingList: [],
       dispatch: (action) => {
         this.setState((state) => reducer(state,action))
       }
@@ -66,33 +79,68 @@ export class Provider extends Component {
   }
 
   async componentDidMount(){
+
+    console.log("DID MOunt: ", this.state.currentUser);
+
     const res = await axios.get('https://localhost:8000/accommodation/');
     this.setState({HouseList: res.data});
-    console.log("HELLO DIDMOUNT");
     console.log(this.state.currentUser);
 
-    if(this.state.currentUser[0] != null){
-      const {token} = this.state.currentUser[0];
-      const res = await axios.get('https://localhost:8000/accommodationHosting/',
+    const allHosting = await axios.get('https://localhost:8000/accommodationHosting/');
+    this.setState({AllHostingList: allHosting.data});
+
+
+    if(this.state.currentUser[0] != null) {
+      const {token,user_id} = this.state.currentUser[0];
+
+      const res = await axios.get(`https://localhost:8000/accommodationHosting/?user=${user_id}`,
       {
         headers:{
           'Authorization': {token}
         }
+      })
+
+
+      if(this.state.myHostingList.length === 0 ){
+        this.setState({myHostingList: res.data});
+        console.log("did mount my hostung lis: ", this.state.myHostingList);
       }
-    )
-    
-    if(this.state.myHostingList.length == 0 ){
-      this.setState({myHostingList: res.data});
-      console.log(this.state.myHostingList);
     }
+
   }
 
+  // WARNING! To be deprecated in React v17. Use componentDidMount instead.
+  componentWillMount() {
+    localStorage.getItem('currentUser')
+    // && localStorage.getItem('HouseList')
+    // localStorage.getItem('myHostingList') && localStorage.getItem('AllHostingList')
+    && this.setState({
+      currentUser: JSON.parse(localStorage.getItem('currentUser')),
+      // HouseList: JSON.parse(localStorage.getItem('HouseList')),
+      // myHostingList: JSON.parse(localStorage.getItem('myHostingList')),
+      // AllHostingList: JSON.parse(localStorage.getItem('AllHostingList')),
+    });
+
+  }
+
+  componentWillUpdate(nextProps, nextState){
+    console.log("WILL UPDATE: ", this.state);
+    // localStorage.setItem('HouseList', JSON.stringify(nextState.HouseList));
+    // localStorage.setItem('myHostingList', JSON.stringify(this.state.myHostingList));
+    // localStorage.setItem('AllHostingList', JSON.stringify(nextState.AllHostingList));
+    localStorage.setItem('currentUser', JSON.stringify(this.state.currentUser));
   }
 
   async componentDidUpdate(){
       console.log("DID UPDATE: ", this.state.currentUser);
+      if(localStorage.getItem('currentUser')){
+        console.log('User data from local storage');
+      }
+
       if(this.state.currentUser[0] != null){
-        const {token} = this.state.currentUser[0];
+        const {token,user_id} = this.state.currentUser[0];
+
+
         const res = await axios.get('https://localhost:8000/accommodationHosting/',
         {
           headers:{
@@ -100,18 +148,21 @@ export class Provider extends Component {
           }
         }
       )
-      
+
+
       if(this.state.myHostingList.length == 0 ){
+        const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
+        this.setState({myHouseList: myHouse.data});
         this.setState({myHostingList: res.data});
         console.log(this.state.myHostingList);
       }
     }
-    return ; 
+    return ;
   }
-  
 
   render () {
     // const fh = this.findHostingAccommodation(this.state.currentUser);
+    console.log("IN REDNER CONTEXt: ", this.state.currentUser);
     console.log(this.state.myHostingList);
     return(
       <Context.Provider value={this.state}>

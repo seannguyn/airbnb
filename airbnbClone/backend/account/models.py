@@ -13,8 +13,8 @@ class Account(models.Model):
 class ProfileImage(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
-    url_height = models.PositiveIntegerField(default='500')
-    url_width = models.PositiveIntegerField(default='500')
+    height = models.PositiveIntegerField(default='500')
+    width = models.PositiveIntegerField(default='500')
 
     # file will be saved to MEDIA_ROOT/accounts/<username>
     save_dir = 'accounts/' + account.user.username

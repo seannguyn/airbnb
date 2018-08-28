@@ -7,17 +7,17 @@ const EditHostContext = (props) => {
   // console.log("history.........",props.history);
   console.log("EDITCONTEXT: ", this.props);
   const {id} = props.match.params;
+
   return(
   <Consumer>
     {value => {
       const {HouseList, currentUser, myHostingList} = value;
-      
+
       return (
         <div>
-          <EditHosting 
-                    // history={props.history} 
-                    id={id} 
-                    HouseList={HouseList} 
+          <EditHosting
+                    id={id}
+                    HouseList={HouseList}
                     currentUser={currentUser}
                     myHostingList={myHostingList}/>
         </div>

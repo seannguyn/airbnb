@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import {Consumer} from '../../Context.js';
-import axios from 'axios';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-class Hosting extends Component {
+class Hosting extends React.Component {
 
+<<<<<<< HEAD:airbnbClone/frontend/src/Component/Function/Hosting.js
     constructor() {
         super();
         this.state = {
@@ -59,73 +59,43 @@ class Hosting extends Component {
         // Add error handling here
         // ......
         // error handling
+=======
+  constructor() {
+    super();
+>>>>>>> 525e9dfc2ecfa6bdc7bc2acc6164ded7495d8159:frontend/src/Component/Function/Hosting.js
 
-        // push back to myhosts page
-        this.props.history.push("/myHouses");
+    this.state = {
+      showHosting: false
     }
-    
-    render() { 
-        return (
-            <Consumer>
-                {value => {    
-                    const {dispatch} = value;
-                    const {currentUser} = value;
-                    console.log(currentUser);
-                return (
-                
-                <div className="card-body mb-3">
 
-                <div className="card-header">Host Accommodation</div>
+  }
 
-                <div className="card-body">
-                <form onSubmit={this.onSubmit.bind(this, dispatch, currentUser)}>
-                
-                <label htmlFor="date_start">Start Date</label>
-                    <div className="form-group">
-                        <input type="date" 
-                               name="date_start" 
-                               placeholder="Start Date ..."
-                               onChange={this.onChange.bind(this)}/>
-                    </div>
-                    
-                    <label htmlFor="date_end">End Date</label>
-                    <div className="form-group">
-                        
-                        <input type="date" 
-                               name="date_end" 
-                               placeholder="End Date ..."
-                               onChange={this.onChange.bind(this)}/>
-                    </div>
+  handleExpand() {
+    this.setState({showHosting : !this.state.showHosting})
+  }
 
-                    <label htmlFor="price">Price</label>
-                    <div className="form-group">
-                        <input type="number"
-                                min="1" 
-                                name="price" 
-                                placeholder="Choose Price ..."
-                                onChange={this.onChange.bind(this)}/>
-                    </div>
-                    
-                    <label htmlFor="description">Description</label>
-                    <div className="form-group">
-                        <input type="text" 
-                                name="description" 
-                                placeholder="Enter Description ..."
-                                onChange={this.onChange.bind(this)}/>
-                    </div>
+  render () {
 
-                    <input type="submit" className="btn btn-block btn-light" value="Host this accommodationn"></input>
-                </form>
+    const {house, SingleHost} = this.props;
+    const {showHosting} = this.state;
+    return (
+      <div className="card card-body mb-3">
+          <h4>
+            {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
+            <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
+          </h4>
 
-                </div>
-            </div>
+          {showHosting === true ?
+            <ul className="list-group">
+              <li className="list-group-item">start_date : {SingleHost.date_start}</li>
+              <li className="list-group-item">end_date :  {SingleHost.date_end}</li>
+              <li className="list-group-item">price :  {SingleHost.price}</li>
+            </ul>
+          : null}
 
-                    );
-                }}
-            </Consumer>
-        );
-
-    }
+        </div>
+    )
+  }
 }
- 
+
 export default Hosting;
