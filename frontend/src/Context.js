@@ -135,7 +135,6 @@ export class Provider extends Component {
       if(this.state.currentUser[0] != null){
         const {token,user_id} = this.state.currentUser[0];
 
-
         const res = await axios.get('https://localhost:8000/accommodationHosting/',
         {
           headers:{

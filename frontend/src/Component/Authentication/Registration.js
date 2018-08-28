@@ -24,7 +24,7 @@ class Registration extends Component {
     onSubmit = async (dispatch, e) => {
         e.preventDefault();
         
-        const {username, password1, password2, email, error} = this.state;
+        const {username, password1, password2, email} = this.state;
 
         if (username === '' ) {
             this.setState({error:{username:"Username is required"}})

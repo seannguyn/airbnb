@@ -1,5 +1,5 @@
 import React from 'react'
-import AllHostingContext from '../Contexts/AllHostingContext'
+// import AllHostingContext from '../Contexts/AllHostingContext'
 import Hosting from './Hosting'
 
 class AllHosting extends React.Component {
@@ -24,12 +24,10 @@ class AllHosting extends React.Component {
   render () {
 
 
-    const {AllHostingList} = this.props.AllHostingList;
+    // const {AllHostingList} = this.props.AllHostingList;
 
     // console.log("all Hosting",this.props.AllHostingList);
     // console.log("all House",this.props.HouseList);
-
-
 
     const SingleHosting = this.props.AllHostingList.map((SingleHost) => this.getData(SingleHost))
 

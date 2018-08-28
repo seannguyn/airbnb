@@ -24,22 +24,18 @@ class EditHosting extends Component {
     // }
 
     componentDidMount(){
-        console.log("from edithousingjs: ", this.props);
-        const{HouseList, currentUser, myHostingList} = this.props;
+
+        const{myHostingList} = this.props;
         const{id} = this.props;
-
-        console.log('PROPSSSShosting: ', myHostingList, id);
-
 
         let i =0;
         var result;
         for(i=0; i<myHostingList.length; i++){
-          if(myHostingList[i].accommodation == id){
+          if(myHostingList[i].accommodation === id){
             result = myHostingList[i];
           }
         }
-        console.log("FILTER EDITHOUSING: ", result);
-        console.log("FILTER EDITHOUSING: ", result.date_start);
+
         this.setState({
             id: result.id,
             accommodation: result.accommodation,
@@ -58,15 +54,15 @@ class EditHosting extends Component {
     // handle when form is submitted
     onSubmit = async (dispatch, currUser, e) => {
         e.preventDefault();
-        console.log('propsss: ', this.props);
+
         const {id} = this.state;
 
-        const {accommodation,
-                user,
+        const {
                 date_start,
                 date_end,
                 price,
-                description} = this.state;
+                description
+              } = this.state;
 
         const hostingHouse = {
             // user: should be the current login user
@@ -83,7 +79,7 @@ class EditHosting extends Component {
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
-        const res = await axios.put(`https://localhost:8000/accommodationHosting/${id}/`, hostingHouse,
+        await axios.put(`https://localhost:8000/accommodationHosting/${id}/`, hostingHouse,
                 {headers:{
                     'Authorization': {token}
                 }
