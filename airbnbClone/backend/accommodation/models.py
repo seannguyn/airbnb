@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from ..account.models import Account
 
 
 class Amenity(models.Model):
@@ -43,3 +43,4 @@ class Accommodation(models.Model):
     amenities = models.ManyToManyField(Amenity)
     images = models.ForeignKey(AccommodationImage, on_delete=models.CASCADE)
 
+    host = models.ForeignKey(Account, on_delete=models.CASCADE)
