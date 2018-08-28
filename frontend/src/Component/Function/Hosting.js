@@ -7,13 +7,19 @@ class Hosting extends React.Component {
     super();
 
     this.state = {
-      showHosting: false
+      showHosting: false,
+      id: ''
     }
 
   }
 
   handleExpand() {
     this.setState({showHosting : !this.state.showHosting})
+  }
+
+  componentDidMount() {
+    console.log(this.props.house.id," pamramm")
+    // this.setState({id: this.props.match.params})
   }
 
   render () {

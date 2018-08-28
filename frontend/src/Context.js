@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const Context = React.createContext();
 
-const reducer = async (state,action) => {
+const reducer = (state,action) => {
 
   switch(action.type) {
     case 'DELETE_HOUSE':
@@ -15,13 +15,11 @@ const reducer = async (state,action) => {
 
 
     case 'ADD_HOUSE':
-      console.log("adding houseasdfsadfasfasfasdfasdfasdfsadfasdf");
-      // const{user} = action.payload;
-      // const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
+      console.log("ADD_HOUSE");
 
       return {
         ...state,
-        HouseList: [...state.HouseList,action.payload]
+        HouseList: action.payload
       }
 
     case 'EDIT_HOUSE':
@@ -112,7 +110,6 @@ export class Provider extends Component {
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
-    console.log("here fammmm");
     localStorage.getItem('currentUser')
     // && localStorage.getItem('HouseList')
     // localStorage.getItem('myHostingList') && localStorage.getItem('AllHostingList')
@@ -128,27 +125,12 @@ export class Provider extends Component {
   async componentWillUpdate(nextProps, nextState){
 
     console.log("WILL UPDATE: ", this.state);
-    // const {user_id} = this.state.currentUser[0];
 
-    // if (user_id !== null) {
-    //
-    // const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
-    // this.setState({myHouseList: myHouse})
-    // }
-
-
-
-    // localStorage.setItem('HouseList', JSON.stringify(nextState.HouseList));
-    // localStorage.setItem('myHostingList', JSON.stringify(this.state.myHostingList));
-    // localStorage.setItem('AllHostingList', JSON.stringify(nextState.AllHostingList));
     localStorage.setItem('currentUser', JSON.stringify(this.state.currentUser));
   }
 
   async componentDidUpdate(){
-    // const {user_id} = this.state.currentUser[0];
-    // const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
-    // this.setState({myHouseList: myHouse})
-      console.log("DID UPDATE: ", this.state.currentUser);
+        console.log("DID UPDATE: ", this.state.currentUser);
       if(localStorage.getItem('currentUser')){
         console.log('User data from local storage');
       }

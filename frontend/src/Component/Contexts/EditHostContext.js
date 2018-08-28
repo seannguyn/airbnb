@@ -5,8 +5,10 @@ import EditHosting from '../Function/EditHosting.js';
 const EditHostContext = (props) => {
   // console.log("this is is: ",props.match.params.id);
   // console.log("history.........",props.history);
-  console.log("EDITCONTEXT: ", this.props);
+  console.log("EDITCONTEXT: ", props);
   const {id} = props.match.params;
+  const {history} = props;
+
 
   return(
   <Consumer>
@@ -19,7 +21,8 @@ const EditHostContext = (props) => {
                     id={id}
                     HouseList={HouseList}
                     currentUser={currentUser}
-                    myHostingList={myHostingList}/>
+                    myHostingList={myHostingList}
+                    history={history}/>
         </div>
       )
     }}

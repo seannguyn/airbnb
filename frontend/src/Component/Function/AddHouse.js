@@ -113,8 +113,9 @@ class AddHouse extends Component {
     console.log(newHouse);
 
     await axios.post('https://localhost:8000/accommodation/',newHouse)
+    const res = await axios.get(`https://localhost:8000/accommodation/?user=${newHouse.user}`);
 
-    dispatch({type:'ADD_HOUSE', payload:newHouse})
+    dispatch({type:'ADD_HOUSE', payload:res.data})
 
     this.setState({
 

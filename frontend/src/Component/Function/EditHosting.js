@@ -58,7 +58,7 @@ class EditHosting extends Component {
     // handle when form is submitted
     onSubmit = async (dispatch, currUser, e) => {
         e.preventDefault();
-        console.log('propsss: ', this.props);
+
         const {id} = this.state;
 
         const {accommodation,
@@ -96,7 +96,8 @@ class EditHosting extends Component {
         // ......
         // error handling
 
-        // push back to myhosts page
+
+        this.props.history.push("/myhouses")
     }
 
     handleAlternate(id,dispatch,e) {
@@ -107,6 +108,9 @@ class EditHosting extends Component {
       .then(res => {
         dispatch({type: "DELETE_HOST", payload: id})
       })
+
+      console.log(this.props.history,"historyyyy");
+      this.props.history.push("/myhouses")
 
 
     }
