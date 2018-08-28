@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const Context = React.createContext();
 
-const reducer = (state,action) => {
+const reducer = async (state,action) => {
 
   switch(action.type) {
     case 'DELETE_HOUSE':
@@ -15,9 +15,13 @@ const reducer = (state,action) => {
 
 
     case 'ADD_HOUSE':
-      console.log("adding house",action.payload);
+      console.log("adding houseasdfsadfasfasfasdfasdfasdfsadfasdf");
+      // const{user} = action.payload;
+      // const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
+
       return {
-        HouseList: [action.payload,...state.HouseList]
+        ...state,
+        HouseList: [...state.HouseList,action.payload]
       }
 
     case 'EDIT_HOUSE':
@@ -38,7 +42,8 @@ const reducer = (state,action) => {
         case 'HOSTING':
           console.log("host context",action.payload);
         return {
-          myHostingList: [action.payload,...state.myHostingList]
+          myHostingList: [action.payload,...state.myHostingList],
+          AllHostingList: [action.payload,...state.AllHostingList],
         }
 
         case 'EDITHOST':
@@ -49,6 +54,7 @@ const reducer = (state,action) => {
           console.log("deleting hosting",action.payload);
           return {
             myHostingList: state.myHostingList.filter((host) => host.id !== action.payload),
+            AllHostingList: state.AllHostingList.filter((host) => host.id !== action.payload),
           }
 
       default:
@@ -106,6 +112,7 @@ export class Provider extends Component {
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
+    console.log("here fammmm");
     localStorage.getItem('currentUser')
     // && localStorage.getItem('HouseList')
     // localStorage.getItem('myHostingList') && localStorage.getItem('AllHostingList')
@@ -118,8 +125,19 @@ export class Provider extends Component {
 
   }
 
-  componentWillUpdate(nextProps, nextState){
+  async componentWillUpdate(nextProps, nextState){
+
     console.log("WILL UPDATE: ", this.state);
+    // const {user_id} = this.state.currentUser[0];
+
+    // if (user_id !== null) {
+    //
+    // const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
+    // this.setState({myHouseList: myHouse})
+    // }
+
+
+
     // localStorage.setItem('HouseList', JSON.stringify(nextState.HouseList));
     // localStorage.setItem('myHostingList', JSON.stringify(this.state.myHostingList));
     // localStorage.setItem('AllHostingList', JSON.stringify(nextState.AllHostingList));
@@ -127,6 +145,9 @@ export class Provider extends Component {
   }
 
   async componentDidUpdate(){
+    // const {user_id} = this.state.currentUser[0];
+    // const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
+    // this.setState({myHouseList: myHouse})
       console.log("DID UPDATE: ", this.state.currentUser);
       if(localStorage.getItem('currentUser')){
         console.log('User data from local storage');

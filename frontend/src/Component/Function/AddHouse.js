@@ -3,6 +3,7 @@ import {Consumer} from '../../Context.js';
 import TextInputGroup from './TextInputGroup'
 import axios from 'axios';
 import uuid from 'uuid';
+import {Link} from 'react-router-dom'
 
 class AddHouse extends Component {
 
@@ -48,29 +49,32 @@ class AddHouse extends Component {
     if (number === '') {
       this.setState({error:{number:"number is required"}})
       return;
-    } else if (!isFinite(String(number))) {
-      this.setState({error:{number:"numeric please"}})
-      return;
     }
-    if (street === '' ) {
-      this.setState({error:{street:"street is required"}})
-      return;
-    }
-    if (city === '' ) {
-      this.setState({error:{city:"city is required"}})
-      return;
-    }
+    // else if (!isFinite(String(number))) {
+    //   this.setState({error:{number:"numeric please"}})
+    //   return;
+    // }
+    // if (street === '' ) {
+    //   this.setState({error:{street:"street is required"}})
+    //   return;
+    // }
+    // if (city === '' ) {
+    //   this.setState({error:{city:"city is required"}})
+    //   return;
+    // }
 
-    if (bedroom === ''  || !isFinite(String(bedroom))) {
-      this.setState({error:{bedroom:"bedroom is required"}})
-      return;
-    }
-    if (bathroom === '' || !isFinite(String(bathroom))) {
-      this.setState({error:{bathroom:"bathroom is required"}})
-      return;
-    }
+    // if (bedroom === ''  || !isFinite(String(bedroom))) {
+    //   this.setState({error:{bedroom:"bedroom is required"}})
+    //   return;
+    // }
+    // if (bathroom === '' || !isFinite(String(bathroom))) {
+    //   this.setState({error:{bathroom:"bathroom is required"}})
+    //   return;
+    // }
 
     this.setState({
+      bathroom        : (bathroom === '' )          ? 0 : 1,
+      bedroom         : (bedroom        === '' )    ? 0 : 1,
       area            : (area === '' )              ? 0 : 1,
       bedroom_master  : (bedroom_master === '' )    ? 0 : 1,
       kitchen         : (kitchen === '' )           ? 0 : 1,
@@ -89,14 +93,14 @@ class AddHouse extends Component {
       Accomodation_Type: this.state.Accommodation_Type,
 
       addr_number:      this.state.number,
-      addr_street:      this.state.street,
-      addr_city:        this.state.city,
-      addr_state:       this.state.state,
+      addr_street:      'street',
+      addr_city:        'city',
+      addr_state:       'NSW',
 
       area:             (area === '' )              ? 0 : 1,
       bedroom_master:   (bedroom_master === '' )    ? 0 : 1,
-      bedroom:          this.state.bedroom,
-      bathroom:         this.state.bathroom,
+      bedroom:          (bedroom        === '' )    ? 0 : 1,
+      bathroom:         (bathroom === '' )          ? 0 : 1,
       kitchen:          (kitchen === '' )           ? 0 : 1,
 
       pool:             (pool === '' )              ? 0 : 1,
@@ -132,7 +136,7 @@ class AddHouse extends Component {
       error:{}
     })
 
-    this.props.history.push("/viewHouse")
+    this.props.history.push("/myhouses")
 
   }
 
@@ -172,7 +176,7 @@ class AddHouse extends Component {
                       <li><input onChange={this.onChange.bind(this)} type="radio" name="Accommodation_Type" value="House"/>House</li>
                       <li><input onChange={this.onChange.bind(this)} type="radio" name="Accommodation_Type" value="Villa"/>Villa<br/></li>
                     </ul>
-                    
+
                     <TextInputGroup
                       label="number"
                       name="number"
@@ -282,8 +286,7 @@ class AddHouse extends Component {
                         onChange={this.onChange.bind(this)}
                         error={this.state.error.blank}
                         />
-
-                    <input type="submit" className="btn btn-block btn-light" value="Add Accommodation"></input>
+                      <input type="submit" className="btn btn-block btn-light" value="Add Accommodation"></input>
                   </form>
                 </div>
 
