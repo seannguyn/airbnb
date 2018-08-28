@@ -22,15 +22,9 @@ class Login extends Component {
 
     onSubmit = async (dispatch, e) => {
         e.preventDefault();
-<<<<<<< HEAD
 
-        const {username, password} = this.state;
-
-=======
-        
         const {username, password, error} = this.state;
         
->>>>>>> dc03845703a451cd079cee6285cdd6515ef53b8a
         if (username === '' ) {
           console.log("EMTYRSUER");
           this.setState({error:{username:"username is required"}});
@@ -70,20 +64,7 @@ class Login extends Component {
         // console.log("loggin check",res.data);
 
         //GET USER AUTH TOKEN - DJANGO
-<<<<<<< HEAD
-        // const res = await axios.post('https://localhost:8000/api-token-auth/', account )
-        // console.log(res.data,"dataaa");
-        // dispatch({type:'LOGIN', payload:res.data});
 
-        this.setState({
-          username:'',
-          password:'',
-          errors:{}
-        })
-
-        this.props.history.push("/")
-      }
-=======
         let res;
         let err;
         await axios.post('https://localhost:8000/api-token-auth/', account)
@@ -117,7 +98,6 @@ class Login extends Component {
             this.props.history.push("/");
         }
     }
->>>>>>> dc03845703a451cd079cee6285cdd6515ef53b8a
 
       socialSubmit = async(dispatch, e) => {
         //   TODO: OAUTH login facebook
@@ -135,29 +115,6 @@ class Login extends Component {
                     <div className="card-body">
                     <div className="container">
                     <form onSubmit={this.onSubmit.bind(this, dispatch)}>
-<<<<<<< HEAD
-                        <div className="form-group">
-                            <label htmlFor="username">Username</label>
-                            <input
-                                type="text"
-                                name="username"
-                                className="form-control form-control-lg"
-                                placeholder="Enter username..."
-                                onChange={this.onChange}
-                                error={this.state.errors.username}/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                className="form-control form-control-lg"
-                                placeholder="Enter password..."
-                                onChange={this.onChange}
-                                error={this.state.errors.password}/>
-                        </div>
-=======
                   
                         <TextInputGroup
                             label="Username"
@@ -177,7 +134,6 @@ class Login extends Component {
                             onChange={this.onChange}
                             error={this.state.error.password}/>
                        
->>>>>>> dc03845703a451cd079cee6285cdd6515ef53b8a
                         <input type="submit" className="btn btn-block btn-light" value="Login"></input>
                     </form>
 
