@@ -15,16 +15,15 @@ class AccommodationImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AccommodationImage
-        fields = ('id', 'accommodation', 'image')
+        fields = ('id', 'accommodation', 'url_height', 'url_width', 'image')
 
 
 class AccommodationSerializer(serializers.ModelSerializer):
-    amenities = serializers.SlugRelatedField(many=True, read_only=True, allow_null=True, allow_empty=True, slug_field='type')
-    images = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='track-list')
-
     class Meta:
         model = Accommodation
         fields = ('id', 'host', 'type',
                   'addr_number', 'addr_street', 'addr_city',
-                  'beds', 'bedrooms', 'bathrooms',
+                  'beds', 'bedroom', 'bathroom',
                   'amenities', 'images')
+
+# snippets = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippets.objects.all())
