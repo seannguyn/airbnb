@@ -1,6 +1,4 @@
 from rest_framework import viewsets
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated
 
 from .serializers import *
 
@@ -15,10 +13,6 @@ class AccommodationImageViewSet(viewsets.ModelViewSet):
     serializer_class = AccommodationImageSerializer
 
 
-# @permission_classes((IsAuthenticated,))
 class AccommodationViewSet(viewsets.ModelViewSet):
     queryset = Accommodation.objects.all()
     serializer_class = AccommodationSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(host=self.request.user)

@@ -31,6 +31,7 @@ SITE_ID = 7  # WTF IS THIS NUMBER SRS
 
 INSTALLED_APPS = [
     # put your apps here
+    'api',
     'backend',
 
     # important apps, don't remove
@@ -156,8 +157,8 @@ EMAIL_FILE_PATH = os.path.join(RES_DIR, "emails")
 # All other required settings go here
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    # 'PAGE_SIZE': 10,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
 
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.AllowAny',
@@ -165,8 +166,6 @@ REST_FRAMEWORK = {
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
