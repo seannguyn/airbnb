@@ -9,10 +9,14 @@ class AllHosting extends React.Component {
 
     const {HouseList} = this.props;
 
-    var house = HouseList.find(obj => {
-      return obj.id === SingleHost.accommodation
-    })
-
+    let i =0;
+    var house;
+    for(i=0; i<HouseList.length; i++){
+      if(HouseList[i].id == SingleHost.accommodation){
+        house = HouseList[i];
+      }
+    }
+    
     return (
 
       <Hosting key={SingleHost.id} house={house} SingleHost={SingleHost}/>

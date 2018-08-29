@@ -34,7 +34,6 @@ class TwitterLogin(SocialLoginView):
 @permission_classes((IsAuthenticated,))
 class AccommodationView(viewsets.ModelViewSet):
     queryset = Accommodation.objects.all()
-    # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationSerializer
 
     def get_queryset(self):
@@ -50,12 +49,9 @@ class AccommodationView(viewsets.ModelViewSet):
         return queryset
 
 
-""" Get accomodation review """
-
-
+# Get accomodation review
 class AccommodationView(viewsets.ModelViewSet):
     queryset = Accommodation.objects.all()
-    # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationSerializer
 
     @action(methods=['get'], detail=False)
@@ -256,5 +252,6 @@ class CustomAuthToken(ObtainAuthToken):
         return Response({
             'token': token.key,
             'user_id': user.pk,
-            'email': user.email
+            'email': user.email,
+            'username': user.username
         })

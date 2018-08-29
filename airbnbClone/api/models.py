@@ -56,7 +56,7 @@ class AccommodationImage(models.Model):
 
     def save(self, *args, **kwargs):
         # self.revision += 1
-        return super(AccommodationImage, self).save(*args, **kwargs)  #
+        return super(AccommodationImage, self).save(*args, **kwargs)
 
 
 class AccommodationHosting(models.Model):

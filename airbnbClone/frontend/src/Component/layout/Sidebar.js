@@ -6,36 +6,55 @@ const Sidebar = (props) => {
     <nav className="col-md-2 d-none d-md-block bg-light sidebar">
           <div className="sidebar-sticky">
             <ul className="nav flex-column">
+
+              
               <Link to="/">
                 <li className="nav-item">
-                   Explore
-                  <i className="fas fa-binoculars" style={{float:'right'}}></i>
+                   <div className="lead">
+                   Explore<i className="fas fa-binoculars" 
+                            style={{
+                              cursor:'pointer',
+                              float:'right',
+                              marginTop:'0.25em',
+                              marginRight:'3.75em'
+                            }}
+                    />
+                  </div>
                 </li>
               </Link>
-
-
+              
               <li className="nav-item">
-                  My Houses
+                  <div className="lead">My Houses</div>
                 <ul>
                   <div>
                   <li className="nav-item">
                     <Link to="/myhouses" className="nav-link">
-                      <i className="fas fa-binoculars" style={{cursor: 'pointer',float:'right'}}> </i>
-                    </Link>
-                    View
-                  </li>
+                      <i className="fas fa-binoculars" 
+                          style={{
+                            cursor:'pointer',
+                            float:'right',
+                            marginTop:'0.8em',
+                            marginRight:'4em'
+                            }}> 
+                      </i>
+                      </Link>View</li>
                   </div>
 
                   <li className="nav-item">
                     <Link to="/addHouse" className="nav-link">
-                      <i className="fas fa-plus" style={{cursor: 'pointer',float:'right'}}> </i>
-                      Add
-                    </Link>
-
-                  </li>
-
+                      <i className="fas fa-plus" 
+                          style={{
+                            cursor:'pointer',
+                            float:'right',
+                            marginTop:'0.8em',
+                            marginRight:'4em'
+                          }}> </i>
+                    </Link>Add
+                     </li>
                 </ul>
               </li>
+
+              <h3>Features</h3>
               <li className="nav-item">
                 <a className="nav-link" href="/">
                   <span data-feather="shopping-cart"></span>
