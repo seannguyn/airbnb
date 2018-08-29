@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios';
+import {Link} from 'react-router-dom';
+import Review from '../Review/Review';
 
 class Hosting extends React.Component {
 
@@ -9,6 +11,7 @@ class Hosting extends React.Component {
     this.state = {
       showHosting: false,
       reviews: {},
+      seeReviews: false,
       id: ''
     }
 
@@ -30,8 +33,12 @@ class Hosting extends React.Component {
     return avgRating/reviews.length;
   }
 
+  showReview = () => {
+    this.setState({seeReviews: !this.state.seeReviews});
+  }
+
   async componentDidMount  () {
-    console.log(this.props.house.id," pamramm")
+    // console.log(this.props.house.id," pamramm")
     // this.setState({id: this.props.match.params})
     const {id} = this.props.house;
     let reviews, err;
@@ -51,12 +58,14 @@ class Hosting extends React.Component {
   }
 
   render () {
-    var Rating = require('react-rating');
+    let Rating = require('react-rating');
+    const readonly = true;
 
     const {reviews} = this.state;
     const avgRating =  this.starCalculator(reviews);
-
+    console.log('REIVW: ', reviews);
     const {house, SingleHost} = this.props;
+    const {id} = this.props.house;
     const {showHosting} = this.state;
     return (
       <div className="card card-body mb-3">
@@ -76,13 +85,35 @@ class Hosting extends React.Component {
           {reviews.length > 0 ?
           <div>
             <Rating 
-                readonly="true" 
+                readonly={readonly} 
                 initialRating={avgRating}
             />
-            <p>({reviews.length})</p>
+            <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
           </div>
           : <p>No reviews yet</p> 
           }
+          
+          {this.state.seeReviews ?
+            <div>{
+              reviews.map(review =>
+                <Review
+                  key={review.id}
+                  accommodation={review.accommodation}
+                  star={review.star}
+                  user={review.user}
+                  review={review.review}
+                  text='Close'
+                  closeReview={this.showReview.bind(this)}
+              />
+              )
+              
+            }
+            <button onClick={this.showReview.bind(this)}>Close</button>
+            </div>
+            
+            : null
+          }
+
         </div>
     )
   }

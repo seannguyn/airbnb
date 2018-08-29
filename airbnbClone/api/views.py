@@ -270,10 +270,27 @@ class Users(viewsets.ModelViewSet):
 
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
+    
+    # def get(self, request):
+    #     pk = request.GET.get('pk')
+    #     myHostObject = AccommodationHosting.objects.get(pk=pk)
+    #     serializer = self.serializer_class(myHostObject)
+    #     return Response(serializer.data)
 
     """ This would get all users """
     def get_queryset(self):
         queryset = UserInfo.objects.all()
+
+        # user_pk = None
+        # if self.kwargs:
+        #     user_pk = self.kwargs['pk']
+    
+        # if user_pk is not None:
+        #     """ return username if /users/id exist """
+        #     queryset = queryset.filter(user=user_pk)
+        #     user = UserInfo.objects.get(pk=user_pk)
+        #     print("USERNAME: ", user.user.username, type(user.user.username))
+            
         return queryset
 
     # def get_queryset(self):
