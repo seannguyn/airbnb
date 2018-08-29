@@ -10,7 +10,6 @@ from .booking.models import *
 
 # Account models
 admin.site.register(Account)
-admin.site.register(ProfileImage)
 
 # Accommodation models
 admin.site.register(Amenity)
@@ -20,5 +19,6 @@ admin.site.register(AccommodationImage)
 # Booking models
 admin.site.register(Listing)
 admin.site.register(Review)
+admin.site.register(Booking)
 
 TokenAdmin.raw_id_fields = ('user',)
