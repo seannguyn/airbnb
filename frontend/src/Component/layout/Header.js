@@ -5,11 +5,11 @@ import {Consumer} from '../../Context.js';
 import './Header.css';
 
 const Header = (props) => {
-  
+
   return (
     <Consumer>
      {value => {
-       
+
         const { currentUser } = value;
         console.log("IN HEADER: ", currentUser[0]);
         return (
@@ -19,20 +19,20 @@ const Header = (props) => {
 
           {currentUser[0] != null ?
           <div style={{color:'white'}}>
-            <i class="fas fa-user-astronaut"></i>
+            <i className="fas fa-user-astronaut"></i>
             Welcome, {currentUser[0].username}
           </div>
           : null
-          }   
-           
-          
+          }
+
+
           <ul className="navbar-nav px-3">
           {currentUser[0] != null ?
-              <li className="nav-item text-nowrap">    
+              <li className="nav-item text-nowrap">
                   <a className="nav-link" href="/login">Sign out</a>
               </li>
           :
-            <li className="nav-item text-nowrap">  
+            <li className="nav-item text-nowrap">
               <a className="nav-link" href="/login">Sign in</a>
             </li>
           }
@@ -40,10 +40,10 @@ const Header = (props) => {
           </ul>
         </nav>
         );
-     }}       
+     }}
 
     </Consumer>
-    
+
   );
 }
 

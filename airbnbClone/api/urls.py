@@ -5,6 +5,7 @@ from api import views
 from django.conf.urls import url
 from rest_framework import routers
 from rest_framework_nested import routers
+from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 
@@ -29,7 +30,7 @@ urlpatterns = [
 	url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
 	url(r'^rest-auth/facebook/$', views.FacebookLogin.as_view(), name='fb_login'),
 	url(r'^rest-auth/twitter/$', views.TwitterLogin.as_view(), name='twitter_login'),
-	
+
 	path('', include(router.urls)),
 	path('', include(accommodation_router.urls)),
 	path('', include(user_router.urls)),
@@ -39,7 +40,7 @@ urlpatterns = [
 
 	path('rest-auth/', include('rest_auth.urls')),
 	url(r'^api-token-auth/', views.CustomAuthToken.as_view()),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 # urlpatterns = format_suffix_patterns(urlpatterns)
