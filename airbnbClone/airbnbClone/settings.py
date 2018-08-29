@@ -32,6 +32,7 @@ SITE_ID = 7  # WTF IS THIS NUMBER SRS
 INSTALLED_APPS = [
     # put your apps here
     'api',
+    'backend',
 
     # important apps, don't remove
     'rest_framework',
@@ -48,8 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # then everything else, still testing
-    # 'rest_auth',
-    # 'rest_auth.registration',
+    'rest_auth',
+    'rest_auth.registration',
     'corsheaders',  # cross origin
 
     'allauth',

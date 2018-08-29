@@ -17,7 +17,6 @@ import EditHostingContext from './Component/Contexts/EditHostContext';
 import AllHostingContext from './Component/Contexts/AllHostingContext';
 import AddHouseContext from './Component/Contexts/AddHouseContext';
 
-
 class App extends Component {
   render() {
     return (

@@ -1,71 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios';
 
 class Hosting extends React.Component {
 
-<<<<<<< HEAD:airbnbClone/frontend/src/Component/Function/Hosting.js
-    constructor() {
-        super();
-        this.state = {
-            accommodation: '', //accommodation id
-            user: '', //account id
-            date_start: '',
-            date_end: '',
-            price: '',
-            description: '',
-            error: {}
-        }
-    }
-
-    //set State when changing text
-    onChange = (e) => {
-        this.setState({[e.target.name] : e.target.value});
-    }
-
-    // handle when form is submitted
-    onSubmit = async (dispatch, currUser, e) => {
-        e.preventDefault();
-        console.log('propsss: ', currUser);
-        const {accommodation,
-                user,
-                date_start,
-                date_end,
-                price,
-                description} = this.state;
-
-        const hostingHouse = {
-            // account: should be the current login account
-            accommodation: this.props.match.params.id, //accommodation id
-            date_start: date_start,
-            date_end: date_end,
-            price: price,
-            description: description
-        }
-        console.log(hostingHouse);
-
-        // AXIOS call here
-        // Notes: need backend validation for date and available date to
-        //        avoid conflicts.
-        const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
-        const res = await axios.post('https://localhost:8000/accommodationHosting/', hostingHouse,
-                {headers:{
-                    'Authorization': {token}
-                }
-            }
-        ) 
-
-        dispatch({type:'HOSTING', payload:hostingHouse});
-
-        // Add error handling here
-        // ......
-        // error handling
-=======
   constructor() {
     super();
->>>>>>> 525e9dfc2ecfa6bdc7bc2acc6164ded7495d8159:frontend/src/Component/Function/Hosting.js
-
     this.state = {
-      showHosting: false
+      showHosting: false,
+      reviews: {},
+      id: ''
     }
 
   }
@@ -74,7 +18,43 @@ class Hosting extends React.Component {
     this.setState({showHosting : !this.state.showHosting})
   }
 
+  starCalculator(reviews){
+    let avgRating = 0; 
+
+    for(let key in reviews){
+      if(reviews.hasOwnProperty(key)){
+        avgRating = avgRating + reviews[key].star;
+      }
+    }
+
+    return avgRating/reviews.length;
+  }
+
+  async componentDidMount  () {
+    console.log(this.props.house.id," pamramm")
+    // this.setState({id: this.props.match.params})
+    const {id} = this.props.house;
+    let reviews, err;
+    await axios.get(`https://localhost:8000/accommodation/${id}/reviews/`)
+                .then(
+                    response => {
+                      reviews = response.data
+                    }
+                ).catch(
+                  error => {
+                    err = error.response;
+                  }
+                )
+
+    if(err == null && reviews.length > 0)
+      this.setState({reviews:reviews});
+  }
+
   render () {
+    var Rating = require('react-rating');
+
+    const {reviews} = this.state;
+    const avgRating =  this.starCalculator(reviews);
 
     const {house, SingleHost} = this.props;
     const {showHosting} = this.state;
@@ -93,6 +73,16 @@ class Hosting extends React.Component {
             </ul>
           : null}
 
+          {reviews.length > 0 ?
+          <div>
+            <Rating 
+                readonly="true" 
+                initialRating={avgRating}
+            />
+            <p>({reviews.length})</p>
+          </div>
+          : <p>No reviews yet</p> 
+          }
         </div>
     )
   }

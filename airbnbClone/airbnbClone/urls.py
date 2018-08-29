@@ -27,9 +27,11 @@ router.register('accommodation', views.AccommodationView)
 app_name = 'main'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
+    path('admin/', admin.site.urls),\
     path('home/', TemplateView.as_view(template_name='index.html')),
+
+    path('api/', include('api.urls')),
+    path('backend/', include('backend.urls')),
 
     # old stuffs
     # path('api-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),

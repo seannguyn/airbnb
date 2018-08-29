@@ -1,9 +1,17 @@
 import datetime
 
 from django.db import models
-from django.contrib.auth.models import User
-
 from ..accommodation.models import Accommodation
+from ..account.models import Account
+
+
+class Listing(models.Model):
+    host = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+    rate = models.PositiveIntegerField(blank=False)
+
+    description = models.TextField(blank=True)
 
 
 class Review(models.Model):
@@ -15,32 +23,18 @@ class Review(models.Model):
         ('Excellent', 5)
     )
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+    author = models.ForeignKey(Account, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
 
-    star = models.CharField(max_length=10, choices=SCALE)
+    rating = models.CharField(max_length=10, choices=RATING)
     review = models.TextField(blank=True)
-
-
-class Listing(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
-    rate = models.PositiveIntegerField(blank=False)
-
-    description = models.TextField(blank=True)
-
-    class Meta:
-        verbose_name_plural = "listings"
 
 
 class Booking(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    booker = models.ForeignKey(User, on_delete=models.CASCADE)
+    guest = models.ForeignKey(Account, on_delete=models.CASCADE)
 
     date_start = models.DateField(default=datetime.datetime.today)
     date_end = models.DateField(default=datetime.datetime.today)
 
     note = models.TextField(blank=True)
-
-

@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ('url', 'username', 'location', 'birth_date',)
+        fields = ('url', 'username',)
 
 
 class ProfileImageSerializer(serializers.ModelSerializer):
