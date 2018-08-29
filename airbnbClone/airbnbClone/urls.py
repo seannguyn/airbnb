@@ -17,22 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
-from rest_framework import routers
-
-from api import views
-
-router = routers.DefaultRouter()
-router.register('accommodation', views.AccommodationView)
 
 app_name = 'main'
 
 urlpatterns = [
     path('admin/', admin.site.urls),\
-    path('home/', TemplateView.as_view(template_name='index.html')),
-
-    path('api/', include('api.urls')),
-    path('backend/', include('backend.urls')),
-
-    # old stuffs
-    # path('api-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
+    path('api/', include('backend.urls')),
+    path('', TemplateView.as_view(template_name='index.html')),
 ]
