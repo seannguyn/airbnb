@@ -1,15 +1,26 @@
 import datetime
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from ..accommodation.models import Accommodation
 from ..account.models import User
 
 
+@receiver(post_save, sender=Accommodation)
+def create_listing(sender, instance, created, **kwargs):
+    # Creates a Listing instance whenever an Accommodation is created
+    if created:
+        Listing.objects.create(accommodation=instance, host=instance.user)
+
+
 class Listing(models.Model):
     host = models.ForeignKey(User, on_delete=models.CASCADE)
+    accommodation = models.OneToOneField(Accommodation, related_name='listing', on_delete=models.CASCADE)
 
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
-    rate = models.PositiveIntegerField(blank=False)
+    is_available = models.BooleanField(default=False)
+    rate = models.PositiveIntegerField(blank=False, default=0)
 
     description = models.TextField(blank=True)
 
@@ -26,7 +37,7 @@ class Review(models.Model):
         (5, 'Excellent')
     )
     rating = models.CharField(max_length=10, choices=RATING)
-    review = models.TextField(blank=True, max_length=300)
+    content = models.TextField(blank=True, max_length=300)
 
 
 class Booking(models.Model):

@@ -23,9 +23,11 @@ router.register('listings', ListingViewSet)
 router.register('bookings', BookingViewSet)
 router.register('reviews', ReviewViewSet)
 
-""" accomodation nested resources setup """
-# accommodation_router = routers.NestedSimpleRouter(router, r'accommodation', lookup='accommodation')
-# accommodation_router.register(r'reviews', views.AccomodationReviews)
+
+user_router = routers.NestedSimpleRouter(router, r'users', lookup='users')
+user_router.register(r'listings', ListingViewSet)
+user_router.register(r'bookings', BookingViewSet)
+user_router.register(r'reviews', ReviewViewSet)
 
 # Routes
 urlpatterns = [

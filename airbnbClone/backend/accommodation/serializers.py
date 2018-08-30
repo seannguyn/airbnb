@@ -19,12 +19,17 @@ class AccommodationImageSerializer(serializers.ModelSerializer):
 
 
 class AccommodationSerializer(serializers.ModelSerializer):
-    amenities = serializers.SlugRelatedField(many=True, read_only=True, allow_null=True, allow_empty=True, slug_field='type')
-    images = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='track-list')
+    user = serializers.HyperlinkedRelatedField(queryset=User.objects.all(), view_name='user-detail')
+    host = serializers.ReadOnlyField(source='user.username')
+    amenities = serializers.SlugRelatedField(
+        many=True,
+        queryset=Amenity.objects.all(),
+        slug_field='type'
+     )
 
     class Meta:
         model = Accommodation
-        fields = ('id', 'host', 'type',
+        fields = ('url', 'user', 'user_id', 'host', 'type',
                   'addr_number', 'addr_street', 'addr_city',
                   'beds', 'bedrooms', 'bathrooms',
                   'amenities', 'images')

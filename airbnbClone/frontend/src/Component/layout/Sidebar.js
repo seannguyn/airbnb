@@ -3,15 +3,15 @@ import './Header.css'
 import {Link} from 'react-router-dom';
 const Sidebar = (props) => {
   return (
-    <nav className="col-md-2 d-none d-md-block bg-light sidebar">
+    <nav className="bg-light sidebar">
           <div className="sidebar-sticky">
             <ul className="nav flex-column">
 
-              
+
               <Link to="/">
                 <li className="nav-item">
                    <div className="lead">
-                   Explore<i className="fas fa-binoculars" 
+                   Explore<i className="fas fa-binoculars"
                             style={{
                               cursor:'pointer',
                               float:'right',
@@ -22,27 +22,27 @@ const Sidebar = (props) => {
                   </div>
                 </li>
               </Link>
-              
+
               <li className="nav-item">
                   <div className="lead">My Houses</div>
                 <ul>
                   <div>
                   <li className="nav-item">
                     <Link to="/myhouses" className="nav-link">
-                      <i className="fas fa-binoculars" 
+                      <i className="fas fa-binoculars"
                           style={{
                             cursor:'pointer',
                             float:'right',
                             marginTop:'0.8em',
                             marginRight:'4em'
-                            }}> 
+                            }}>
                       </i>
                       </Link>View</li>
                   </div>
 
                   <li className="nav-item">
                     <Link to="/addHouse" className="nav-link">
-                      <i className="fas fa-plus" 
+                      <i className="fas fa-plus"
                           style={{
                             cursor:'pointer',
                             float:'right',

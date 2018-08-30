@@ -112,9 +112,10 @@ class AddHouse extends Component {
 
     console.log(newHouse);
 
-    await axios.post('https://localhost:8000/accommodation/',newHouse)
+    const id = await axios.post('https://localhost:8000/accommodation/',newHouse)
     const res = await axios.get(`https://localhost:8000/accommodation/?user=${newHouse.user}`);
 
+    console.log("NEW ID ISSSSS: ",id.data.id);
     dispatch({type:'ADD_HOUSE', payload:res.data})
 
     this.setState({
@@ -137,7 +138,7 @@ class AddHouse extends Component {
       error:{}
     })
 
-    this.props.history.push("/myhouses")
+    this.props.history.push(`/editHouse/${id.data.id}`)
 
   }
 
@@ -157,13 +158,13 @@ class AddHouse extends Component {
           if(value["currentUser"][0] == null){
                return (
                 <React.Fragment>
-                    <h1> Add Houses</h1>
+                    <h1>Add Houses</h1>
                     <p>You are not login yet</p>
                 </React.Fragment>
               );
           } else {
             return (
-              <div className="card-body mb-3">
+              <div className="card-body mb-3 mt-3">
 
                 <div className="card-header">Add Accommodation</div>
 

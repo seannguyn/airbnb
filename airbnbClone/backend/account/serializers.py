@@ -1,22 +1,20 @@
 from rest_framework import serializers
 
+from ..serializers import NonNullModelSerializer
 from .models import User, Account
-from ..booking.models import Listing, Booking, Review
 
 
-class UserSerializer(serializers.ModelSerializer):
-    listings = serializers.PrimaryKeyRelatedField(many=True, queryset=Listing.objects.all())
-    bookings = serializers.PrimaryKeyRelatedField(many=True, queryset=Booking.objects.all())
-    reviews = serializers.PrimaryKeyRelatedField(many=True, queryset=Review.objects.all())
+class UserSerializer(serializers.HyperlinkedModelSerializer, NonNullModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'listings', 'bookings', 'reviews')
+        fields = ('id', 'username', 'email', 'accommodations')
 
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     username = serializers.CharField(read_only=True, source='user.username')
+    image = serializers.ImageField()
 
     class Meta:
         model = Account
-        fields = ('user', 'username', 'image',)
+        fields = ('url', 'user', 'username', 'image',)

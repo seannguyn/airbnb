@@ -15,10 +15,10 @@ class AccommodationImageViewSet(viewsets.ModelViewSet):
     serializer_class = AccommodationImageSerializer
 
 
-# @permission_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated,))
 class AccommodationViewSet(viewsets.ModelViewSet):
     queryset = Accommodation.objects.all()
     serializer_class = AccommodationSerializer
 
     def perform_create(self, serializer):
-        serializer.save(host=self.request.user)
+        serializer.save(user=self.request.user)

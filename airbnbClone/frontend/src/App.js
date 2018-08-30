@@ -21,16 +21,18 @@ class App extends Component {
   render() {
     return (
       <Provider>
-        
+
       <Header />
         <Router>
-          
+
           <div className="container-fluid">
             <div className="row">
+              <div className="col-sm">
+                <Sidebar/>
+              </div>
 
-              <Sidebar/>
 
-            <div>
+              <div className="col-sm-8">
                 <Switch>
 
                   {/* Router for authentication */}
@@ -46,8 +48,7 @@ class App extends Component {
                   <Route exact path="/edithosting/:id" component={EditHostingContext}></Route>
                 </Switch>
 
-            </div>
-
+              </div>
           </div>
         </div>
       </Router>

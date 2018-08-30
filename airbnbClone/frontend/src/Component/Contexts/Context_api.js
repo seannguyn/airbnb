@@ -1,6 +1,6 @@
 import React from 'react'
 import {Consumer} from '../../Context.js'
-import EditHouse from '../Function/EditHouse'
+import EditOverAll from '../Function/EditOverAll'
 
 const ContextApi = (props) => {
   // console.log("this is is: ",props.match.params.id);
@@ -12,7 +12,7 @@ const ContextApi = (props) => {
       const {HouseList, currentUser} = value;
       return (
         <div>
-          <EditHouse history={props.history} id={id} currentUser={currentUser} HouseList={HouseList} />
+          <EditOverAll history={props.history} id={id} currentUser={currentUser} HouseList={HouseList} />
         </div>
       )
     }}

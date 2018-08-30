@@ -4,11 +4,11 @@ from ..account.models import User
 
 def image_dir(instance, filename):
     # file will be uploaded to MEDIA_ROOT/<accommodation_id>/<filename>
-    return '{0}/{1}'.format(instance.accommodation_id, filename)
+    return '{0}/{1}/{2}'.format('accommodations', instance.accommodation_id, filename)
 
 
 class Accommodation(models.Model):
-    host = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='accommodations', on_delete=models.CASCADE)
 
     ACCOMMODATION_TYPES = (
         ('APARTMENT', 'Apartment'),
@@ -29,7 +29,7 @@ class Accommodation(models.Model):
 
 
 class Amenity(models.Model):
-    accommodation = models.ManyToManyField(Accommodation)
+    accommodation = models.ManyToManyField(Accommodation, related_name='amenities')
 
     type = models.CharField(blank=False, max_length=20)
 
@@ -43,4 +43,4 @@ class AccommodationImage(models.Model):
 
     height = models.PositiveIntegerField(default='500')
     width = models.PositiveIntegerField(default='500')
-    image = models.ImageField(upload_to=image_dir, height_field='url_height', width_field='url_width')
+    image = models.ImageField(upload_to=image_dir, height_field='height', width_field='width')
