@@ -12,6 +12,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import house from './house.jpeg';
 
 const styles = {
   card: {
@@ -93,7 +94,7 @@ class Hosting extends React.Component {
       <Card className={classes.card} style={{}}>
         <CardActionArea>
           <CardMedia>
-              <img src="/test" height="250" width="345"/>
+              <img src="https://www.mcdonaldjoneshomes.com.au/sites/default/files/styles/page-banner-image/public/page-banner-images/h-l-img4.jpg?itok=vz-MtVAj" height="250" width="345"/>
           </CardMedia>
           
         </CardActionArea>
