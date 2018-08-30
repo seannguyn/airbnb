@@ -75,6 +75,9 @@ class House extends React.Component {
 
     const isMyHouse = false; // flag to check if which current user's houses - for hosting button
     const isHosting = false;// flag to check if the accom is hosting
+
+    const { classes} = this.props;
+
     return (
       <Consumer>
         { value => {
@@ -106,27 +109,30 @@ class House extends React.Component {
 
           return (
 
-            <div className="card card-body mb-3">
-              <h5>
+    <div style={{padding:"1rem"}}>
+      <Card className={classes.card} style={{width:'30vw'}} >
+            <CardContent>
+              <Typography gutterBottom variant="headline" component="h2">
                 {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
                 <i  className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)} style={{cursor:'pointer', float:'right',color:'red'}}/>
+              </Typography>
+              
+              <Link to={`editHouse/${id}`}>
+                <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
+              </Link>
 
-                <Link to={`editHouse/${id}`}>
-                  <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
+            {this.isMyHouse === true && this.isHosting === true?
+              <div>
+                <Link to={`/edithosting/${id}`}>
+                  <i>Edit hosting</i>
+                </Link>
+              </div>
+            : <Link to={`/hosting/${id}`}>
+                  <i>Hosting</i>
                 </Link>
 
-              {this.isMyHouse === true && this.isHosting === true?
-                <div>
-                  <Link to={`/edithosting/${id}`}>
-                    <i>Edit hosting</i>
-                  </Link>
-                </div>
-              : <Link to={`/hosting/${id}`}>
-                    <i>Hosting</i>
-                  </Link>
-
-              }
-              </h5>
+            }
+          </CardContent>
 
               {showDetail === true ?
                 <ul className="list-group">
@@ -143,7 +149,8 @@ class House extends React.Component {
                 </ul>
                 : null}
 
-            </div>
+            </Card>
+          </div>
           )
         }}
 
@@ -154,4 +161,4 @@ class House extends React.Component {
   }
 }
 
-export default House;
+export default withStyles(styles)(House);
