@@ -5,10 +5,22 @@ import {Link} from 'react-router-dom';
 import Review from '../Review/Review';
 
 import { withStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
-
+const styles = {
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+};
 
 class Hosting extends React.Component {
 
@@ -69,16 +81,34 @@ class Hosting extends React.Component {
 
     const {reviews} = this.state;
     const avgRating =  this.starCalculator(reviews);
-    console.log('REIVW: ', reviews);
+    console.log('PROPS ', this.props);
     const {house, SingleHost} = this.props;
     const {id} = this.props.house;
     const {showHosting} = this.state;
+
+    const { classes} = this.props;
+
     return (
-      <div className="card card-body mb-3">
-          <h4>
-            {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
-            <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
-          </h4>
+      <div style={{padding:"1rem"}}>
+      <Card className={classes.card} style={{}}>
+        <CardActionArea>
+          <CardMedia>
+              <img src="/" height="250" width="345"/>
+          </CardMedia>
+          
+        </CardActionArea>
+
+          <CardContent>
+              <Typography gutterBottom variant="headline" component="h2">
+                {house.Accomodation_Type} ${SingleHost.price}/night
+                
+              </Typography>
+                
+              <Typography component="p">
+                  {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
+                  <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
+                </Typography>
+            </CardContent>
 
           {showHosting === true ?
             <ul className="list-group">
@@ -89,18 +119,24 @@ class Hosting extends React.Component {
           : null}
 
           {reviews.length > 0 ?
-          <div>
+          <CardContent>
             <Rating 
                 readonly={readonly} 
                 initialRating={avgRating}
             />
             <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
-          </div>
-          : <p>No reviews yet</p> 
+            </CardContent>
+          : <CardContent>
+              <Rating 
+                readonly={readonly} 
+                initialRating={0}
+            />
+              No reviews yet
+            </CardContent> 
           }
           
           {this.state.seeReviews ?
-            <div>{
+            <CardContent>{
               reviews.map(review =>
                 <Review
                   key={review.id}
@@ -115,14 +151,13 @@ class Hosting extends React.Component {
               
             }
               <button onClick={this.showReview.bind(this)}>Close</button>
-            </div>
-            
+            </CardContent>
             : null
           }
-
-        </div>
+      </Card>
+      </div>
     )
   }
 }
 
-export default Hosting;
+export default withStyles(styles)(Hosting);

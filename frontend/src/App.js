@@ -34,7 +34,7 @@ class App extends Component {
               </div>
 
 
-              <div className="col-md-8">
+              <div className="col-md-10">
                 <Switch>
 
                   {/* Router for authentication */}

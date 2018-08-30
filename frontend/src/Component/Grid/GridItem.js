@@ -1,63 +1,66 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    maxWidth: 600,
-    padding: theme.spacing.unit * 2,
+const styles = {
+  card: {
+    maxWidth: 345,
   },
-  image: {
-    width: 128,
-    height: 128,
+  media: {
+    height: 140,
   },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
-  },
-});
+};
 
-function ComplexGrid(props) {
-  const { classes } = props;
-  return (
-    <Paper className={classes.root}>
-      <Grid container spacing={16}>
-        <Grid item>
-          <ButtonBase className={classes.image}>
-            <img className={classes.img} alt="complex" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={16}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subheading">
-                Standard license
-              </Typography>
-              <Typography gutterBottom>Full resolution 1920x1080 • JPEG</Typography>
-              <Typography color="textSecondary">ID: 1030114</Typography>
-            </Grid>
-            <Grid item>
-              <Typography style={{ cursor: 'pointer' }}>Remove</Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subheading">$19.00</Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Paper>
-  );
+
+class MediaCard extends Component {
+  render(){
+    const { classes } = this.props;
+    return (
+      <Card className={classes.card}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image="house.jpeg"
+            title="Contemplative Reptile"
+          />
+
+          <CardContent>
+            <Typography gutterBottom variant="headline" component="h2">
+              Lizard
+            </Typography>
+            <Typography component="p">
+              Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+              across all continents except Antarctica
+            </Typography>
+          </CardContent>
+        
+        </CardActionArea>
+
+        <CardActions>
+        
+          <Button size="small" color="primary">
+            Share
+          </Button>
+        
+          <Button size="small" color="primary">
+            Learn More
+          </Button>
+        
+        </CardActions>
+
+      </Card>
+    );
+  }
 }
-
-ComplexGrid.propTypes = {
+MediaCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ComplexGrid);
+export default withStyles(styles)(MediaCard);

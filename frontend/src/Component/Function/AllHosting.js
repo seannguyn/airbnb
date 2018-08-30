@@ -1,6 +1,7 @@
 import React from 'react'
 import AllHostingContext from '../Contexts/AllHostingContext'
 import Hosting from './Hosting'
+import ComplexGrid from '../Grid/GridItem';
 
 class AllHosting extends React.Component {
 
@@ -18,12 +19,10 @@ class AllHosting extends React.Component {
     }
     
     return (
-
       <Hosting key={SingleHost.id} house={house} SingleHost={SingleHost}/>
 
     );
   }
-
 
   render () {
 
@@ -31,13 +30,15 @@ class AllHosting extends React.Component {
     // console.log("all Hosting",this.props.AllHostingList);
     // console.log("all House",this.props.HouseList);
     const SingleHosting = this.props.AllHostingList.map((SingleHost) => this.getData(SingleHost))
-
+    // console.log("SINGLEHOUSE: ", SingleHosting)
     return (
-      <div>
-      <h1>Explore</h1>
-      {SingleHosting}
-      </div>
-    );
+      <React.Fragment>
+        <h1>Explore</h1>
+        <div className="row">
+            {SingleHosting}
+          </div>    
+        </React.Fragment>
+      );
   }
 }
 
