@@ -16,6 +16,8 @@ import ContextApi from './Component/Contexts/Context_api.js';
 import EditHostingContext from './Component/Contexts/EditHostContext';
 import AllHostingContext from './Component/Contexts/AllHostingContext';
 import AddHouseContext from './Component/Contexts/AddHouseContext';
+import GuttersGrid from './Component/Grid/GridItem';
+import Demo from './Component/Grid/GridItem';
 
 class App extends Component {
   render() {
@@ -24,7 +26,7 @@ class App extends Component {
 
       <Header />
         <Router>
-
+          
           <div className="container-fluid">
             <div className="row">
               <div className="col-sm">
@@ -32,7 +34,7 @@ class App extends Component {
               </div>
 
 
-              <div className="col-sm-8">
+              <div className="col-md-8">
                 <Switch>
 
                   {/* Router for authentication */}
@@ -46,11 +48,13 @@ class App extends Component {
                   <Route exact path="/editHouse/:id" component={ContextApi}></Route>
                   <Route exact path="/hosting/:id" component={AddHosting}></Route>
                   <Route exact path="/edithosting/:id" component={EditHostingContext}></Route>
+                  <Route exact path="/grid" component={Demo}></Route>
                 </Switch>
 
               </div>
           </div>
         </div>
+      
       </Router>
       </Provider>
     );

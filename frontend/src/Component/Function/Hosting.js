@@ -4,6 +4,12 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import Review from '../Review/Review';
 
+import { withStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+
+
+
 class Hosting extends React.Component {
 
   constructor() {
@@ -108,7 +114,7 @@ class Hosting extends React.Component {
               )
               
             }
-            <button onClick={this.showReview.bind(this)}>Close</button>
+              <button onClick={this.showReview.bind(this)}>Close</button>
             </div>
             
             : null

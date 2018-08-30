@@ -271,16 +271,12 @@ class Users(viewsets.ModelViewSet):
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
     
-    # def get(self, request):
-    #     pk = request.GET.get('pk')
-    #     myHostObject = AccommodationHosting.objects.get(pk=pk)
-    #     serializer = self.serializer_class(myHostObject)
-    #     return Response(serializer.data)
+    
 
     """ This would get all users """
     def get_queryset(self):
         queryset = UserInfo.objects.all()
-
+        print("FOES DD", queryset)
         # user_pk = None
         # if self.kwargs:
         #     user_pk = self.kwargs['pk']
@@ -290,8 +286,22 @@ class Users(viewsets.ModelViewSet):
         #     queryset = queryset.filter(user=user_pk)
         #     user = UserInfo.objects.get(pk=user_pk)
         #     print("USERNAME: ", user.user.username, type(user.user.username))
-            
+        print("FOES DD", queryset)
         return queryset
+
+    # def get(self, request, pk, format=None):
+    #     print("FUCK")
+    #     myHostObject = self.get_object(pk)
+    #     serializer = self.serializer_class(myHostObject)
+    #     return Response(serializer.data)
+
+    # def get_object(self):
+    #     print("FICL")
+    #     # pk = request.GET.get('pk')
+    #     # myHostObject = AccommodationHosting.objects.get(pk=pk)
+    #     # serializer = self.serializer_class(myHostObject)
+    #     # return Response(serializer.data)
+    #     return 1
 
     # def get_queryset(self):
     #     """ get the current login user """

@@ -16,12 +16,12 @@ class Review extends Component {
         const {text, closeReview, star, review, user} = this.props;
         return (
             <React.Fragment>
-                <div className="">
-                    {star}
-                    <p>{review}</p> 
-                    by {user}
-                </div>    
-                {/* <button onClick={this.props.closeReview}>Close</button> */}
+
+                    <div className="container" style={{background:"#f7f7f7"}}>
+                    Rating {star}
+                    <p className><b>{review}  <i>(by {user})</i></b></p> 
+                    </div>
+
             </React.Fragment>
         );
       }

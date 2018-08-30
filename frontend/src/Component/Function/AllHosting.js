@@ -4,13 +4,13 @@ import Hosting from './Hosting'
 
 class AllHosting extends React.Component {
 
-
   getData(SingleHost) {
 
     const {HouseList} = this.props;
 
     let i =0;
     var house;
+
     for(i=0; i<HouseList.length; i++){
       if(HouseList[i].id == SingleHost.accommodation){
         house = HouseList[i];
@@ -27,14 +27,9 @@ class AllHosting extends React.Component {
 
   render () {
 
-
     const {AllHostingList} = this.props.AllHostingList;
-
     // console.log("all Hosting",this.props.AllHostingList);
     // console.log("all House",this.props.HouseList);
-
-
-
     const SingleHosting = this.props.AllHostingList.map((SingleHost) => this.getData(SingleHost))
 
     return (
