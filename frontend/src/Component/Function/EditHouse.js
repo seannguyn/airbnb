@@ -33,9 +33,11 @@ class EditHouse extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const {HouseList, currentUser} = this.props;
     const {id} = this.props;
+
+    console.log(this.props,"propss");
 
     this.setState({currentUser: currentUser}, () => {
       console.log("current user", currentUser[0]);
@@ -43,11 +45,12 @@ class EditHouse extends Component {
 
     let i =0;
     var result;
-    for(i=0; i<HouseList.length; i++){
+    for(i=0; i < HouseList.length; i++){
       if(HouseList[i].id == id){
         result = HouseList[i];
       }
     }
+
 
     console.log("here",result);
 
@@ -72,11 +75,7 @@ class EditHouse extends Component {
       description: result.description,
     })
 
-    // axios call ???
-    // const {id} = this.props.match.params;
-    // const res = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`);
-    // console.log(res.data);
-    // this.setState({name: res.data.name, website: res.data.website, email: res.data.email})
+    // =>
 
   }
 

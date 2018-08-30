@@ -20,7 +20,7 @@ class Images extends React.Component {
     console.log(res.data,'component will mount');
 
     var i;
-    for (i = 0; i <res.data.length; i++) {
+    for (i = 0; i < res.data.length; i++) {
       this.setState({
         images: [...this.state.images, res.data[i].a_image],
         files: [...this.state.files, res.data[i].a_image],

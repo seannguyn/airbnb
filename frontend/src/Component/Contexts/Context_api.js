@@ -8,12 +8,14 @@ const ContextApi = (props) => {
   // console.log("this is is: ",props.match.params.id);
   // console.log("history.........",props.history);
   const {id} = props.match.params;
+
   var stageComponent
   if(props.location.state) {
     const {stage} = props.location.state
     stageComponent = stage;
+  } else {
+    stageComponent = 1;
   }
-  alert(stageComponent)
   return(
   <Consumer>
     {value => {

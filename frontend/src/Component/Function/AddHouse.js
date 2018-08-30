@@ -138,7 +138,11 @@ class AddHouse extends Component {
       error:{}
     })
 
-    this.props.history.push(`/editHouse/${id.data.id}`)
+    this.props.history.push({
+      pathname: `/editHouse/${id.data.id}`,
+      state: { stage: 2 }
+    })
+
 
   }
 

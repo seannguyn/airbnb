@@ -3,6 +3,7 @@ import EditHouse from './EditHouse.js'
 import EditHosting from './EditHosting.js'
 import AddHosting from './AddHosting.js'
 import Images from './Images.js'
+import axios from 'axios'
 
 class EditOverAll extends React.Component {
 
@@ -11,14 +12,20 @@ class EditOverAll extends React.Component {
 
     this.state = {
       stage_1: false,
-      stage_2: true,
+      stage_2: false,
       stage_3: false,
-      picture: false
+      picture: false,
+      HouseList: []
     }
 
   }
 
-
+  async componentWillMount(){
+    const res = await axios.get('https://localhost:8000/accommodation/');
+    console.log(res.data,"edit houseee");
+    this.setState({HouseList: res.data});
+    this.navigateTo(this.props.stageComponent);
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log("should update???",nextProps,nextState);
@@ -46,6 +53,8 @@ class EditOverAll extends React.Component {
 
   render () {
 
+
+
     const {stage_1, stage_2, stage_3, picture} = this.state;
     const as_1 = (stage_1 === true ) ? " active" : null;
     const as_2 = (stage_2 === true ) ? " active" : null;
@@ -71,7 +80,7 @@ class EditOverAll extends React.Component {
           history={this.props.history}
           id={this.props.id}
           currentUser={this.props.currentUser}
-          HouseList={this.props.HouseList}
+          HouseList={this.state.HouseList}
            >
          </EditHouse>
        : null}
