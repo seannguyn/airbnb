@@ -35,7 +35,7 @@ class Hosting extends Component {
 
         const hostingHouse = {
             // user: should be the current login user
-            accommodation: this.props.match.params.id, //accommodation id
+            accommodation: this.props.id, //accommodation id
             date_start: date_start,
             date_end: date_end,
             price: price,
@@ -52,7 +52,7 @@ class Hosting extends Component {
                     'Authorization': {token}
                 }
             }
-        ) 
+        )
 
         dispatch({type:'HOSTING', payload:hostingHouse});
 
@@ -63,36 +63,36 @@ class Hosting extends Component {
         // push back to myhosts page
         this.props.history.push("/myHouses");
     }
-    
-    render() { 
+
+    render() {
         return (
             <Consumer>
-                {value => {    
+                {value => {
                     const {dispatch} = value;
                     const {currentUser} = value;
                     console.log(currentUser);
                 return (
-                
+
                 <div className="card-body mb-3">
 
                 <div className="card-header">Host Accommodation</div>
 
                 <div className="card-body">
                 <form onSubmit={this.onSubmit.bind(this, dispatch, currentUser)}>
-                
+
                 <label htmlFor="date_start">Start Date</label>
                     <div className="form-group">
-                        <input type="date" 
-                               name="date_start" 
+                        <input type="date"
+                               name="date_start"
                                placeholder="Start Date ..."
                                onChange={this.onChange.bind(this)}/>
                     </div>
-                    
+
                     <label htmlFor="date_end">End Date</label>
                     <div className="form-group">
-                        
-                        <input type="date" 
-                               name="date_end" 
+
+                        <input type="date"
+                               name="date_end"
                                placeholder="End Date ..."
                                onChange={this.onChange.bind(this)}/>
                     </div>
@@ -100,16 +100,16 @@ class Hosting extends Component {
                     <label htmlFor="price">Price</label>
                     <div className="form-group">
                         <input type="number"
-                                min="1" 
-                                name="price" 
+                                min="1"
+                                name="price"
                                 placeholder="Choose Price ..."
                                 onChange={this.onChange.bind(this)}/>
                     </div>
-                    
+
                     <label htmlFor="description">Description</label>
                     <div className="form-group">
-                        <input type="text" 
-                                name="description" 
+                        <input type="text"
+                                name="description"
                                 placeholder="Enter Description ..."
                                 onChange={this.onChange.bind(this)}/>
                     </div>
@@ -127,5 +127,5 @@ class Hosting extends Component {
 
     }
 }
- 
+
 export default Hosting;

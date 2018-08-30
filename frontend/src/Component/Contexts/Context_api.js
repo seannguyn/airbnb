@@ -1,18 +1,44 @@
 import React from 'react'
 import {Consumer} from '../../Context.js'
 import EditOverAll from '../Function/EditOverAll'
+import EditHosting from '../Function/EditHosting'
+import AddHosting from '../Function/AddHosting'
 
 const ContextApi = (props) => {
   // console.log("this is is: ",props.match.params.id);
   // console.log("history.........",props.history);
   const {id} = props.match.params;
+  var stageComponent
+  if(props.location.state) {
+    const {stage} = props.location.state
+    stageComponent = stage;
+  }
+  alert(stageComponent)
   return(
   <Consumer>
     {value => {
-      const {HouseList, currentUser} = value;
+      const {HouseList, currentUser, myHostingList} = value;
+
+      var hasHost = []
+      var i;
+      for(i=0; i < myHostingList.length; i++){
+        if(myHostingList[i].accommodation == id){
+          hasHost.push(<EditHosting id={id}
+                                  key={id}
+                                  HouseList={HouseList}
+                                  currentUser={currentUser}
+                                  myHostingList={myHostingList}
+                                  history={props.history}/>);
+          hasHost.push(true);
+        }
+      }
+      if (hasHost.length === 0) {
+        hasHost.push(<AddHosting key={id} history={props.history} id={id}/>)
+        hasHost.push(false);
+      }
       return (
         <div>
-          <EditOverAll history={props.history} id={id} currentUser={currentUser} HouseList={HouseList} />
+          <EditOverAll stageComponent={stageComponent} hasHost={hasHost} history={props.history} id={id} myHostingList={myHostingList} currentUser={currentUser} HouseList={HouseList} />
         </div>
       )
     }}

@@ -50,10 +50,10 @@ class AddHouse extends Component {
       this.setState({error:{number:"number is required"}})
       return;
     }
-    // else if (!isFinite(String(number))) {
-    //   this.setState({error:{number:"numeric please"}})
-    //   return;
-    // }
+    else if (!isFinite(String(number))) {
+      this.setState({error:{number:"numeric please"}})
+      return;
+    }
     // if (street === '' ) {
     //   this.setState({error:{street:"street is required"}})
     //   return;

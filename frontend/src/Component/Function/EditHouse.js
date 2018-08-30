@@ -91,6 +91,31 @@ class EditHouse extends Component {
     const {id, user, Accommodation_Type, number, street, city, state} = this.state;
     const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
 
+    if (number === '') {
+      this.setState({error:{number:"number is required"}})
+      return;
+    } else if (!isFinite(String(number))) {
+      this.setState({error:{number:"numeric please"}})
+      return;
+    }
+    // if (street === '' ) {
+    //   this.setState({error:{street:"street is required"}})
+    //   return;
+    // }
+    // if (city === '' ) {
+    //   this.setState({error:{city:"city is required"}})
+    //   return;
+    // }
+    //
+    // if (bedroom === ''  || !isFinite(String(bedroom))) {
+    //   this.setState({error:{bedroom:"bedroom is required"}})
+    //   return;
+    // }
+    // if (bathroom === '' || !isFinite(String(bathroom))) {
+    //   this.setState({error:{bathroom:"bathroom is required"}})
+    //   return;
+    // }
+
     const editHouse ={
       id: id,
       user:user,
@@ -127,32 +152,6 @@ class EditHouse extends Component {
 
     dispatch({type:'EDIT_HOUSE', payload:editHouse})
 
-
-    if (number === '') {
-      this.setState({error:{number:"number is required"}})
-      return;
-    } else if (!isFinite(String(number))) {
-      this.setState({error:{number:"numeric please"}})
-      return;
-    }
-    if (street === '' ) {
-      this.setState({error:{street:"street is required"}})
-      return;
-    }
-    if (city === '' ) {
-      this.setState({error:{city:"city is required"}})
-      return;
-    }
-
-    if (bedroom === ''  || !isFinite(String(bedroom))) {
-      this.setState({error:{bedroom:"bedroom is required"}})
-      return;
-    }
-    if (bathroom === '' || !isFinite(String(bathroom))) {
-      this.setState({error:{bathroom:"bathroom is required"}})
-      return;
-    }
-
     this.setState({
 
       number: '',
@@ -172,7 +171,7 @@ class EditHouse extends Component {
       error:{}
     })
 
-    this.props.history.push("/myhouses")
+    this.props.navigateTo(2);
 
   }
 

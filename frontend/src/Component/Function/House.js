@@ -98,17 +98,17 @@ class House extends React.Component {
                 </Link>
 
               {this.isMyHouse === true && this.isHosting === true?
-                <div>
-                  <Link to={`/edithosting/${id}`}>
-                    <i>Edit hosting</i>
+                  <Link to={{ pathname: `/editHouse/${id}`, state: { stage: 3} }}>
+                    <i className="fas fa-circle" style={{color:"green"}}>Active</i>
                   </Link>
-                </div>
-              : <Link to={`/hosting/${id}`}>
-                    <i>Hosting</i>
+              : <Link to={`/editHouse/${id}`}>
+                    <i className="fas fa-circle" style={{color:"grey"}}>Inactive Host</i>
                   </Link>
 
               }
               </h5>
+
+
 
               {showDetail === true ?
                 <ul className="list-group">

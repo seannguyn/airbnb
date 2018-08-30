@@ -8,12 +8,9 @@ import Sidebar from './Component/layout/Sidebar';
 import Login from './Component/Authentication/Login';
 import Registration from './Component/Authentication/Registration';
 import MyHouses from './Component/Function/MyHouses';
-import AddHosting from './Component/Function/AddHosting';
-import EditHosting from './Component/Function/EditHosting';
 
 import {Provider} from './Context';
 import ContextApi from './Component/Contexts/Context_api.js';
-import EditHostingContext from './Component/Contexts/EditHostContext';
 import AllHostingContext from './Component/Contexts/AllHostingContext';
 import AddHouseContext from './Component/Contexts/AddHouseContext';
 
@@ -44,8 +41,6 @@ class App extends Component {
                   <Route exact path="/myhouses" component={MyHouses}></Route>
                   <Route exact path="/addHouse" component={AddHouseContext}></Route>
                   <Route exact path="/editHouse/:id" component={ContextApi}></Route>
-                  <Route exact path="/hosting/:id" component={AddHosting}></Route>
-                  <Route exact path="/edithosting/:id" component={EditHostingContext}></Route>
                 </Switch>
 
               </div>
