@@ -1,25 +1,38 @@
-from rest_framework import viewsets, renderers
-from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_auth.registration.views import SocialLoginView
+
+# Facebook
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+
+# Twitter
+from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
+from rest_auth.social_serializers import TwitterLoginSerializer
 
 
-class SnippetViewSet(viewsets.ModelViewSet):
-    """
-    This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
 
-    Additionally we also provide an extra `highlight` action, using
-    @action decorator
-    """
-    # queryset = Snippet.objects.all()
-    # serializer_class = SnippetSerializer
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-    #                     IsOwnerOrReadOnly,)
 
-    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
-    def highlight(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet.highlighted)
+class TwitterLogin(SocialLoginView):
+    serializer_class = TwitterLoginSerializer
+    adapter_class = TwitterOAuthAdapter
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+
+# Custom authentication - return Token, username and email
+class CustomAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        print("DATA: ", request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'email': user.email,
+            'username': user.username
+        })
