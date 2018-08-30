@@ -43,16 +43,16 @@ class MyHouses extends Component {
 
                         return (
                             <React.Fragment>
-                            <h1>My Houses</h1>
-                            <main className="col-md-9 ml-sm-auto col-lg-10 px-4">
-                            {myHouses.map(house => (
-                                <House key={house.id}
-                                  houseDetail={house}
-                                  value={value}
-                                  myHouses={myHouses}>
-                                </House>
-                            ))}
-                        </main>
+                                <h1>My Houses</h1>
+                                <div className="row">   
+                                    {myHouses.map(house => (
+                                        <House key={house.id}
+                                        houseDetail={house}
+                                        value={value}
+                                        myHouses={myHouses}>
+                                        </House>
+                                    ))}
+                            </div>
                             </React.Fragment>
                         );
                    }

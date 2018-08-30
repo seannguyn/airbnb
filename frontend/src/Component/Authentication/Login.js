@@ -51,19 +51,19 @@ class Login extends Component {
                 dispatch({type:'LOGIN', payload:response.data});
             })
             .catch(error => {
-                console.log("ERR: ", error.response);
+                // console.log("ERR: ", error.response);
                 err = error.response;
                 this.setState({error:{username:"Check your username again", password:"Check your password again"}});
             });
 
-        console.log("ERROR: ", err);
+        // console.log("ERROR: ", err);
         if( err != null){
             console.log(error);
             this.props.history.push("/login");
             return;
         }
 
-        console.log("RES: ", res);
+        // console.log("RES: ", res);
         if( res != null){
             
             
@@ -77,12 +77,15 @@ class Login extends Component {
         }
     }
 
-      socialSubmit = async(dispatch, e) => {
+    socialSubmit = async(dispatch, e) => {
         //   TODO: OAUTH login facebook
-      }
+    }
+
 
     render() {
         localStorage.clear();
+        localStorage.removeItem('currentUser');
+        // console.log("GOES LOGIN CLEAD: ", localStorage, localStorage.getItem('currentUser'));
         return(
             <Consumer>
             {value =>{
