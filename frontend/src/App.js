@@ -9,13 +9,13 @@ import Login from './Component/Authentication/Login';
 import Registration from './Component/Authentication/Registration';
 import MyHouses from './Component/Function/MyHouses';
 import AddHosting from './Component/Function/AddHosting';
-import EditHosting from './Component/Function/EditHosting';
 
 import {Provider} from './Context';
 import ContextApi from './Component/Contexts/Context_api.js';
-import EditHostingContext from './Component/Contexts/EditHostContext';
 import AllHostingContext from './Component/Contexts/AllHostingContext';
 import AddHouseContext from './Component/Contexts/AddHouseContext';
+import EditHostingContext from './Component/Contexts/EditHostContext';
+
 import GuttersGrid from './Component/Grid/GridItem';
 import Demo from './Component/Grid/GridItem';
 

@@ -146,7 +146,6 @@ export class Provider extends Component {
         }
       )
 
-
       if(this.state.myHostingList.length == 0 ){
         const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
         this.setState({myHouseList: myHouse.data});

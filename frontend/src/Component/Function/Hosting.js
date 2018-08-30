@@ -81,7 +81,7 @@ class Hosting extends React.Component {
 
     const {reviews} = this.state;
     const avgRating =  this.starCalculator(reviews);
-    console.log('PROPS ', this.props);
+    // console.log('PROPS ', this.props);
     const {house, SingleHost} = this.props;
     const {id} = this.props.house;
     const {showHosting} = this.state;
@@ -93,7 +93,7 @@ class Hosting extends React.Component {
       <Card className={classes.card} style={{}}>
         <CardActionArea>
           <CardMedia>
-              <img src="/" height="250" width="345"/>
+              <img src="/test" height="250" width="345"/>
           </CardMedia>
           
         </CardActionArea>
@@ -101,7 +101,6 @@ class Hosting extends React.Component {
           <CardContent>
               <Typography gutterBottom variant="headline" component="h2">
                 {house.Accomodation_Type} ${SingleHost.price}/night
-                
               </Typography>
                 
               <Typography component="p">

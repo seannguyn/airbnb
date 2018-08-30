@@ -40,7 +40,7 @@ class House extends React.Component {
   // pass an axios to backend, requesting for delete
     async handleDelete(id, dispatch) {
 
-      console.log('delete',this.props.value,this.props.myHouses,id);
+      // console.log('delete',this.props.value,this.props.myHouses,id);
 
       const {myHostingList} = this.props.value;
       let i =0;
@@ -93,10 +93,7 @@ class House extends React.Component {
             }
             let counter = 0;
             let i = 0;
-            // this.isHosting = false;
             for(i=0; i < myHostingList.length; i++){
-              // console.log("counter: ", i);
-              // console.log("cp: ", 0 + parseInt(myHostingList[i].accommodation), id);
               if(parseInt(myHostingList[i].accommodation) === id){
                 this.isHosting = true;
                 break;
@@ -133,7 +130,16 @@ class House extends React.Component {
 
             }
           </CardContent>
+              {this.isMyHouse === true && this.isHosting === true?
+                  <Link to={{ pathname: `/editHouse/${id}`, state: { stage: 3} }}>
+                    <i className="fas fa-circle" style={{color:"green"}}>Active</i>
+                  </Link>
+              : <Link to={`/editHouse/${id}`}>
+                    <i className="fas fa-circle" style={{color:"grey"}}>Inactive Host</i>
+                  </Link>
 
+              }
+              
               {showDetail === true ?
                 <ul className="list-group">
                   {area           !=='0' ? <li className="list-group-item">Area <i className="fas fa-th-large"/> {area}  sq meters</li>         : null}
