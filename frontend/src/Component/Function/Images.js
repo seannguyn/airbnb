@@ -130,8 +130,9 @@ class Images extends React.Component {
     return (
       <div>
         <h1>Images (add at least 2)</h1>
+        <div className="row">
         {rendering}
-
+        </div>
       </div>
     );
 
