@@ -21,7 +21,7 @@ class Header extends Component {
   }
 
   componentDidMount(){
-    console.log("didmoutn header: ", this.props);
+    // console.log("didmoutn header: ", this.props);
   }
 
   render(){
@@ -31,7 +31,7 @@ class Header extends Component {
       {value => {
 
           const { currentUser } = value;
-          console.log("IN HEADER: ", currentUser[0]);
+          // console.log("IN HEADER: ", currentUser[0]);
           return (
             <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow mb-4">
             <a className="navbar-brand col-md-2 mr-0" href="/">portBnB</a>

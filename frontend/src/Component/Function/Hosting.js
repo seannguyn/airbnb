@@ -56,6 +56,10 @@ class Hosting extends React.Component {
     this.setState({seeReviews: !this.state.seeReviews});
   }
 
+  seeRoomDetail = () => {
+    console.log("ID HOSTING: ", this.props);
+  }
+
   async componentDidMount  () {
     // console.log(this.props.house.id," pamramm")
     // this.setState({id: this.props.match.params})
@@ -154,6 +158,13 @@ class Hosting extends React.Component {
             </CardContent>
             : null
           }
+
+          <CardActions>
+            <Button size="small" color="primary" href={`/accommodations/${id}`} onClick={this.seeRoomDetail}>
+              See more
+          </Button>
+          </CardActions>
+
       </Card>
       </div>
     )

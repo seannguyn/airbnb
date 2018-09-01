@@ -79,11 +79,11 @@ export class Provider extends Component {
 
   async componentDidMount(){
 
-    console.log("DID MOunt: ", this.state.currentUser);
+    // console.log("DID MOunt: ", this.state.currentUser);
 
     const res = await axios.get('https://localhost:8000/accommodation/');
     this.setState({HouseList: res.data});
-    console.log(this.state.currentUser);
+    // console.log(this.state.currentUser);
 
     const allHosting = await axios.get('https://localhost:8000/accommodationHosting/');
     this.setState({AllHostingList: allHosting.data});
@@ -101,7 +101,7 @@ export class Provider extends Component {
 
       if(this.state.myHostingList.length === 0 ){
         this.setState({myHostingList: res.data});
-        console.log("did mount my hostung lis: ", this.state.myHostingList);
+        // console.log("did mount my hostung lis: ", this.state.myHostingList);
       }
     }
 
@@ -123,13 +123,13 @@ export class Provider extends Component {
 
   async componentWillUpdate(nextProps, nextState){
 
-    console.log("WILL UPDATE: ", this.state);
+    // console.log("WILL UPDATE: ", this.state);
 
     localStorage.setItem('currentUser', JSON.stringify(this.state.currentUser));
   }
 
   async componentDidUpdate(){
-        console.log("DID UPDATE: ", this.state.currentUser);
+        // console.log("DID UPDATE: ", this.state.currentUser);
       if(localStorage.getItem('currentUser')){
         console.log('User data from local storage');
       }
@@ -149,7 +149,7 @@ export class Provider extends Component {
         const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
         this.setState({myHouseList: myHouse.data});
         this.setState({myHostingList: res.data});
-        console.log(this.state.myHostingList);
+        // console.log(this.state.myHostingList);
       }
     }
     return ;
@@ -157,8 +157,8 @@ export class Provider extends Component {
 
   render () {
     // const fh = this.findHostingAccommodation(this.state.currentUser);
-    console.log("IN REDNER CONTEXt: ", this.state.currentUser);
-    console.log(this.state.myHostingList);
+    // console.log("IN REDNER CONTEXt: ", this.state.currentUser);
+    // console.log(this.state.myHostingList);
     return(
       <Context.Provider value={this.state}>
         {this.props.children}

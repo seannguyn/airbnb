@@ -69,7 +69,7 @@ class House extends React.Component {
 
     const {user} = this.props.houseDetail; //-- from houses.js -- user id in each house in houselist
     const {id} = this.props.houseDetail;
-    console.log("HDT: ", this.props.houseDetail);
+    // console.log("HDT: ", this.props.houseDetail);
 
     const {showDetail} = this.state;
 
