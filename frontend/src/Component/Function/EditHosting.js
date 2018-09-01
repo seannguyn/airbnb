@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {Consumer} from '../../Context.js';
 import axios from 'axios';
+import 'react-dates/initialize';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 
 class EditHosting extends Component {
 
@@ -14,6 +17,10 @@ class EditHosting extends Component {
             date_end: '',
             price: '',
             description: '',
+
+            date_start_onchange: '',
+            date_end_onchange: '',
+
             error: {}
         }
     }
@@ -52,6 +59,21 @@ class EditHosting extends Component {
 
     //set State when changing text
     onChange = (e) => {
+        
+        if( e.target.name == 'date_start'){
+            let date_start = new Date(e.target.value)
+            this.setState({date_start_onchange: date_start});
+        }
+
+        if(e.target.name == 'date_end'){
+            console.log("DATE END: ", this.state.date_start_onchange);
+            let date_end = new Date(e.target.value)
+            console.log("DATE INVALID", typeof(date_end));
+            if(date_end < this.state.date_start_onchange){
+                console.log("DATE INVALID", typeof(e.target.value));
+            }
+        }
+
         this.setState({[e.target.name] : e.target.value});
     }
 
@@ -124,12 +146,25 @@ class EditHosting extends Component {
                     const {currentUser} = value;
                     console.log(currentUser);
                 return (
+                
+                 
 
                 <div className="card-body mb-3">
 
                 <div className="card-header">Host Accommodation</div>
 
                 <div className="card-body">
+                
+                <DateRangePicker
+                    startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+                    startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                    endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                    endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                    onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+                    focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                    onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                />
+                
                 <form onSubmit={this.onSubmit.bind(this, dispatch, currentUser)}>
 
                 <label htmlFor="date_start">Start Date</label>
