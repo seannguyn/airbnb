@@ -6,13 +6,10 @@ from .models import *
 class AmenitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Amenity
-        fields = ('id', 'type')
+        fields = ('id', 'category', 'name')
 
 
 class AccommodationImageSerializer(serializers.ModelSerializer):
-    # might need this to show the url in the api instead of file path
-    # image = serializers.ImageField(max_length=None, allow_empty_file=False, use_url=True)
-
     class Meta:
         model = AccommodationImage
         fields = ('id', 'accommodation', 'image')
@@ -21,11 +18,7 @@ class AccommodationImageSerializer(serializers.ModelSerializer):
 class AccommodationSerializer(serializers.ModelSerializer):
     user = serializers.HyperlinkedRelatedField(queryset=User.objects.all(), view_name='user-detail')
     host = serializers.ReadOnlyField(source='user.username')
-    amenities = serializers.SlugRelatedField(
-        many=True,
-        queryset=Amenity.objects.all(),
-        slug_field='type'
-     )
+    amenities = serializers.PrimaryKeyRelatedField(many=True, queryset=Amenity.objects.all())
 
     class Meta:
         model = Accommodation

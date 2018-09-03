@@ -4,6 +4,24 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import AddHosting from './AddHosting';
 
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+const styles = {
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+};
+
 class House extends React.Component {
 
   constructor() {
@@ -22,7 +40,7 @@ class House extends React.Component {
   // pass an axios to backend, requesting for delete
     async handleDelete(id, dispatch) {
 
-      console.log('delete',this.props.value,this.props.myHouses,id);
+      // console.log('delete',this.props.value,this.props.myHouses,id);
 
       const {myHostingList} = this.props.value;
       let i =0;
@@ -48,34 +66,20 @@ class House extends React.Component {
 
     const {addr_number, addr_street, addr_city} = this.props.houseDetail;
     const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.props.houseDetail;
-<<<<<<< HEAD:airbnbClone/frontend/src/Component/Function/House.js
-    
-    const {user} = this.props.houseDetail; //-- from houses.js -- account id in each house in houselist
-=======
-
     const {user} = this.props.houseDetail; //-- from houses.js -- user id in each house in houselist
->>>>>>> 525e9dfc2ecfa6bdc7bc2acc6164ded7495d8159:frontend/src/Component/Function/House.js
     const {id} = this.props.houseDetail;
     console.log("HDT: ", this.props.houseDetail);
 
     const {showDetail} = this.state;
-
-<<<<<<< HEAD:airbnbClone/frontend/src/Component/Function/House.js
-    const isMyHouse = false; // flag to check if which current account's houses - for hosting button
-=======
     const isMyHouse = false; // flag to check if which current user's houses - for hosting button
->>>>>>> 525e9dfc2ecfa6bdc7bc2acc6164ded7495d8159:frontend/src/Component/Function/House.js
     const isHosting = false;// flag to check if the accom is hosting
+
+    const { classes} = this.props;
+
     return (
       <Consumer>
         { value => {
           const {dispatch} = value;
-<<<<<<< HEAD:airbnbClone/frontend/src/Component/Function/House.js
-          // console.log("in HOUSE.js current account", value.currentUser);
-  
-          const {currentUser, myHostingList} = value;
-=======
->>>>>>> 525e9dfc2ecfa6bdc7bc2acc6164ded7495d8159:frontend/src/Component/Function/House.js
 
           const {currentUser, myHostingList} = value;
 
@@ -87,11 +91,8 @@ class House extends React.Component {
             }
             let counter = 0;
             let i = 0;
-            // this.isHosting = false;
             for(i=0; i < myHostingList.length; i++){
-              console.log("counter: ", i);
-              console.log("cp: ", 0 + parseInt(myHostingList[i].accommodation), id);
-              if( (0 + parseInt(myHostingList[i].accommodation)) === id){
+              if(parseInt(myHostingList[i].accommodation) === id){
                 this.isHosting = true;
                 break;
               }else{
@@ -103,27 +104,28 @@ class House extends React.Component {
 
           return (
 
-            <div className="card card-body mb-3">
-              <h5>
+    <div style={{padding:"1rem"}}>
+      <Card className={classes.card} style={{width:'30vw'}} >
+            <CardContent>
+              <Typography gutterBottom variant="headline" component="h2">
                 {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
                 <i  className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)} style={{cursor:'pointer', float:'right',color:'red'}}/>
+              </Typography>
 
-                <Link to={`editHouse/${id}`}>
-                  <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
-                </Link>
+              <Link to={`editHouse/${id}`}>
+                <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
+              </Link>
 
+          </CardContent>
               {this.isMyHouse === true && this.isHosting === true?
-                <div>
-                  <Link to={`/edithosting/${id}`}>
-                    <i>Edit hosting</i>
+                  <Link to={{ pathname: `/editHouse/${id}`, state: { stage: 3} }}>
+                    <i className="fas fa-circle" style={{color:"green"}}>Active</i>
                   </Link>
-                </div>
-              : <Link to={`/hosting/${id}`}>
-                    <i>Hosting</i>
+              : <Link to={`/editHouse/${id}`}>
+                    <i className="fas fa-circle" style={{color:"grey"}}>Inactive Host</i>
                   </Link>
 
               }
-              </h5>
 
               {showDetail === true ?
                 <ul className="list-group">
@@ -140,7 +142,8 @@ class House extends React.Component {
                 </ul>
                 : null}
 
-            </div>
+            </Card>
+          </div>
           )
         }}
 
@@ -151,4 +154,4 @@ class House extends React.Component {
   }
 }
 
-export default House;
+export default withStyles(styles)(House);

@@ -24,7 +24,7 @@ from airbnbClone import settings
 app_name = 'main'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),\
+    path('admin/', admin.site.urls),
     path('api/', include('backend.urls')),
     path('', TemplateView.as_view(template_name='index.html')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

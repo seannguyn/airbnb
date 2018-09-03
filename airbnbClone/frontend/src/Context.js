@@ -30,13 +30,7 @@ const reducer = (state,action) => {
       }
 
       case 'LOGIN':
-<<<<<<< HEAD:airbnbClone/frontend/src/Context.js
-        console.log('login account login');
-        
-=======
         console.log('login user login');
-
->>>>>>> 525e9dfc2ecfa6bdc7bc2acc6164ded7495d8159:frontend/src/Context.js
         return {
           ...state,
           currentUser: [action.payload, ...state.currentUser]
@@ -150,7 +144,6 @@ export class Provider extends Component {
           }
         }
       )
-
 
       if(this.state.myHostingList.length == 0 ){
         const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)

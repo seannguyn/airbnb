@@ -33,9 +33,11 @@ class EditHouse extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const {HouseList, currentUser} = this.props;
     const {id} = this.props;
+
+    console.log(this.props,"propss");
 
     this.setState({currentUser: currentUser}, () => {
       console.log("current user", currentUser[0]);
@@ -43,11 +45,12 @@ class EditHouse extends Component {
 
     let i =0;
     var result;
-    for(i=0; i<HouseList.length; i++){
+    for(i=0; i < HouseList.length; i++){
       if(HouseList[i].id == id){
         result = HouseList[i];
       }
     }
+
 
     console.log("here",result);
 
@@ -72,11 +75,7 @@ class EditHouse extends Component {
       description: result.description,
     })
 
-    // axios call ???
-    // const {id} = this.props.match.params;
-    // const res = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`);
-    // console.log(res.data);
-    // this.setState({name: res.data.name, website: res.data.website, email: res.data.email})
+    // =>
 
   }
 
@@ -90,6 +89,31 @@ class EditHouse extends Component {
 
     const {id, user, Accommodation_Type, number, street, city, state} = this.state;
     const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
+
+    if (number === '') {
+      this.setState({error:{number:"number is required"}})
+      return;
+    } else if (!isFinite(String(number))) {
+      this.setState({error:{number:"numeric please"}})
+      return;
+    }
+    // if (street === '' ) {
+    //   this.setState({error:{street:"street is required"}})
+    //   return;
+    // }
+    // if (city === '' ) {
+    //   this.setState({error:{city:"city is required"}})
+    //   return;
+    // }
+    //
+    // if (bedroom === ''  || !isFinite(String(bedroom))) {
+    //   this.setState({error:{bedroom:"bedroom is required"}})
+    //   return;
+    // }
+    // if (bathroom === '' || !isFinite(String(bathroom))) {
+    //   this.setState({error:{bathroom:"bathroom is required"}})
+    //   return;
+    // }
 
     const editHouse ={
       id: id,
@@ -127,32 +151,6 @@ class EditHouse extends Component {
 
     dispatch({type:'EDIT_HOUSE', payload:editHouse})
 
-
-    if (number === '') {
-      this.setState({error:{number:"number is required"}})
-      return;
-    } else if (!isFinite(String(number))) {
-      this.setState({error:{number:"numeric please"}})
-      return;
-    }
-    if (street === '' ) {
-      this.setState({error:{street:"street is required"}})
-      return;
-    }
-    if (city === '' ) {
-      this.setState({error:{city:"city is required"}})
-      return;
-    }
-
-    if (bedroom === ''  || !isFinite(String(bedroom))) {
-      this.setState({error:{bedroom:"bedroom is required"}})
-      return;
-    }
-    if (bathroom === '' || !isFinite(String(bathroom))) {
-      this.setState({error:{bathroom:"bathroom is required"}})
-      return;
-    }
-
     this.setState({
 
       number: '',
@@ -172,7 +170,7 @@ class EditHouse extends Component {
       error:{}
     })
 
-    this.props.history.push("/myhouses")
+    this.props.navigateTo(2);
 
   }
 
