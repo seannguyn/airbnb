@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR,'templates')
-STATIC_DIR = os.path.join(BASE_DIR,'static')
+# STATIC_DIR = os.path.join(BASE_DIR,'static')
 MEDIA_DIR = os.path.join(BASE_DIR,'media')
 
 # Quick-start development settings - unsuitable for production
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'rest_auth',
     'api',
     'basic_func',
@@ -59,16 +59,16 @@ INSTALLED_APPS = [
     'django_adminlte',
     'django_adminlte_theme',
     'rest_framework',
-   
+
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.AllowAny',
-        # 'rest_framework.permissions.IsAuthenticated', # uncomment this line to enable authentication
+        'rest_framework.permissions.IsAuthenticated', # uncomment this line to enable authentication
     ],
 
-    'DEFAULT_AUTHENTICATION_CLASSES': [   
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
 
@@ -102,7 +102,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
-    '127.0.0.1:3000'
+    '127.0.0.1:3000',
+    'https://localhost:8000',
+    'localhost:8000',
 )
 
 CORS_ALLOW_METHODS = (
@@ -124,7 +126,7 @@ TAWKTO_IS_SECURE=True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR,os.path.join(BASE_DIR, 'templates', 'allauth')],
+        'DIRS': [os.path.join(BASE_DIR, '..', 'frontend', 'build'), os.path.join(BASE_DIR, 'templates', 'allauth')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -194,7 +196,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR,]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '..', 'frontend', 'build', 'static')
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = MEDIA_DIR

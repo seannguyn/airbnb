@@ -24,7 +24,7 @@ class Login extends Component {
         e.preventDefault();
 
         const {username, password, error} = this.state;
-        
+
         if (username === '' ) {
           this.setState({error:{username:"username is required"}})
           return;
@@ -39,7 +39,7 @@ class Login extends Component {
             password
         }
 
-        // console.log("loggin check",res.data);
+        console.log("loggin check", account);
 
         //GET USER AUTH TOKEN - DJANGO
 
@@ -48,6 +48,7 @@ class Login extends Component {
         await axios.post('https://localhost:8000/api-token-auth/', account)
             .then(response => {
                 res = response.data;
+
                 dispatch({type:'LOGIN', payload:response.data});
             })
             .catch(error => {
@@ -65,8 +66,8 @@ class Login extends Component {
 
         // console.log("RES: ", res);
         if( res != null){
-            
-            
+
+
             this.setState({
                 username:'',
                 password:'',
@@ -96,25 +97,25 @@ class Login extends Component {
                     <div className="card-body">
                     <div className="container">
                     <form onSubmit={this.onSubmit.bind(this, dispatch)}>
-                  
+
                         <TextInputGroup
                             label="Username"
-                            type="text" 
-                            name="username" 
-                            className="form-control form-control-lg" 
+                            type="text"
+                            name="username"
+                            className="form-control form-control-lg"
                             placeholder="Enter username..."
                             onChange={this.onChange}
                             error={this.state.error.username}/>
-            
+
                         <TextInputGroup
-                            label="Password" 
-                            type="password" 
-                            name="password" 
-                            className="form-control form-control-lg" 
+                            label="Password"
+                            type="password"
+                            name="password"
+                            className="form-control form-control-lg"
                             placeholder="Enter password..."
                             onChange={this.onChange}
                             error={this.state.error.password}/>
-                        
+
                         <input type="submit" className="btn btn-block btn-light" value="Login"></input>
                     </form>
                     <div>
@@ -122,11 +123,11 @@ class Login extends Component {
                            <i className="fas fa-registered">Register</i>
                        </Link>
                     </div>
-                        
+
                     <Link to="" className="">
                         <i className="fab fa-facebook-square">Login with Facebook</i>
                     </Link>
-                    
+
                     </div>
                     </div>
 

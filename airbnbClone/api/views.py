@@ -10,6 +10,7 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from api import views
 
 from .functions import compareDate
+from django.views.decorators.csrf import csrf_exempt
 
 # Facebook
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
@@ -270,8 +271,8 @@ class Users(viewsets.ModelViewSet):
 
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
-    
-    
+
+
 
     """ This would get all users """
     def get_queryset(self):
@@ -280,7 +281,7 @@ class Users(viewsets.ModelViewSet):
         # user_pk = None
         # if self.kwargs:
         #     user_pk = self.kwargs['pk']
-    
+
         # if user_pk is not None:
         #     """ return username if /users/id exist """
         #     queryset = queryset.filter(user=user_pk)
@@ -310,6 +311,7 @@ class Users(viewsets.ModelViewSet):
 
 
 """ Custom authentication - return Token, username and email """
+@csrf_exempt
 class CustomAuthToken(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):

@@ -39,7 +39,7 @@ urlpatterns = [
 	# path('accommodationHosting/<id>/$', views.AccommodationHostingView.as_view()),
 
 	path('rest-auth/', include('rest_auth.urls')),
-	url(r'^api-token-auth/', views.CustomAuthToken.as_view()),
+	url(r'^api-token-auth/', views.CustomAuthToken),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
