@@ -52,7 +52,6 @@ class App extends Component {
 
                   {/* Route for room */}
                   <Route exact path="/accommodations/:id" component={AccommodationDetail}></Route>
-
                 </Switch>
 
               </div>
