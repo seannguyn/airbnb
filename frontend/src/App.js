@@ -15,6 +15,7 @@ import ContextApi from './Component/Contexts/Context_api.js';
 import AllHostingContext from './Component/Contexts/AllHostingContext';
 import AddHouseContext from './Component/Contexts/AddHouseContext';
 import EditHostingContext from './Component/Contexts/EditHostContext';
+import AccommodationDetail from './Component/AccommodationDetail/AccommodationDetail';
 
 import GuttersGrid from './Component/Grid/GridItem';
 import Demo from './Component/Grid/GridItem';
@@ -26,7 +27,7 @@ class App extends Component {
 
       <Header />
         <Router>
-          
+
           <div className="container-fluid">
             <div className="row">
               <div className="col-sm">
@@ -48,12 +49,16 @@ class App extends Component {
                   <Route exact path="/hosting/:id" component={AddHosting}></Route>
                   <Route exact path="/edithosting/:id" component={EditHostingContext}></Route>
                   <Route exact path="/grid" component={Demo}></Route>
+
+                  {/* Route for room */}
+                  <Route exact path="/accommodations/:id" component={AccommodationDetail}></Route>
+
                 </Switch>
 
               </div>
           </div>
         </div>
-      
+
       </Router>
       </Provider>
     );
