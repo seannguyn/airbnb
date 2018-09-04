@@ -12,11 +12,6 @@ class AccommodationDetail extends Component {
             accomDetail: {}
         }
     }
-<<<<<<< HEAD
-
-=======
-
->>>>>>> origin/Front-end-Date-pick
     async componentDidMount(){
 
         const {id} = this.props.match.params;
@@ -57,9 +52,4 @@ class AccommodationDetail extends Component {
          );
     }
 }
-<<<<<<< HEAD
-
-=======
-
->>>>>>> origin/Front-end-Date-pick
 export default AccommodationDetail;
