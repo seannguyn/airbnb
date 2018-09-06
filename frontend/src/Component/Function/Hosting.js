@@ -16,7 +16,7 @@ import house from './house.jpeg';
 
 const styles = {
   card: {
-    maxWidth: 345,
+    maxWidth: 300,
   },
   media: {
     height: 140,
@@ -41,7 +41,7 @@ class Hosting extends React.Component {
   }
 
   starCalculator(reviews){
-    let avgRating = 0; 
+    let avgRating = 0;
 
     for(let key in reviews){
       if(reviews.hasOwnProperty(key)){
@@ -97,17 +97,17 @@ class Hosting extends React.Component {
       <div style={{padding:"1rem"}}>
       <Card className={classes.card} style={{}}>
         <CardActionArea>
-          <CardMedia>
+          <CardMedia src="ddd" img="ddd">
               <img src="https://www.mcdonaldjoneshomes.com.au/sites/default/files/styles/page-banner-image/public/page-banner-images/h-l-img4.jpg?itok=vz-MtVAj" height="250" width="345"/>
           </CardMedia>
-          
+
         </CardActionArea>
 
           <CardContent>
               <Typography gutterBottom variant="headline" component="h2">
                 {house.Accomodation_Type} ${SingleHost.price}/night
               </Typography>
-                
+
               <Typography component="p">
                   {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
                   <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
@@ -124,21 +124,21 @@ class Hosting extends React.Component {
 
           {reviews.length > 0 ?
           <CardContent>
-            <Rating 
-                readonly={readonly} 
+            <Rating
+                readonly={readonly}
                 initialRating={avgRating}
             />
             <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
             </CardContent>
           : <CardContent>
-              <Rating 
-                readonly={readonly} 
+              <Rating
+                readonly={readonly}
                 initialRating={0}
             />
               No reviews yet
-            </CardContent> 
+            </CardContent>
           }
-          
+
           {this.state.seeReviews ?
             <CardContent>{
               reviews.map(review =>
@@ -152,7 +152,7 @@ class Hosting extends React.Component {
                   closeReview={this.showReview.bind(this)}
               />
               )
-              
+
             }
               <button onClick={this.showReview.bind(this)}>Close</button>
             </CardContent>
