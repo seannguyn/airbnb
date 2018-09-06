@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Consumer} from '../../Context.js';
 import axios from 'axios';
 
+
 class EditHosting extends Component {
 
     constructor() {
@@ -14,6 +15,7 @@ class EditHosting extends Component {
             date_end: '',
             price: '',
             description: '',
+            
             error: {}
         }
     }
@@ -28,18 +30,16 @@ class EditHosting extends Component {
         const{HouseList, currentUser, myHostingList} = this.props;
         const{id} = this.props;
 
-        console.log('PROPSSSShosting: ', myHostingList, id);
-
-
-        let i =0;
+        // console.log('PROPSSSShosting: ', myHostingList, id);
+        let i = 0;
         var result;
         for(i=0; i<myHostingList.length; i++){
           if(myHostingList[i].accommodation == id){
             result = myHostingList[i];
           }
         }
-        console.log("FILTER EDITHOUSING: ", result);
-        console.log("FILTER EDITHOUSING: ", result.date_start);
+        // console.log("FILTER EDITHOUSING: ", result);
+        // console.log("FILTER EDITHOUSING: ", result.date_start);
         this.setState({
             id: result.id,
             accommodation: result.accommodation,
@@ -52,6 +52,21 @@ class EditHosting extends Component {
 
     //set State when changing text
     onChange = (e) => {
+        
+        if( e.target.name == 'date_start'){
+            let date_start = new Date(e.target.value)
+            this.setState({date_start_onchange: date_start});
+        }
+
+        if(e.target.name == 'date_end'){
+            console.log("DATE END: ", this.state.date_start_onchange);
+            let date_end = new Date(e.target.value)
+            console.log("DATE INVALID", typeof(date_end));
+            if(date_end < this.state.date_start_onchange){
+                console.log("DATE INVALID", typeof(e.target.value));
+            }
+        }
+
         this.setState({[e.target.name] : e.target.value});
     }
 
@@ -124,14 +139,15 @@ class EditHosting extends Component {
                     const {currentUser} = value;
                     console.log(currentUser);
                 return (
-
+                
                 <div className="card-body mb-3">
 
                 <div className="card-header">Host Accommodation</div>
 
                 <div className="card-body">
+                
                 <form onSubmit={this.onSubmit.bind(this, dispatch, currentUser)}>
-
+                    
                 <label htmlFor="date_start">Start Date</label>
                     <div className="form-group">
                         <input type="date"

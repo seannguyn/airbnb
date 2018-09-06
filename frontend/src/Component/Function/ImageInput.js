@@ -9,7 +9,6 @@ class ImageInput extends React.Component {
       file: {},
       imgId: ''
     }
-
   }
 
   componentWillMount() {
@@ -37,7 +36,6 @@ class ImageInput extends React.Component {
         this.props.onChang(e.target.files[0]);
       }
         // this.props.onChange(e.target.files[0]);
-
   }
 
   deletePic(fileURL, file, imgId) {
@@ -53,6 +51,7 @@ class ImageInput extends React.Component {
 
     // send back the file, delete from the parent state
     const {fileURL,file,imgId} = this.state;
+    console.log("FROM IMAGE INPUT: ", fileURL);
 
     return (
 
@@ -81,12 +80,6 @@ class ImageInput extends React.Component {
       		</label>
       </div>
 
-
-      // <div>
-      //   <input className="imgInput" type="file" name="imageInput" onChange={this.uploadPic.bind(this)}/>
-      //   <img src={this.state.fileURL} height="400" width="400"/>
-      //   <button onClick={this.deletePic.bind(this, fileURL, file, imgId )}>Delete photo</button>
-      // </div>
     );
   }
 }

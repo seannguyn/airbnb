@@ -13,6 +13,10 @@ class Hosting extends Component {
             date_end: '',
             price: '',
             description: '',
+
+            startDate: {},
+            endDate: {},
+
             error: {}
         }
     }
@@ -65,6 +69,7 @@ class Hosting extends Component {
     }
 
     render() {
+        console.log('ADDHOSTING: ', this.props);
         return (
             <Consumer>
                 {value => {

@@ -68,17 +68,11 @@ class Images extends React.Component {
         break;
       }
     }
-
-
-
   }
 
   async uploadPic(file) {
 
-
     console.log("upload parent",file);
-
-
     const config = {
         headers: {
             'content-type': 'multipart/form-data'
@@ -120,7 +114,6 @@ class Images extends React.Component {
     this.setState({images: newImages, files: newURL, idList:idList })
     this.props.imgNumber(idList.length);
   }
-
 
   render () {
 
