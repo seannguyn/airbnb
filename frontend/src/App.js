@@ -19,6 +19,7 @@ import AccommodationDetail from './Component/AccommodationDetail/AccommodationDe
 
 import GuttersGrid from './Component/Grid/GridItem';
 import Demo from './Component/Grid/GridItem';
+import MyBookings from './Component/Booking/MyBookings';
 
 class App extends Component {
   render() {
@@ -52,6 +53,9 @@ class App extends Component {
 
                   {/* Route for room */}
                   <Route exact path="/accommodations/:id" component={AccommodationDetail}></Route>
+
+                  {/* Route for my bookings */}
+                  <Route exact path="/mybookings" component={MyBookings}></Route>
                 </Switch>
 
               </div>

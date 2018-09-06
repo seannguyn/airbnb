@@ -56,7 +56,7 @@ const Sidebar = (props) => {
 
               <h3>Features</h3>
               <li className="nav-item">
-                <a className="nav-link" href="/">
+                <a className="nav-link" href="/mybookings">
                   <span data-feather="shopping-cart"></span>
                   My Bookings
                 </a>

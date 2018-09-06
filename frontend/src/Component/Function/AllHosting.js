@@ -1,7 +1,7 @@
 import React from 'react'
-import AllHostingContext from '../Contexts/AllHostingContext'
+// import AllHostingContext from '../Contexts/AllHostingContext'
 import Hosting from './Hosting'
-import ComplexGrid from '../Grid/GridItem';
+
 
 class AllHosting extends React.Component {
 

@@ -81,7 +81,7 @@ class Booking(models.Model):
 
     hosting = models.ForeignKey(AccommodationHosting, on_delete=models.CASCADE)
     booker = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    
     date_start = models.DateField(default=datetime.datetime.today)
     date_end = models.DateField(default=datetime.datetime.today)
 
