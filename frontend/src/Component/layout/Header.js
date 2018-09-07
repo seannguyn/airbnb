@@ -19,6 +19,7 @@ import Avatar from '@material-ui/core/Avatar';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import LoginDialog from './LoginDialog'
+import { CardActionArea } from '../../../node_modules/@material-ui/core';
 
 
 const drawerWidth = 240;
@@ -185,9 +186,10 @@ class Header extends Component {
                   <MenuIcon />
                 </IconButton>
 
-                <Typography style={{flex:1}} className={classNames(!logged_in && classes.transparent)} variant="title" color="inherit" noWrap>
-                  portBnB
-                </Typography>
+                  <Typography style={{flex:1}} className={classNames(!logged_in && classes.transparent)} variant="title" color="inherit" noWrap>
+                    portBnB
+                  </Typography>
+
                 <Button color="inherit">About us</Button>
                 {logged_in === true ?
                   <div>

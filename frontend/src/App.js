@@ -16,6 +16,7 @@ import AccommodationDetail from './Component/AccommodationDetail/AccommodationDe
 
 import GuttersGrid from './Component/Grid/GridItem';
 import Demo from './Component/Grid/GridItem';
+import MyBookings from './Component/Booking/MyBookings';
 import AppMain from './AppMain'
 
 class App extends Component {

@@ -67,12 +67,14 @@ class Items extends React.Component {
            <ListItemText primary="Property" />
          </ListItem>
         </Link>
+      <Link to="/mybookings">
        <ListItem button>
          <ListItemIcon>
            <WorkIcon />
          </ListItemIcon>
          <ListItemText primary="Booking" />
        </ListItem>
+       </Link>
 
       </List>
     )

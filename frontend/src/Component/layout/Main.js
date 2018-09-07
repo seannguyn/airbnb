@@ -7,6 +7,8 @@ import ContextApi from '../Contexts/Context_api.js';
 import AddHouseContext from '../Contexts/AddHouseContext.js';
 
 import MyHouses from '../Function/MyHouses'
+import MyBookings from '../Booking/MyBookings';
+import AccommodationDetail from '../AccommodationDetail/AccommodationDetail';
 
 const styles = theme => ({
   toolbar: {
@@ -32,7 +34,6 @@ class Main extends React.Component {
       <main className={classes.content}>
         <div className={classes.toolbar} />
           <Switch>
-
             <Route exact path="/" component={AllHostingContext}></Route>
             <Route exact path="/myhouses" component={MyHouses}></Route>
             <Route exact path="/editHouse/:id" component={ContextApi}></Route>
@@ -40,6 +41,8 @@ class Main extends React.Component {
             <Route component={NotFound}></Route>
 
 
+            <Route exact path="/accommodations/:id" component={AccommodationDetail}></Route>
+            <Route exact path="/mybookings" component={MyBookings}></Route>
           </Switch>
       </main>
     )
