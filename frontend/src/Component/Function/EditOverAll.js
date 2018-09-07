@@ -26,6 +26,17 @@ TabContainer.propTypes = {
 };
 
 const styles = theme => ({
+  layout: {
+    width: 'auto',
+    display: 'block', // Fix IE11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 700,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
 });
 
 class EditOverAll extends React.Component {
@@ -60,7 +71,7 @@ class EditOverAll extends React.Component {
   render () {
 
 
-    const { theme } = this.props;
+    const { theme, classes } = this.props;
     const {swipe} = this.state;
 
     const {picture} = this.state;
@@ -83,10 +94,12 @@ class EditOverAll extends React.Component {
             <Tab label="Host" />
           </Tabs>
         </AppBar>
+        <main className={classes.layout}>
         <SwipeableViews
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={swipe}
           onChangeIndex={this.switchIndex.bind(this)}
+
         >
 
             <EditHouse
@@ -96,13 +109,14 @@ class EditOverAll extends React.Component {
               currentUser={this.props.currentUser}
               HouseList={this.props.HouseList}
              >
+             </EditHouse>
 
-           </EditHouse>
            <Images imgNumber={this.imgNumber.bind(this)} dir={theme.direction} id={this.props.id} />
-           <div dir={theme.direction}>{ hasHost[0]}</div>
+           <div >{ hasHost[0]}</div>
 
 
         </SwipeableViews>
+        </main>
       </div>
     )
   }
