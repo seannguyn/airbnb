@@ -66,7 +66,8 @@ const reducer = (state,action) => {
           sidebar_show: !sidebar_show
         }
       case 'LOGOUT':
-        console.log("here");
+        console.log("here LOGOUT");
+        window.localStorage.clear();
         return {
           ...state,
           logged_in: false,
@@ -109,7 +110,7 @@ export class Provider extends Component {
     this.state = {
       HouseList : [],
       myHouseList: [],
-      currentUser: {},
+      currentUser: [],
       myHostingList: [],
       AllHostingList: [],
       sidebar_show: false,
@@ -127,7 +128,7 @@ export class Provider extends Component {
 
   async componentDidMount(){
 
-    // console.log("DID MOunt: ", this.state.currentUser);
+    console.log("DID MOunt: ", this.state.currentUser);
 
     const res = await axios.get('https://localhost:8000/accommodation/');
     this.setState({HouseList: res.data});
@@ -136,7 +137,7 @@ export class Provider extends Component {
     const allHosting = await axios.get('https://localhost:8000/accommodationHosting/');
     this.setState({AllHostingList: allHosting.data});
 
-    if(this.state.currentUser[0] != null) {
+    if(this.state.currentUser.length === 1) {
       const {token,user_id} = this.state.currentUser[0];
 
       const res = await axios.get(`https://localhost:8000/accommodationHosting/?user=${user_id}`,
@@ -157,15 +158,15 @@ export class Provider extends Component {
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
-    localStorage.getItem('currentUser')
+    // localStorage.getItem('currentUser')
     // && localStorage.getItem('HouseList')
     // localStorage.getItem('myHostingList') && localStorage.getItem('AllHostingList')
-    && this.setState({
-      currentUser: JSON.parse(localStorage.getItem('currentUser')),
+    // && this.setState({
+      // currentUser: JSON.parse(localStorage.getItem('currentUser')),
       // HouseList: JSON.parse(localStorage.getItem('HouseList')),
       // myHostingList: JSON.parse(localStorage.getItem('myHostingList')),
       // AllHostingList: JSON.parse(localStorage.getItem('AllHostingList')),
-    });
+    // });
 
   }
 
@@ -182,7 +183,7 @@ export class Provider extends Component {
         console.log('User data from local storage');
       }
 
-      if(this.state.currentUser[0] != null){
+      if(this.state.currentUser.length === 1){
         const {token,user_id} = this.state.currentUser[0];
 
         const res = await axios.get('https://localhost:8000/accommodationHosting/',

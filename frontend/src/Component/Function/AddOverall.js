@@ -8,6 +8,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import {Consumer} from '../../Context.js';
+import Forbidden from '../layout/Forbidden';
 
 function TabContainer({ children, dir }) {
   return (
@@ -54,12 +55,9 @@ class AddOverAll extends React.Component {
         {value => {
           const {dispatch} = value;
           const {HouseList, currentUser, myHostingList} = value;
-          if(value["currentUser"][0] == null){
+          if(currentUser.length === 0){
                return (
-                <React.Fragment>
-                    <h1>Add Houses</h1>
-                    <p>You are not login yet</p>
-                </React.Fragment>
+                <Forbidden/>
               );
           } else {
             return (

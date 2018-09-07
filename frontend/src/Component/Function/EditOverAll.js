@@ -11,6 +11,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import Forbidden from '../layout/Forbidden'
 
 function TabContainer({ children, dir }) {
   return (
@@ -76,49 +77,56 @@ class EditOverAll extends React.Component {
 
     const {picture} = this.state;
 
-    const {hasHost} = this.props;
+    const {hasHost, currentUser} = this.props;
 
 
-    return (
-      <div>
-        <AppBar position="static" color="default" style={{marginBottom: '15px'}}>
-          <Tabs
-            value={swipe}
-            onChange={this.changeTab.bind(this)}
-            indicatorColor="primary"
-            textColor="primary"
-            fullWidth
+    if (currentUser.length === 0) {
+      return (
+       <Forbidden/>
+     )
+    } else {
+      return (
+        <div>
+          <AppBar position="static" color="default" style={{marginBottom: '15px'}}>
+            <Tabs
+              value={swipe}
+              onChange={this.changeTab.bind(this)}
+              indicatorColor="primary"
+              textColor="primary"
+              fullWidth
+            >
+              <Tab label="Property Information" />
+              <Tab label="Picture" />
+              <Tab label="Host" />
+            </Tabs>
+          </AppBar>
+          <main className={classes.layout}>
+          <SwipeableViews
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={swipe}
+            onChangeIndex={this.switchIndex.bind(this)}
+
           >
-            <Tab label="Property Information" />
-            <Tab label="Picture" />
-            <Tab label="Host" />
-          </Tabs>
-        </AppBar>
-        <main className={classes.layout}>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={swipe}
-          onChangeIndex={this.switchIndex.bind(this)}
 
-        >
+              <EditHouse
+                dir={theme.direction}
+                history={this.props.history}
+                id={this.props.id}
+                currentUser={this.props.currentUser}
+                HouseList={this.props.HouseList}
+               >
+               </EditHouse>
 
-            <EditHouse
-              dir={theme.direction}
-              history={this.props.history}
-              id={this.props.id}
-              currentUser={this.props.currentUser}
-              HouseList={this.props.HouseList}
-             >
-             </EditHouse>
-
-           <Images imgNumber={this.imgNumber.bind(this)} dir={theme.direction} id={this.props.id} />
-           <div >{ hasHost[0]}</div>
+             <Images imgNumber={this.imgNumber.bind(this)} dir={theme.direction} id={this.props.id} />
+             <div >{ hasHost[0]}</div>
 
 
-        </SwipeableViews>
-        </main>
-      </div>
-    )
+          </SwipeableViews>
+          </main>
+        </div>
+      )
+    }
+
   }
 }
 export default withStyles(styles, { withTheme: true })(EditOverAll);

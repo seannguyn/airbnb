@@ -1,7 +1,7 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-
+import NotFound from './NotFound'
 import AllHostingContext from '../Contexts/AllHostingContext'
 import ContextApi from '../Contexts/Context_api.js';
 import AddHouseContext from '../Contexts/AddHouseContext.js';
@@ -37,6 +37,8 @@ class Main extends React.Component {
             <Route exact path="/myhouses" component={MyHouses}></Route>
             <Route exact path="/editHouse/:id" component={ContextApi}></Route>
             <Route exact path="/addHouse" component={AddHouseContext}></Route>
+            <Route component={NotFound}></Route>
+
 
           </Switch>
       </main>
