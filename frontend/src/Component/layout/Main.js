@@ -38,11 +38,12 @@ class Main extends React.Component {
             <Route exact path="/myhouses" component={MyHouses}></Route>
             <Route exact path="/editHouse/:id" component={ContextApi}></Route>
             <Route exact path="/addHouse" component={AddHouseContext}></Route>
-            <Route component={NotFound}></Route>
+
 
 
             <Route exact path="/accommodations/:id" component={AccommodationDetail}></Route>
             <Route exact path="/mybookings" component={MyBookings}></Route>
+            <Route component={NotFound}></Route>
           </Switch>
       </main>
     )
