@@ -93,7 +93,7 @@ class House extends React.Component {
             let counter = 0;
             let i = 0;
             for(i=0; i < myHostingList.length; i++){
-              if(parseInt(myHostingList[i].accommodation, 10) === id){
+              if(parseInt(myHostingList[i].accommodation, ) === id){
                 this.isHosting = true;
                 break;
               }else{

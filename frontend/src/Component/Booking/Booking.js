@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import aixos from 'axios'
+import axios from 'axios'
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 // import CardActionArea from '@material-ui/core/CardActionArea'
@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent'
 // import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import { CardMedia, CardActions } from '../../../node_modules/@material-ui/core';
 // import {Link} from 'react-router-dom'
 
 
@@ -28,7 +29,7 @@ class Booking extends Component {
     }
 
     handleDelete = async (id) => {
-        await aixos.delete(`https://localhost:8000/booking/${id}/`);
+        await axios.delete(`https://localhost:8000/booking/${id}/`);
         alert("Delete successfully - reload page");
     }
 
@@ -36,14 +37,31 @@ class Booking extends Component {
 
     }
 
+    findImages = (images) => {
+
+    }
+
+    async componentDidMount(){
+
+        const images = await axios.get('https://localhost:8000/accommodationImage/');
+        this.findImages(images.data);
+
+    }
+
     render() {
         const { id, date_start, date_end, note } = this.props.booking;
-        // console.log("BOOKIN: ", booking);
         const { classes } = this.props;
-
+        console.log("Propsss: ", this.props);
         return (
             <React.Fragment>
                 <Card className={classes.card} style={{width:'30vw'}} >
+
+                    <CardActions>
+                        {/* <CardMedia>
+
+                        </CardMedia> */}
+                    </CardActions>
+
                     <CardContent>
                         <Typography gutterBottom variant="headline" component="h2">
                         From: {date_start}
