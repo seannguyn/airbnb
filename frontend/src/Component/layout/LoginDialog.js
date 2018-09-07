@@ -129,8 +129,7 @@ class LoginDialog extends React.Component {
             username: '',
             password: '',
             password_confirm:'',
-            error: {},
-            error_bool: false,
+
           })
 
     } else {
@@ -168,7 +167,6 @@ class LoginDialog extends React.Component {
                   this.setState({error:{}, error_bool: false})
               })
 
-      this.setState({error:{}, error_bool: false})
     }
 
   }
