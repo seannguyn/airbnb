@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Consumer} from '../../Context.js';
 import House from './House.js'
+import {Link} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 class MyHouses extends Component {
 
@@ -44,7 +46,12 @@ class MyHouses extends Component {
                         return (
                             <React.Fragment>
                                 <h1>My Houses</h1>
-                                <div className="row">   
+                                <Link to="/addHouse">
+                                  <Button
+                                    variant="raised" color="primary">Add Property
+                                  </Button>
+                                </Link>
+                                <div className="row">
                                     {myHouses.map(house => (
                                         <House key={house.id}
                                         houseDetail={house}

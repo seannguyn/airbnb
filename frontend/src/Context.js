@@ -31,29 +31,71 @@ const reducer = (state,action) => {
 
       case 'LOGIN':
         console.log('login user login');
-
         return {
           ...state,
-          currentUser: [action.payload, ...state.currentUser]
+          currentUser: [action.payload],
+          logged_in: true,
+          dialog: {
+            open: false,
+            login: true,
+          },
         };
 
-        case 'HOSTING':
-          console.log("host context",action.payload);
+      case 'HOSTING':
+        console.log("host context",action.payload);
+      return {
+        myHostingList: [action.payload,...state.myHostingList],
+        AllHostingList: [action.payload,...state.AllHostingList],
+      }
+
+      case 'EDITHOST':
         return {
-          myHostingList: [action.payload,...state.myHostingList],
-          AllHostingList: [action.payload,...state.AllHostingList],
+          myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
+        }
+      case 'DELETE_HOST':
+        console.log("deleting hosting",action.payload);
+        return {
+          myHostingList: state.myHostingList.filter((host) => host.id !== action.payload),
+          AllHostingList: state.AllHostingList.filter((host) => host.id !== action.payload),
         }
 
-        case 'EDITHOST':
-          return {
-            myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
-          }
-        case 'DELETE_HOST':
-          console.log("deleting hosting",action.payload);
-          return {
-            myHostingList: state.myHostingList.filter((host) => host.id !== action.payload),
-            AllHostingList: state.AllHostingList.filter((host) => host.id !== action.payload),
-          }
+      case 'TOGGLE_SIDEBAR':
+        const{sidebar_show} = state;
+        return {
+          ...state,
+          sidebar_show: !sidebar_show
+        }
+      case 'LOGOUT':
+        console.log("here");
+        return {
+          ...state,
+          logged_in: false,
+          sidebar_show: false,
+          currentUser: [],
+        }
+      case 'OPEN_DIALOG':
+        return {
+          ...state,
+          dialog: action.payload
+        }
+
+      case 'CLOSE_DIALOG':
+        return {
+          ...state,
+          dialog: {
+            open: false,
+            login: true,
+          },
+        }
+
+      case 'TOGGLE_SIGNIN':
+        return {
+          ...state,
+          dialog: {
+            open: true,
+            login: !state.dialog.login,
+          },
+        }
 
       default:
         return state;
@@ -70,6 +112,12 @@ export class Provider extends Component {
       currentUser: {},
       myHostingList: [],
       AllHostingList: [],
+      sidebar_show: false,
+      logged_in: false,
+      dialog: {
+        open: false,
+        login: true,
+      },
       dispatch: (action) => {
         this.setState((state) => reducer(state,action))
       }

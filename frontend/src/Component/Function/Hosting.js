@@ -16,7 +16,7 @@ import '../../Styles/ImageSlide.css';
 
 const styles = {
   card: {
-    maxWidth: 345,
+    maxWidth: 300,
   },
   media: {
     height: 140,

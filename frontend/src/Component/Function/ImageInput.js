@@ -80,11 +80,6 @@ class ImageInput extends React.Component {
       		</label>
       </div>
 
-      // <div>
-      //   <input className="imgInput" type="file" name="imageInput" onChange={this.uploadPic.bind(this)}/>
-      //   <img src={this.state.fileURL} height="400" width="400"/>
-      //   <button onClick={this.deletePic.bind(this, fileURL, file, imgId )}>Delete photo</button>
-      // </div>
     );
   }
 }

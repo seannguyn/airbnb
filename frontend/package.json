@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.0.1",
+    "@material-ui/icons": "^3.0.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
     "classnames": "^2.2.6",
@@ -19,6 +20,7 @@
     "react-scripts": "1.1.5",
     "react-slick": "^0.23.1",
     "react-star-rating-component": "^1.4.1",
+    "react-swipeable-views": "^0.12.17",
     "slick-carousel": "^1.8.1"
   },
   "scripts": {
