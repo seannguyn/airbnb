@@ -214,6 +214,7 @@ class AccommodationDetail extends Component {
 
     render() {
         // console.log("props acom detail: ", this.state);
+        console.log("BOKIGPREID: ", this.state.bookedPeriods);
         const {Accommodation_Type, area, bathroom,
                 bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
 
@@ -247,6 +248,7 @@ class AccommodationDetail extends Component {
                                 isDayBlocked = {isDayBlocked}
                                 //  isOutsideRange={day => isAfterDay(day, moment())}
                                 showClearDates={true}
+                                reopenPickerOnClearDates
                                 minimumNights = {2}
                             />
                             <div style={{paddingLeft:'15.3rem'}}>
