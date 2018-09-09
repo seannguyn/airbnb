@@ -9,6 +9,7 @@ import AddHouseContext from '../Contexts/AddHouseContext.js';
 import MyHouses from '../Function/MyHouses'
 import MyBookings from '../Booking/MyBookings';
 import AccommodationDetail from '../AccommodationDetail/AccommodationDetail';
+import MyApp from '../Payment/paypal'
 
 const styles = theme => ({
   toolbar: {
@@ -43,6 +44,7 @@ class Main extends React.Component {
 
             <Route exact path="/accommodations/:id" component={AccommodationDetail}></Route>
             <Route exact path="/mybookings" component={MyBookings}></Route>
+            <Route exact path="/paypal" component={MyApp}></Route>
             <Route component={NotFound}></Route>
           </Switch>
       </main>

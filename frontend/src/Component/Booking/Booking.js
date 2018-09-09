@@ -8,10 +8,9 @@ import CardContent from '@material-ui/core/CardContent'
 // import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { CardMedia, CardActions } from '../../../node_modules/@material-ui/core';
+import { CardMedia, CardActions } from '../../../node_modules/@material-ui/core'
 // import {Link} from 'react-router-dom'
-import moment, { relativeTimeRounding } from 'moment';
-
+import moment from 'moment'
 
 const styles = {
   card: {
@@ -78,20 +77,16 @@ class Booking extends Component {
                             width="345" height="220"/>
                     </CardMedia>
                     {/* </CardActions> */}
-
                     <CardContent style={{marginLeft:'-1.23rem'}}>
                         <Typography gutterBottom variant="headline" component="h2">
                         From: {date_start}
                         </Typography>
-
                         <Typography gutterBottom variant="headline" component="p">
                          To: {date_end}
                         </Typography>
-
                         <Typography gutterBottom variant="headline" component="p">
                             Note: {note}
                         </Typography>
-
                         {daysLeft >= 0?
                             <p>You stay will start in {daysLeft} days {hoursLeft} hours {minutesLeft} minutes</p>
                         :null
@@ -100,7 +95,6 @@ class Booking extends Component {
                             <Button onClick={this.handleEdit}>
                                 <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
                                 </Button>
-
                             <Button onClick={this.handleDelete.bind(this, id)}>
                                 <i  className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
                             </Button>

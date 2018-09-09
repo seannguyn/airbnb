@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import 'react-dates/initialize';
-import { DateRangePicker } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
-import moment from 'moment';
-import Button from '@material-ui/core/Button';
+import React, { Component } from 'react'
+import axios from 'axios'
+import 'react-dates/initialize'
+import { DateRangePicker } from 'react-dates'
+import 'react-dates/lib/css/_datepicker.css'
+import moment from 'moment'
+import Button from '@material-ui/core/Button'
 import {
     // withStyles,
     MuiThemeProvider,
     createMuiTheme
-} from "@material-ui/core/styles";
-
-
-// import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
+} from "@material-ui/core/styles"
+import green from "@material-ui/core/colors/green"
 
 
 const theme = createMuiTheme({
@@ -167,7 +164,6 @@ class AccommodationDetail extends Component {
         console.log("BOKIGPREID: ", this.state.bookedPeriods);
         const {Accommodation_Type, area, bathroom,
                 bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
-
         const isDayBlocked = day => this.state.bookedPeriods.filter(d => d.isSame(day, 'day')).length > 0;
 
         return (
@@ -208,6 +204,7 @@ class AccommodationDetail extends Component {
                                     </Button>
                                 </MuiThemeProvider>
                             </div>
+
                         </div>
                     </div>
                 </div>
