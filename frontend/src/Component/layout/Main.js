@@ -8,7 +8,8 @@ import AddHouseContext from '../Contexts/AddHouseContext.js';
 
 import MyHouses from '../Function/MyHouses'
 import MyBookings from '../Booking/MyBookings';
-import AccommodationDetail from '../AccommodationDetail/AccommodationDetail';
+import AccommodationDetailContext from '../Contexts/AccommodationDetailContext';
+import OverallBooking from '../Function/OverallBooking'
 
 const styles = theme => ({
   toolbar: {
@@ -41,8 +42,9 @@ class Main extends React.Component {
 
 
 
-            <Route exact path="/accommodations/:id" component={AccommodationDetail}></Route>
+            <Route exact path="/accommodations/:id" component={AccommodationDetailContext}></Route>
             <Route exact path="/mybookings" component={MyBookings}></Route>
+            <Route exact path="/overallBooking" component={OverallBooking}></Route>
             <Route component={NotFound}></Route>
           </Switch>
       </main>

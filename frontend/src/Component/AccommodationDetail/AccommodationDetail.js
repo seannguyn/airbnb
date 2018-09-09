@@ -5,6 +5,11 @@ import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
 import Button from '@material-ui/core/Button';
+import isBeforeDay from './utils/isBeforeDay'
+import isAfterDay from './utils/isAfterDay';
+import {Consumer} from '../../Context.js';
+import BookingPaper from './BookingPaper'
+
 import {
     withStyles,
     MuiThemeProvider,
@@ -80,10 +85,10 @@ class AccommodationDetail extends Component {
         this.state = {
             accomDetail: {},
             currentHost: {},
-            currentUser: {},
 
             bookedPeriods: [], //periods that this accomm booked to block the date
-
+            minDateSet: [],
+            minDate: {},
             allBookings: [],
         }
     }
@@ -107,38 +112,7 @@ class AccommodationDetail extends Component {
         return;
     }
 
-    handleBooking = async () => {
 
-        if(this.isEmpty(this.state.currentUser) === true){
-            this.props.history.push('/login');
-        }
-        else{
-            let startDate = this.state.startDate;
-            let endDate = this.state.endDate;
-
-            let tempStartDate = moment(startDate).format('YYYY-MM-DD');
-            let tempEndDate = moment(endDate).format('YYYY-MM-DD');
-
-            const {currentHost, currentUser} = this.state;
-            const currentUserID = currentUser[0].user_id;
-            const currentHostID = currentHost.id;
-            const note = 'hello';
-            const newBooking = {
-                hosting: currentHostID,
-                booker: currentUserID,
-                date_start: tempStartDate,
-                date_end: tempEndDate,
-                note
-            }
-
-            await axios.post('https://localhost:8000/booking/', newBooking);
-            console.log("SUCCESSFully Booking");
-
-            const bookedPeriods = this.state.bookedPeriods.concat(this.datesInPeriod(startDate, endDate));
-            this.setState({bookedPeriods : bookedPeriods});
-        }
-
-    }
 
     checkValidPeriod = () => {
 
@@ -163,18 +137,29 @@ class AccommodationDetail extends Component {
 
         bookingList = this.getBookingsOfThisHosting(this.state.currentHost.id, bookingList);
         let startDate, endDate;
-        let  currentPeriod = []
+        let  currentPeriod = [];
+        var tempBookedPeriods = this.state.bookedPeriods;
+        var minDateSet;
         for( let i = 0; i < bookingList.length; i++){
             startDate = bookingList[i].date_start;
             endDate = bookingList[i].date_end;
             startDate = moment(startDate);
             endDate = moment(endDate);
-
             currentPeriod = this.datesInPeriod(startDate, endDate);
 
-            const tempBookedPeriods = this.state.bookedPeriods.concat(currentPeriod);
-            this.setState({bookedPeriods: tempBookedPeriods});
+
+            tempBookedPeriods=tempBookedPeriods.concat(currentPeriod);
+            minDateSet = this.state.minDateSet;
+
+            minDateSet.push(currentPeriod[0]);
+
         }
+
+
+        this.setState({minDateSet: minDateSet})
+        // console.log(tempBookedPeriods,"booked period");
+        // console.log(this.state.minDateSet,"min date");
+        this.setState({bookedPeriods: tempBookedPeriods});
     }
 
     // get all the booking of this host
@@ -191,7 +176,7 @@ class AccommodationDetail extends Component {
     async componentDidMount(){
 
         // Get accommodation detail
-        const {id} = this.props.match.params;
+        const {id} = this.props.id;
         const res = await axios.get(`https://localhost:8000/accommodation/${id}/`);
         this.setState({accomDetail: res.data});
 
@@ -202,14 +187,21 @@ class AccommodationDetail extends Component {
 
         // Get all bookings and find the bookings related to this accommodation
         const res2 = await axios.get('https://localhost:8000/booking/');
+        // console.log(res2.data,"booked period axio");
         this.blockBookedPeriod(res2.data);
-
+        console.log("user: ...",this.props);
         // const res3 = await axios.get('https://localhost:8000/accommodationImage/');
         // console.log("IMAGES: ", res3.data);
+    }
 
-        localStorage.getItem('currentUser')
-            && this.setState({
-            currentUser: JSON.parse(localStorage.getItem('currentUser'))});;
+    findMax(minDateSet) {
+      var max = minDateSet[0];
+      for (var i = 0; i < minDateSet.length ; i++) {
+        if(isAfterDay(minDateSet[i],max) === true) {
+            max = minDateSet[i].clone();
+          }
+      }
+      return max;
     }
 
     render() {
@@ -218,50 +210,47 @@ class AccommodationDetail extends Component {
                 bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
 
         const isDayBlocked = day => this.state.bookedPeriods.filter(d => d.isSame(day, 'day')).length > 0;
-
         return (
-                <div className="row">
-                    <div className="col-md-8">
-                        <div><h1>House Name Here</h1></div>
-                        <div className="description">
-                            <h4>Description: {description}</h4>
-                        </div>
-                        <div className="row">
-                            <i className="fas fa-bed"> {bedroom} bedrooms</i>&#160;
-                            <i className="fas fa-bath"> {bathroom} bathrooms</i>&#160;
-                            <i className="fas fa-utensils"> {kitchen} kitchens</i>&#160;
-                            <i className="fas fa-car"> {carpark} carparks</i>&#160;
-                        </div>
+          <Consumer>
+            {value =>{
+              const {dispatch, currentUser} = value;
+              return (
+                  <div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <img src="https://cdn.photographylife.com/wp-content/uploads/2010/04/20100415-Dead-Horse-Point-040.jpg" className="img-fluid" alt="Responsive image"/>
+                      </div>
                     </div>
-                    <div className="col-md-4">
-                        <div style={{paddingTop:'3rem'}}>
-                            <h4>Choose Booking Period</h4>
-                            <DateRangePicker
-                                startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-                                startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-                                endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-                                endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-                                onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-                                focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                                onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-                                isDayBlocked = {isDayBlocked}
-                                //  isOutsideRange={day => isAfterDay(day, moment())}
-                                showClearDates={true}
-                                minimumNights = {2}
-                            />
-                            <div style={{paddingLeft:'15.3rem'}}>
-                                <MuiThemeProvider theme={theme}>
-                                    <Button type="submit" name="book" color="primary" variant="contained" onClick={this.handleBooking}>
-                                        Book
-                                    </Button>
-                                </MuiThemeProvider>
-                            </div>
-                        </div>
+                      <div className="row">
+                          <div className="col-md-8">
+                              <div><h1>House Name Here</h1></div>
+                              <div className="description">
+                                  <h4>Description: {description}</h4>
+                              </div>
+                              <div className="row">
+                                  <i className="fas fa-bed"> {bedroom} bedrooms</i>&#160;
+                                  <i className="fas fa-bath"> {bathroom} bathrooms</i>&#160;
+                                  <i className="fas fa-utensils"> {kitchen} kitchens</i>&#160;
+                                  <i className="fas fa-car"> {carpark} carparks</i>&#160;
+                              </div>
+                          </div>
+                          <div className="col-md-4">
+                              <div style={{paddingTop:'3rem'}}>
+                                  <BookingPaper
+                                    isDayBlocked={isDayBlocked}
+                                    minDateSet={this.state.minDateSet}
+                                    context={value}
+                                    currentHost={this.state.currentHost}
+                                    history={this.props.history}
+                                    />
+                              </div>
+                          </div>
+                      </div>
                     </div>
-                </div>
-
-
-         );
+               );
+            }}
+          </Consumer>
+        )
     }
 }
 export default AccommodationDetail;

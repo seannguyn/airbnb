@@ -204,9 +204,11 @@ class Hosting extends React.Component {
               : null
             }
             <CardActions>
-              <Button size="small" color="primary" href={`/accommodations/${id}`} onClick={this.seeRoomDetail}>
-                See more
-            </Button>
+              <Link to={`/accommodations/${id}`}>
+                <Button size="small" color="primary" onClick={this.seeRoomDetail}>
+                  See more
+                </Button>
+              </Link>
             </CardActions>
         </Card>
       </div>
