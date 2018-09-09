@@ -6,9 +6,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Header from './Component/layout/Header'
 // import Signin from './components/layouts/Signin'
 
-import Sidebar from './Component/layout/Sidebar'
-import Main from './Component/layout/Main'
 
+import Main from './Component/layout/Main'
+import LandingPage from './views/LandingPage/LandingPage'
 // import Main from './components/layouts/Main'
 const drawerWidth = 240;
 
@@ -26,18 +26,7 @@ class AppMain extends React.Component {
   render () {
     const { classes } = this.props;
     return (
-      <Consumer>
-        {value => {
-          const {logged_in} = value;
-          return (
-            <div className={classes.root}>
-              <Header />
-              {logged_in === true ? <Sidebar/> : null}
-              <Main/>
-            </div>
-          )
-        }}
-      </Consumer>
+      <LandingPage/>    
     )
   }
 }

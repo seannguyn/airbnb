@@ -12,6 +12,7 @@
     "jquery": "^3.3.1",
     "material-ui": "^0.20.2",
     "npm": "^6.4.1",
+    "perfect-scrollbar": "^1.4.0",
     "react": "^16.4.2",
     "react-dates": "^17.2.0",
     "react-dom": "^16.4.2",
