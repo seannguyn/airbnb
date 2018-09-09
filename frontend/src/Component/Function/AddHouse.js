@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {Consumer} from '../../Context.js';
 import axios from 'axios';
-import uuid from 'uuid';
-import {Link} from 'react-router-dom';
+// import uuid from 'uuid';
+// import {Link} from 'react-router-dom';
 
 import Paper from '@material-ui/core/Paper';
 import HomeIcon from '@material-ui/icons/Home';
@@ -11,10 +11,10 @@ import Avatar from '@material-ui/core/Avatar';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
+// import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
+// import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
@@ -69,8 +69,7 @@ const styles = theme => ({
 function getModalStyle() {
 
   const top = 25;
-  const left = 25;
-
+  // const left = 25;
   return {
     top: `${top}%`,
     margin: 'auto'
@@ -129,8 +128,8 @@ class AddHouse extends Component {
   }
 
   errorCheck(current) {
-    const {id, user, Accommodation_Type, number, street, city, state} = current;
-    const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
+    const { number } = current;
+    // const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
 
     var flag = false;
     if (number === '') {
@@ -170,8 +169,8 @@ class AddHouse extends Component {
   async onSubmit(dispatch, e) {
     e.preventDefault();
 
-    const {user, number, street, city, state} = this.state;
-    const {Accommodation_Type,area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
+    const {user} = this.state;
+    const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark} = this.state;
 
     if(this.errorCheck(this.state) === true) return;
 
@@ -258,7 +257,7 @@ class AddHouse extends Component {
       <Consumer>
         {value =>{
           const {dispatch} = value;
-          const {HouseList, currentUser, myHostingList} = value;
+          // const {HouseList, currentUser, myHostingList} = value;
             return (
               <div>
                 <Paper className={classes.paper}>

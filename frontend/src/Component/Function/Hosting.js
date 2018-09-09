@@ -57,10 +57,6 @@ class Hosting extends React.Component {
     this.setState({seeReviews: !this.state.seeReviews});
   }
 
-  seeRoomDetail = () => {
-    console.log("ID HOSTING: ", this.props);
-  }
-
   // find this accomm's images
   findImages = (images) => {
     const accommID = this.props.house.id;
@@ -97,11 +93,8 @@ class Hosting extends React.Component {
   }
 
   render () {
-
     // console.log('PROPS ', this.props);
-
     const readonly = true,
-
           {house, SingleHost} = this.props,
           {id} = this.props.house,
           {showHosting, images, reviews} = this.state,
@@ -122,8 +115,8 @@ class Hosting extends React.Component {
     let imagesDiv = [];
     images.map( (image) => {
       imagesDiv.push(
-          <div key={image.id}>
-            <img src={image.a_image} height="250" width="345"/>
+          <div key={image.id} style={{paddingRight:'2rem'}}>
+            <img src={image.a_image} height="250" width="307" alt="house"/>
           </div>
       )
 
@@ -132,22 +125,20 @@ class Hosting extends React.Component {
     // console.log("STATE: ", this.state);
 
     return (
-      <div style={{padding:"1rem"}}>
-        <Card className={classes.card} style={{}}>
-          {/* <CardActionArea> */}
+      <div style={{paddingLeft:"1rem", paddingBottom:'1rem'}}>
+        <Card className={classes.card}>
 
-            <CardMedia src="ddd" img="ddd">
+          {/* <CardActionArea> */}
+            <CardMedia src="ddd" img="ddd" style={{marginLeft:'-1.23rem', marginRight:'-1.23rem' ,marginTop:'-2.1rem'}}>
               <Slider {...settings}>
               { images.length !== 0 ?
                   imagesDiv
-                :
-                <div>
-                    <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="250" width="345"/>
-                </div>
+              :
+                <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="250" width="307" alt="nohouse"/>
+
               }
               </Slider>
             </CardMedia>
-
           {/* </CardActionArea> */}
 
             <CardContent>
@@ -182,7 +173,7 @@ class Hosting extends React.Component {
                   readonly={readonly}
                   initialRating={0}
               />
-                No reviews yet
+                No reviews
               </CardContent>
             }
             {this.state.seeReviews ?
@@ -209,7 +200,7 @@ class Hosting extends React.Component {
             </Button>
             </CardActions>
         </Card>
-      </div>
+       </div>
     )
   }
 }

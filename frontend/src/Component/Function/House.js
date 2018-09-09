@@ -1,7 +1,6 @@
 import React from 'react'
 import {Consumer} from '../../Context'
 import {Link} from 'react-router-dom'
-import AddHosting from './AddHosting'
 
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
@@ -46,7 +45,7 @@ class House extends React.Component {
       var deletable=true;
 
       for(i=0; i<myHostingList.length; i++){
-        if(myHostingList[i].accommodation == id){
+        if(myHostingList[i].accommodation === id){
           deletable =false;
           break;
         }
@@ -68,12 +67,11 @@ class House extends React.Component {
 
     const {user} = this.props.houseDetail; //-- from houses.js -- user id in each house in houselist
     const {id} = this.props.houseDetail;
-    // console.log("HDT: ", this.props.houseDetail);
 
     const {showDetail} = this.state;
 
-    const isMyHouse = false; // flag to check if which current user's houses - for hosting button
-    const isHosting = false;// flag to check if the accom is hosting
+    // const isMyHouse = false; // flag to check if which current user's houses - for hosting button
+    // const isHosting = false;// flag to check if the accom is hosting
 
     const { classes} = this.props;
 
@@ -90,10 +88,10 @@ class House extends React.Component {
             if(user_id === user){
               this.isMyHouse = true;
             }
-            let counter = 0;
+
             let i = 0;
             for(i=0; i < myHostingList.length; i++){
-              if(parseInt(myHostingList[i].accommodation, ) === id){
+              if(parseInt(myHostingList[i].accommodation, 10) === id){
                 this.isHosting = true;
                 break;
               }else{

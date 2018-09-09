@@ -158,15 +158,15 @@ export class Provider extends Component {
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
-    // localStorage.getItem('currentUser')
+    localStorage.getItem('currentUser')
     // && localStorage.getItem('HouseList')
     // localStorage.getItem('myHostingList') && localStorage.getItem('AllHostingList')
-    // && this.setState({
-      // currentUser: JSON.parse(localStorage.getItem('currentUser')),
+    && this.setState({
+      currentUser: JSON.parse(localStorage.getItem('currentUser')),
       // HouseList: JSON.parse(localStorage.getItem('HouseList')),
       // myHostingList: JSON.parse(localStorage.getItem('myHostingList')),
       // AllHostingList: JSON.parse(localStorage.getItem('AllHostingList')),
-    // });
+    });
 
   }
 

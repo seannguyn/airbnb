@@ -91,11 +91,10 @@
   height: 180px;
 }
 .slick-arrow {
-  background-color: grey;
   color: black;
 }
 .slick-arrow:hover {
-  background-color: grey;
+  /* background-color: grey; */
 }
  .slick-prev {
   z-index: 100;
