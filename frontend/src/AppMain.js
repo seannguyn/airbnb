@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Consumer} from './Context';
+import { Consumer } from './Context';
 import { withStyles } from '@material-ui/core/styles';
 
 import Header from './Component/layout/Header'
@@ -23,17 +23,17 @@ const styles = theme => ({
 });
 
 class AppMain extends React.Component {
-  render () {
+  render() {
     const { classes } = this.props;
     return (
       <Consumer>
         {value => {
-          const {logged_in} = value;
+          const { logged_in } = value;
           return (
             <div className={classes.root}>
               <Header />
-              {logged_in === true ? <Sidebar/> : null}
-              <Main/>
+              {logged_in === true ? <Sidebar /> : null}
+              <Main />
             </div>
           )
         }}

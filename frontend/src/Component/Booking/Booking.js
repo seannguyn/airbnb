@@ -54,7 +54,7 @@ class Booking extends Component {
         const { classes, booking } = this.props;
         const { id, date_start, date_end, note } = booking;
 
-        console.log("Propsss: ", this.props);
+        // console.log("Propsss: ", this.props);
 
         daysLeft = Math.abs(moment(date_start).diff(moment(), 'hours'))/24;
         hoursLeft = Math.abs((daysLeft - Math.round(daysLeft))) * 24;
@@ -72,7 +72,7 @@ class Booking extends Component {
             <React.Fragment>
                 <Card className={classes.card}>
                     {/* <CardActions> */}
-                    <CardMedia className={classes.media} image="" title="">
+                    <CardMedia className={classes.media} image="image" title="">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7WywhWyPwGB89RrYhEl9zzlDeqXcLI-lpuMu7-XcuvR3MC9UT"
                             width="345" height="220"/>
                     </CardMedia>
@@ -105,5 +105,4 @@ class Booking extends Component {
          );
     }
 }
-
 export default withStyles(styles)(Booking);

@@ -20,7 +20,7 @@ const styles = {
 
 
 class MediaCard extends Component {
-  render(){
+  render() {
     const { classes } = this.props;
     return (
       <Card className={classes.card}>
@@ -40,19 +40,19 @@ class MediaCard extends Component {
               across all continents except Antarctica
             </Typography>
           </CardContent>
-        
+
         </CardActionArea>
 
         <CardActions>
-        
+
           <Button size="small" color="primary">
             Share
           </Button>
-        
+
           <Button size="small" color="primary">
             Learn More
           </Button>
-        
+
         </CardActions>
 
       </Card>

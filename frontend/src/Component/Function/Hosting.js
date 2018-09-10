@@ -127,7 +127,6 @@ class Hosting extends React.Component {
     return (
       <div style={{paddingLeft:"1rem", paddingBottom:'1rem'}}>
         <Card className={classes.card}>
-
           {/* <CardActionArea> */}
             <CardMedia src="ddd" img="ddd" style={{marginLeft:'-1.23rem', marginRight:'-1.23rem' ,marginTop:'-2.1rem'}}>
               <Slider {...settings}>
