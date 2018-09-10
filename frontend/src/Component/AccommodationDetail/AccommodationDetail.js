@@ -206,6 +206,7 @@ class AccommodationDetail extends Component {
 
     render() {
         // console.log("props acom detail: ", this.state);
+        console.log("BOKIGPREID: ", this.state.bookedPeriods);
         const {Accommodation_Type, area, bathroom,
                 bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
 
@@ -246,6 +247,7 @@ class AccommodationDetail extends Component {
                               </div>
                           </div>
                       </div>
+
                     </div>
                );
             }}
