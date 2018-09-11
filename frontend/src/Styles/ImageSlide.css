@@ -87,13 +87,13 @@
 .slick-vertical .slick-slide {
   height: 180px;
 }
-/* .slick-arrow {
-  background-color: grey;
+.slick-arrow {
+  /* background-color: grey; */
   color: black;
-} */
-/* .slick-arrow:hover {
-  background-color: grey;
-} */
+}
+.slick-arrow:hover {
+  /* background-color: grey; */
+}
  .slick-prev {
   z-index: 100;
   left: 20px;

@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import 'react-dates/initialize';
-import { DateRangePicker } from 'react-dates';
+// import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
-import Button from '@material-ui/core/Button';
-import isBeforeDay from './utils/isBeforeDay'
+// import Button from '@material-ui/core/Button';
+// import isBeforeDay from './utils/isBeforeDay'
 import isAfterDay from './utils/isAfterDay';
 import {Consumer} from '../../Context.js';
 import BookingPaper from './BookingPaper'
 
 import {
 	// withStyles,
-	MuiThemeProvider,
+	// MuiThemeProvider,
 	createMuiTheme
 } from "@material-ui/core/styles"
 import green from "@material-ui/core/colors/green"
@@ -59,12 +59,6 @@ class AccommodationDetail extends Component {
         return;
     }
 
-
-
-    checkValidPeriod = () => {
-
-    }
-
     // find dates between 2 dates
     datesInPeriod = (startDate, endDate) => {
         var dates = [];
@@ -94,14 +88,10 @@ class AccommodationDetail extends Component {
             endDate = moment(endDate);
             currentPeriod = this.datesInPeriod(startDate, endDate);
 
-
             tempBookedPeriods=tempBookedPeriods.concat(currentPeriod);
             minDateSet = this.state.minDateSet;
-
             minDateSet.push(currentPeriod[0]);
-
         }
-
 
         this.setState({minDateSet: minDateSet})
         // console.log(tempBookedPeriods,"booked period");
@@ -121,8 +111,8 @@ class AccommodationDetail extends Component {
     }
 
     async componentDidMount(){
-
-        // Get accommodation detail
+				// Get accommodation detail
+				console.log("PROPS: ", this.props);
         const {id} = this.props.id;
         const res = await axios.get(`https://localhost:8000/accommodation/${id}/`);
         this.setState({accomDetail: res.data});

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {Consumer} from '../../Context.js';
 
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 // import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -19,13 +19,23 @@ import Avatar from '@material-ui/core/Avatar';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import LoginDialog from './LoginDialog'
-// import { CardActionArea } from '../../../node_modules/@material-ui/core';
 
+import green from '@material-ui/core/colors/green';
 
 const drawerWidth = 240;
 
+const customColor = createMuiTheme({
+  palette: {
+    primary: green,
+    secondary: {
+      main: '#ffb199',
+    },
+  },
+});
+
 const styles = theme => ({
   appBar: {
+    border: 'none',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -59,7 +69,6 @@ const styles = theme => ({
   },
 });
 
-
 class Header extends Component {
 
   // constructor(){
@@ -69,13 +78,8 @@ class Header extends Component {
   //   }
   // }
 
-
   signOut = () => {
     window.localStorage.clear();
-  }
-
-  componentDidMount(){
-    // console.log("didmoutn header: ", this.props);
   }
 
 //   render(){
@@ -147,7 +151,6 @@ class Header extends Component {
     this.handleClose();
   }
 
-
   handleDialogSignin(dispatch) {
    dispatch({type:"OPEN_DIALOG", payload:{open:true,login:true}})
   }
@@ -165,74 +168,67 @@ class Header extends Component {
     return (
       <Consumer>
         {value => {
-
           const {dispatch, sidebar_show,logged_in, currentUser} = value;
-
           return (
             <div>
-            <AppBar
-              position="absolute"
-              className={classNames(classes.appBar, sidebar_show && classes.appBarShift)}
-            >
-              <Toolbar disableGutters={!sidebar_show}>
-
-
-                <IconButton
-                  color="inherit"
-                  aria-label="Open drawer"
-                  onClick={this.handleDrawerOpen.bind(this, dispatch)}
-                  className={classNames(classes.menuButton, !logged_in && classes.hide)}
-                >
-                  <MenuIcon />
-                </IconButton>
-
+           <MuiThemeProvider theme={customColor} style={{backgroundColor:'transparent'}}>
+              <AppBar
+                color="secondary"
+                position="absolute"
+                className={classNames(classes.appBar, sidebar_show && classes.appBarShift)}
+              >
+                <Toolbar disableGutters={!sidebar_show}>
+                  <IconButton
+                    color="inherit"
+                    aria-label="Open drawer"
+                    onClick={this.handleDrawerOpen.bind(this, dispatch)}
+                    className={classNames(classes.menuButton, !logged_in && classes.hide)}
+                  >
+                    <MenuIcon />
+                  </IconButton>
                   <Typography style={{flex:1}} className={classNames(!logged_in && classes.transparent)} variant="title" color="inherit" noWrap>
                     portBnB
                   </Typography>
-
-                <Button color="inherit">About us</Button>
-                {logged_in === true ?
+                  <Button color="inherit">About us</Button>
+                  {logged_in === true ?
+                    <div>
+                  <Avatar
+                    className={classNames(classes.avatar)}
+                    aria-owns={open ? 'menu-appbar' : null}
+                    aria-haspopup="true"
+                    onClick={this.handleMenu}
+                    color="inherit"
+                  ><PersonIcon/></Avatar>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={open}
+                    onClose={this.handleClose}
+                  >
+                    <Link to="/"><MenuItem onClick={this.handleLogOut.bind(this,dispatch)} style={{color:'red'}}>Log out</MenuItem></Link>
+                  </Menu>
+                  </div> :
                   <div>
-                <Avatar
-                  className={classNames(classes.avatar)}
-                  aria-owns={open ? 'menu-appbar' : null}
-                  aria-haspopup="true"
-                  onClick={this.handleMenu}
-                  color="inherit"
-                ><PersonIcon/></Avatar>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <Link to="/"><MenuItem onClick={this.handleLogOut.bind(this,dispatch)} style={{color:'red'}}>Log out</MenuItem></Link>
-                </Menu>
-                </div> :
-                <div>
-                <Button color="inherit" onClick={this.handleDialogSignup.bind(this, dispatch)}>Sign up</Button>
-                <Button color="inherit" onClick={this.handleDialogSignin.bind(this, dispatch)}>Log in</Button>
-                </div>}
-              </Toolbar>
-            </AppBar>
-
+                  <Button color="inherit" onClick={this.handleDialogSignup.bind(this, dispatch)}>Sign up</Button>
+                  <Button color="inherit" onClick={this.handleDialogSignin.bind(this, dispatch)}>Log in</Button>
+                  </div>}
+                </Toolbar>
+              </AppBar>
+            </MuiThemeProvider>
             <LoginDialog Signin_form = {value.dialog.login}/>
-
             </div>
           );
-
         }}
       </Consumer>
     )
   }
 }
-
 export default withStyles(styles, { withTheme: true })(Header);

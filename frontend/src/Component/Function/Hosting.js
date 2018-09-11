@@ -126,8 +126,8 @@ class Hosting extends React.Component {
     let imagesDiv = [];
     images.map( (image) => {
       imagesDiv.push(
-          <div key={image.id} style={{paddingRight:'2rem'}}>
-            <img src={image.a_image} height="250" width="307" alt="house"/>
+          <div key={image.id}>
+            <img src={image.a_image} height="150" width="345"/>
           </div>
       )
 
@@ -138,47 +138,30 @@ class Hosting extends React.Component {
     return (
 
       <div style={{padding:"1rem"}}>
-        <Link to={`/accommodations/${id}`}>
         <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}>
+
           <CardHeader style={{marginBottom: '0rem'}}image className={classes.cardHeaderHover}>
           <Carousel {...settings} dots={false}>
-                  <div>
-                    <img
-                      src={image1}
-                      alt="First slide"
-                      className="slick-image"
-                    />
-                  </div>
-                  <div>
-                    <img
-                      src={image2}
-                      alt="Second slide"
-                      className="slick-image"
-                    />
-                  </div>
-                  <div>
-                    <img
-                      src={image3}
-                      alt="Third slide"
-                      className="slick-image"
-                    />
-                  </div>
-                </Carousel>
-
-              {/* <img src={priceImage1} alt="..." /> */}
-
+          { images.length !== 0 ?
+            imagesDiv
+          :
+          <div>
+              <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345"/>
+          </div>
+          }
+          </Carousel>
           </CardHeader >
           <CardBody>
             <div className={classes.cardHoverUnder}>
+            <Link to={`/accommodations/${id}`}>
               <h4 className={classes.cardProductTitle}>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
                 {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
                 <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
-                </a>
               </h4>
+              </Link>
               {/* <p className={classes.cardProductDesciprion}> */}
               <h4>{house.Accomodation_Type}</h4>
-              {reviews.length > 0 ?
+            {reviews.length > 0 ?
             <div>
               <Rating
                   readonly={readonly}
@@ -210,8 +193,6 @@ class Hosting extends React.Component {
             }
             </div>
 
-
-
           </CardBody>
           <CardFooter product>
               <div className={classes.price}>
@@ -221,7 +202,7 @@ class Hosting extends React.Component {
               </div>
           </CardFooter>
         </Card>
-        </Link>
+
         {/* <Card className={classes.card} style={{}}> */}
             {/* <CardAvatar profile className={classes.cardAvatar}>
                   <a href="#pablo" onClick={e => e.preventDefault()}>

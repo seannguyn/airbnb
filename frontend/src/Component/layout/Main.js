@@ -42,7 +42,7 @@ class Main extends React.Component {
           <Route exact path="/editHouse/:id" component={ContextApi}></Route>
           <Route exact path="/addHouse" component={AddHouseContext}></Route>
 
-          <Route exact path="/accommodations/:id" component={AccommodationDetail}></Route>
+          <Route exact path="/accommodations/:id" component={AccommodationDetailContext}></Route>
           <Route exact path="/mybookings" component={MyBookings}></Route>
           <Route exact path="/paypal" component={MyApp}></Route>
           <Route component={NotFound}></Route>

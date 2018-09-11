@@ -101,10 +101,6 @@ class BookingPaper extends React.Component {
         let tempStartDate = moment(startDate).format('YYYY-MM-DD');
         let tempEndDate = moment(endDate).format('YYYY-MM-DD');
 
-
-
-
-
         if (currentUser.length !== 0 && this.state.booking === true) {
           console.log("Component will receive props", currentUser);
           const newBooking = {
@@ -122,7 +118,6 @@ class BookingPaper extends React.Component {
     }
 
   async handleBooking(dispatch) {
-
       this.setState({booking: true});
       if(this.isEmpty(this.props.context.currentUser[0]) === true){
 
@@ -134,7 +129,6 @@ class BookingPaper extends React.Component {
             login: true,
           },
         })
-
       }
       else{
           let startDate = this.state.startDate;
@@ -157,15 +151,10 @@ class BookingPaper extends React.Component {
 
           // await axios.post('https://localhost:8000/booking/', newBooking);
           console.log("SUCCESSFully Booking");
-
           // const bookedPeriods = this.state.bookedPeriods.concat(this.datesInPeriod(startDate, endDate));
           // this.setState({bookedPeriods : bookedPeriods});
       }
-
-
   }
-
-
   render () {
     const {classes} = this.props;
     return (
@@ -183,43 +172,33 @@ class BookingPaper extends React.Component {
                 endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
                 onDatesChange={({ startDate, endDate }) => {
                   this.setState({ startDate, endDate })
-
                   if (startDate !== null) {
-
                     const {minDateSet} = this.props;
                     // in order to work, gotta be max
                     var min = this.findMax(minDateSet)
-
                     for (var i = 0; i < minDateSet.length ; i++) {
                       if(isAfterDay(minDateSet[i],startDate) === true) {
                         if (isBeforeDay(minDateSet[i],min) === true) {
-
                             min = minDateSet[i].clone();
                           }
                         }
                     }
-
                     if (isBeforeDay(min,startDate) === true) {
                       min = null;
                     }
-
-
                     this.setState({minDate: min})
-
-
                   } else {
                     this.setState({minDate: null})
                   }
                 }
               }
-
-                focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-                isDayBlocked = {this.props.isDayBlocked}
-                isOutsideRange={day => isBeforeDay(day,moment()) || isAfterDay(day,this.state.minDate) }
-                showClearDates={true}
-                minimumNights = {2}
-                reopenPickerOnClearDates
+            focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+            onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+            isDayBlocked = {this.props.isDayBlocked}
+            isOutsideRange={day => isBeforeDay(day,moment()) || isAfterDay(day,this.state.minDate) }
+            showClearDates={true}
+            minimumNights = {2}
+            reopenPickerOnClearDates
             />
           <div className="row">
             <div className="col md-6">

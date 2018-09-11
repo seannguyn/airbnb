@@ -15,7 +15,7 @@ class EditHosting extends Component {
             date_end: '',
             price: '',
             description: '',
-            
+
             error: {}
         }
     }
@@ -52,13 +52,12 @@ class EditHosting extends Component {
 
     //set State when changing text
     onChange = (e) => {
-        
-        if( e.target.name == 'date_start'){
+        if( e.target.name === 'date_start'){
             let date_start = new Date(e.target.value)
             this.setState({date_start_onchange: date_start});
         }
 
-        if(e.target.name == 'date_end'){
+        if(e.target.name === 'date_end'){
             console.log("DATE END: ", this.state.date_start_onchange);
             let date_end = new Date(e.target.value)
             console.log("DATE INVALID", typeof(date_end));
@@ -66,7 +65,6 @@ class EditHosting extends Component {
                 console.log("DATE INVALID", typeof(e.target.value));
             }
         }
-
         this.setState({[e.target.name] : e.target.value});
     }
 
@@ -76,8 +74,8 @@ class EditHosting extends Component {
 
         const {id} = this.state;
 
-        const {accommodation,
-                user,
+        const {//accommodation,
+                // user,
                 date_start,
                 date_end,
                 price,
@@ -93,7 +91,6 @@ class EditHosting extends Component {
             description: description
         }
 
-
         // AXIOS call here - PUT REQUEST
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
@@ -104,14 +101,10 @@ class EditHosting extends Component {
                 }
             }
         )
-
         dispatch({type:'EDITHOST', payload:hostingHouse});
-
         // Add error handling here
         // ......
         // error handling
-
-
         this.props.history.push("/myhouses")
     }
 
@@ -126,8 +119,6 @@ class EditHosting extends Component {
 
       console.log(this.props.history,"historyyyy");
       this.props.history.push("/myhouses")
-
-
     }
 
     render() {
@@ -139,15 +130,10 @@ class EditHosting extends Component {
                     const {currentUser} = value;
                     console.log(currentUser);
                 return (
-                
                 <div className="card-body mb-3">
-
                 <div className="card-header">Host Accommodation</div>
-
                 <div className="card-body">
-                
                 <form onSubmit={this.onSubmit.bind(this, dispatch, currentUser)}>
-                    
                 <label htmlFor="date_start">Start Date</label>
                     <div className="form-group">
                         <input type="date"
@@ -155,16 +141,13 @@ class EditHosting extends Component {
                                value={date_start}
                                onChange={this.onChange.bind(this)}/>
                     </div>
-
                     <label htmlFor="date_end">End Date</label>
                     <div className="form-group">
-
                         <input type="date"
                                name="date_end"
                                value={date_end}
                                onChange={this.onChange.bind(this)}/>
                     </div>
-
                     <label htmlFor="price">Price</label>
                     <div className="form-group">
                         <input type="number"
@@ -173,7 +156,6 @@ class EditHosting extends Component {
                                 value={price}
                                 onChange={this.onChange.bind(this)}/>
                     </div>
-
                     <label htmlFor="description">Description</label>
                     <div className="form-group">
                         <input type="text"
@@ -184,18 +166,13 @@ class EditHosting extends Component {
 
                     <input type="submit" className="btn btn-block btn-light" value="Host this accommodationn"></input>
                     <input type="submit" className="btn btn-block btn-danger" onClick={this.handleAlternate.bind(this, id, dispatch)} value="Stop Hosting this accommodationn"></input>
-
               </form>
-
                 </div>
             </div>
-
                     );
                 }}
             </Consumer>
         );
-
     }
 }
-
 export default EditHosting;

@@ -11,12 +11,11 @@ class MyHouses extends Component {
 		super();
 		// currentUser: { }
 	}
-
 	render() {
 		return (
 			<Consumer>
 				{value => {
-					const { HouseList, currentUser, myHostingList } = value;
+					const { HouseList, currentUser } = value;
 					// CHECK USER LOGIN OR NOT
 					//  nested objects - and by default user detail store at index [0]
 					if (currentUser.length === 0) {
@@ -30,7 +29,7 @@ class MyHouses extends Component {
 						const myHouses = [];
 						let i = 0;
 						for (i = 0; i < HouseList.length; i++) {
-							if (HouseList[i].user == value["currentUser"][0].user_id) {
+							if (HouseList[i].user === value["currentUser"][0].user_id) {
 								myHouses.push(HouseList[i]);
 							}
 						}
@@ -40,7 +39,7 @@ class MyHouses extends Component {
 								<Link to="/addHouse">
 									<Button
 										variant="raised" color="primary">Add Property
-                                  </Button>
+                  </Button>
 								</Link>
 								<div className="row">
 									{myHouses.map(house => (

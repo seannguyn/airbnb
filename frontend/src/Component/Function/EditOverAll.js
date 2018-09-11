@@ -44,13 +44,10 @@ class EditOverAll extends React.Component {
 
   constructor() {
     super();
-
     this.state = {
-
       HouseList: [],
       swipe: 0
     }
-
   }
 
   changeTab(event, swipe) {
@@ -70,16 +67,10 @@ class EditOverAll extends React.Component {
   }
 
   render () {
-
-
     const { theme, classes } = this.props;
     const {swipe} = this.state;
-
-    const {picture} = this.state;
-
+    // const {picture} = this.state;
     const {hasHost, currentUser} = this.props;
-
-
     if (currentUser.length === 0) {
       return (
        <Forbidden/>
@@ -107,7 +98,6 @@ class EditOverAll extends React.Component {
             onChangeIndex={this.switchIndex.bind(this)}
 
           >
-
               <EditHouse
                 dir={theme.direction}
                 history={this.props.history}
@@ -116,17 +106,13 @@ class EditOverAll extends React.Component {
                 HouseList={this.props.HouseList}
                >
                </EditHouse>
-
              <Images imgNumber={this.imgNumber.bind(this)} dir={theme.direction} id={this.props.id} />
              <div >{ hasHost[0]}</div>
-
-
           </SwipeableViews>
           </main>
         </div>
       )
     }
-
   }
 }
 export default withStyles(styles, { withTheme: true })(EditOverAll);
