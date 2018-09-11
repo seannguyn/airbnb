@@ -6,7 +6,7 @@ import Review from '../Review/Review';
 import { withStyles } from '@material-ui/core/styles';
 // import Card from '@material-ui/core/Card';
 // // import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardActions from '@material-ui/core/CardActions';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 // import CardMedia from '@material-ui/core/CardMedia';
 // import Button from '@material-ui/core/Button';
@@ -121,7 +121,20 @@ class Hosting extends React.Component {
   render () {
 
     // console.log('PROPS ', this.props);
-
+    let data = [
+      {
+          des: "1",
+          imgSrc: "assets/img/card-1.jpeg"
+      },
+      {
+          des: "2",
+          imgSrc: "assets/img/card-2.jpeg"
+      },
+      {
+          des: "3",
+          imgSrc: "assets/img/card-3.jpeg"
+      }
+  ];
     const readonly = true,
 
           {house, SingleHost} = this.props,
@@ -156,20 +169,12 @@ class Hosting extends React.Component {
     return (
       
       <div style={{padding:"1rem"}}>
-        <Card product className={classes.cardHover} style={{width:'20vw', height:'25vw'}}> 
+        <Link to={`/accommodations/${id}`}>
+        <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}> 
           <CardHeader image className={classes.cardHeaderHover}>
-            <a href="#pablo" onClick={e => e.preventDefault()}>
-            {/* <Slider {...settings}>
-              { images.length !== 0 ?
-                  imagesDiv
-                :
-                <div>
-                    <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="250" width="345"/>
-                </div>
-              }
-              </Slider> */}
+          
               <img src={priceImage1} alt="..." />
-            </a>
+              
           </CardHeader>
           <CardBody>
             <h6 className={classes.cardProductTitle}>
@@ -185,37 +190,48 @@ class Hosting extends React.Component {
                 {house.Accomodation_Type} ${SingleHost.price}/night
               </Typography>
             </div>
-            
-            {/* <p className={classes.cardProductDesciprion}>
-              {showHosting === true ?
-                <ul className="list-group">
-                  <li className="list-group-item">start_date : {SingleHost.date_start}</li>
-                  <li className="list-group-item">end_date :  {SingleHost.date_end}</li>
-                  <li className="list-group-item">price :  {SingleHost.price}</li>
-                </ul>
-              : null}
-            </p> */}
-            
-          </CardBody>
-          <CardFooter product>
             {reviews.length > 0 ?
-            <CardContent>
+            <div>
               <Rating
                   readonly={readonly}
                   initialRating={avgRating}
               />
               <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
-              </CardContent>
-            : <CardContent>
+            </div>
+              : 
                 <Rating
                   readonly={readonly}
                   initialRating={0}
               />
-              </CardContent>
+              
             }
+            {this.state.seeReviews ?
+              <CardContent>{ reviews.map(review =>
+                  <Review
+                    key={review.id}
+                    accommodation={review.accommodation}
+                    star={review.star}
+                    user={review.user}
+                    review={review.review}
+                    text='Close'
+                    closeReview={this.showReview.bind(this)}
+                />
+                )
+              }
+              </CardContent>
+              : null
+            }
+            
+          </CardBody>
+          <CardFooter product>
+              <Link to={`/accommodations/${id}`}>
+                <Button size="small" color="primary" onClick={this.seeRoomDetail}>
+                  See more
+                </Button>
+              </Link> 
           </CardFooter>
         </Card>
-          
+        </Link>  
         {/* <Card className={classes.card} style={{}}> */}
             {/* <CardAvatar profile className={classes.cardAvatar}>
                   <a href="#pablo" onClick={e => e.preventDefault()}>
