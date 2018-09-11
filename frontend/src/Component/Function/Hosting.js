@@ -4,34 +4,27 @@ import {Link} from 'react-router-dom';
 import Review from '../Review/Review';
 
 import { withStyles } from '@material-ui/core/styles';
-import CardActions from '@material-ui/core/CardActions';
+
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Cloud from "@material-ui/icons/Cloud";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-import Slider from "react-slick";
+
 import '../../Styles/ImageSlide.css';
 // core components
 import Button from "Component/CustomButtons/Button.jsx";
-import CustomInput from "Component/CustomInput/CustomInput.jsx";
+
 import Card from "Component/Card/Card.jsx";
 import CardBody from "Component/Card/CardBody.jsx";
-import CardAvatar from "Component/Card/CardAvatar.jsx";
 import CardHeader from "Component/Card/CardHeader.jsx";
 import CardFooter from "Component/Card/CardFooter.jsx";
-import GridContainer from "Component/Grid/GridContainer.jsx";
-import GridItem from "Component/Grid/GridItem.jsx";
-import avatar from "assets/img/faces/avatar.jpg";
 
-import priceImage1 from "assets/img/card-2.jpeg";
-import priceImage2 from "assets/img/card-3.jpeg";
-import priceImage3 from "assets/img/card-1.jpeg";
-import Tooltip from "@material-ui/core/Tooltip";
-import Refresh from "@material-ui/icons/Refresh";
-import Edit from "@material-ui/icons/Edit";
-import Place from "@material-ui/icons/Place";
-import ArtTrack from "@material-ui/icons/ArtTrack";
-import CarouselSlider from "react-carousel-slider"
+import image1 from "assets/img/card-1.jpeg";
+import image2 from "assets/img/card-2.jpeg";
+import image3 from "assets/img/card-3.jpeg";
+
+import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
+import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx";
+import Carousel from "react-slick";
+// @material-ui/icons
+import LocationOn from "@material-ui/icons/LocationOn";
 const styles = {
   card: {
     maxWidth: 300,
@@ -147,26 +140,45 @@ class Hosting extends React.Component {
       <div style={{padding:"1rem"}}>
         <Link to={`/accommodations/${id}`}>
         <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}>
-          <CardHeader image className={classes.cardHeaderHover}>
+          <CardHeader style={{marginBottom: '0rem'}}image className={classes.cardHeaderHover}>
+          <Carousel {...settings} dots={false}>
+                  <div>
+                    <img
+                      src={image1}
+                      alt="First slide"
+                      className="slick-image"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src={image2}
+                      alt="Second slide"
+                      className="slick-image"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src={image3}
+                      alt="Third slide"
+                      className="slick-image"
+                    />
+                  </div>
+                </Carousel>
 
-              <img src={priceImage1} alt="..." />
+              {/* <img src={priceImage1} alt="..." /> */}
 
-          </CardHeader>
+          </CardHeader >
           <CardBody>
-            <h6 className={classes.cardProductTitle}>
-              <a href="#pablo" onClick={e => e.preventDefault()}>
-              <Typography component="p">
+            <div className={classes.cardHoverUnder}>
+              <h4 className={classes.cardProductTitle}>
+                <a href="#pablo" onClick={e => e.preventDefault()}>
                 {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
                 <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
-              </Typography>
-              </a>
-            </h6>
-            <div className={classes.price}>
-              <Typography gutterBottom variant="headline" component="h6">
-                {house.Accomodation_Type} ${SingleHost.price}/night
-              </Typography>
-            </div>
-            {reviews.length > 0 ?
+                </a>
+              </h4>
+              {/* <p className={classes.cardProductDesciprion}> */}
+              <h4>{house.Accomodation_Type}</h4>
+              {reviews.length > 0 ?
             <div>
               <Rating
                   readonly={readonly}
@@ -196,13 +208,17 @@ class Hosting extends React.Component {
               </CardContent>
               : null
             }
+            </div>
+
+
+
           </CardBody>
           <CardFooter product>
-              <Link to={`/accommodations/${id}`}>
-                <Button size="small" color="primary" onClick={this.seeRoomDetail}>
-                  See more
-                </Button>
-              </Link>
+              <div className={classes.price}>
+                {/* <Typography gutterBottom variant="headline" component="h6"> */}
+                  <h4>${SingleHost.price}/night</h4>
+                {/* </Typography> */}
+              </div>
           </CardFooter>
         </Card>
         </Link>
@@ -291,4 +307,5 @@ class Hosting extends React.Component {
   }
 }
 
-export default withStyles(styles)(Hosting);
+// export default withStyles(styles)(Hosting);
+export default withStyles(dashboardStyle,carouselStyle)(Hosting);

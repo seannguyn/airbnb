@@ -20,7 +20,7 @@ const dashboardStyle = {
   },
   cardIconTitle: {
     ...cardTitle,
-    marginTop: "15px",
+    marginTop: "0px",
     marginBottom: "0px"
   },
   cardProductTitle: {
