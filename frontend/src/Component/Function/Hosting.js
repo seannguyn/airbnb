@@ -4,16 +4,38 @@ import {Link} from 'react-router-dom';
 import Review from '../Review/Review';
 
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-// import CardActionArea from '@material-ui/core/CardActionArea';
+// import Card from '@material-ui/core/Card';
+// // import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+// import CardMedia from '@material-ui/core/CardMedia';
+// import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Cloud from "@material-ui/icons/Cloud";
+import FormatQuote from "@material-ui/icons/FormatQuote";
 import Slider from "react-slick";
 import '../../Styles/ImageSlide.css';
+// core components
+import Button from "Component/CustomButtons/Button.jsx";
+import CustomInput from "Component/CustomInput/CustomInput.jsx";
+import Card from "Component/Card/Card.jsx";
+import CardBody from "Component/Card/CardBody.jsx";
+import CardAvatar from "Component/Card/CardAvatar.jsx";
+import CardHeader from "Component/Card/CardHeader.jsx";
+import CardFooter from "Component/Card/CardFooter.jsx";
+import GridContainer from "Component/Grid/GridContainer.jsx";
+import GridItem from "Component/Grid/GridItem.jsx";
+import avatar from "assets/img/faces/avatar.jpg";
 
+import priceImage1 from "assets/img/card-2.jpeg";
+import priceImage2 from "assets/img/card-3.jpeg";
+import priceImage3 from "assets/img/card-1.jpeg";
+import Tooltip from "@material-ui/core/Tooltip";
+import Refresh from "@material-ui/icons/Refresh";
+import Edit from "@material-ui/icons/Edit";
+import Place from "@material-ui/icons/Place";
+import ArtTrack from "@material-ui/icons/ArtTrack";
+import CarouselSlider from "react-carousel-slider"
 const styles = {
   card: {
     maxWidth: 300,
@@ -125,10 +147,80 @@ class Hosting extends React.Component {
     // console.log("STATE: ", this.state);
 
     return (
-      <div style={{paddingLeft:"1rem", paddingBottom:'1rem'}}>
-        <Card className={classes.card}>
+
+      <div style={{padding:"1rem"}}>
+        <Link to={`/accommodations/${id}`}>
+        <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}>
+          <CardHeader image className={classes.cardHeaderHover}>
+
+              <img src={priceImage1} alt="..." />
+
+          </CardHeader>
+          <CardBody>
+            <h6 className={classes.cardProductTitle}>
+              <a href="#pablo" onClick={e => e.preventDefault()}>
+              <Typography component="p">
+                {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
+                <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
+              </Typography>
+              </a>
+            </h6>
+            <div className={classes.price}>
+              <Typography gutterBottom variant="headline" component="h6">
+                {house.Accomodation_Type} ${SingleHost.price}/night
+              </Typography>
+            </div>
+            {reviews.length > 0 ?
+            <div>
+              <Rating
+                  readonly={readonly}
+                  initialRating={avgRating}
+              />
+              <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
+            </div>
+              :
+                <Rating
+                  readonly={readonly}
+                  initialRating={0}
+              />
+
+            }
+            {this.state.seeReviews ?
+              <CardContent>{ reviews.map(review =>
+                  <Review
+                    key={review.id}
+                    accommodation={review.accommodation}
+                    star={review.star}
+                    user={review.user}
+                    review={review.review}
+                    text='Close'
+                    closeReview={this.showReview.bind(this)}
+                />
+                )
+              }
+              </CardContent>
+              : null
+            }
+
+          </CardBody>
+          <CardFooter product>
+              <Link to={`/accommodations/${id}`}>
+                <Button size="small" color="primary" onClick={this.seeRoomDetail}>
+                  See more
+                </Button>
+              </Link>
+          </CardFooter>
+        </Card>
+        </Link>
+        {/* <Card className={classes.card} style={{}}> */}
+            {/* <CardAvatar profile className={classes.cardAvatar}>
+                  <a href="#pablo" onClick={e => e.preventDefault()}>
+                    <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" alt="..." />
+                  </a>
+            </CardAvatar> */}
           {/* <CardActionArea> */}
-            <CardMedia src="ddd" img="ddd" style={{marginLeft:'-1.23rem', marginRight:'-1.23rem' ,marginTop:'-2.1rem'}}>
+
+            {/* <CardMedia src="ddd" img="ddd">
               <Slider {...settings}>
               { images.length !== 0 ?
                   imagesDiv
@@ -137,10 +229,15 @@ class Hosting extends React.Component {
 
               }
               </Slider>
+<<<<<<< HEAD
             </CardMedia>
+=======
+            </CardMedia> */}
+
+>>>>>>> Frontend-LiveChat
           {/* </CardActionArea> */}
 
-            <CardContent>
+            {/* <CardContent>
                 <Typography gutterBottom variant="headline" component="h2">
                   {house.Accomodation_Type} ${SingleHost.price}/night
                 </Typography>
@@ -172,7 +269,10 @@ class Hosting extends React.Component {
                   readonly={readonly}
                   initialRating={0}
               />
+<<<<<<< HEAD
                 No reviews
+=======
+>>>>>>> Frontend-LiveChat
               </CardContent>
             }
             {this.state.seeReviews ?
@@ -194,12 +294,14 @@ class Hosting extends React.Component {
               : null
             }
             <CardActions>
-              <Button size="small" color="primary" href={`/accommodations/${id}`} onClick={this.seeRoomDetail}>
-                See more
-            </Button>
+              <Link to={`/accommodations/${id}`}>
+                <Button size="small" color="primary" onClick={this.seeRoomDetail}>
+                  See more
+                </Button>
+              </Link>
             </CardActions>
-        </Card>
-       </div>
+        </Card> */}
+      </div>
     )
   }
 }

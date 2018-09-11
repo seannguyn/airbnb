@@ -67,7 +67,7 @@ const reducer = (state,action) => {
         }
       case 'LOGOUT':
         console.log("here LOGOUT");
-        window.localStorage.clear();
+        localStorage.clear();
         return {
           ...state,
           logged_in: false,
@@ -158,23 +158,31 @@ export class Provider extends Component {
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
-    localStorage.getItem('currentUser')
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    console.log(currentUser,"WILL MOUNT");
+
+    if( currentUser.length > 0) {
+      this.setState({
+        currentUser: JSON.parse(localStorage.getItem('currentUser')),
+        logged_in: true,
+        // HouseList: JSON.parse(localStorage.getItem('HouseList')),
+        // myHostingList: JSON.parse(localStorage.getItem('myHostingList')),
+        // AllHostingList: JSON.parse(localStorage.getItem('AllHostingList')),
+      });
+    }
+
     // && localStorage.getItem('HouseList')
     // localStorage.getItem('myHostingList') && localStorage.getItem('AllHostingList')
-    && this.setState({
-      currentUser: JSON.parse(localStorage.getItem('currentUser')),
-      // HouseList: JSON.parse(localStorage.getItem('HouseList')),
-      // myHostingList: JSON.parse(localStorage.getItem('myHostingList')),
-      // AllHostingList: JSON.parse(localStorage.getItem('AllHostingList')),
-    });
+
 
   }
 
   async componentWillUpdate(nextProps, nextState){
 
-    // console.log("WILL UPDATE: ", this.state);
+    // console.log("WILL UPDATE: ", nextState);
 
-    localStorage.setItem('currentUser', JSON.stringify(this.state.currentUser));
+    // should be nextState
+    localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
   }
 
   async componentDidUpdate(){

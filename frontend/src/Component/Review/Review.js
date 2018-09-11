@@ -19,7 +19,7 @@ class Review extends Component {
 
                     <div className="container" style={{background:"#f7f7f7"}}>
                     Rating {star}
-                    <p className><b>{review}  <i>(by {user})</i></b></p> 
+                    <p><b>{review}  <i>(by {user})</i></b></p> 
                     </div>
 
             </React.Fragment>
