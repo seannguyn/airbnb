@@ -150,7 +150,7 @@ class Hosting extends React.Component {
     images.map( (image) => {
       imagesDiv.push(
           <div key={image.id}>
-            <img src={image.a_image} height="250" width="345"/>
+            <img src={image.a_image} height="150" width="345"/>
           </div>
       )
 
@@ -165,27 +165,13 @@ class Hosting extends React.Component {
         <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}> 
           <CardHeader style={{marginBottom: '0rem'}}image className={classes.cardHeaderHover}>
           <Carousel {...settings} dots={false}>
-                  <div>
-                    <img
-                      src={image1}
-                      alt="First slide"
-                      className="slick-image"
-                    />
-                  </div>
-                  <div>
-                    <img
-                      src={image2}
-                      alt="Second slide"
-                      className="slick-image"
-                    />
-                  </div>
-                  <div>
-                    <img
-                      src={image3}
-                      alt="Third slide"
-                      className="slick-image"
-                    />
-                  </div>
+          { images.length !== 0 ?
+                  imagesDiv
+                :
+                <div>
+                    <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345"/>
+                </div>
+              }
                 </Carousel>
               
               {/* <img src={priceImage1} alt="..." /> */}
