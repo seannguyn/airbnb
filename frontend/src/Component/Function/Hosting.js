@@ -229,12 +229,7 @@ class Hosting extends React.Component {
 
               }
               </Slider>
-<<<<<<< HEAD
             </CardMedia>
-=======
-            </CardMedia> */}
-
->>>>>>> Frontend-LiveChat
           {/* </CardActionArea> */}
 
             {/* <CardContent>
@@ -269,10 +264,6 @@ class Hosting extends React.Component {
                   readonly={readonly}
                   initialRating={0}
               />
-<<<<<<< HEAD
-                No reviews
-=======
->>>>>>> Frontend-LiveChat
               </CardContent>
             }
             {this.state.seeReviews ?
