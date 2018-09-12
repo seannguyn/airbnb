@@ -11,7 +11,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Items from './Items';
 
 import {Consumer} from '../../Context';
-
+import logo from "assets/img/portbnb_logo.png";
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -93,7 +93,7 @@ class Sidebar extends React.Component {
               open={sidebar_show}
             >
               <div className={classes.toolbar}>
-                blah blah
+                <img src={logo} alt="..." />
               </div>
               <Divider />
                 <Items />

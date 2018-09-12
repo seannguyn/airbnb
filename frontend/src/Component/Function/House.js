@@ -4,14 +4,33 @@ import {Link} from 'react-router-dom'
 import AddHosting from './AddHosting'
 
 import { withStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
+// import Card from '@material-ui/core/Card'
 // import CardActionArea from '@material-ui/core/CardActionArea';
 // import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent'
 // import CardMedia from '@material-ui/core/CardMedia';
 // import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
+// core components
+import Button from "Component/CustomButtons/Button.jsx";
+import CustomInput from "Component/CustomInput/CustomInput.jsx";
+import Card from "Component/Card/Card.jsx";
+import CardBody from "Component/Card/CardBody.jsx";
+import CardAvatar from "Component/Card/CardAvatar.jsx";
+import CardHeader from "Component/Card/CardHeader.jsx";
+import CardFooter from "Component/Card/CardFooter.jsx";
+import GridContainer from "Component/Grid/GridContainer.jsx";
+import GridItem from "Component/Grid/GridItem.jsx";
+import avatar from "assets/img/faces/avatar.jpg";
 
+import priceImage1 from "assets/img/card-2.jpeg";
+import priceImage2 from "assets/img/card-3.jpeg";
+import priceImage3 from "assets/img/card-1.jpeg";
+import Tooltip from "@material-ui/core/Tooltip";
+import Refresh from "@material-ui/icons/Refresh";
+import Edit from "@material-ui/icons/Edit";
+import Place from "@material-ui/icons/Place";
+import ArtTrack from "@material-ui/icons/ArtTrack";
 const styles = {
   card: {
     maxWidth: 345,
@@ -74,7 +93,6 @@ class House extends React.Component {
 
     const isMyHouse = false; // flag to check if which current user's houses - for hosting button
     const isHosting = false;// flag to check if the accom is hosting
-
     const { classes} = this.props;
 
     return (
@@ -105,9 +123,51 @@ class House extends React.Component {
 
           return (
 
-    <div style={{padding:"1rem"}}>
-      <Card className={classes.card} style={{width:'30vw'}} >
-            <CardContent>
+        <div style={{padding:"1rem"}}>
+          <Card product className={classes.cardHover} style={{width:'20vw'}} >
+            <CardHeader image className={classes.cardHeaderHover}>
+            
+              <img src={priceImage1} alt="..." />
+            
+            </CardHeader>
+            <CardBody>
+            <h6 className={classes.cardProductTitle}>
+              <Typography gutterBottom variant="headline" component="h2">
+                {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
+                <i  className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)} style={{cursor:'pointer', float:'right',color:'red'}}/>
+              </Typography>
+            </h6>
+            
+
+              {showDetail === true ?
+                <ul className="list-group">
+                  {area           !=='0' ? <li className="list-group-item">Area <i className="fas fa-th-large"/> {area}  sq meters</li>         : null}
+                  {bedroom_master !=='0' ? <li className="list-group-item">Master Bedroom <i className="fas fa-bed"/> x {bedroom_master} </li>  : null}
+                  {bedroom        !=='0' ? <li className="list-group-item">Bedroom <i className="fas fa-bed"/> x {bedroom} </li>                : null}
+                  {bathroom       !=='0' ? <li className="list-group-item">Bathroom <i className="fas fa-bath"/> x {bathroom} </li>             : null}
+                  {kitchen        !=='0' ? <li className="list-group-item">Kitchen <i className="fas fa-utensils"/> x {kitchen} </li>           : null}
+                  {gym            !=='0' ? <li className="list-group-item">Gym <i className="fas fa-dumbbell"/> x {gym} </li>                   : null}
+                  {pool           !=='0' ? <li className="list-group-item">Pool <i className="fas fa-swimming-pool"/> x {pool} </li>            : null}
+                  {carpark        !=='0' ? <li className="list-group-item">Carpark <i className="fas fa-car-side"/> x {carpark} </li>           : null}
+
+                  <li className="list-group-item">Description :{description} </li>
+                </ul>
+                : null}
+              </CardBody>
+              <CardFooter product>
+                <Link to={`editHouse/${id}`}>
+                  <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
+                </Link>
+                {this.isMyHouse === true && this.isHosting === true?
+                  <Link to={{ pathname: `/editHouse/${id}`, state: { stage: 3} }}>
+                    <i className="fas fa-circle" style={{color:"green"}}>Active</i>
+                  </Link>
+                  : <Link to={`/editHouse/${id}`}>
+                      <i className="fas fa-circle" style={{color:"grey"}}>Inactive Host</i>
+                    </Link>
+              }
+              </CardFooter>  
+            {/* <CardContent>
               <Typography gutterBottom variant="headline" component="h2">
                 {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
                 <i  className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)} style={{cursor:'pointer', float:'right',color:'red'}}/>
@@ -117,7 +177,7 @@ class House extends React.Component {
                 <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
               </Link>
 
-          </CardContent>
+            </CardContent>
               {this.isMyHouse === true && this.isHosting === true?
                   <Link to={{ pathname: `/editHouse/${id}`, state: { stage: 3} }}>
                     <i className="fas fa-circle" style={{color:"green"}}>Active</i>
@@ -141,7 +201,7 @@ class House extends React.Component {
 
                   <li className="list-group-item">Description :{description} </li>
                 </ul>
-                : null}
+                : null} */}
 
             </Card>
           </div>

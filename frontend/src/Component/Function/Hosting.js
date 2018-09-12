@@ -121,20 +121,6 @@ class Hosting extends React.Component {
   render () {
 
     // console.log('PROPS ', this.props);
-    let data = [
-      {
-          des: "1",
-          imgSrc: "assets/img/card-1.jpeg"
-      },
-      {
-          des: "2",
-          imgSrc: "assets/img/card-2.jpeg"
-      },
-      {
-          des: "3",
-          imgSrc: "assets/img/card-3.jpeg"
-      }
-  ];
     const readonly = true,
 
           {house, SingleHost} = this.props,
@@ -169,13 +155,15 @@ class Hosting extends React.Component {
     return (
       
       <div style={{padding:"1rem"}}>
-        <Link to={`/accommodations/${id}`}>
-        <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}> 
-          <CardHeader image className={classes.cardHeaderHover}>
-          
-              <img src={priceImage1} alt="..." />
-              
-          </CardHeader>
+        
+        <Card product className={classes.cardHover} style={{width:'20vw'}}> 
+          <Link to={`/accommodations/${id}`}>
+            <CardHeader image className={classes.cardHeaderHover}>
+            
+                <img src={priceImage1} alt="..." />
+                
+            </CardHeader>
+          </Link>
           <CardBody>
             <h6 className={classes.cardProductTitle}>
               <a href="#pablo" onClick={e => e.preventDefault()}>
@@ -231,7 +219,7 @@ class Hosting extends React.Component {
               </Link> 
           </CardFooter>
         </Card>
-        </Link>  
+          
         {/* <Card className={classes.card} style={{}}> */}
             {/* <CardAvatar profile className={classes.cardAvatar}>
                   <a href="#pablo" onClick={e => e.preventDefault()}>

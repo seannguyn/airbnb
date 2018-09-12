@@ -20,7 +20,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import LoginDialog from './LoginDialog'
 import { CardActionArea } from '../../../node_modules/@material-ui/core';
-
+import logo from "assets/img/logo3900.png";
 
 const drawerWidth = 240;
 
@@ -183,7 +183,8 @@ class Header extends Component {
                   onClick={this.handleDrawerOpen.bind(this, dispatch)}
                   className={classNames(classes.menuButton, !logged_in && classes.hide)}
                 >
-                  <MenuIcon />
+                  {/* <MenuIcon /> */}
+                  <img src={logo} alt="..." />
                 </IconButton>
 
                   <Typography style={{flex:1}} className={classNames(!logged_in && classes.transparent)} variant="title" color="inherit" noWrap>
