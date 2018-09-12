@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-import Houses from './Component/Function/Houses';
 import AddHouse from './Component/Function/AddHouse';
 import Header from './Component/layout/Header';
 import Sidebar from './Component/layout/Sidebar';
-import Login from './Component/Authentication/Login';
-import Registration from './Component/Authentication/Registration';
 import MyHouses from './Component/Function/MyHouses';
 import AddHosting from './Component/Function/AddHosting';
 
@@ -15,17 +12,19 @@ import ContextApi from './Component/Contexts/Context_api.js';
 import AllHostingContext from './Component/Contexts/AllHostingContext';
 import AddHouseContext from './Component/Contexts/AddHouseContext';
 import EditHostingContext from './Component/Contexts/EditHostContext';
+import AccommodationDetail from './Component/AccommodationDetail/AccommodationDetail';
 
 import GuttersGrid from './Component/Grid/GridItem';
 import Demo from './Component/Grid/GridItem';
+import MyBookings from './Component/Booking/MyBookings';
+import AppMain from './AppMain'
 
 class App extends Component {
   render() {
     return (
       <Provider>
-
-      <Header />
         <Router>
+<<<<<<< HEAD:airbnbClone/frontend/src/App.js
           
           <div className="container-fluid">
             <div className="row">
@@ -56,6 +55,10 @@ class App extends Component {
         </div>
       
       </Router>
+=======
+          <AppMain />
+        </Router>
+>>>>>>> 0ab14986750935aabfc5c86264411f0d12022f4f:frontend/src/App.js
       </Provider>
     );
   }

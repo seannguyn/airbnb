@@ -1,7 +1,18 @@
 import React from 'react'
-import AllHostingContext from '../Contexts/AllHostingContext'
+// import AllHostingContext from '../Contexts/AllHostingContext'
 import Hosting from './Hosting'
 import ComplexGrid from '../Grid/GridItem';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
+
+
+const styles = theme => ({
+
+  search: {
+    margin: theme.spacing.unit * 2,
+  },
+
+});
 
 class AllHosting extends React.Component {
 
@@ -24,8 +35,12 @@ class AllHosting extends React.Component {
     );
   }
 
-  render () {
+  filterHouse() {
 
+  }
+
+  render () {
+    const {classes} = this.props;
     const {AllHostingList} = this.props.AllHostingList;
     // console.log("all Hosting",this.props.AllHostingList);
     // console.log("all House",this.props.HouseList);
@@ -33,7 +48,15 @@ class AllHosting extends React.Component {
     // console.log("SINGLEHOUSE: ", SingleHosting)
     return (
       <React.Fragment>
-        <h1>Explore</h1>
+        <TextField
+          fullWidth
+          label="Search Bar"
+          name="search"
+          type="text"
+          id="search"
+          onChange={this.filterHouse.bind(this)}
+          className={classes.search}
+        />
         <div className="row">
             {SingleHosting}
           </div>
@@ -42,4 +65,4 @@ class AllHosting extends React.Component {
   }
 }
 
-export default AllHosting;
+export default withStyles(styles, { withTheme: true })(AllHosting);
