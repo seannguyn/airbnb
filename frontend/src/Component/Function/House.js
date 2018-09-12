@@ -152,5 +152,4 @@ class House extends React.Component {
 
   }
 }
-
 export default withStyles(styles)(House);

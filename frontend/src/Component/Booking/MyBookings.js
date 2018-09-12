@@ -27,6 +27,15 @@ class MyBookings extends Component {
 		this.setState({ myBookings: res });
 	}
 
+	 // check if object is empty
+	isEmpty = (obj) => {
+		for(var key in obj) {
+				if(obj.hasOwnProperty(key))
+						return false;
+		}
+		return true;
+	}
+
 	// separate future, past, current booking into diffent array and set state
 	separateFutureCurrentPast = () => {
 		let tempFutureStay = [], tempCurrentStay = [], tempPastStay = [];
@@ -83,28 +92,33 @@ class MyBookings extends Component {
 		const { myBookings, futureStay, currentStay, pastStay, earliestBooking } = this.state;
 		return (
 			<React.Fragment>
-				<center><h1>Next Stay</h1></center>
+
 				<div>
 					<center>
-						{futureStay.length !== 0 ?
-							<Booking key={earliestBooking.id} booking={earliestBooking}></Booking>
-							: <h1>There is not future bookings</h1>
+						{ !this.isEmpty(earliestBooking) ?
+							<div>
+								<center><h1>Next Stay</h1></center>
+								<Booking key={earliestBooking.id} booking={earliestBooking}></Booking>
+							</div>
+							: null
 						}
 					</center>
 				</div>
-				<center><h1>Incoming</h1></center>
+				{futureStay.length !== 0 ? <center><h1>Incoming</h1></center> : null}
 				<div className="row">
 					{futureStay.length !== 0 ?
 						futureStay.map((booking) => {
 							return (
-								<div key={booking.id} style={{ padding: '1rem' }}>
-									<center>
-										<Booking key={booking.id} booking={booking}  earliestBooking={earliestBooking}></Booking>
-									</center>
+								<div>
+									<div key={booking.id} style={{ padding: '1rem' }}>
+										<center>
+											<Booking key={booking.id} booking={booking}  earliestBooking={earliestBooking}></Booking>
+										</center>
+									</div>
 								</div>
 							);
 						})
-						: <h1>There is not future bookings</h1>
+						: null
 					}
 				</div>
 				<div className="row">
@@ -113,23 +127,37 @@ class MyBookings extends Component {
 						: null
 					}
 				</div>
+				{pastStay.length !== 0 ? <center><h1>In The Past</h1></center> : null}
 				<div className="row">
 					{pastStay.length !== 0 ?
-						<h1>Past</h1>
+						pastStay.map((booking) => {
+							return (
+								<div>
+									<div key={booking.id} style={{ padding: '1rem' }}>
+										<center>
+											<Booking key={booking.id} booking={booking}></Booking>
+										</center>
+									</div>
+								</div>
+							);
+						})
 						: null
 					}
 				</div>
-				<center><h1> All My Bookings</h1></center>
+				<center><h1>All Bookings</h1></center>
 				<div className="row">
-					{myBookings.map((booking) => {
-						return (
-							<div key={booking.id} style={{ padding: '1rem' }}>
-								<center>
-									<Booking key={booking.id} booking={booking}></Booking>
-								</center>
-							</div>
-						);
-					})}
+					{myBookings.length !== 0 ?
+						myBookings.map((booking) => {
+							return (
+								<div key={booking.id} style={{ padding: '1rem' }}>
+									<center>
+										<Booking key={booking.id} booking={booking}></Booking>
+									</center>
+								</div>
+							);
+						})
+					: <p>You have not booked any accommodation with us</p>
+					}
 				</div>
 			</React.Fragment>
 		);

@@ -276,6 +276,5 @@ class Hosting extends React.Component {
     )
   }
 }
-
 // export default withStyles(styles)(Hosting);
 export default withStyles(dashboardStyle,carouselStyle)(Hosting);
