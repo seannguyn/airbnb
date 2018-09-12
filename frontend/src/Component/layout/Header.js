@@ -171,7 +171,7 @@ class Header extends Component {
           const {dispatch, sidebar_show,logged_in, currentUser} = value;
           return (
             <div>
-           <MuiThemeProvider theme={customColor} style={{backgroundColor:'transparent'}}>
+           <MuiThemeProvider theme={customColor}>
               <AppBar
                 color="secondary"
                 position="absolute"

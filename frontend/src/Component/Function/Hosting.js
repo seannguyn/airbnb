@@ -16,10 +16,6 @@ import CardBody from "Component/Card/CardBody.jsx";
 import CardHeader from "Component/Card/CardHeader.jsx";
 import CardFooter from "Component/Card/CardFooter.jsx";
 
-import image1 from "assets/img/card-1.jpeg";
-import image2 from "assets/img/card-2.jpeg";
-import image3 from "assets/img/card-3.jpeg";
-
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
 import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx";
 import Carousel from "react-slick";
@@ -69,8 +65,7 @@ class Hosting extends React.Component {
   }
 
   // find this accomm's images
-  findImages = (images) => {
-    const accommID = this.props.house.id;
+  findImagesByAccommID = (images, accommID)=> {
     const retImages = [];
     for( let i = 0; i < images.length; i++){
       if(accommID === images[i].accommodation){
@@ -100,7 +95,7 @@ class Hosting extends React.Component {
       this.setState({reviews:reviews});
 
     const images = await axios.get('https://localhost:8000/accommodationImage/');
-    this.findImages(images.data);
+    this.findImagesByAccommID(images.data, this.props.house.id);
   }
 
   render () {
@@ -132,14 +127,10 @@ class Hosting extends React.Component {
       )
 
     })
-
     // console.log("STATE: ", this.state);
-
     return (
-
       <div style={{padding:"1rem"}}>
         <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}>
-
           <CardHeader style={{marginBottom: '0rem'}}image className={classes.cardHeaderHover}>
           <Carousel {...settings} dots={false}>
           { images.length !== 0 ?
@@ -164,19 +155,20 @@ class Hosting extends React.Component {
             {reviews.length > 0 ?
             <div>
               <Rating
-                  readonly={readonly}
-                  initialRating={avgRating}
+                readonly={readonly}
+                initialRating={avgRating}
               />
               <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
             </div>
-              :
-                <Rating
-                  readonly={readonly}
-                  initialRating={0}
-              />
+            :
+            <Rating
+              readonly={readonly}
+              initialRating={0}
+            />
             }
             {this.state.seeReviews ?
-              <CardContent>{ reviews.map(review =>
+              <CardContent>
+              {reviews.map(review =>
                   <Review
                     key={review.id}
                     accommodation={review.accommodation}
@@ -185,14 +177,11 @@ class Hosting extends React.Component {
                     review={review.review}
                     text='Close'
                     closeReview={this.showReview.bind(this)}
-                />
-                )
-              }
+                />)}
               </CardContent>
               : null
             }
             </div>
-
           </CardBody>
           <CardFooter product>
               <div className={classes.price}>

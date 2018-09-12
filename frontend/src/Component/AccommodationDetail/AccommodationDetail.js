@@ -32,13 +32,12 @@ class AccommodationDetail extends Component {
         this.state = {
             accomDetail: {},
             currentHost: {},
-
             bookedPeriods: [], //periods that this accomm booked to block the date
             minDateSet: [],
             minDate: {},
             allBookings: [],
         }
-    }
+		}
 
     // check if object is empty
     isEmpty = (obj) => {
@@ -146,7 +145,6 @@ class AccommodationDetail extends Component {
         console.log("BOKIGPREID: ", this.state.bookedPeriods);
         const {Accommodation_Type, area, bathroom,
                 bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
-
         const isDayBlocked = day => this.state.bookedPeriods.filter(d => d.isSame(day, 'day')).length > 0;
         return (
           <Consumer>

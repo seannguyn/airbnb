@@ -81,7 +81,6 @@ class MyBookings extends Component {
 	}
 	render() {
 		const { myBookings, futureStay, currentStay, pastStay, earliestBooking } = this.state;
-
 		return (
 			<React.Fragment>
 				<center><h1>Next Stay</h1></center>
@@ -99,21 +98,21 @@ class MyBookings extends Component {
 						futureStay.map((booking) => {
 							return (
 								<div key={booking.id} style={{ padding: '1rem' }}>
-									<Booking key={booking.id} booking={booking} futureStay={futureStay} pastStay={pastStay} currentStay={currentStay} earliestBooking={earliestBooking}></Booking>
+									<center>
+										<Booking key={booking.id} booking={booking}  earliestBooking={earliestBooking}></Booking>
+									</center>
 								</div>
 							);
 						})
 						: <h1>There is not future bookings</h1>
 					}
 				</div>
-
 				<div className="row">
 					{currentStay.length !== 0 ?
 						<h1>Current</h1>
 						: null
 					}
 				</div>
-
 				<div className="row">
 					{pastStay.length !== 0 ?
 						<h1>Past</h1>
@@ -125,7 +124,9 @@ class MyBookings extends Component {
 					{myBookings.map((booking) => {
 						return (
 							<div key={booking.id} style={{ padding: '1rem' }}>
-								<Booking key={booking.id} booking={booking} futureStay={futureStay} pastStay={pastStay} currentStay={currentStay} ></Booking>
+								<center>
+									<Booking key={booking.id} booking={booking}></Booking>
+								</center>
 							</div>
 						);
 					})}
@@ -134,5 +135,4 @@ class MyBookings extends Component {
 		);
 	}
 }
-
 export default MyBookings;
