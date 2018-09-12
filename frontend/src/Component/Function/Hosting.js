@@ -21,6 +21,10 @@ import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSec
 import Carousel from "react-slick";
 // @material-ui/icons
 import LocationOn from "@material-ui/icons/LocationOn";
+import StarRating from 'react-star-rating';
+import like from '../../assets/img/icons/like.png'
+import like_empty from '../../assets/img/icons/like_empty.png'
+
 const styles = {
   card: {
     maxWidth: 300,
@@ -91,8 +95,9 @@ class Hosting extends React.Component {
                   }
                 )
 
-    if(err == null && reviews.length > 0)
+    if(err == null && reviews.length > 0){
       this.setState({reviews:reviews});
+    }
 
     const images = await axios.get('https://localhost:8000/accommodationImage/');
     this.findImagesByAccommID(images.data, this.props.house.id);
@@ -127,6 +132,11 @@ class Hosting extends React.Component {
       )
 
     })
+
+    const SVGIcon = (props) =>
+  <svg className={props.className} pointerEvents="none">
+    <use xlinkHref={props.href} />
+  </svg>;
     // console.log("STATE: ", this.state);
     return (
       <div style={{padding:"1rem"}}>
@@ -157,6 +167,8 @@ class Hosting extends React.Component {
               <Rating
                 readonly={readonly}
                 initialRating={avgRating}
+                emptySymbol={<img src={like_empty} className="icon" />}
+                fullSymbol={<img src={like} className="icon" />}
               />
               <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
             </div>
@@ -164,6 +176,8 @@ class Hosting extends React.Component {
             <Rating
               readonly={readonly}
               initialRating={0}
+              emptySymbol={<img src={like_empty} className="icon" />}
+                fullSymbol={<img src={like} className="icon" />}
             />
             }
             {this.state.seeReviews ?
@@ -191,87 +205,6 @@ class Hosting extends React.Component {
               </div>
           </CardFooter>
         </Card>
-
-        {/* <Card className={classes.card} style={{}}> */}
-            {/* <CardAvatar profile className={classes.cardAvatar}>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" alt="..." />
-                  </a>
-            </CardAvatar> */}
-          {/* <CardActionArea> */}
-
-            {/* <CardMedia src="ddd" img="ddd">
-              <Slider {...settings}>
-              { images.length !== 0 ?
-                  imagesDiv
-              :
-                <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="250" width="307" alt="nohouse"/>
-
-              }
-              </Slider>
-            </CardMedia>
-          {/* </CardActionArea> */}
-
-            {/* <CardContent>
-                <Typography gutterBottom variant="headline" component="h2">
-                  {house.Accomodation_Type} ${SingleHost.price}/night
-                </Typography>
-
-                <Typography component="p">
-                    {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
-                    <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
-                  </Typography>
-              </CardContent>
-
-            {showHosting === true ?
-              <ul className="list-group">
-                <li className="list-group-item">start_date : {SingleHost.date_start}</li>
-                <li className="list-group-item">end_date :  {SingleHost.date_end}</li>
-                <li className="list-group-item">price :  {SingleHost.price}</li>
-              </ul>
-            : null}
-
-            {reviews.length > 0 ?
-            <CardContent>
-              <Rating
-                  readonly={readonly}
-                  initialRating={avgRating}
-              />
-              <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
-              </CardContent>
-            : <CardContent>
-                <Rating
-                  readonly={readonly}
-                  initialRating={0}
-              />
-              </CardContent>
-            }
-            {this.state.seeReviews ?
-              <CardContent>{
-                reviews.map(review =>
-                  <Review
-                    key={review.id}
-                    accommodation={review.accommodation}
-                    star={review.star}
-                    user={review.user}
-                    review={review.review}
-                    text='Close'
-                    closeReview={this.showReview.bind(this)}
-                />
-                )
-              }
-                <button onClick={this.showReview.bind(this)}>Close</button>
-              </CardContent>
-              : null
-            }
-            <CardActions>
-              <Link to={`/accommodations/${id}`}>
-                <Button size="small" color="primary" onClick={this.seeRoomDetail}>
-                  See more
-                </Button>
-              </Link>
-            </CardActions>
-        </Card> */}
       </div>
     )
   }
