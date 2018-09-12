@@ -6,8 +6,8 @@ import TextInputGroup from '../Function/TextInputGroup';
 
 class Login extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             username : '',
             password : '',
@@ -115,7 +115,7 @@ class Login extends Component {
                             onChange={this.onChange}
                             error={this.state.error.password}/>
                         
-                        <input type="submit" className="btn btn-block btn-light" value="Login"></input>
+                        <input type="submit" className="btn btn-block btn-light" value="Login"/>
                     </form>
                     <div>
                        <Link to="/registration" className="">

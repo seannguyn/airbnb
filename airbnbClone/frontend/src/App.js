@@ -33,22 +33,22 @@ class App extends Component {
                 <Sidebar/>
               </div>
 
-
               <div className="col-md-10">
                 <Switch>
 
                   {/* Router for authentication */}
-                  <Route exact path="/login" component={Login}></Route>
-                  <Route exact path="/registration" component={Registration}></Route>
+                  <Route exact path="/login" component={Login}/>
+                  <Route exact path="/registration" component={Registration}/>
 
                   {/* Router for accommodation/house */}
-                  <Route exact path="/" component={AllHostingContext}></Route>
-                  <Route exact path="/myhouses" component={MyHouses}></Route>
-                  <Route exact path="/addHouse" component={AddHouseContext}></Route>
-                  <Route exact path="/editHouse/:id" component={ContextApi}></Route>
-                  <Route exact path="/hosting/:id" component={AddHosting}></Route>
-                  <Route exact path="/edithosting/:id" component={EditHostingContext}></Route>
-                  <Route exact path="/grid" component={Demo}></Route>
+                  <Route exact path="/" component={AllHostingContext}/>
+                  <Route exact path="/myhouses" component={MyHouses}/>
+                  <Route exact path="/addHouse" component={AddHouseContext}/>
+                  <Route exact path="/editHouse/:id" component={ContextApi}/>
+                  <Route exact path="/hosting/:id" component={AddHosting}/>
+                  <Route exact path="/edithosting/:id" component={EditHostingContext}/>
+                  <Route exact path="/grid" component={Demo}/>
+
                 </Switch>
 
               </div>
