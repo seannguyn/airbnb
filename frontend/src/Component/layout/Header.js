@@ -28,7 +28,7 @@ const customColor = createMuiTheme({
   palette: {
     primary: green,
     secondary: {
-      main: '#ffb199',
+      main: '#ffffff',
     },
   },
 });
