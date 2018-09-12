@@ -3,24 +3,21 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import Review from '../Review/Review';
 
-import { withStyles } from '@material-ui/core/styles';
-
-import CardContent from '@material-ui/core/CardContent';
-
-import '../../Styles/ImageSlide.css';
-// core components
-import Button from "Component/CustomButtons/Button.jsx";
-
+// Material UI components
 import Card from "Component/Card/Card.jsx";
 import CardBody from "Component/Card/CardBody.jsx";
 import CardHeader from "Component/Card/CardHeader.jsx";
 import CardFooter from "Component/Card/CardFooter.jsx";
-
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
+import { withStyles } from '@material-ui/core/styles';
+import CardContent from '@material-ui/core/CardContent';
+
+// Image Slider
 import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx";
 import Carousel from "react-slick";
-// @material-ui/icons
-import LocationOn from "@material-ui/icons/LocationOn";
+import '../../Styles/ImageSlide.css';
+
+// Rating
 import StarRating from 'react-star-rating';
 import like from '../../assets/img/icons/like.png'
 import like_empty from '../../assets/img/icons/like_empty.png'
@@ -45,7 +42,6 @@ class Hosting extends React.Component {
       id: '',
       images: [],
     }
-
   }
 
   handleExpand() {
@@ -60,7 +56,6 @@ class Hosting extends React.Component {
         avgRating = avgRating + reviews[key].star;
       }
     }
-
     return avgRating/reviews.length;
   }
 
@@ -80,8 +75,6 @@ class Hosting extends React.Component {
   }
 
   async componentDidMount  () {
-    // console.log(this.props.house.id," pamramm")
-    // this.setState({id: this.props.match.params})
     const {id} = this.props.house;
     let reviews, err;
     await axios.get(`https://localhost:8000/accommodation/${id}/reviews/`)
@@ -111,18 +104,17 @@ class Hosting extends React.Component {
           {showHosting, images, reviews} = this.state,
           avgRating =  this.starCalculator(reviews),
           { classes} = this.props;
-
     let Rating = require('react-rating');
-
     let settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      arrows: true,
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
     };
 
+    // Map image in images array to div
     let imagesDiv = [];
     images.map( (image) => {
       imagesDiv.push(
@@ -130,18 +122,12 @@ class Hosting extends React.Component {
             <img src={image.a_image} height="150" width="345"/>
           </div>
       )
-
     })
 
-    const SVGIcon = (props) =>
-  <svg className={props.className} pointerEvents="none">
-    <use xlinkHref={props.href} />
-  </svg>;
-    // console.log("STATE: ", this.state);
     return (
       <div style={{padding:"1rem"}}>
         <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}>
-          <CardHeader style={{marginBottom: '0rem'}}image className={classes.cardHeaderHover}>
+          <CardHeader style={{marginBottom: '0rem'}} image>
           <Carousel {...settings} dots={false}>
           { images.length !== 0 ?
             imagesDiv
@@ -177,7 +163,7 @@ class Hosting extends React.Component {
               readonly={readonly}
               initialRating={0}
               emptySymbol={<img src={like_empty} className="icon" />}
-                fullSymbol={<img src={like} className="icon" />}
+              fullSymbol={<img src={like} className="icon" />}
             />
             }
             {this.state.seeReviews ?
@@ -209,5 +195,4 @@ class Hosting extends React.Component {
     )
   }
 }
-// export default withStyles(styles)(Hosting);
 export default withStyles(dashboardStyle,carouselStyle)(Hosting);

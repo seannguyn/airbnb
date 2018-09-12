@@ -102,54 +102,44 @@ class House extends React.Component {
           }
 
           return (
-
-    <div style={{padding:"1rem"}}>
-      <Card className={classes.card} style={{width:'30vw'}} >
-            <CardContent>
-              <Typography gutterBottom variant="headline" component="h2">
-                {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
-                <i  className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)} style={{cursor:'pointer', float:'right',color:'red'}}/>
-              </Typography>
-
-              <Link to={`editHouse/${id}`}>
-                <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
-              </Link>
-
-          </CardContent>
-              {this.isMyHouse === true && this.isHosting === true?
-                  <Link to={{ pathname: `/editHouse/${id}`, state: { stage: 3} }}>
-                    <i className="fas fa-circle" style={{color:"green"}}>Active</i>
+            <div style={{padding:"1rem"}}>
+              <Card className={classes.card} style={{width:'30vw'}} >
+                <CardContent>
+                  <Typography gutterBottom variant="headline" component="h2">
+                    {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
+                    <i  className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)} style={{cursor:'pointer', float:'right',color:'red'}}/>
+                  </Typography>
+                  <Link to={`editHouse/${id}`}>
+                    <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
                   </Link>
-              : <Link to={`/editHouse/${id}`}>
-                    <i className="fas fa-circle" style={{color:"grey"}}>Inactive Host</i>
-                  </Link>
-
-              }
-
-              {showDetail === true ?
-                <ul className="list-group">
-                  {area           !=='0' ? <li className="list-group-item">Area <i className="fas fa-th-large"/> {area}  sq meters</li>         : null}
-                  {bedroom_master !=='0' ? <li className="list-group-item">Master Bedroom <i className="fas fa-bed"/> x {bedroom_master} </li>  : null}
-                  {bedroom        !=='0' ? <li className="list-group-item">Bedroom <i className="fas fa-bed"/> x {bedroom} </li>                : null}
-                  {bathroom       !=='0' ? <li className="list-group-item">Bathroom <i className="fas fa-bath"/> x {bathroom} </li>             : null}
-                  {kitchen        !=='0' ? <li className="list-group-item">Kitchen <i className="fas fa-utensils"/> x {kitchen} </li>           : null}
-                  {gym            !=='0' ? <li className="list-group-item">Gym <i className="fas fa-dumbbell"/> x {gym} </li>                   : null}
-                  {pool           !=='0' ? <li className="list-group-item">Pool <i className="fas fa-swimming-pool"/> x {pool} </li>            : null}
-                  {carpark        !=='0' ? <li className="list-group-item">Carpark <i className="fas fa-car-side"/> x {carpark} </li>           : null}
-
-                  <li className="list-group-item">Description :{description} </li>
-                </ul>
-                : null}
-
-            </Card>
-          </div>
+              </CardContent>
+                  {this.isMyHouse === true && this.isHosting === true?
+                      <Link to={{ pathname: `/editHouse/${id}`, state: { stage: 3} }}>
+                        <i className="fas fa-circle" style={{color:"green"}}>Active</i>
+                      </Link>
+                  : <Link to={`/editHouse/${id}`}>
+                        <i className="fas fa-circle" style={{color:"grey"}}>Inactive Host</i>
+                      </Link>
+                  }
+                  {showDetail === true ?
+                    <ul className="list-group">
+                      {area           !=='0' ? <li className="list-group-item">Area <i className="fas fa-th-large"/> {area}  sq meters</li>         : null}
+                      {bedroom_master !=='0' ? <li className="list-group-item">Master Bedroom <i className="fas fa-bed"/> x {bedroom_master} </li>  : null}
+                      {bedroom        !=='0' ? <li className="list-group-item">Bedroom <i className="fas fa-bed"/> x {bedroom} </li>                : null}
+                      {bathroom       !=='0' ? <li className="list-group-item">Bathroom <i className="fas fa-bath"/> x {bathroom} </li>             : null}
+                      {kitchen        !=='0' ? <li className="list-group-item">Kitchen <i className="fas fa-utensils"/> x {kitchen} </li>           : null}
+                      {gym            !=='0' ? <li className="list-group-item">Gym <i className="fas fa-dumbbell"/> x {gym} </li>                   : null}
+                      {pool           !=='0' ? <li className="list-group-item">Pool <i className="fas fa-swimming-pool"/> x {pool} </li>            : null}
+                      {carpark        !=='0' ? <li className="list-group-item">Carpark <i className="fas fa-car-side"/> x {carpark} </li>           : null}
+                      <li className="list-group-item">Description :{description} </li>
+                    </ul>
+                    : null}
+                </Card>
+            </div>
           )
         }}
-
       </Consumer>
-
     );
-
   }
 }
 export default withStyles(styles)(House);
