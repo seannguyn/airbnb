@@ -18,7 +18,6 @@ import Carousel from "react-slick";
 import '../../Styles/ImageSlide.css';
 
 // Rating
-import StarRating from 'react-star-rating';
 import like from '../../assets/img/icons/like.png'
 import like_empty from '../../assets/img/icons/like_empty.png'
 
@@ -45,12 +44,12 @@ class Hosting extends React.Component {
   }
 
   handleExpand() {
+    console.log("HEREEEE", this.state.showHosting);
     this.setState({showHosting : !this.state.showHosting})
   }
 
   starCalculator(reviews){
     let avgRating = 0;
-
     for(let key in reviews){
       if(reviews.hasOwnProperty(key)){
         avgRating = avgRating + reviews[key].star;
@@ -118,16 +117,17 @@ class Hosting extends React.Component {
     let imagesDiv = [];
     images.map( (image) => {
       imagesDiv.push(
-          <div key={image.id}>
-            <img src={image.a_image} height="150" width="345"/>
-          </div>
+      <div key={image.id}>
+        <img src={image.a_image} height="150" width="345"/>
+      </div>
       )
     })
 
     return (
       <div style={{padding:"1rem"}}>
         <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}>
-          <CardHeader style={{marginBottom: '0rem'}} image>
+        <Link to={`/accommodations/${id}`}>
+          <CardHeader image>
           <Carousel {...settings} dots={false}>
           { images.length !== 0 ?
             imagesDiv
@@ -137,19 +137,18 @@ class Hosting extends React.Component {
           </div>
           }
           </Carousel>
-          </CardHeader >
+          </CardHeader>
+          </Link>
           <CardBody>
             <div className={classes.cardHoverUnder}>
-            <Link to={`/accommodations/${id}`}>
               <h4 className={classes.cardProductTitle}>
                 {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
                 <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
               </h4>
-              </Link>
               {/* <p className={classes.cardProductDesciprion}> */}
               <h4>{house.Accomodation_Type}</h4>
-            {reviews.length > 0 ?
-            <div>
+              {reviews.length > 0 ?
+               <div>
               <Rating
                 readonly={readonly}
                 initialRating={avgRating}
