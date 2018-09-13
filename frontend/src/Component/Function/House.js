@@ -96,7 +96,6 @@ class House extends React.Component {
                 break;
               }else{
                 this.isHosting = false;
-
               }
             }
           }

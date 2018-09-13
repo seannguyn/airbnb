@@ -39,7 +39,7 @@ class MyHouses extends Component {
 								<Link to="/addHouse">
 									<Button
 										variant="raised" color="primary">Add Property
-                  </Button>
+                  					</Button>
 								</Link>
 								<div className="row">
 									{myHouses.map(house => (

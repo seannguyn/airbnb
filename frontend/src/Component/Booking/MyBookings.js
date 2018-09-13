@@ -2,6 +2,14 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Booking from './Booking'
 import moment from 'moment'
+import Popup from "reactjs-popup";
+import Prompt from '../Popup/Prompt'
+import '../../Styles/Popup.css'
+
+// Rating
+import Rating from 'react-rating'
+import like from '../../assets/img/icons/like.png'
+import like_empty from '../../assets/img/icons/like_empty.png'
 
 class MyBookings extends Component {
 
@@ -70,29 +78,37 @@ class MyBookings extends Component {
 		let earliestBooking;
 		for (let i = 0; i < dates.length; i++) {
 			let diff = moment(dates[i].date_start).diff(moment(), 'minutes');
-			if (diff < earliestBookingTime) {
-				earliestBooking = dates[i];
-			}
+			if (diff < earliestBookingTime) earliestBooking = dates[i];
 		}
 		return earliestBooking;
 	}
+
+	// getPastAccommodationID = async(pastStay) => {
+	// 	const accommodationIDs = [];
+	// 	for( let i = 0; i < pastStay.length; i++){
+	// 		let res = await axios.get(`https://localhost:8000/accommodationHosting/${pastStay[i].hosting}/`);
+	// 		accommodationIDs.push(res.data.accommodation);
+	// 	}
+	// 	console.log("ACCOOMM: ", accommodationIDs);
+	// 	return accommodationIDs;
+
+	// }
 
 	async componentDidMount() {
 		localStorage.getItem('currentUser')
 			&& this.setState({
 				currentUser: JSON.parse(localStorage.getItem('currentUser'))
 			});;
-
 		// Get all bookings and find that current user booked
 		const res2 = await axios.get('https://localhost:8000/booking/');
 		this.getBookings(this.state.currentUser[0].user_id, res2.data);
 		this.separateFutureCurrentPast();
 	}
 	render() {
-		const { myBookings, futureStay, currentStay, pastStay, earliestBooking } = this.state;
+		const { myBookings, futureStay, currentStay, pastStay, earliestBooking, currentUser } = this.state;
+		// this.getReviewRequiredList(pastStay);
 		return (
 			<React.Fragment>
-
 				<div>
 					<center>
 						{ !this.isEmpty(earliestBooking) ?
@@ -135,7 +151,7 @@ class MyBookings extends Component {
 								<div>
 									<div key={booking.id} style={{ padding: '1rem' }}>
 										<center>
-											<Booking key={booking.id} booking={booking}></Booking>
+											<Booking key={booking.id} booking={booking} isPast={true}></Booking>
 										</center>
 									</div>
 								</div>
@@ -151,7 +167,7 @@ class MyBookings extends Component {
 							return (
 								<div key={booking.id} style={{ padding: '1rem' }}>
 									<center>
-										<Booking key={booking.id} booking={booking}></Booking>
+										<Booking key={booking.id} booking={booking} pastStay={pastStay} currentUser={currentUser}></Booking>
 									</center>
 								</div>
 							);
