@@ -128,8 +128,6 @@ export class Provider extends Component {
 
   async componentDidMount(){
 
-    console.log("DID MOunt: ", this.state.currentUser);
-
     const res = await axios.get('https://localhost:8000/accommodation/');
     this.setState({HouseList: res.data});
     // console.log(this.state.currentUser);
@@ -148,19 +146,22 @@ export class Provider extends Component {
       })
 
 
-      if(this.state.myHostingList.length === 0 ){
+      // if(this.state.myHostingList.length === 0 ){
         this.setState({myHostingList: res.data});
         // console.log("did mount my hostung lis: ", this.state.myHostingList);
-      }
+      // }
     }
 
   }
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    console.log(currentUser,"WILL MOUNT");
-
+    var currentUser= JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (currentUser  === null) {
+      currentUser = []
+    }
+    console.log("WILL MOUNT",currentUser);
     if( currentUser.length > 0) {
       this.setState({
         currentUser: JSON.parse(localStorage.getItem('currentUser')),
@@ -187,9 +188,9 @@ export class Provider extends Component {
 
   async componentDidUpdate(){
         // console.log("DID UPDATE: ", this.state.currentUser);
-      if(localStorage.getItem('currentUser')){
-        console.log('User data from local storage');
-      }
+      // if(localStorage.getItem('currentUser')){
+      //   console.log('User data from local storage');
+      // }
 
       if(this.state.currentUser.length === 1){
         const {token,user_id} = this.state.currentUser[0];

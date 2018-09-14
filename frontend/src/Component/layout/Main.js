@@ -9,7 +9,7 @@ import AddHouseContext from '../Contexts/AddHouseContext.js';
 import MyHouses from '../Function/MyHouses'
 import MyBookings from '../Booking/MyBookings';
 import AccommodationDetailContext from '../Contexts/AccommodationDetailContext';
-import OverallBooking from '../Function/OverallBooking'
+import OverallBooking from '../Booking/OverallBooking'
 
 const styles = theme => ({
   toolbar: {
@@ -20,9 +20,15 @@ const styles = theme => ({
     ...theme.mixins.toolbar,
   },
   content: {
-    flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing.unit,
+    width: '90%',
+    height: '90%',
+    // position:'fixed',
+    // margin:'0',
+    // top:'0',
+    // left:'0',
+
   },
 });
 
@@ -44,8 +50,9 @@ class Main extends React.Component {
 
             <Route exact path="/accommodations/:id" component={AccommodationDetailContext}></Route>
             <Route exact path="/mybookings" component={MyBookings}></Route>
-            <Route exact path="/overallBooking" component={OverallBooking}></Route>
+            <Route exact path="/payment/:id" component={OverallBooking}></Route>
             <Route component={NotFound}></Route>
+
           </Switch>
       </main>
     )

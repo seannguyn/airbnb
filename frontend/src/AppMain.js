@@ -18,6 +18,7 @@ const styles = theme => ({
     zIndex: 1,
     position: 'relative',
     display: 'flex',
+    width: '100%'
   }
 });
 

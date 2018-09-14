@@ -7,7 +7,7 @@ class AccommodationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Accommodation
-        fields = ('id','user',
+        fields = ('id','user','title',
                     'addr_number','addr_street','addr_city','addr_state',
                     'Accomodation_Type','area','bedroom_master','bedroom',
                     'kitchen','bathroom','pool',
@@ -26,7 +26,7 @@ class AccommodationImageSerializer(serializers.ModelSerializer):
 class AccommodationHostingSerializer(serializers.ModelSerializer):
     class Meta:
         model = AccommodationHosting
-        fields = ('id', 'accommodation','date_start','date_end','price','description')
+        fields = ('id', 'accommodation','date_start','date_end','check_in','check_out','price','description')
 
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:

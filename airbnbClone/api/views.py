@@ -175,10 +175,14 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         print("GET REQUEST OKOKOKOK ")
 
         user = self.request.query_params.get('user', None)
+        accomm = self.request.query_params.get('accomm', None)
 
         if user is not None:
             ids = queryset_1.values_list('id', flat=True).filter(user=user)
             queryset_2 = queryset_2.filter(accommodation__in=set(ids))
+
+        if accomm is not None:
+            queryset_2 = queryset_2.filter(accommodation=accomm)
 
         return queryset_2
 
@@ -270,8 +274,8 @@ class Users(viewsets.ModelViewSet):
 
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
-    
-    
+
+
 
     """ This would get all users """
     def get_queryset(self):
@@ -280,7 +284,7 @@ class Users(viewsets.ModelViewSet):
         # user_pk = None
         # if self.kwargs:
         #     user_pk = self.kwargs['pk']
-    
+
         # if user_pk is not None:
         #     """ return username if /users/id exist """
         #     queryset = queryset.filter(user=user_pk)

@@ -19,6 +19,15 @@ import Demo from './Component/Grid/GridItem';
 import MyBookings from './Component/Booking/MyBookings';
 import AppMain from './AppMain'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStroopwafel, faBed, faBath, faDoorOpen, faUsers,
+          faSwimmingPool, faDumbbell, faUtensils, faCar, faLaptop,
+          faCreditCard, faCheck} from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+
+library.add(fab, faStroopwafel, faBed, faBath, faDoorOpen, faUsers, faSwimmingPool, faDumbbell, faUtensils, faCar, faLaptop, faCreditCard, faCheck)
+
 class App extends Component {
   render() {
     return (
