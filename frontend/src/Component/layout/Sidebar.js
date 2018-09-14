@@ -93,7 +93,7 @@ class Sidebar extends React.Component {
               open={sidebar_show}
             >
               <div className={classes.toolbar}>
-                <img src={logo} alt="..." />
+                
               </div>
               <Divider />
                 <Items />
