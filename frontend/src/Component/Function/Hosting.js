@@ -127,6 +127,7 @@ class Hosting extends React.Component {
     return (
       <div style={{padding:"1rem"}}>
         <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}>
+        <Link to={`/accommodations/${id}`}>
           <CardHeader style={{marginBottom: '0rem'}} image>
           <Carousel {...settings} dots={false}>
           { images.length !== 0 ?
@@ -138,6 +139,7 @@ class Hosting extends React.Component {
           }
           </Carousel>
           </CardHeader >
+          </Link>
           <CardBody>
             <div className={classes.cardHoverUnder}>
             <Link to={`/accommodations/${id}`}>
