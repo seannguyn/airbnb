@@ -5,8 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 
 import Divider from '@material-ui/core/Divider';
-// import IconButton from '@material-ui/core/IconButton';
-// import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 // import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Items from './Items';
 
@@ -33,9 +31,6 @@ const styles = theme => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 36,
-  },
-  hide: {
-    display: 'none',
   },
   drawerPaper: {
     position: 'relative',
@@ -73,15 +68,12 @@ const styles = theme => ({
 
 class Sidebar extends React.Component {
   render () {
-    // const { classes, theme } = this.props;
     const { classes } = this.props;
     return (
       <Consumer>
 
         {value => {
-          // const {dispatch} = value;
           const {sidebar_show} = value;
-          // const {logged_in} = value;
           return (
             <Drawer
               variant="permanent"

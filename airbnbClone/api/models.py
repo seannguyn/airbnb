@@ -30,6 +30,8 @@ class Accommodation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     Accomodation_Type = models.CharField(max_length=10, choices=ACCOMMODATION_TYPES)
 
+    title = models.CharField(blank=False, max_length=100,default=uuid.uuid4())
+
     addr_number = models.PositiveIntegerField(blank=False, default=1)
     addr_street = models.CharField(blank=False, max_length=100,default='dedault')
     addr_city   = models.CharField(blank=False, max_length=100,default='default')
@@ -64,6 +66,8 @@ class AccommodationHosting(models.Model):
     accommodation = models.OneToOneField(Accommodation, on_delete=models.CASCADE)
     date_start = models.DateField(default=datetime.datetime.today)
     date_end = models.DateField(default=datetime.datetime.today)
+    check_in = models.TimeField(blank=True,default=datetime.time(14,30,0,0))
+    check_out = models.TimeField(blank=True,default=datetime.time(10,0,0,0))
     price = models.PositiveIntegerField(blank=False)
     description = models.TextField(blank=True)
 
@@ -81,9 +85,11 @@ class Booking(models.Model):
 
     hosting = models.ForeignKey(AccommodationHosting, on_delete=models.CASCADE)
     booker = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    isPaid = models.BooleanField(default=False)
+    guest = models.IntegerField(blank=False, default=1)
     date_start = models.DateField(default=datetime.datetime.today)
     date_end = models.DateField(default=datetime.datetime.today)
+    date_paymentDue = models.DateField(default=datetime.datetime.today)
 
     note  = models.TextField(blank=True)
 
@@ -100,6 +106,6 @@ class Review(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
-
+    booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     star = models.IntegerField(choices=SCALE)
     review = models.TextField(blank=True)
