@@ -24,7 +24,7 @@ const ContextApi = (props) => {
       var hasHost = []
       var i;
       for(i=0; i < myHostingList.length; i++){
-        if(myHostingList[i].accommodation == id){
+        if(myHostingList[i].accommodation === id){
           hasHost.push(<EditHosting id={id}
                                   key={id}
                                   HouseList={HouseList}

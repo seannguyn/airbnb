@@ -1,8 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Consumer } from './Context';
+import {Consumer} from './Context';
 import { withStyles } from '@material-ui/core/styles';
-
 import Header from './Component/layout/Header'
 // import Signin from './components/layouts/Signin'
 
@@ -10,7 +8,7 @@ import Sidebar from './Component/layout/Sidebar'
 import Main from './Component/layout/Main'
 
 // import Main from './components/layouts/Main'
-const drawerWidth = 240;
+
 
 const styles = theme => ({
   root: {
@@ -18,6 +16,7 @@ const styles = theme => ({
     zIndex: 1,
     position: 'relative',
     display: 'flex',
+    width: '100%'
   }
 });
 

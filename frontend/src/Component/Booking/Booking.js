@@ -4,36 +4,33 @@ import moment from 'moment'
 
 // Material UI
 import { withStyles } from '@material-ui/core/styles'
-import CardContent from '@material-ui/core/CardContent'
+// import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { CardMedia, CardActions } from '../../../node_modules/@material-ui/core'
+// import { CardMedia, CardActions } from '../../../node_modules/@material-ui/core'
 
 import Card from "Component/Card/Card.jsx"
 import CardBody from "Component/Card/CardBody.jsx"
 import CardHeader from "Component/Card/CardHeader.jsx"
-import CardFooter from "Component/Card/CardFooter.jsx"
 
 // Images Slider
 import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx"
 import Carousel from "react-slick"
 
-// Pop up
-import Popup from "reactjs-popup"
-
 // check empty object
 import isEmpty from '../../utils/isEmpty.js'
+// import {Link} from 'react-router-dom'
 
 import FormDialog from '../Popup/FormDialog'
 
-const styles = {
-  card: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 200,
-  },
-};
+// const styles = {
+//   card: {
+//     maxWidth: 345,
+//   },
+//   media: {
+//     height: 200,
+//   },
+// };
 
 let settings = {
 	dots: true,
@@ -59,7 +56,19 @@ class Booking extends Component {
         alert("Delete successfully - reload page");
     }
 
-// find this accomm's images
+	handleEdit = () => {
+
+    }
+
+    handlePayment= () => {
+
+    }
+
+    findImages = (images) => {
+
+	}
+
+	// find this accomm's images
 	findImagesByAccommID = (images, accommID)=> {
 		const retImages = [];
 		for( let i = 0; i < images.length; i++){
@@ -72,7 +81,7 @@ class Booking extends Component {
 
 	async componentDidMount(){
 		// console.log("Props: ", this.props.booking);
-		const { booking, pastStay, isPast } = this.props,
+		const { booking, /*pastStay, isPast*/ } = this.props,
 					hosting = booking.hosting;
 		const res = await axios.get(`https://localhost:8000/accommodationHosting/${hosting}/`);
 		const accommID = res.data.accommodation;
@@ -107,9 +116,10 @@ class Booking extends Component {
 		images.map((image) => {
 			imagesDiv.push(
 					<div key={image.id}>
-						<img src={image.a_image} height="150" width="345"/>
+						<img src={image.a_image} height="150" width="345" alt="house"/>
 					</div>
 			)
+			return 1;
 		})
 		return (
 			<React.Fragment>
@@ -126,7 +136,7 @@ class Booking extends Component {
 					imagesDiv
 				:
 				<div>
-					<img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345"/>
+					<img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345" alt="house"/>
 				</div>
 				}
 				</Carousel>
@@ -153,6 +163,9 @@ class Booking extends Component {
 						<Button onClick={this.handleDelete.bind(this, id)}>
 							<i className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
 						</Button>
+						<Button variant="contained" color="primary" onClick={this.handlePayment}>
+                            Pay
+                        </Button>
 					</div>
 				</div>
 			</CardBody>
@@ -160,5 +173,6 @@ class Booking extends Component {
 		</React.Fragment>
 		);
 	}
+
 }
 export default withStyles(carouselStyle)(Booking);

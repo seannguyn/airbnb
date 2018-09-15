@@ -23,7 +23,7 @@ class AllHosting extends React.Component {
     var house;
 
     for(i=0; i < HouseList.length; i++){
-      if(HouseList[i].id == SingleHost.accommodation){
+      if(HouseList[i].id === SingleHost.accommodation){
         house = HouseList[i];
       }
     }
@@ -40,7 +40,7 @@ class AllHosting extends React.Component {
 
   render () {
     const {classes} = this.props;
-    const {AllHostingList} = this.props.AllHostingList;
+
     // console.log("all Hosting",this.props.AllHostingList);
     // console.log("all House",this.props.HouseList);
     const SingleHosting = this.props.AllHostingList.map((SingleHost) => this.getData(SingleHost))

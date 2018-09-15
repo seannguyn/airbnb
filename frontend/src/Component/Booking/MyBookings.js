@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Booking from './Booking'
 import moment from 'moment'
-import Popup from "reactjs-popup";
-import Prompt from '../Popup/Prompt'
+// import Popup from "reactjs-popup";
+
 import '../../Styles/Popup.css'
 
 import isEmpty from '../../utils/isEmpty.js';
 
 // Rating
-import Rating from 'react-rating'
-import like from '../../assets/img/icons/like.png'
-import like_empty from '../../assets/img/icons/like_empty.png'
+// import Rating from 'react-rating'
+// import like from '../../assets/img/icons/like.png'
+// import like_empty from '../../assets/img/icons/like_empty.png'
 
 class MyBookings extends Component {
 
@@ -83,7 +83,7 @@ class MyBookings extends Component {
 				tempPastStay = [];
 
 		const { requireReviewList } = this.state,
-					{ booking } = this.props,
+					// { booking } = this.props,
 					currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 		// const accommodationIDs = [];
