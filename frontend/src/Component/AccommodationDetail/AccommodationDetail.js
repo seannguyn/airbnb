@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+
 import 'react-dates/initialize';
-import { DateRangePicker } from 'react-dates';
+
 import 'react-dates/lib/css/_datepicker.css';
-import moment from 'moment';
-import Button from '@material-ui/core/Button';
-import isBeforeDay from './utils/isBeforeDay'
+
+
 import isAfterDay from './utils/isAfterDay';
 import {Consumer} from '../../Context.js';
 import BookingPaper from './BookingPaper'
@@ -81,16 +80,17 @@ class AccommodationDetail extends Component {
     render() {
         // console.log("props acom detail: ", this.state);
         const { classes } = this.props;
-        const {Accommodation_Type, area, bathroom,
-                bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
-        const {currentHost} = this.state;
+        // const {Accommodation_Type, area, bathroom,
+        //         bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
+        const {bathroom,bedroom,kitchen,carpark,description} = this.state.accomDetail
+        // const {currentHost} = this.state;
         const isDayBlocked = day => this.props.booking.filter(d => d.isSame(day, 'day')).length > 0;
         const {status} = this.state;
         console.log(this.props,"here it is",this.state);
         return (
           <Consumer>
             {value =>{
-              const {dispatch, currentUser} = value;
+
 
               if (status === 0 ) {
                 return(
@@ -101,7 +101,7 @@ class AccommodationDetail extends Component {
               } else {
                 return (
                   <div>
-                    <img src="https://cdn.photographylife.com/wp-content/uploads/2010/04/20100415-Dead-Horse-Point-040.jpg" className="img-fluid" alt="Responsive image" style={{width:'100%'}}/>
+                    <img src="https://cdn.photographylife.com/wp-content/uploads/2010/04/20100415-Dead-Horse-Point-040.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
 
                     <div className="container">
                       <div className="row">

@@ -8,10 +8,10 @@ import Avatar from '@material-ui/core/Avatar';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
+
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
+
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
@@ -20,7 +20,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 function getModalStyle() {
 
   const top = 25;
-  const left = 25;
+
 
   return {
     top: `${top}%`,
@@ -148,7 +148,7 @@ class EditHouse extends Component {
         let i =0;
         var result;
         for(i=0; i < HouseList.length; i++){
-          if(HouseList[i].id == id){
+          if(HouseList[i].id === id){
             result = HouseList[i];
           }
         }
@@ -205,8 +205,9 @@ class EditHouse extends Component {
   }
 
   errorCheck(current) {
-    const {id, user, Accommodation_Type, number, street, city, state, title} = current;
-    const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
+    const {number,Accommodation_Type} = current;
+    // const {id, user, Accommodation_Type, number, street, city, state, title} = current;
+    // const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
 
     var flag = false;
     if (number === '') {
@@ -284,7 +285,7 @@ class EditHouse extends Component {
 
     // const res = await axios.put(`${id}`,editHouse)
     const {token} = this.state.currentUser; //GET TOKEN FROM CURRENT USER
-    const res = await axios.put(`https://localhost:8000/accommodation/${id}/`, editHouse,
+    await axios.put(`https://localhost:8000/accommodation/${id}/`, editHouse,
             {headers:{
                 'Authorization': {token}
             }
@@ -320,7 +321,7 @@ class EditHouse extends Component {
   render () {
     const {status} = this.state;
     const {Accommodation_Type,number, street, city, state, title} = this.state;
-    const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
+    const {bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
     console.log(Accommodation_Type,"accomm type");
     const {classes} = this.props
     return (

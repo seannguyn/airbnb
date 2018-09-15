@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -21,7 +21,7 @@ const styles = theme => ({
 
 class Reminder extends React.Component {
   render () {
-    const { classes } = this.props;
+    
     return (
       <div style={{marginTop:'50px',marginBottom:'50px'}}>
 

@@ -4,10 +4,10 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import HomeIcon from '@material-ui/icons/Home';
-import Avatar from '@material-ui/core/Avatar';
+
+
 import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
+
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
@@ -80,8 +80,7 @@ class Hosting extends Component {
     onSubmit = async (dispatch, currUser, e) => {
         e.preventDefault();
         console.log('start host: ', currUser);
-        const {accommodation,
-                user,
+        const {
                 date_start,
                 date_end,
                 check_in,
@@ -105,7 +104,7 @@ class Hosting extends Component {
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
-        const res = await axios.post('https://localhost:8000/accommodationHosting/', hostingHouse,
+        await axios.post('https://localhost:8000/accommodationHosting/', hostingHouse,
                 {headers:{
                     'Authorization': {token}
                 }

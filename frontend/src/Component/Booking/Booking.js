@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent'
 // import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { CardMedia, CardActions } from '../../../node_modules/@material-ui/core';
+import {CardActions } from '../../../node_modules/@material-ui/core';
 // import {Link} from 'react-router-dom'
 
 
@@ -24,9 +24,6 @@ const styles = {
 
 class Booking extends Component {
 
-    constructor(){
-        super();
-    }
 
     handleDelete = async (id) => {
         await axios.delete(`https://localhost:8000/booking/${id}/`);
@@ -34,6 +31,10 @@ class Booking extends Component {
     }
 
     handleEdit = () => {
+
+    }
+
+    handlePayment= () => {
 
     }
 
@@ -77,10 +78,14 @@ class Booking extends Component {
 
                         <Button onClick={this.handleEdit}>
                             <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
-                            </Button>
+                        </Button>
 
                         <Button onClick={this.handleDelete.bind(this, id)}>
                             <i  className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
+                        </Button>
+
+                        <Button variant="contained" color="primary" onClick={this.handlePayment}>
+                            Pay
                         </Button>
 
                      </CardContent>

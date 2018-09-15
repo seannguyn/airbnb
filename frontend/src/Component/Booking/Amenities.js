@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import Typography from "@material-ui/core/Typography";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -8,7 +8,7 @@ import uuid from 'uuid';
 
 class Amenities extends React.Component {
   render () {
-    const {accommodation} = this.props;
+    // const {accommodation} = this.props;
     var amenites = []
 
     amenites.push(

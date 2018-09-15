@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import AccommodationDetail from '../AccommodationDetail/AccommodationDetail'
 import {Consumer} from '../../Context.js'
 import axios from 'axios';
@@ -40,7 +40,7 @@ class AccommodationDetailContext extends React.Component {
       let startDate, endDate;
       let  currentPeriod = [];
       var tempBookedPeriods = [];
-      var minDateSet;
+      var minDateSet=[];
       for( let i = 0; i < bookingList.length; i++){
           startDate = bookingList[i].date_start;
           endDate = bookingList[i].date_end;

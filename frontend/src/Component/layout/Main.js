@@ -1,6 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import NotFound from './NotFound'
 import AllHostingContext from '../Contexts/AllHostingContext'
 import ContextApi from '../Contexts/Context_api.js';
@@ -9,7 +9,10 @@ import AddHouseContext from '../Contexts/AddHouseContext.js';
 import MyHouses from '../Function/MyHouses'
 import MyBookings from '../Booking/MyBookings';
 import AccommodationDetailContext from '../Contexts/AccommodationDetailContext';
-import OverallBooking from '../Booking/OverallBooking'
+import ReserveOverallBooking from '../Booking/ReserveOverallBooking'
+import EditOverallBooking from '../Booking/EditOverallBooking'
+import ConfirmOverallBooking from '../Booking/ConfirmOverallBooking'
+
 
 const styles = theme => ({
   toolbar: {
@@ -50,7 +53,9 @@ class Main extends React.Component {
 
             <Route exact path="/accommodations/:id" component={AccommodationDetailContext}></Route>
             <Route exact path="/mybookings" component={MyBookings}></Route>
-            <Route exact path="/payment/:id" component={OverallBooking}></Route>
+            <Route exact path="/overallbooking/reserve/:id" component={ReserveOverallBooking}></Route>
+            <Route exact path="/overallbooking/payment/:id" component={EditOverallBooking}></Route>
+            <Route exact path="/overallbooking/confirm/:id" component={ConfirmOverallBooking}></Route>
             <Route component={NotFound}></Route>
 
           </Switch>

@@ -123,10 +123,10 @@ class Hosting extends React.Component {
     images.map( (image) => {
       imagesDiv.push(
           <div key={image.id}>
-            <img src={image.a_image} height="250" width="345"/>
+            <img src={image.a_image} height="250" width="345" alt="no"/>
           </div>
       )
-
+      return 1;
     })
 
     // console.log("STATE: ", this.state);
@@ -142,7 +142,7 @@ class Hosting extends React.Component {
                   imagesDiv
                 :
                 <div>
-                    <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="250" width="345"/>
+                    <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="250" width="345" alt="no"/>
                 </div>
               }
               </Slider>

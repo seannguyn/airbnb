@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+
 import Cards from 'react-credit-cards';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
@@ -18,10 +18,10 @@ class CardForm extends React.Component {
   state = {
     value: 0,
     error: false,
-    card_number:'',
-    name:'',
-    valid:'',
-    cvc:'',
+    card_number:'4900000000000000',
+    name:'sean',
+    valid:'12/12',
+    cvc:'555',
     focus:'name',
 
   };
@@ -45,8 +45,7 @@ class CardForm extends React.Component {
     if (this.errorCheck(this.state) === true) {
       return;
     } else if (this.errorCheck(this.state) === false) {
-      console.log("SUBMITTING",this.state);
-      this.props.handleChange(2);
+      this.props.submitPayment();
     }
 
   }
@@ -92,7 +91,6 @@ class CardForm extends React.Component {
   }
 
   onFocus(focus) {
-    console.log("heheheh");
     this.setState({focus:focus});
   }
 
@@ -114,6 +112,7 @@ class CardForm extends React.Component {
                 expiry={valid}
                 cvc={cvc}
                 focused={focus}
+                preview={false}
               />
             </div>
           </div>

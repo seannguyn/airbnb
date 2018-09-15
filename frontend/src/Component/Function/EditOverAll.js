@@ -1,9 +1,9 @@
 import React from 'react'
 import EditHouse from './EditHouse.js'
-import EditHosting from './EditHosting.js'
-import AddHosting from './AddHosting.js'
+
+
 import Images from './Images.js'
-import axios from 'axios'
+
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
@@ -75,7 +75,7 @@ class EditOverAll extends React.Component {
     const { theme, classes } = this.props;
     const {swipe} = this.state;
 
-    const {picture} = this.state;
+    
 
     const {hasHost, currentUser} = this.props;
 

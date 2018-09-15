@@ -1,18 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import {Consumer} from '../../Context';
 import Avatar from '@material-ui/core/Avatar';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -63,7 +55,6 @@ const styles = theme => ({
   },
 });
 
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class LoginDialog extends React.Component {
 
@@ -112,17 +103,16 @@ class LoginDialog extends React.Component {
       }
       // dispatch({type:"LOGIN", payload: account});
 
-      let res;
-      let err;
+
       await axios.post('https://localhost:8000/api-token-auth/', account)
           .then(response => {
-              res = response.data;
+
               dispatch({type:'LOGIN', payload:response.data});
               this.setState({error:{}, error_bool: false})
           })
           .catch(error => {
               console.log("ERR: ", error.response);
-              err = error.response;
+              
               this.setState({error:{username:"Check your username again", password:"Check your password again"}, error_bool: true});
           });
           this.setState({

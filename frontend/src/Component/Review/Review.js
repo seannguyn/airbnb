@@ -13,13 +13,13 @@ class Review extends Component {
     render() {
         console.log("GO TO REVIEW");
         console.log("props reivw: ", this.props)
-        const {text, closeReview, star, review, user} = this.props;
+        const {/*text, closeReview, */star, review, user} = this.props;
         return (
             <React.Fragment>
 
                     <div className="container" style={{background:"#f7f7f7"}}>
                     Rating {star}
-                    <p><b>{review}  <i>(by {user})</i></b></p> 
+                    <p><b>{review}  <i>(by {user})</i></b></p>
                     </div>
 
             </React.Fragment>

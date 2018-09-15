@@ -1,7 +1,7 @@
 import React from 'react'
 // import AllHostingContext from '../Contexts/AllHostingContext'
 import Hosting from './Hosting'
-import ComplexGrid from '../Grid/GridItem';
+
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -24,7 +24,7 @@ class AllHosting extends React.Component {
     var house;
 
     for(i=0; i < HouseList.length; i++){
-      if(HouseList[i].id == SingleHost.accommodation){
+      if(HouseList[i].id === SingleHost.accommodation){
         house = HouseList[i];
       }
     }
@@ -41,7 +41,7 @@ class AllHosting extends React.Component {
 
   render () {
     const {classes} = this.props;
-    const {AllHostingList} = this.props.AllHostingList;
+    
     // console.log("all Hosting",this.props.AllHostingList);
     // console.log("all House",this.props.HouseList);
     const SingleHosting = this.props.AllHostingList.map((SingleHost) => this.getData(SingleHost))

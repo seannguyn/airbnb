@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import uuid from 'uuid';
+
 import axios from 'axios';
 
 const Context = React.createContext();
@@ -157,7 +157,7 @@ export class Provider extends Component {
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
     var currentUser= JSON.parse(localStorage.getItem('currentUser'));
-    
+
     if (currentUser  === null) {
       currentUser = []
     }
@@ -203,7 +203,7 @@ export class Provider extends Component {
         }
       )
 
-      if(this.state.myHostingList.length == 0 ){
+      if(this.state.myHostingList.length === 0 ){
         const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
         this.setState({myHouseList: myHouse.data});
         this.setState({myHostingList: res.data});

@@ -1,9 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import axios from 'axios';
+
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
@@ -82,6 +82,7 @@ class BookingPaper extends React.Component {
   }
 
   findMax(minDateSet) {
+    if (minDateSet.length === 0) {return null}
     var max = minDateSet[0];
     for (var i = 0; i < minDateSet.length ; i++) {
       if(isAfterDay(minDateSet[i],max) === true) {
@@ -159,10 +160,18 @@ class BookingPaper extends React.Component {
         let tempStartDate = moment(this.state.startDate).format('YYYY-MM-DD');
         let tempEndDate = moment(this.state.endDate).format('YYYY-MM-DD');
 
+        // Find the date user have to pay by
+        var now = moment();
+        let daysDiff = now.diff(this.state.startDate,'days');
+        now.subtract(daysDiff/2, 'days');
+        let paidDate = moment(now).format('YYYY-MM-DD');
+
+
         const newDetail = {
 
           startDate: tempStartDate,
           endDate: tempEndDate,
+          paidDate: paidDate,
 
           guest: guest,
 
@@ -188,7 +197,8 @@ class BookingPaper extends React.Component {
   goToPayment(booker,newDetail) {
 
     this.props.history.push({
-      pathname: `/payment/${newDetail.currentHost.id}`,
+      pathname: `/overallbooking/reserve/${newDetail.currentHost.id}`,
+      search: '?query=abc',
       state: {
         detail: newDetail,
         booker: booker,

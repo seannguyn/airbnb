@@ -31,7 +31,7 @@ class AccommodationHostingSerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields = ('id','hosting','booker','date_start','date_end','note')
+        fields = ('id','isPaid','guest','hosting','booker','date_start','date_end','date_paymentDue','note')
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:

@@ -8,24 +8,15 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CheckIcon from '@material-ui/icons/Check';
-import BookingPaper from '../AccommodationDetail/BookingPaper'
 import BookingInfo from '../Booking/BookingInfo';
 import Price from '../AccommodationDetail/Price'
 import Divider from '@material-ui/core/Divider';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import uuid from 'uuid';
 import Overview from '../Booking/Overview';
 import Days from '../Booking/Days';
 import Amenities from '../Booking/Amenities';
 import Reminder from '../Booking/Reminder';
-import PaymentOptions from '../Booking/PaymentOptions';
-import CardForm from '../Booking/CardForm';
-import Cards from 'react-credit-cards';
+import Payment from '../Payment/Payment';
 import 'react-credit-cards/es/styles-compiled.css';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
 
 function TabContainer({ children, dir }) {
   return (
@@ -56,22 +47,15 @@ const styles = theme => ({
   },
 });
 
-class OverallBooking extends React.Component {
+class EditOverallBooking extends React.Component {
 
   state = {
-    value: 0,
-
-    credit: {
-      card_number:'',
-      name:'',
-      valid:'',
-      cvc:'',
-    }
-
+    value: 1,
   };
 
+
   handleChange(value) {
-    console.log("credit card:        ",this.state.credit);
+
     this.setState({ value });
   }
 
@@ -79,32 +63,15 @@ class OverallBooking extends React.Component {
     this.setState({ value: index });
   };
 
-  onChange(credit) {
-
-    this.setState({
-      credit
-    })
-  }
-
-  postBooking() {
-    console.log("POST BOOKING");
-    this.handleChange(1);
-  }
-
-
 
   render () {
-    const { theme, classes } = this.props;
+    const { theme } = this.props;
 
     console.log(this.props.location.state,"PROCESS PAYMENT");
-    const appear = false;
-
-
-
 
     if (typeof this.props.location.state !== "undefined") {
 
-      const {detail,booker} = this.props.location.state
+      const {detail,booker,booking} = this.props.location.state
       const price = (<Price
       pricePerNight={parseFloat(detail.price.pricePerNight)}
       daysDiff={parseFloat(detail.price.daysDiff)}
@@ -120,9 +87,9 @@ class OverallBooking extends React.Component {
               textColor="primary"
               fullWidth
             >
-              <Tab label="Review Detail" icon={<CheckIcon hidden={this.state.value > 0 ? false : true}/>} disabled={this.state.value === 0 ? false : true}></Tab>
-              <Tab label="Payment" icon={<CheckIcon hidden={this.state.value > 1 ? false : true}/>} disabled={this.state.value === 1 ? false : true} />
-              <Tab label="Confirmation" disabled={this.state.value === 2 ? false : true} />
+              <Tab label={<span style={{ color: '#3f51b5', fontWeight: '900'}}>Review Detail</span>}icon={<CheckIcon style={{ color: '#3f51b5',fontWeight: '900' }}/>}></Tab>
+              <Tab label={<span style={{ color: '#3f51b5', fontWeight: '900'}}>Payment</span>}/>
+              <Tab label={<span style={{ fontWeight: '900'}}>Confirmation</span>} />
             </Tabs>
           </AppBar>
           <div className="container">
@@ -162,7 +129,7 @@ class OverallBooking extends React.Component {
                     <Divider/>
 
                     <div className="row" style={{marginTop:'20px'}}>
-                      <Button variant="contained" color="primary" onClick={this.postBooking.bind(this)}>Agree and Continue</Button>
+                      <Button variant="contained" color="primary" onClick={this.handleChange.bind(this, 1)}>Proceed to Pay</Button>
                     </div>
 
 
@@ -173,11 +140,11 @@ class OverallBooking extends React.Component {
                     <div className="container" style={{border: '3px solid red'}}>
 
 
-                      <PaymentOptions/>
-
-                      <CardForm
-                        onChange={this.onChange.bind(this)}
-                        handleChange={this.handleChange.bind(this)}
+                      <Payment
+                        booking={booking}
+                        detail={detail}
+                        booker={booker}
+                        previous={this.props}
                         />
 
                     </div>
@@ -207,7 +174,7 @@ class OverallBooking extends React.Component {
       )
     } else {
       return(
-        <h1>hihihi</h1>
+        <h1>Illegal to refresh</h1>
       )
 
     }
@@ -215,4 +182,4 @@ class OverallBooking extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(OverallBooking);
+export default withStyles(styles, { withTheme: true })(EditOverallBooking);

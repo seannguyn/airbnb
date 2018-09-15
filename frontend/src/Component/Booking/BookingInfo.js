@@ -1,9 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import moment from 'moment';
+
 import Divider from '@material-ui/core/Divider';
 import PeopleIcon from '@material-ui/icons/People';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
@@ -58,7 +58,7 @@ class BookingInfo extends React.Component {
 
 
         <Divider/>
-        {this.props.price}
+        {price}
         <Divider/>
           <div className="row">
             <div className="col-12">

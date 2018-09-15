@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -10,10 +10,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Cards from 'react-credit-cards';
+
 
 const styles = theme => ({
   root: {
@@ -41,6 +40,7 @@ class PaymentOptions extends React.Component {
       expanded: !this.state.expanded,
       payment: payment,
     });
+    this.props.changePayment(payment);
   };
   render () {
     const { classes } = this.props;

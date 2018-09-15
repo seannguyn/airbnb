@@ -46,17 +46,17 @@ class Images extends React.Component {
         }
     }
 
-    const urlFile = URL.createObjectURL(file);
+
 
     var i;
     var formData = new FormData()
     formData.append('a_image',file);
     formData.append('accommodation',this.props.id);
 
-    const res = await axios.put(`https://localhost:8000/accommodationImage/${imgId}/`, formData, config)
+    await axios.put(`https://localhost:8000/accommodationImage/${imgId}/`, formData, config)
 
-    var new_images = this.state.images.map((img) => {img})
-    var new_files = this.state.images.map((url) => {url})
+    var new_images = this.state.images.map((img) => {return img})
+    var new_files = this.state.images.map((url) => {return url})
     for (i = 0; i < this.state.idList.length; i++) {
       if (this.state.idList[i] === imgId) {
         new_images[i] = file;
@@ -79,7 +79,7 @@ class Images extends React.Component {
         }
     }
 
-    var i;
+
     var formData = new FormData()
     formData.append('a_image',file);
     formData.append('accommodation',this.props.id);
@@ -110,7 +110,7 @@ class Images extends React.Component {
       return id!==imgId
     })
 
-    const res = await axios.delete(`https://localhost:8000/accommodationImage/${imgId}/`)
+    await axios.delete(`https://localhost:8000/accommodationImage/${imgId}/`)
     this.setState({images: newImages, files: newURL, idList:idList })
     this.props.imgNumber(idList.length);
   }

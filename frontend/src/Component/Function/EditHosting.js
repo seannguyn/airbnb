@@ -4,10 +4,10 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import HomeIcon from '@material-ui/icons/Home';
-import Avatar from '@material-ui/core/Avatar';
+
+
 import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
+
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
@@ -76,14 +76,14 @@ class EditHosting extends Component {
 
     componentDidMount(){
         console.log("from edithousingjs: ", this.props);
-        const{HouseList, currentUser, myHostingList} = this.props;
+        const{myHostingList} = this.props;
         const{id} = this.props;
 
         // console.log('PROPSSSShosting: ', myHostingList, id);
         let i = 0;
         var result;
         for(i=0; i < myHostingList.length; i++){
-          if(myHostingList[i].accommodation == id){
+          if(myHostingList[i].accommodation === id){
             result = myHostingList[i];
           }
         }
@@ -104,12 +104,12 @@ class EditHosting extends Component {
     //set State when changing text
     onChange = (e) => {
 
-        if( e.target.name == 'date_start'){
+        if( e.target.name === 'date_start'){
             let date_start = new Date(e.target.value)
             this.setState({date_start_onchange: date_start});
         }
 
-        if(e.target.name == 'date_end'){
+        if(e.target.name === 'date_end'){
             console.log("DATE END: ", this.state.date_start_onchange);
             let date_end = new Date(e.target.value)
             console.log("DATE INVALID", typeof(date_end));
@@ -127,8 +127,7 @@ class EditHosting extends Component {
 
         const {id} = this.state;
 
-        const {accommodation,
-                user,
+        const {
                 date_start,
                 date_end,
                 check_in,
@@ -153,7 +152,7 @@ class EditHosting extends Component {
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
-        const res = await axios.put(`https://localhost:8000/accommodationHosting/${id}/`, hostingHouse,
+        await axios.put(`https://localhost:8000/accommodationHosting/${id}/`, hostingHouse,
                 {headers:{
                     'Authorization': {token}
                 }
@@ -269,7 +268,7 @@ class EditHosting extends Component {
                                 type="text"
                                 className={classes.textField}
                               />
-                            </FormControl>
+                          </FormControl>
                             <FormControl margin="normal" required fullWidth style={{marginBottom:'15px'}}>
                               <TextField
                                 label="description"

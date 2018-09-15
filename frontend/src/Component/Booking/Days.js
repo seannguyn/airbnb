@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import Typography from "@material-ui/core/Typography";
 
 class Days extends React.Component {
@@ -16,7 +16,6 @@ class Days extends React.Component {
 
     const startD = new Date(this.props.startDate).getDate()
     const endD = new Date(this.props.endDate).getDate()
-    console.log(startM,endM,"dateee...")
 
     return (
       <div style={{marginBottom:'50px', marginTop:'50px'}}>
@@ -41,7 +40,7 @@ class Days extends React.Component {
               <div className="col-8">
                 <div style={{height: '100px',width: '150px', }}>
 
-                  <h4 align='center'></h4>
+                  <h4 align='center'> </h4>
                   <Typography align='center' variant="caption" style={{fontSize:'25px'}}>Check in {this.props.checkIn}</Typography>
 
                 </div>
@@ -62,7 +61,7 @@ class Days extends React.Component {
               </div>
               <div className="col-8">
                 <div style={{height: '100px',width: '150px'}}>
-                  <h4 align='center'></h4>
+                  <h4 align='center'> </h4>
                   <Typography align='center' variant="caption" style={{fontSize:'25px'}}>Check out {this.props.checkOut}</Typography>
                 </div>
               </div>

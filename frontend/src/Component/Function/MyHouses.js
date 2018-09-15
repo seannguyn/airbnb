@@ -7,18 +7,13 @@ import Forbidden from '../layout/Forbidden'
 
 class MyHouses extends Component {
 
-    constructor(){
-        super();
-        currentUser : {}
-    }
-
     render() {
         return (
            <Consumer>
 
                {value => {
 
-                   const {HouseList, currentUser, myHostingList} = value;
+                   const {HouseList, currentUser} = value;
                 // CHECK USER LOGIN OR NOT
                 //  nested objects - and by default user detail store at index [0]
                    if(currentUser.length === 0){
@@ -35,7 +30,7 @@ class MyHouses extends Component {
 
                         for(i=0; i < HouseList.length; i++){
 
-                            if(HouseList[i].user == value["currentUser"][0].user_id){
+                            if(HouseList[i].user === value["currentUser"][0].user_id){
                                 myHouses.push(HouseList[i]);
                             }
 

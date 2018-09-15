@@ -85,9 +85,11 @@ class Booking(models.Model):
 
     hosting = models.ForeignKey(AccommodationHosting, on_delete=models.CASCADE)
     booker = models.ForeignKey(User, on_delete=models.CASCADE)
-
+    isPaid = models.BooleanField(default=False)
+    guest = models.IntegerField(blank=False, default=1)
     date_start = models.DateField(default=datetime.datetime.today)
     date_end = models.DateField(default=datetime.datetime.today)
+    date_paymentDue = models.DateField(default=datetime.datetime.today)
 
     note  = models.TextField(blank=True)
 

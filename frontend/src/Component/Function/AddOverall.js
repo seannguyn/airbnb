@@ -64,8 +64,8 @@ class AddOverAll extends React.Component {
     return (
       <Consumer>
         {value => {
-          const {dispatch} = value;
-          const {HouseList, currentUser, myHostingList} = value;
+          
+          const {currentUser} = value;
           if(currentUser.length === 0){
                return (
                 <Forbidden/>
