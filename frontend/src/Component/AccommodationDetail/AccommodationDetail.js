@@ -21,12 +21,18 @@ class AccommodationDetail extends Component {
         this.state = {
             accomDetail: {},
             currentHost: {},
+
             bookedPeriods: [], //periods that this accomm booked to block the date
             minDateSet: [],
             minDate: {},
             status: 0,
         }
-	}
+        setTimeout(() => {
+            this.setState({
+                status: 1
+            });
+        },1000);
+    }
 
     // check if object is empty
     isEmpty = (obj) => {
