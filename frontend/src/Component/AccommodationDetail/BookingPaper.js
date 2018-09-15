@@ -159,7 +159,8 @@ class BookingPaper extends React.Component {
 
         let tempStartDate = moment(this.state.startDate).format('YYYY-MM-DD');
         let tempEndDate = moment(this.state.endDate).format('YYYY-MM-DD');
-
+        let stayPeriod = this.state.endDate.diff(this.state.startDate, 'days');
+        
         // Find the date user have to pay by
         var now = moment();
         let daysDiff = now.diff(this.state.startDate,'days');
@@ -177,7 +178,7 @@ class BookingPaper extends React.Component {
 
           price: {
             pricePerNight: currentHost.price,
-            daysDiff: daysDiff,
+            daysDiff: stayPeriod,
             promotion: promotion,
           },
 

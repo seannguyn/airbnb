@@ -145,6 +145,7 @@ class EditOverallBooking extends React.Component {
                         detail={detail}
                         booker={booker}
                         previous={this.props}
+                        handleChange={this.handleChange.bind(this)}
                         />
 
                     </div>
