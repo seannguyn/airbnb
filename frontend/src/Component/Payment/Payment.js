@@ -63,8 +63,10 @@ class Payment extends React.Component {
         onChange={this.onChange.bind(this)}
         submitPayment={this.submitPayment.bind(this)}
         handleChange={this.props.handleChange}
+
         />)
     }
+    //
     else if (payment === 'paypal') {
         stuff.push(<h1 key={uuid.v4()}>hihihi</h1>)
     }
