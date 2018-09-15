@@ -81,7 +81,7 @@ class Booking(models.Model):
 
     hosting = models.ForeignKey(AccommodationHosting, on_delete=models.CASCADE)
     booker = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     date_start = models.DateField(default=datetime.datetime.today)
     date_end = models.DateField(default=datetime.datetime.today)
 
@@ -100,6 +100,6 @@ class Review(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
-
+    booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
     star = models.IntegerField(choices=SCALE)
     review = models.TextField(blank=True)
