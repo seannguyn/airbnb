@@ -50,9 +50,23 @@ class Booking extends Component {
     }
 
     render() {
-        const { id, date_start, date_end, note } = this.props.booking;
+        const { id, date_start, date_end, note, isPaid } = this.props.booking;
         const { classes } = this.props;
         console.log("Propsss: ", this.props);
+
+        var payButton = []
+        if (isPaid === false) {
+          payButton.push(
+            <Button variant="contained" color="primary" onClick={this.handlePayment}>
+              Pay
+          </Button>)
+        } else {
+          payButton.push(
+          <Button color="primary">
+            Paid
+          </Button>)
+        }
+
         return (
             <React.Fragment>
                 <Card className={classes.card} style={{width:'30vw'}} >
@@ -84,9 +98,7 @@ class Booking extends Component {
                             <i  className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
                         </Button>
 
-                        <Button variant="contained" color="primary" onClick={this.handlePayment}>
-                            Pay
-                        </Button>
+                        {payButton}
 
                      </CardContent>
                 </Card>

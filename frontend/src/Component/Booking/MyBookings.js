@@ -12,28 +12,22 @@ class MyBookings extends Component {
         }
     }
 
-    getBookings = (userID, bookingList) => {
-        let res = [];
-        for( let i = 0; i < bookingList.length; i++){
-
-            if(userID === bookingList[i].booker){
-                res.push(bookingList[i]);
-            }
-        }
-
-        this.setState({myBookings: res});
-    }
 
     async componentDidMount(){
 
-        localStorage.getItem('currentUser')
-            && this.setState({
-            currentUser: JSON.parse(localStorage.getItem('currentUser'))});;
+      const user = JSON.parse(localStorage.getItem('currentUser'))
+
+      this.setState({currentUser: user});
 
         // Get all bookings and find that current user booked
-        const res2 = await axios.get('https://localhost:8000/booking/');
+        // const res2 = await axios.get('https://localhost:8000/booking/');
+        // this.getBookings(this.state.currentUser[0].user_id, res2.data);
 
-        this.getBookings(this.state.currentUser[0].user_id, res2.data);
+        const res2 = await axios.get(`https://localhost:8000/booking/?booker=${user[0].user_id}`);
+        console.log("USER IS",user[0].user_id);
+        this.setState({
+          myBookings: res2.data
+        })
 
     }
 

@@ -16,6 +16,7 @@ class AccommodationDetailContext extends React.Component {
       accommodationHosting: {},
       booking: [],
       minDateSet: [],
+      reviews: []
     }
 
   }
@@ -69,14 +70,18 @@ class AccommodationDetailContext extends React.Component {
     const {id} = this.props.match.params;
 
     const res1 = await axios.get(`https://localhost:8000/accommodation/${id}/`)
-    this.setState({accommodation:res1.data},() => {console.log("rest in peace",this.state.accommodation)})
+    this.setState({accommodation:res1.data})
 
 
     const res2 = await axios.get(`https://localhost:8000/accommodationHosting/?accomm=${id}`)
-    this.setState({accommodationHosting:res2.data[0]}, () => {console.log("rest in just fix",this.state.accommodationHosting)})
+    this.setState({accommodationHosting:res2.data[0]})
 
     const res3 = await axios.get(`https://localhost:8000/booking/?host=${this.state.accommodationHosting.id}`)
     this.blockBookedPeriod(res3.data)
+
+    // axios review, pass review down
+    const res4 = await axios.get(`https://localhost:8000/accommodation/${id}/reviews/`)
+    this.setState({reviews: res4.data})
 
 }
 
@@ -98,6 +103,7 @@ class AccommodationDetailContext extends React.Component {
               accommodationHosting={this.state.accommodationHosting}
               booking={this.state.booking}
               minDateSet={this.state.minDateSet}
+              reviews={this.state.reviews}
               />
           )
         }}
