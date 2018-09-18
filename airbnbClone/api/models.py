@@ -109,3 +109,4 @@ class Review(models.Model):
 
     star = models.IntegerField(choices=SCALE)
     review = models.TextField(blank=True)
+    date_posted = models.DateField(default=datetime.datetime.today,blank=True)
