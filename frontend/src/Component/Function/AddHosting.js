@@ -4,8 +4,7 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-
-
+import {enumerateDaysBetweenDates} from '../Helper/Helper'
 import FormControl from '@material-ui/core/FormControl';
 
 import Button from '@material-ui/core/Button';
@@ -62,6 +61,7 @@ class Hosting extends Component {
             check_in: '14:30',
             check_out: '10:00',
             price: '',
+            guest: 2,
             description: '',
 
             startDate: {},
@@ -86,6 +86,7 @@ class Hosting extends Component {
                 check_in,
                 check_out,
                 price,
+                guest,
                 description} = this.state;
 
         const hostingHouse = {
@@ -95,11 +96,26 @@ class Hosting extends Component {
             date_end: date_end,
             check_in: check_in,
             check_out: check_out,
+            guest: guest,
             price: price,
             description: description
         }
         console.log('start host: ', hostingHouse);
 
+        const date_free = enumerateDaysBetweenDates(date_start,date_end)
+
+        const res = await axios.get(`https://localhost:8000/accommodation/${this.props.id}/`)
+
+        const searchAccommodation = {
+          accommodation: res.data.id,
+          date_free: date_free,
+          price: price,
+          guest: guest,
+          location: res.data.addr_city
+        }
+
+
+        await axios.post('https://localhost:8000/search/',searchAccommodation)
         // AXIOS call here
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.

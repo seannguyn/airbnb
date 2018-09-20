@@ -4,6 +4,7 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
+import {enumerateDaysBetweenDates} from '../Helper/Helper'
 
 
 import FormControl from '@material-ui/core/FormControl';
@@ -63,6 +64,7 @@ class EditHosting extends Component {
             check_in: '',
             check_out: '',
             price: '',
+            guest: 2,
             description: '',
 
             error: {}
@@ -83,7 +85,7 @@ class EditHosting extends Component {
         let i = 0;
         var result;
         for(i=0; i < myHostingList.length; i++){
-          if(myHostingList[i].accommodation === id){
+          if(myHostingList[i].accommodation === parseInt(id,10)){
             result = myHostingList[i];
           }
         }
@@ -133,6 +135,7 @@ class EditHosting extends Component {
                 check_in,
                 check_out,
                 price,
+                guest,
                 description} = this.state;
 
         const hostingHouse = {
@@ -142,11 +145,21 @@ class EditHosting extends Component {
             date_start: date_start,
             date_end: date_end,
             price: price,
+            guest: guest,
             check_in: check_in,
             check_out: check_out,
             description: description
         }
 
+        // const date_free = enumerateDaysBetweenDates(date_start,date_end)
+        //
+        // const searchAccommodation = {
+        //   accommodation: this.props.id,
+        //   date_free: date_free,
+        //   price: price,
+        //   guest: guest,
+        // }
+        // await axios.put(`https://localhost:8000/search/${this.props.id}/`,searchAccommodation)
 
         // AXIOS call here - PUT REQUEST
         // Notes: need backend validation for date and available date to

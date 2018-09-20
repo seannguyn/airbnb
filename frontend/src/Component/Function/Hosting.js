@@ -102,11 +102,11 @@ class Hosting extends React.Component {
 
     const readonly = true,
 
-          {house, SingleHost} = this.props,
-          {id} = this.props.house,
-          {showHosting, images, reviews} = this.state,
-          avgRating =  this.starCalculator(reviews),
-          { classes} = this.props;
+    {house, SingleHost} = this.props,
+    {id} = this.props.house,
+    {showHosting, images, reviews} = this.state,
+    avgRating =  this.starCalculator(reviews),
+    { classes} = this.props;
 
     let Rating = require('react-rating');
 

@@ -40,7 +40,7 @@ class MyBookings extends Component {
                 <div className="row">
                     {myBookings.map((booking) => {
                         return (
-                            <Booking key={booking.id} booking={booking}></Booking>
+                            <Booking history={this.props.history} key={booking.id} booking={booking}></Booking>
                         );
                     })
                     }

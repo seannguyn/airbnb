@@ -2,15 +2,16 @@ from django.shortcuts import render
 # from api.serializers import UserSerializer
 
 from django.contrib.auth.models import User
-from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo
-from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer,BookingSerializer, ReviewSerializer, UserInfoSerializer
+from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search
+from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer,BookingSerializer, ReviewSerializer, UserInfoSerializer, SearchSerializer
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-
+from datetime import datetime, timedelta
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from api import views
-
 from .functions import compareDate
-
+import operator
+import functools
+from django.db.models import Q
 # Facebook
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from rest_auth.social_serializers import TwitterLoginSerializer
@@ -330,3 +331,54 @@ class CustomAuthToken(ObtainAuthToken):
             'email': user.email,
             'username': user.username
         })
+
+class SearchViews(viewsets.ModelViewSet):
+    queryset = Search.objects.all()
+    # queryset = Accomodation.objects.filter(user__username__exact="sean")
+    serializer_class = SearchSerializer
+
+# issue comes when:
+    # 1. modify location        : check
+    # 2. modify booking date    : ugh..., add old booking date back date_free, delete the new booking date from date_free
+    # 2. modify hosting date    : ugh..., lien quan den booking,
+
+    def get_queryset(self):
+        """ allow rest api to filter by submissions """
+        queryset = Search.objects.all()
+        date_start = self.request.query_params.get('start', None)
+        date_end = self.request.query_params.get('end', None)
+        price_upper = self.request.query_params.get('price_upper', None)
+        price_lower = self.request.query_params.get('price_lower', None)
+        guest = self.request.query_params.get('guest', None)
+        location = self.request.query_params.get('location', None)
+
+        if guest is not None:
+            print("guest at: " + guest)
+
+        if location is not None:
+            print("location at: " + location)
+
+        if price_upper is not None:
+            queryset = queryset.filter(price__lte=price_upper)
+
+        if price_lower is not None:
+            queryset = queryset.filter(price__gte=price_lower)
+
+        if date_start is not None and date_end is not None:
+            print()
+            begin = datetime.strptime(date_start, '%Y-%m-%d')
+            endin = datetime.strptime(date_end, '%Y-%m-%d')
+
+            delta = endin - begin         # timedelta
+
+            y = []
+            for i in range(delta.days + 1):
+                x = begin + timedelta(i)
+                y.append(str(x.date())+",")
+
+            print(y)
+
+            condition = functools.reduce(operator.and_, [Q(date_free__icontains=day) for day in y])
+            queryset = queryset.filter(condition)
+
+        return queryset

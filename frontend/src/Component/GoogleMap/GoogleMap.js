@@ -27,11 +27,12 @@ class GoogleMap extends React.Component {
         lat: parseFloat(lat),
         lng: parseFloat(lng)
       }
+    }, () => {
+      console.log(this.state.center,"MOUNT");
     })
   }
 
   renderMarkers(map, maps) {
-    console.log(this.state.center,"CENTER...");
     let marker = new maps.Marker({
       position: this.state.center,
       map,

@@ -41,7 +41,7 @@ class AllHosting extends React.Component {
 
   render () {
     const {classes} = this.props;
-    
+
     // console.log("all Hosting",this.props.AllHostingList);
     // console.log("all House",this.props.HouseList);
     const SingleHosting = this.props.AllHostingList.map((SingleHost) => this.getData(SingleHost))

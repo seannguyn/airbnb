@@ -66,6 +66,7 @@ class AccommodationHosting(models.Model):
     accommodation = models.OneToOneField(Accommodation, on_delete=models.CASCADE)
     date_start = models.DateField(default=datetime.datetime.today)
     date_end = models.DateField(default=datetime.datetime.today)
+    guest = models.IntegerField(blank=False, default=1)
     check_in = models.TimeField(blank=True,default=datetime.time(14,30,0,0))
     check_out = models.TimeField(blank=True,default=datetime.time(10,0,0,0))
     price = models.PositiveIntegerField(blank=False)
@@ -110,3 +111,11 @@ class Review(models.Model):
     star = models.IntegerField(choices=SCALE)
     review = models.TextField(blank=True)
     date_posted = models.DateField(default=datetime.datetime.today,blank=True)
+
+class Search(models.Model):
+
+    accommodation = models.OneToOneField(Accommodation, on_delete=models.CASCADE, primary_key="true")
+    date_free = models.TextField(blank=False)
+    price = models.PositiveIntegerField(blank=False,default=100)
+    guest = models.IntegerField(blank=False, default=1)
+    location = models.CharField(blank=False, max_length=100,default='default')

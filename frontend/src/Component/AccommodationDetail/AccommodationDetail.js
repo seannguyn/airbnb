@@ -50,7 +50,7 @@ class AccommodationDetail extends Component {
         return true;
     }
 
-    
+
 
     findMax(minDateSet) {
       var max = minDateSet[0];
@@ -81,6 +81,8 @@ class AccommodationDetail extends Component {
         const { classes } = this.props;
         // const {Accommodation_Type, area, bathroom,
         //         bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
+
+
         const {bathroom,bedroom,kitchen,carpark,description} = this.state.accomDetail
         // const {currentHost} = this.state;
         const isDayBlocked = day => this.props.booking.filter(d => d.isSame(day, 'day')).length > 0;

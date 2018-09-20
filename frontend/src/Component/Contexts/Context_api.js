@@ -23,8 +23,9 @@ const ContextApi = (props) => {
 
       var hasHost = []
       var i;
-      for(i=0; i < myHostingList.length; i++){
-        if(myHostingList[i].accommodation === id){
+      for(i=0; i < myHostingList.length; i++) {
+
+        if(myHostingList[i].accommodation === parseInt(id,10)){
           hasHost.push(<EditHosting id={id}
                                   key={id}
                                   HouseList={HouseList}
@@ -32,12 +33,14 @@ const ContextApi = (props) => {
                                   myHostingList={myHostingList}
                                   history={props.history}/>);
           hasHost.push(true);
+          break;
         }
       }
       if (hasHost.length === 0) {
         hasHost.push(<AddHosting key={id} history={props.history} id={id}/>)
         hasHost.push(false);
       }
+
       return (
         <div>
           <EditOverAll stageComponent={stageComponent} hasHost={hasHost} history={props.history} id={id} myHostingList={myHostingList} currentUser={currentUser} HouseList={HouseList} />

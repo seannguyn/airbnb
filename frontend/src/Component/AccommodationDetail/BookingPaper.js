@@ -160,7 +160,7 @@ class BookingPaper extends React.Component {
         let tempStartDate = moment(this.state.startDate).format('YYYY-MM-DD');
         let tempEndDate = moment(this.state.endDate).format('YYYY-MM-DD');
         let stayPeriod = this.state.endDate.diff(this.state.startDate, 'days');
-        
+
         // Find the date user have to pay by
         var now = moment();
         let daysDiff = now.diff(this.state.startDate,'days');
@@ -196,13 +196,15 @@ class BookingPaper extends React.Component {
   }
 
   goToPayment(booker,newDetail) {
-
+    console.log("NOT YET",this.props.booking_id);
     this.props.history.push({
       pathname: `/overallbooking/reserve/${newDetail.currentHost.id}`,
       search: '?query=abc',
       state: {
         detail: newDetail,
         booker: booker,
+        booking_id: this.props.booking_id,
+        booking: this.props.booking
       }
     })
   }
@@ -289,7 +291,7 @@ class BookingPaper extends React.Component {
                 focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                 onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
                 isDayBlocked = {this.props.isDayBlocked}
-                isOutsideRange={day => isBeforeDay(day,moment()) || isAfterDay(day,this.state.minDate) }
+                isOutsideRange={day => isBeforeDay(day,moment(this.props.currentHost.date_start)) || isBeforeDay(day,moment()) || isAfterDay(day,this.state.minDate) || isAfterDay(day,moment(this.props.currentHost.date_end))}
                 showClearDates={true}
                 minimumNights = {2}
                 reopenPickerOnClearDates
@@ -332,5 +334,10 @@ class BookingPaper extends React.Component {
     )
   }
 }
+
+BookingPaper.defaultProps = {
+  booking_id: -1,
+  booking:{}
+};
 
 export default withStyles(styles)(BookingPaper);
