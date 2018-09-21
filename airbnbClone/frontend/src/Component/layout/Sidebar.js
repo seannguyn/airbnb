@@ -5,8 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+// import IconButton from '@material-ui/core/IconButton';
+// import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 // import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Items from './Items';
 
@@ -69,21 +69,19 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
   },
-  hide : {
-    display: 'none'
-  }
 });
 
 class Sidebar extends React.Component {
   render () {
-    const { classes, theme } = this.props;
+    // const { classes, theme } = this.props;
+    const { classes } = this.props;
     return (
       <Consumer>
 
         {value => {
-          const {dispatch} = value;
+          // const {dispatch} = value;
           const {sidebar_show} = value;
-          const {logged_in} = value;
+          // const {logged_in} = value;
           return (
             <Drawer
               variant="permanent"

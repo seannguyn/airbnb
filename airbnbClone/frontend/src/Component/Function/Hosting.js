@@ -3,39 +3,24 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import Review from '../Review/Review';
 
-import { withStyles } from '@material-ui/core/styles';
-// import Card from '@material-ui/core/Card';
-// // import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-// import CardMedia from '@material-ui/core/CardMedia';
-// import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Cloud from "@material-ui/icons/Cloud";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-import Slider from "react-slick";
-import '../../Styles/ImageSlide.css';
-// core components
-import Button from "Component/CustomButtons/Button.jsx";
-import CustomInput from "Component/CustomInput/CustomInput.jsx";
+// Material UI components
 import Card from "Component/Card/Card.jsx";
 import CardBody from "Component/Card/CardBody.jsx";
-import CardAvatar from "Component/Card/CardAvatar.jsx";
 import CardHeader from "Component/Card/CardHeader.jsx";
 import CardFooter from "Component/Card/CardFooter.jsx";
-import GridContainer from "Component/Grid/GridContainer.jsx";
-import GridItem from "Component/Grid/GridItem.jsx";
-import avatar from "assets/img/faces/avatar.jpg";
+import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
+import { withStyles } from '@material-ui/core/styles';
+import CardContent from '@material-ui/core/CardContent';
 
-import priceImage1 from "assets/img/card-2.jpeg";
-import priceImage2 from "assets/img/card-3.jpeg";
-import priceImage3 from "assets/img/card-1.jpeg";
-import Tooltip from "@material-ui/core/Tooltip";
-import Refresh from "@material-ui/icons/Refresh";
-import Edit from "@material-ui/icons/Edit";
-import Place from "@material-ui/icons/Place";
-import ArtTrack from "@material-ui/icons/ArtTrack";
-import CarouselSlider from "react-carousel-slider"
+// Image Slider
+import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx";
+import Carousel from "react-slick";
+import '../../Styles/ImageSlide.css';
+
+// Rating
+import like from '../../assets/img/icons/like.png'
+import like_empty from '../../assets/img/icons/like_empty.png'
+
 const styles = {
   card: {
     maxWidth: 300,
@@ -56,22 +41,20 @@ class Hosting extends React.Component {
       id: '',
       images: [],
     }
-
   }
 
   handleExpand() {
+    console.log("HEREEEE", this.state.showHosting);
     this.setState({showHosting : !this.state.showHosting})
   }
 
   starCalculator(reviews){
     let avgRating = 0;
-
     for(let key in reviews){
       if(reviews.hasOwnProperty(key)){
         avgRating = avgRating + reviews[key].star;
       }
     }
-
     return avgRating/reviews.length;
   }
 
@@ -79,13 +62,8 @@ class Hosting extends React.Component {
     this.setState({seeReviews: !this.state.seeReviews});
   }
 
-  seeRoomDetail = () => {
-    console.log("ID HOSTING: ", this.props);
-  }
-
   // find this accomm's images
-  findImages = (images) => {
-    const accommID = this.props.house.id;
+  findImagesByAccommID = (images, accommID)=> {
     const retImages = [];
     for( let i = 0; i < images.length; i++){
       if(accommID === images[i].accommodation){
@@ -96,8 +74,6 @@ class Hosting extends React.Component {
   }
 
   async componentDidMount  () {
-    // console.log(this.props.house.id," pamramm")
-    // this.setState({id: this.props.match.params})
     const {id} = this.props.house;
     let reviews, err;
     await axios.get(`https://localhost:8000/accommodation/${id}/reviews/`)
@@ -111,102 +87,87 @@ class Hosting extends React.Component {
                   }
                 )
 
-    if(err == null && reviews.length > 0)
+    if(err == null && reviews.length > 0){
       this.setState({reviews:reviews});
+    }
 
     const images = await axios.get('https://localhost:8000/accommodationImage/');
-    this.findImages(images.data);
+    this.findImagesByAccommID(images.data, this.props.house.id);
   }
 
   render () {
-
     // console.log('PROPS ', this.props);
-    let data = [
-      {
-          des: "1",
-          imgSrc: "assets/img/card-1.jpeg"
-      },
-      {
-          des: "2",
-          imgSrc: "assets/img/card-2.jpeg"
-      },
-      {
-          des: "3",
-          imgSrc: "assets/img/card-3.jpeg"
-      }
-  ];
     const readonly = true,
-
           {house, SingleHost} = this.props,
           {id} = this.props.house,
           {showHosting, images, reviews} = this.state,
           avgRating =  this.starCalculator(reviews),
           { classes} = this.props;
-
     let Rating = require('react-rating');
-
     let settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      arrows: true,
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
     };
 
+    // Map image in images array to div
     let imagesDiv = [];
     images.map( (image) => {
       imagesDiv.push(
-          <div key={image.id}>
-            <img src={image.a_image} height="250" width="345"/>
-          </div>
+      <div key={image.id}>
+        <img src={image.a_image} height="150" width="345"/>
+      </div>
       )
-
     })
 
-    // console.log("STATE: ", this.state);
-
     return (
-      
       <div style={{padding:"1rem"}}>
+        <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}>
         <Link to={`/accommodations/${id}`}>
-        <Card product className={classes.cardHover} style={{width:'20vw', height:'22vw'}}> 
-          <CardHeader image className={classes.cardHeaderHover}>
-          
-              <img src={priceImage1} alt="..." />
-              
+          <CardHeader image>
+          <Carousel {...settings} dots={false}>
+          { images.length !== 0 ?
+            imagesDiv
+          :
+          <div>
+              <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345"/>
+          </div>
+          }
+          </Carousel>
           </CardHeader>
+          </Link>
           <CardBody>
-            <h6 className={classes.cardProductTitle}>
-              <a href="#pablo" onClick={e => e.preventDefault()}>
-              <Typography component="p">
+            <div className={classes.cardHoverUnder}>
+              <h4 className={classes.cardProductTitle}>
                 {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
                 <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
-              </Typography>
-              </a>
-            </h6>
-            <div className={classes.price}>
-              <Typography gutterBottom variant="headline" component="h6">
-                {house.Accomodation_Type} ${SingleHost.price}/night
-              </Typography>
-            </div>
-            {reviews.length > 0 ?
-            <div>
+              </h4>
+              {/* <p className={classes.cardProductDesciprion}> */}
+              <h4>{house.Accomodation_Type}</h4>
+              {reviews.length > 0 ?
+               <div>
               <Rating
-                  readonly={readonly}
-                  initialRating={avgRating}
+                readonly={readonly}
+                initialRating={avgRating}
+                emptySymbol={<img src={like_empty} className="icon" />}
+                fullSymbol={<img src={like} className="icon" />}
               />
               <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
             </div>
-              : 
-                <Rating
-                  readonly={readonly}
-                  initialRating={0}
-              />
-              
+            :
+            <Rating
+              readonly={readonly}
+              initialRating={0}
+              emptySymbol={<img src={like_empty} className="icon" />}
+              fullSymbol={<img src={like} className="icon" />}
+            />
             }
             {this.state.seeReviews ?
-              <CardContent>{ reviews.map(review =>
+              <CardContent>
+              {reviews.map(review =>
                   <Review
                     key={review.id}
                     accommodation={review.accommodation}
@@ -215,108 +176,22 @@ class Hosting extends React.Component {
                     review={review.review}
                     text='Close'
                     closeReview={this.showReview.bind(this)}
-                />
-                )
-              }
+                />)}
               </CardContent>
               : null
             }
-            
+            </div>
           </CardBody>
           <CardFooter product>
-              <Link to={`/accommodations/${id}`}>
-                <Button size="small" color="primary" onClick={this.seeRoomDetail}>
-                  See more
-                </Button>
-              </Link> 
+              <div className={classes.price}>
+                {/* <Typography gutterBottom variant="headline" component="h6"> */}
+                  <h4>${SingleHost.price}/night</h4>
+                {/* </Typography> */}
+              </div>
           </CardFooter>
         </Card>
-        </Link>  
-        {/* <Card className={classes.card} style={{}}> */}
-            {/* <CardAvatar profile className={classes.cardAvatar}>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" alt="..." />
-                  </a>
-            </CardAvatar> */}
-          {/* <CardActionArea> */}
-
-            {/* <CardMedia src="ddd" img="ddd">
-              <Slider {...settings}>
-              { images.length !== 0 ?
-                  imagesDiv
-                :
-                <div>
-                    <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="250" width="345"/>
-                </div>
-              }
-              </Slider>
-            </CardMedia> */}
-
-          {/* </CardActionArea> */}
-
-            {/* <CardContent>
-                <Typography gutterBottom variant="headline" component="h2">
-                  {house.Accomodation_Type} ${SingleHost.price}/night
-                </Typography>
-
-                <Typography component="p">
-                    {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
-                    <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
-                  </Typography>
-              </CardContent>
-
-            {showHosting === true ?
-              <ul className="list-group">
-                <li className="list-group-item">start_date : {SingleHost.date_start}</li>
-                <li className="list-group-item">end_date :  {SingleHost.date_end}</li>
-                <li className="list-group-item">price :  {SingleHost.price}</li>
-              </ul>
-            : null}
-
-            {reviews.length > 0 ?
-            <CardContent>
-              <Rating
-                  readonly={readonly}
-                  initialRating={avgRating}
-              />
-              <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
-              </CardContent>
-            : <CardContent>
-                <Rating
-                  readonly={readonly}
-                  initialRating={0}
-              />
-              </CardContent>
-            }
-            {this.state.seeReviews ?
-              <CardContent>{
-                reviews.map(review =>
-                  <Review
-                    key={review.id}
-                    accommodation={review.accommodation}
-                    star={review.star}
-                    user={review.user}
-                    review={review.review}
-                    text='Close'
-                    closeReview={this.showReview.bind(this)}
-                />
-                )
-              }
-                <button onClick={this.showReview.bind(this)}>Close</button>
-              </CardContent>
-              : null
-            }
-            <CardActions>
-              <Link to={`/accommodations/${id}`}>
-                <Button size="small" color="primary" onClick={this.seeRoomDetail}>
-                  See more
-                </Button>
-              </Link>
-            </CardActions>
-        </Card> */}
       </div>
     )
   }
 }
-
-export default withStyles(styles)(Hosting);
+export default withStyles(dashboardStyle,carouselStyle)(Hosting);

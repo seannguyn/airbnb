@@ -1,80 +1,27 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import 'react-dates/initialize';
-import { DateRangePicker } from 'react-dates';
+// import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
-import Button from '@material-ui/core/Button';
-import isBeforeDay from './utils/isBeforeDay'
+// import Button from '@material-ui/core/Button';
+// import isBeforeDay from './utils/isBeforeDay'
 import isAfterDay from './utils/isAfterDay';
 import {Consumer} from '../../Context.js';
 import BookingPaper from './BookingPaper'
 
 import {
-    withStyles,
-    MuiThemeProvider,
-    createMuiTheme
-} from "@material-ui/core/styles";
+	// withStyles,
+	// MuiThemeProvider,
+	createMuiTheme
+} from "@material-ui/core/styles"
+import green from "@material-ui/core/colors/green"
 
-
-import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
-
-
-const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  margin: {
-    margin: theme.spacing.unit
-  },
-  cssRoot: {
-    color: theme.palette.getContrastText(purple[500]),
-    backgroundColor: purple[500],
-    "&:hover": {
-      backgroundColor: purple[700]
-    }
-  },
-  bootstrapRoot: {
-    boxShadow: "none",
-    textTransform: "none",
-    fontSize: 16,
-    padding: "6px 12px",
-    border: "1px solid",
-    backgroundColor: "#007bff",
-    borderColor: "#007bff",
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"'
-    ].join(","),
-    "&:hover": {
-      backgroundColor: "#0069d9",
-      borderColor: "#0062cc"
-    },
-    "&:active": {
-      boxShadow: "none",
-      backgroundColor: "#0062cc",
-      borderColor: "#005cbf"
-    },
-    "&:focus": {
-      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)"
-    }
-  }
-});
 
 const theme = createMuiTheme({
-  palette: {
-    primary: green
-  }
+	palette: {
+		primary: green
+	}
 });
 
 
@@ -85,13 +32,12 @@ class AccommodationDetail extends Component {
         this.state = {
             accomDetail: {},
             currentHost: {},
-
             bookedPeriods: [], //periods that this accomm booked to block the date
             minDateSet: [],
             minDate: {},
             allBookings: [],
         }
-    }
+		}
 
     // check if object is empty
     isEmpty = (obj) => {
@@ -110,12 +56,6 @@ class AccommodationDetail extends Component {
             }
         }
         return;
-    }
-
-
-
-    checkValidPeriod = () => {
-
     }
 
     // find dates between 2 dates
@@ -147,14 +87,10 @@ class AccommodationDetail extends Component {
             endDate = moment(endDate);
             currentPeriod = this.datesInPeriod(startDate, endDate);
 
-
             tempBookedPeriods=tempBookedPeriods.concat(currentPeriod);
             minDateSet = this.state.minDateSet;
-
             minDateSet.push(currentPeriod[0]);
-
         }
-
 
         this.setState({minDateSet: minDateSet})
         // console.log(tempBookedPeriods,"booked period");
@@ -174,8 +110,8 @@ class AccommodationDetail extends Component {
     }
 
     async componentDidMount(){
-
-        // Get accommodation detail
+				// Get accommodation detail
+				console.log("PROPS: ", this.props);
         const {id} = this.props.id;
         const res = await axios.get(`https://localhost:8000/accommodation/${id}/`);
         this.setState({accomDetail: res.data});
@@ -209,7 +145,6 @@ class AccommodationDetail extends Component {
         console.log("BOKIGPREID: ", this.state.bookedPeriods);
         const {Accommodation_Type, area, bathroom,
                 bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
-
         const isDayBlocked = day => this.state.bookedPeriods.filter(d => d.isSame(day, 'day')).length > 0;
         return (
           <Consumer>

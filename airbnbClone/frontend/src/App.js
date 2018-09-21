@@ -24,41 +24,8 @@ class App extends Component {
     return (
       <Provider>
         <Router>
-<<<<<<< HEAD:airbnbClone/frontend/src/App.js
-          
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-sm">
-                <Sidebar/>
-              </div>
-
-              <div className="col-md-10">
-                <Switch>
-
-                  {/* Router for authentication */}
-                  <Route exact path="/login" component={Login}/>
-                  <Route exact path="/registration" component={Registration}/>
-
-                  {/* Router for accommodation/house */}
-                  <Route exact path="/" component={AllHostingContext}/>
-                  <Route exact path="/myhouses" component={MyHouses}/>
-                  <Route exact path="/addHouse" component={AddHouseContext}/>
-                  <Route exact path="/editHouse/:id" component={ContextApi}/>
-                  <Route exact path="/hosting/:id" component={AddHosting}/>
-                  <Route exact path="/edithosting/:id" component={EditHostingContext}/>
-                  <Route exact path="/grid" component={Demo}/>
-
-                </Switch>
-
-              </div>
-          </div>
-        </div>
-      
-      </Router>
-=======
           <AppMain />
         </Router>
->>>>>>> 0ab14986750935aabfc5c86264411f0d12022f4f:frontend/src/App.js
       </Provider>
     );
   }

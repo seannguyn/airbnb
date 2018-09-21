@@ -14,7 +14,9 @@ if [ ! -f ${db} ]; then
     User.objects.create_superuser('bobby', 'bobby@portbnb.com', 'comp3900'); \
     User.objects.create_superuser('carol', 'carol@portbnb.com', 'comp3900'); \
     User.objects.create_superuser('david', 'david@portbnb.com', 'comp3900'); \
-    User.objects.create_superuser('eliza', 'eliza@portbnb.com', 'comp3900')" \
+    User.objects.create_superuser('eliza', 'elise@portbnb.com', 'comp3900'); \
+    User.objects.create_superuser('frank', 'frank@portbnb.com', 'comp3900'); \
+    User.objects.create_superuser('grant', 'grant@portbnb.com', 'comp3900')" \
     | ${py} manage.py shell
 else
    ${py} manage.py makemigrations
