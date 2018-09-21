@@ -2,6 +2,16 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Booking from './Booking'
 import moment from 'moment'
+// import Popup from "reactjs-popup";
+
+import '../../Styles/Popup.css'
+
+import isEmpty from '../../utils/isEmpty.js';
+
+// Rating
+// import Rating from 'react-rating'
+// import like from '../../assets/img/icons/like.png'
+// import like_empty from '../../assets/img/icons/like_empty.png'
 
 class MyBookings extends Component {
 
@@ -13,7 +23,8 @@ class MyBookings extends Component {
 			futureStay: [], //bookings that not checkin yet
 			currentStay: [], // still in the accomm
 			pastStay: [], // already check in
-			earliestBooking: {}
+			earliestBooking: {},
+			requireReviewList : []
 		}
 	}
 
@@ -25,15 +36,6 @@ class MyBookings extends Component {
 			}
 		}
 		this.setState({ myBookings: res });
-	}
-
-	 // check if object is empty
-	isEmpty = (obj) => {
-		for(var key in obj) {
-				if(obj.hasOwnProperty(key))
-						return false;
-		}
-		return true;
 	}
 
 	// separate future, past, current booking into diffent array and set state
@@ -70,11 +72,55 @@ class MyBookings extends Component {
 		let earliestBooking;
 		for (let i = 0; i < dates.length; i++) {
 			let diff = moment(dates[i].date_start).diff(moment(), 'minutes');
-			if (diff < earliestBookingTime) {
-				earliestBooking = dates[i];
-			}
+			if (diff < earliestBookingTime) earliestBooking = dates[i];
 		}
 		return earliestBooking;
+	}
+
+	requireReview = async (pastStay) => {
+		let isReviewed = false,
+				tempRequireReviewList = [],
+				tempPastStay = [];
+
+		const { requireReviewList } = this.state,
+					// { booking } = this.props,
+					currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+		// const accommodationIDs = [];
+		for( let i = 0; i < pastStay.length; i++){
+			const res = await axios.get(`https://localhost:8000/accommodationHosting/${pastStay[i].hosting}/`);
+			pastStay[i].accommodation = res.data.accommodation;
+			tempPastStay.push(pastStay[i]);
+		}
+		console.log("TEMPAST STAY: ", tempPastStay);
+		for(let i = 0; i < tempPastStay.length; i++){
+			let reviews = [];
+			await axios.get(`https://localhost:8000/accommodation/${tempPastStay[i].accommodation}/reviews/`)
+												.then( response => {
+													reviews = response.data
+												})
+												.catch(error => {
+													reviews = [];
+												})
+
+
+			for(let j = 0; j < reviews.length; j++){
+				// console.log("CP: ", tempPastStay[i].accommodation, reviews[j].accommodation)
+				if(tempPastStay[i].accommodation === reviews[j].accommodation && tempPastStay[i].id === reviews[j].booking && reviews[j].user === currentUser[0].user_id){
+					// tempRequireReviewList.push(tempPastStay[i]);
+					isReviewed = true;
+				}
+			}
+			if(isReviewed === false){
+				tempRequireReviewList.push(tempPastStay[i]);
+				console.log("ADDDD: ", tempPastStay[i]);
+			}
+			else {isReviewed = false;}
+		}
+
+		console.log("TEMEEEE: ", tempRequireReviewList);
+		tempRequireReviewList = tempRequireReviewList.concat(requireReviewList);
+		this.setState({requireReviewList: tempRequireReviewList})
 	}
 
 	async componentDidMount() {
@@ -87,30 +133,38 @@ class MyBookings extends Component {
 		const res2 = await axios.get('https://localhost:8000/booking/');
 		this.getBookings(this.state.currentUser[0].user_id, res2.data);
 		this.separateFutureCurrentPast();
+		this.requireReview(this.state.pastStay);
 	}
 	render() {
-		const { myBookings, futureStay, currentStay, pastStay, earliestBooking } = this.state;
+		const { myBookings, futureStay, currentStay, pastStay, earliestBooking, currentUser, requireReviewList } = this.state;
+		// this.getReviewRequiredList(pastStay);
 		return (
 			<React.Fragment>
-
-				<div>
-					<center>
-						{ !this.isEmpty(earliestBooking) ?
-							<div>
-								<center><h1>Next Stay</h1></center>
-								<Booking key={earliestBooking.id} booking={earliestBooking}></Booking>
-							</div>
-							: null
-						}
-					</center>
-				</div>
+				<center>
+					{!isEmpty(earliestBooking) ?
+						<div>
+							<center><h1>Next Stay</h1></center>
+							<Booking key={earliestBooking.id} booking={earliestBooking}></Booking>
+						</div>
+						: null
+					}
+				</center>
+				<center>
+					{!isEmpty(pastStay[0]) ?
+						<div key={pastStay[0].id}>
+							<center><h1>Recent Stay</h1></center>
+							<Booking key={pastStay[0].id} booking={pastStay[0]} requireReviewItem={requireReviewList[0]}></Booking>
+						</div>
+						: null
+					}
+				</center>
 				{futureStay.length !== 0 ? <center><h1>Incoming</h1></center> : null}
 				<div className="row">
 					{futureStay.length !== 0 ?
 						futureStay.map((booking) => {
 							return (
-								<div>
-									<div key={booking.id} style={{ padding: '1rem' }}>
+								<div key={booking.id}>
+									<div style={{ padding: '1rem' }}>
 										<center>
 											<Booking key={booking.id} booking={booking}  earliestBooking={earliestBooking}></Booking>
 										</center>
@@ -127,12 +181,13 @@ class MyBookings extends Component {
 						: null
 					}
 				</div>
+
 				{pastStay.length !== 0 ? <center><h1>In The Past</h1></center> : null}
 				<div className="row">
 					{pastStay.length !== 0 ?
 						pastStay.map((booking) => {
 							return (
-								<div>
+								<div key={booking.id}>
 									<div key={booking.id} style={{ padding: '1rem' }}>
 										<center>
 											<Booking key={booking.id} booking={booking}></Booking>
@@ -151,7 +206,7 @@ class MyBookings extends Component {
 							return (
 								<div key={booking.id} style={{ padding: '1rem' }}>
 									<center>
-										<Booking key={booking.id} booking={booking}></Booking>
+										<Booking key={booking.id} booking={booking} pastStay={pastStay} currentUser={currentUser}></Booking>
 									</center>
 								</div>
 							);

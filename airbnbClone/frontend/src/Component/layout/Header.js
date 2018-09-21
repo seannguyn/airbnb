@@ -4,13 +4,12 @@ import { Link } from 'react-router-dom';
 import {Consumer} from '../../Context.js';
 
 import classNames from 'classnames';
+
+
 import { withStyles, createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
-// import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-// import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-// import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import PersonIcon from '@material-ui/icons/Person';
@@ -19,7 +18,6 @@ import Avatar from '@material-ui/core/Avatar';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import LoginDialog from './LoginDialog'
-
 import green from '@material-ui/core/colors/green';
 
 const drawerWidth = 240;
@@ -161,14 +159,14 @@ class Header extends Component {
 
   render () {
 
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
       <Consumer>
         {value => {
-          const {dispatch, sidebar_show,logged_in, currentUser} = value;
+          const {dispatch, sidebar_show,logged_in} = value;
           return (
             <div>
            <MuiThemeProvider theme={customColor}>

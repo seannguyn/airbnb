@@ -1,7 +1,6 @@
 import React from 'react'
 import {Consumer} from '../../Context'
 import {Link} from 'react-router-dom'
-
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 // import CardActionArea from '@material-ui/core/CardActionArea';
@@ -66,8 +65,8 @@ class House extends React.Component {
     const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.props.houseDetail;
     const {user} = this.props.houseDetail; //-- from houses.js -- user id in each house in houselist
     const {id} = this.props.houseDetail;
-
     const {showDetail} = this.state;
+<<<<<<< HEAD:airbnbClone/frontend/src/Component/Function/House.js
 <<<<<<< HEAD:airbnbClone/frontend/src/Component/Function/House.js
     const isMyHouse = false; // flag to check if which current user's houses - for hosting button
     const isHosting = false;// flag to check if the accom is hosting
@@ -77,6 +76,8 @@ class House extends React.Component {
     // const isHosting = false;// flag to check if the accom is hosting
 >>>>>>> 7edc4a77703d3d8fff83cc6de7acaff03876726a:frontend/src/Component/Function/House.js
 
+=======
+>>>>>>> 5028e4f1e86146e7dd21986ef6a6b02b0b8746c1:frontend/src/Component/Function/House.js
     const { classes} = this.props;
 
     return (
@@ -100,7 +101,6 @@ class House extends React.Component {
                 break;
               }else{
                 this.isHosting = false;
-
               }
             }
           }
