@@ -52,6 +52,7 @@ class Booking extends Component {
         }
 
         await axios.patch(`https://localhost:8000/search/${accommodation.id}/`,searchAccommodationTemp)
+        window.location.reload();
     }
 
     // find dates between 2 dates

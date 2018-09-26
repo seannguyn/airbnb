@@ -61,7 +61,7 @@ class OverallBooking extends React.Component {
       await axios.patch(`https://localhost:8000/search/${detail.accommodation.id}/`,searchAccommodationTemp)
 
       await axios.delete(`https://localhost:8000/booking/${booking_id}/`);
-      alert("Delete successfully - reload page");
+      alert("Delete OLD BOOKING successfully");
     }
 
 
@@ -91,7 +91,7 @@ class OverallBooking extends React.Component {
 
     const booking = await axios.post('https://localhost:8000/booking/', newBooking);
     console.log("SUCCESSFully Booking", booking.data);
-    
+
     this.props.history.push({
       pathname: `/overallbooking/payment/${detail.currentHost.id}`,
       search: '?query=abc',
