@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PaypalExpressBtn from 'react-paypal-express-checkout'
 
 class MyApp extends React.Component {

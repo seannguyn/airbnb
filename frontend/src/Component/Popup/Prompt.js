@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 /** The prompt content component */
 class Prompt extends React.Component {

@@ -102,7 +102,7 @@ class Hosting extends React.Component {
           {id} = this.props.house,
           {images, reviews} = this.state,
           avgRating =  this.starCalculator(reviews),
-          { classes} = this.props;
+          { classes } = this.props;
     let Rating = require('react-rating');
     let settings = {
         dots: true,
@@ -118,10 +118,10 @@ class Hosting extends React.Component {
     images.map( (image) => {
       imagesDiv.push(
           <div key={image.id}>
-            <img src={image.a_image} height="150" width="345" alt="no"/>
+            <img src={image.a_image} height="150" width="345" alt="hostingimg"/>
           </div>
       )
-      return 1;
+      return 0;
     })
 
     return (
@@ -134,7 +134,7 @@ class Hosting extends React.Component {
             imagesDiv
           :
           <div>
-              <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345" alt="nohouse"/>
+              <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345" alt="noimage"/>
           </div>
           }
           </Carousel>

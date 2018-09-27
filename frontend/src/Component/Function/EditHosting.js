@@ -4,7 +4,8 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-
+// import {enumerateDaysBetweenDates} from '../Helper/Helper'
+import {Link} from 'react-router-dom'
 
 import FormControl from '@material-ui/core/FormControl';
 
@@ -63,6 +64,7 @@ class EditHosting extends Component {
             check_in: '',
             check_out: '',
             price: '',
+            guest: 2,
             description: '',
 
             error: {}
@@ -83,7 +85,7 @@ class EditHosting extends Component {
         let i = 0;
         var result;
         for(i=0; i < myHostingList.length; i++){
-          if(myHostingList[i].accommodation === id){
+          if(parseInt(myHostingList[i].accommodation,10) === parseInt(id,10)){
             result = myHostingList[i];
           }
         }
@@ -98,7 +100,7 @@ class EditHosting extends Component {
             check_out: result.check_out,
             description: result.description,
             price: result.price
-        })
+        }, () => {console.log("STATE IS:", this.state);})
     }
 
     //set State when changing text
@@ -131,6 +133,7 @@ class EditHosting extends Component {
                 check_in,
                 check_out,
                 price,
+                guest,
                 description} = this.state;
 
         const hostingHouse = {
@@ -140,15 +143,27 @@ class EditHosting extends Component {
             date_start: date_start,
             date_end: date_end,
             price: price,
+            guest: guest,
             check_in: check_in,
             check_out: check_out,
             description: description
         }
 
+        // const date_free = enumerateDaysBetweenDates(date_start,date_end)
+        //
+        // const searchAccommodation = {
+        //   accommodation: this.props.id,
+        //   date_free: date_free,
+        //   price: price,
+        //   guest: guest,
+        // }
+        // await axios.put(`https://localhost:8000/search/${this.props.id}/`,searchAccommodation)
+
         // AXIOS call here - PUT REQUEST
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
+        console.log("ID IS: ",id);
         await axios.put(`https://localhost:8000/accommodationHosting/${id}/`, hostingHouse,
                 {headers:{
                     'Authorization': {token}
@@ -159,7 +174,9 @@ class EditHosting extends Component {
         // Add error handling here
         // ......
         // error handling
-        this.props.history.push("/myhouses")
+
+
+        this.props.history.push("/myHouses")
     }
 
     handleAlternate(id,dispatch,e) {
@@ -171,8 +188,6 @@ class EditHosting extends Component {
         dispatch({type: "DELETE_HOST", payload: id})
       })
 
-      console.log(this.props.history,"historyyyy");
-      this.props.history.push("/myhouses")
     }
 
     render() {
@@ -279,15 +294,17 @@ class EditHosting extends Component {
                               >
                                 Edit Hosting
                               </Button>
-                              <Button
-                                  fullWidth
-                                  variant="raised"
-                                  color="secondary"
-                                  className={classes.submit}
-                                  onClick={this.handleAlternate.bind(this, id, dispatch)}
-                                >
+                              <Link to="/myHouses">
+                                <Button
+                                    fullWidth
+                                    variant="raised"
+                                    color="secondary"
+                                    className={classes.submit}
+                                    onClick={this.handleAlternate.bind(this, id, dispatch)}
+                                  >
                                   Stop Hosting this accommodation
                                 </Button>
+                              </Link>
                           </form>
                         </Paper>
                       </div>

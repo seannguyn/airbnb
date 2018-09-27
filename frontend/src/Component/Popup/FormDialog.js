@@ -33,11 +33,9 @@ export default class FormDialog extends React.Component {
 	handleSubmit = async () => {
 		const { star, comment, currentUser } = this.state;
 		const { requireReviewItem } = this.props;
-		console.log("THIS PROPSSSS: ", this.props);
-		console.log("CLOASE: ", star, " ", comment, currentUser);
 		let newReview = {
 			accommodation: requireReviewItem.accommodation,
-			user: requireReviewItem.booker,
+			// user: requireReviewItem.booker,
 			booking: requireReviewItem.id,
 			star: star,
 			review: comment

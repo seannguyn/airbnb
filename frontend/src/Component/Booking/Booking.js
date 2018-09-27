@@ -22,6 +22,7 @@ import isEmpty from '../../utils/isEmpty.js'
 // import {Link} from 'react-router-dom'
 
 import FormDialog from '../Popup/FormDialog'
+import {enumerateDaysBetweenDates, concatString} from '../Helper/Helper'
 
 // const styles = {
 //   card: {
@@ -43,32 +44,128 @@ let settings = {
 
 class Booking extends Component {
 
-    constructor(){
-			super();
-			this.state = {
-				images: [],
-				currentAccommodationID : -1,
-			}
+  constructor(props) {
+    super(props)
+    this.state = {
+      open: false,
+      host: {},
+      accommodation: {},
+      booking: [],
+      minDateSet: [],
+      images: [],
+			currentAccommodationID : -1,
+
     }
+  }
 
-    handleDelete = async (id) => {
-        await axios.delete(`https://localhost:8000/booking/${id}/`);
-        alert("Delete successfully - reload page");
-    }
+    handleEdit = () => {
 
-	handleEdit = () => {
-
+      this.setState({
+        open:true
+      })
     }
 
     handlePayment= () => {
 
+      let stayPeriod = moment(this.props.booking.date_end).diff(moment(this.props.booking.date_start), 'days');
+
+
+      const newDetail = {
+
+        startDate: this.props.booking.date_start,
+        endDate: this.props.booking.date_end,
+        paidDate: this.props.booking.date_paymentDue,
+
+        guest: this.props.booking.guest,
+
+        price: {
+          pricePerNight: this.state.host.price,
+          daysDiff: stayPeriod,
+          promotion: 0.1,
+        },
+
+        accommodation: this.state.accommodation,
+        currentHost: this.state.host,
+      }
+
+      console.log("NEW_DETAIL",newDetail);
+
+      this.props.history.push({
+        pathname: `/overallbooking/payment/${this.state.host.id}`,
+        search: '?query=abc',
+        state: {
+          detail: newDetail,
+          booker: this.props.booking.booker,
+          booking: this.props.booking,
+        }
+      })
     }
 
-    findImages = (images) => {
+  closeDiaglog() {
+    this.setState({
+      open: !this.state.open
+    })
+  }
 
-	}
+  handleDelete = async (id) => {
+    await axios.delete(`https://localhost:8000/booking/${id}/`);
+    alert("Delete successfully - reload page");
+    const {accommodation} = this.state;
+    const date_free = enumerateDaysBetweenDates(this.props.booking.date_start, this.props.booking.date_end)
+    const res_temp = await axios.get(`https://localhost:8000/search/${accommodation.id}/`)
 
-	// find this accomm's images
+    const newDateFree_temp = concatString(res_temp.data.date_free,date_free)
+
+    const searchAccommodationTemp = {
+      date_free: newDateFree_temp
+    }
+
+    await axios.patch(`https://localhost:8000/search/${accommodation.id}/`,searchAccommodationTemp)
+    window.location.reload();
+  }
+
+    // find dates between 2 dates
+    datesInPeriod = (startDate, endDate) => {
+        var dates = [];
+
+        var currDate = startDate,
+            lastDate  = endDate;
+        dates.push(currDate.clone());
+        while(currDate.add(1, 'days').diff(lastDate) < 0) {
+            dates.push(currDate.clone());
+        }
+        dates.push(lastDate.clone());
+        return dates;
+    };
+
+    blockBookedPeriod(bookingList) {
+
+        let startDate, endDate;
+        let  currentPeriod = [];
+        var tempBookedPeriods = [];
+        var minDateSet=[];
+        for( let i = 0; i < bookingList.length; i++){
+            if (bookingList[i].id === this.props.booking.id) continue;
+            startDate = bookingList[i].date_start;
+            endDate = bookingList[i].date_end;
+            startDate = moment(startDate);
+            endDate = moment(endDate);
+            currentPeriod = this.datesInPeriod(startDate, endDate);
+
+
+            tempBookedPeriods=tempBookedPeriods.concat(currentPeriod);
+            minDateSet = this.state.minDateSet;
+
+            minDateSet.push(currentPeriod[0]);
+
+        }
+
+
+        this.setState({minDateSet: minDateSet})
+        this.setState({booking: tempBookedPeriods});
+    }
+
+// find this accomm's images
 	findImagesByAccommID = (images, accommID)=> {
 		const retImages = [];
 		for( let i = 0; i < images.length; i++){
@@ -89,16 +186,26 @@ class Booking extends Component {
 		let images = await axios.get(`https://localhost:8000/accommodationImage/`);
 		// console.log("images: ", images.data);
 		images = this.findImagesByAccommID(images.data, accommID);
-		this.setState({images:images});
-		// if(isPast === true) this.requireReview();
+    this.setState({images:images});
+
+    const res1 = await axios.get(`https://localhost:8000/accommodationHosting/${this.props.booking.hosting}/`)
+    this.setState({host: res1.data})
+
+
+  const res2 = await axios.get(`https://localhost:8000/accommodation/${res1.data.accommodation}/`)
+  this.setState({accommodation: res2.data})
+
+
+  const res3 = await axios.get(`https://localhost:8000/booking/?host=${this.props.booking.hosting}`)
+  this.blockBookedPeriod(res3.data);
 	}
 
 	render() {
-		let {daysLeft, hoursLeft, minutesLeft} = 0;
+    let {daysLeft, hoursLeft, minutesLeft} = 0;
+    const { open } =this.state;
 		const { images } = this.state,
 					{ classes, booking, requireReviewItem } = this.props,
-					{ id, date_start, date_end, note } = booking;
-
+					{ id, date_start, date_end, note, isPaid } = booking;
 		daysLeft = Math.abs(moment(date_start).diff(moment(), 'hours'))/24;
 		hoursLeft = Math.abs((daysLeft - Math.round(daysLeft))) * 24;
 		daysLeft = Math.round(daysLeft);
@@ -118,9 +225,26 @@ class Booking extends Component {
 					<div key={image.id}>
 						<img src={image.a_image} height="150" width="345" alt="house"/>
 					</div>
-			)
-			return 1;
-		})
+      )
+      return 0;
+    })
+
+    const isDayBlocked = day => this.state.booking.filter(d => d.isSame(day, 'day')).length > 0;
+
+    var payButton = []
+    if (isPaid === false) {
+      payButton.push(
+        <Button key={1} variant="contained" color="primary" onClick={this.handlePayment}>
+          Pay
+      </Button>)
+    } else {
+      payButton.push(
+      <Button key={2} color="primary">
+        Paid
+      </Button>)
+    }
+    console.log("props booking: ", this.props.booking);
+    console.log("props currntHostL ", this.props.currentHost);
 		return (
 			<React.Fragment>
 			<center>
@@ -157,9 +281,9 @@ class Booking extends Component {
 					:null
 					}
 					<div style={{float:'right'}}>
-						<Button onClick={this.handleEdit}>
-							<i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
-						</Button>
+          <Button onClick={this.handleEdit}>
+            <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
+          </Button>
 						<Button onClick={this.handleDelete.bind(this, id)}>
 							<i className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
 						</Button>
@@ -168,11 +292,166 @@ class Booking extends Component {
                         </Button>
 					</div>
 				</div>
+        {payButton}
 			</CardBody>
+      <BookingDiaglog
+        closeDiaglog={this.closeDiaglog.bind(this)}
+        open={open}
+        isDayBlocked={isDayBlocked}
+        minDateSet={this.state.minDateSet}
+        currentHost={this.state.host}
+        history={this.props.history}
+        accommodation={this.state.accommodation}
+        booking_id={this.props.booking.id}
+        booking={this.props.booking}
+      />
 			</Card>
 		</React.Fragment>
 		);
-	}
+  }
 
+// =======
+//     handleEdit = () => {
+
+//       this.setState({
+//         open:true
+//       })
+//     }
+
+//     handlePayment= () => {
+
+//       let stayPeriod = moment(this.props.booking.date_end).diff(moment(this.props.booking.date_start), 'days');
+
+
+//       const newDetail = {
+
+//         startDate: this.props.booking.date_start,
+//         endDate: this.props.booking.date_end,
+//         paidDate: this.props.booking.date_paymentDue,
+
+//         guest: this.props.booking.guest,
+
+//         price: {
+//           pricePerNight: this.state.host.price,
+//           daysDiff: stayPeriod,
+//           promotion: 0.1,
+//         },
+
+//         accommodation: this.state.accommodation,
+//         currentHost: this.state.host,
+//       }
+
+//       console.log("NEW_DETAIL",newDetail);
+
+//       this.props.history.push({
+//         pathname: `/overallbooking/payment/${this.state.host.id}`,
+//         search: '?query=abc',
+//         state: {
+//           detail: newDetail,
+//           booker: this.props.booking.booker,
+//           booking: this.props.booking,
+//         }
+//       })
+//     }
+
+//     findImages = (images) => {
+
+//     }
+
+//     async componentDidMount(){
+
+//         const images = await axios.get('https://localhost:8000/accommodationImage/');
+//         this.findImages(images.data);
+
+//         const res1 = await axios.get(`https://localhost:8000/accommodationHosting/${this.props.booking.hosting}/`)
+//         this.setState({host: res1.data})
+
+
+//         const res2 = await axios.get(`https://localhost:8000/accommodation/${res1.data.accommodation}/`)
+//         this.setState({accommodation: res2.data})
+
+
+//         const res3 = await axios.get(`https://localhost:8000/booking/?host=${this.props.booking.hosting}`)
+//         this.blockBookedPeriod(res3.data);
+
+//     }
+
+//     closeDiaglog() {
+//       this.setState({
+//         open: !this.state.open
+//       })
+//     }
+
+//     render() {
+//         const { id, date_start, date_end, note, isPaid } = this.props.booking;
+//         const { classes } = this.props;
+//         console.log("Propsss: ", this.props);
+//         const {open} = this.state;
+
+//         const isDayBlocked = day => this.state.booking.filter(d => d.isSame(day, 'day')).length > 0;
+
+//         var payButton = []
+//         if (isPaid === false) {
+//           payButton.push(
+//             <Button key={1} variant="contained" color="primary" onClick={this.handlePayment}>
+//               Pay
+//           </Button>)
+//         } else {
+//           payButton.push(
+//           <Button key={2} color="primary">
+//             Paid
+//           </Button>)
+//         }
+
+//         return (
+//             <React.Fragment>
+//                 <Card className={classes.card} style={{width:'30vw'}} >
+
+//                     <CardActions>
+//                         {/* <CardMedia>
+
+//                         </CardMedia> */}
+//                     </CardActions>
+
+//                     <CardContent>
+//                         <Typography gutterBottom variant="headline" component="h2">
+//                         From: {date_start}
+//                         </Typography>
+
+//                         <Typography gutterBottom variant="headline" component="p">
+//                          To: {date_end} Note: {note}
+//                         </Typography>
+
+//                         <Typography gutterBottom variant="headline" component="p">
+//                             Note: {note}
+//                         </Typography>
+
+//                         <Button onClick={this.handleEdit}>
+//                             <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
+//                         </Button>
+
+//                         <Button onClick={this.handleDelete.bind(this, id)}>
+//                             <i  className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
+//                         </Button>
+
+//                         {payButton}
+
+//                      </CardContent>
+//                 </Card>
+                // <BookingDiaglog
+                //   closeDiaglog={this.closeDiaglog.bind(this)}
+                //   open={open}
+
+                //   isDayBlocked={isDayBlocked}
+                //   minDateSet={this.state.minDateSet}
+                //   currentHost={this.state.host}
+                //   history={this.props.history}
+                //   accommodation={this.state.accommodation}
+                //   booking_id={this.props.booking.id}
+                //   booking={this.props.booking}
+                //   />
+//             </React.Fragment>
+//          );
+//     }
 }
 export default withStyles(carouselStyle)(Booking);

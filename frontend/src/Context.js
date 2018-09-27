@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 const Context = React.createContext();
 
 const reducer = (state,action) => {
@@ -44,19 +44,29 @@ const reducer = (state,action) => {
       case 'HOSTING':
         console.log("host context",action.payload);
       return {
+        ...state,
         myHostingList: [action.payload,...state.myHostingList],
         AllHostingList: [action.payload,...state.AllHostingList],
       }
 
       case 'EDITHOST':
         return {
+          ...state,
           myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
         }
       case 'DELETE_HOST':
         console.log("deleting hosting",action.payload);
+
+        // var updateHouse;
+        // for ( var i = 0; i < this.state.myHouseList.length; i++) {
+        //   if
+        // }
+
         return {
+          ...state,
           myHostingList: state.myHostingList.filter((host) => host.id !== action.payload),
           AllHostingList: state.AllHostingList.filter((host) => host.id !== action.payload),
+          // myHouseList:
         }
 
       case 'TOGGLE_SIDEBAR':
@@ -119,6 +129,8 @@ export class Provider extends Component {
         open: false,
         login: true,
       },
+      mounted: 0,
+      didmount: 0,
       dispatch: (action) => {
         this.setState((state) => reducer(state,action))
       }
@@ -130,6 +142,7 @@ export class Provider extends Component {
 
     const res = await axios.get('https://localhost:8000/accommodation/');
     this.setState({HouseList: res.data});
+    this.setState({didmount: 1});
     // console.log(this.state.currentUser);
 
     const allHosting = await axios.get('https://localhost:8000/accommodationHosting/');
@@ -178,24 +191,16 @@ export class Provider extends Component {
 
   }
 
-  async componentWillUpdate(nextProps, nextState){
+  async shouldComponentUpdate(nextProps, nextState) {
+    // console.log("should it update?",nextProps,nextState);
+    if (nextState.currentUser.length > 0 && this.state.mounted === 0) {
+      this.setState({mounted: 1})
+      console.log("it updated",nextState);
+      localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
 
-    // console.log("WILL UPDATE: ", nextState);
+      const {token,user_id} = nextState.currentUser[0];
 
-    // should be nextState
-    localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
-  }
-
-  async componentDidUpdate(){
-        // console.log("DID UPDATE: ", this.state.currentUser);
-      // if(localStorage.getItem('currentUser')){
-      //   console.log('User data from local storage');
-      // }
-
-      if(this.state.currentUser.length === 1){
-        const {token,user_id} = this.state.currentUser[0];
-
-        const res = await axios.get('https://localhost:8000/accommodationHosting/',
+      const res = await axios.get('https://localhost:8000/accommodationHosting/',
         {
           headers:{
             'Authorization': {token}
@@ -203,25 +208,37 @@ export class Provider extends Component {
         }
       )
 
-      if(this.state.myHostingList.length === 0 ){
-        const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
-        this.setState({myHouseList: myHouse.data});
-        this.setState({myHostingList: res.data});
-        // console.log(this.state.myHostingList);
-      }
+      const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
+      this.setState({myHouseList: myHouse.data});
+      this.setState({myHostingList: res.data});
+      console.log(myHouse.data,"my hosting");
+
+      return true;
     }
-    return ;
+    return true;
   }
+
+
 
   render () {
     // const fh = this.findHostingAccommodation(this.state.currentUser);
     // console.log("IN REDNER CONTEXt: ", this.state.currentUser);
     // console.log(this.state.myHostingList);
-    return(
-      <Context.Provider value={this.state}>
-        {this.props.children}
-      </Context.Provider>
-    );
+    if (this.state.didmount === 0) {
+      return(
+        <div>
+          <CircularProgress color="primary" size={50}/>
+        </div>
+      )
+    }
+    else {
+      return(
+        <Context.Provider value={this.state}>
+          {this.props.children}
+        </Context.Provider>
+      );
+    }
+
   }
 }
 

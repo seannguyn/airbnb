@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {Consumer} from '../../Context.js';
 import axios from 'axios';
+
+
+
 import Paper from '@material-ui/core/Paper';
 import HomeIcon from '@material-ui/icons/Home';
 import { withStyles } from '@material-ui/core/styles';
@@ -64,6 +67,8 @@ const styles = theme => ({
 function getModalStyle() {
 
   const top = 25;
+
+
   return {
     top: `${top}%`,
     margin: 'auto'

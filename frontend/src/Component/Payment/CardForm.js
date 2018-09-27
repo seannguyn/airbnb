@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import {Link} from 'react-router-dom'
 
 const styles = theme => ({
   form: {
@@ -180,6 +181,9 @@ class CardForm extends React.Component {
         <div className="row" style={{marginTop:'15px'}}>
           <Button variant="contained" color="primary" type="submit" form="form1">Confirm and Pay</Button>
           <Button onClick={this.goBack.bind(this)}>Review detail</Button>
+          <Link to="/mybookings">
+            <Button>Pay Later</Button>
+          </Link>
         </div>
       </div>
     )

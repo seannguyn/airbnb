@@ -17,6 +17,7 @@ import Amenities from '../Booking/Amenities';
 import Reminder from '../Booking/Reminder';
 import 'react-credit-cards/es/styles-compiled.css';
 import axios from 'axios';
+import {enumerateDaysBetweenDates, removeString, concatString} from '../Helper/Helper'
 
 function TabContainer({ children, dir }) {
   return (
@@ -44,11 +45,26 @@ class OverallBooking extends React.Component {
   async postBooking(detail, booker) {
 
     const note = 'hello';
-    console.log("THIS MOMENT", detail.paidDate);
-    console.log("HOSSSSTING: ", detail.currentHost.id);
-    console.log("booker: ", booker);
-    console.log("detail: ", detail);
-    console.log("Props: ", this.props);
+
+    if (this.props.location.state.booking_id > 0) {
+      const {booking_id,booking} = this.props.location.state;
+      console.log("GOTCHA",booking_id,booking);
+      const date_free = enumerateDaysBetweenDates(booking.date_start,booking.date_end)
+      const res_temp = await axios.get(`https://localhost:8000/search/${detail.accommodation.id}/`)
+
+      const newDateFree_temp = concatString(res_temp.data.date_free,date_free)
+
+      const searchAccommodationTemp = {
+        date_free: newDateFree_temp
+      }
+
+      await axios.patch(`https://localhost:8000/search/${detail.accommodation.id}/`,searchAccommodationTemp)
+
+      await axios.delete(`https://localhost:8000/booking/${booking_id}/`);
+      alert("Delete OLD BOOKING successfully");
+    }
+
+
     const newBooking = {
       booker: booker,
       hosting: detail.currentHost.id,
@@ -59,6 +75,19 @@ class OverallBooking extends React.Component {
       guest: detail.guest,
       note
     }
+
+    // * REMOVE FROM SEARCH DB
+    const{ startDate, endDate} = this.props.location.state.detail
+
+    const res = await axios.get(`https://localhost:8000/search/${detail.accommodation.id}/`)
+    const newDateFree = removeString(res.data.date_free,startDate,endDate)
+
+    const searchAccommodation = {
+      date_free: newDateFree
+    }
+
+    await axios.patch(`https://localhost:8000/search/${detail.accommodation.id}/`,searchAccommodation)
+    // * REMOVE FROM SEARCH DB
 
     const booking = await axios.post('https://localhost:8000/booking/', newBooking);
     console.log("SUCCESSFully Booking", booking.data);

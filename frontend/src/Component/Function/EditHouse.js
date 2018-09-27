@@ -146,13 +146,10 @@ class EditHouse extends Component {
         let i =0;
         var result;
         for(i=0; i < HouseList.length; i++){
-          if(HouseList[i].id === id){
+          if(HouseList[i].id === parseInt(id,10)){
             result = HouseList[i];
           }
         }
-
-
-
 
         if (this.state.init === 0) {
 
@@ -289,6 +286,15 @@ class EditHouse extends Component {
             }
         }
     )
+
+    const searchAccommodation = {
+      accommodation: this.props.id,
+      location: city
+    }
+    await axios.patch(`https://localhost:8000/search/${this.props.id}/`,searchAccommodation)
+    .catch(error => {
+      console.log(error.response,)
+    });
 
     dispatch({type:'EDIT_HOUSE', payload:editHouse})
 
