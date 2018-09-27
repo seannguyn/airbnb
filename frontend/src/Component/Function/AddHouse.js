@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {Consumer} from '../../Context.js';
 import axios from 'axios';
-// import uuid from 'uuid';
-// import {Link} from 'react-router-dom';
+
+
 
 import Paper from '@material-ui/core/Paper';
 import HomeIcon from '@material-ui/icons/Home';
@@ -11,10 +11,10 @@ import Avatar from '@material-ui/core/Avatar';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-// import Input from '@material-ui/core/Input';
+
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-// import FormHelperText from '@material-ui/core/FormHelperText';
+
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
@@ -69,7 +69,8 @@ const styles = theme => ({
 function getModalStyle() {
 
   const top = 25;
-  // const left = 25;
+
+
   return {
     top: `${top}%`,
     margin: 'auto'
@@ -83,6 +84,8 @@ class AddHouse extends Component {
     this.state = {
 
       user:{},
+
+      title: '',
 
       number: '',
       street: '',
@@ -100,18 +103,22 @@ class AddHouse extends Component {
       carpark: '',
       description:'',
 
+      error_title: false,
       error_number: false,
       error_street: false,
       error_city: false,
       error_state: false,
+      error_Accommodation_Type: false,
       error_bedroom: false,
       error_bathroom: false,
 
       error: {
+        title: '',
         number: '',
         street: '',
         city: '',
         state: '',
+        Accommodation_Type: '',
         bedroom: '',
         bathroom: '',
       },
@@ -128,7 +135,8 @@ class AddHouse extends Component {
   }
 
   errorCheck(current) {
-    const { number } = current;
+    const { Accommodation_Type, number} = current;
+    // const {id, user, Accommodation_Type, number, street, city, state} = current;
     // const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
 
     var flag = false;
@@ -137,6 +145,11 @@ class AddHouse extends Component {
       flag = true;
     } else if (!isFinite(String(number))) {
       this.setState({error:{number:"numeric please"}, error_number: true})
+      flag = true;
+    }
+
+    if (Accommodation_Type === '') {
+      this.setState({error:{Accommodation_Type:"required"}, error_Accommodation_Type: true})
       flag = true;
     }
 
@@ -169,8 +182,8 @@ class AddHouse extends Component {
   async onSubmit(dispatch, e) {
     e.preventDefault();
 
-    const {user} = this.state;
-    const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark} = this.state;
+    const {user/*,number, street, city, state*/} = this.state;
+    const {/*Accommodation_Type, */area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark/*,description*/} = this.state;
 
     if(this.errorCheck(this.state) === true) return;
 
@@ -192,6 +205,7 @@ class AddHouse extends Component {
 
       Accomodation_Type: this.state.Accommodation_Type,
 
+      title:            this.state.title,
       addr_number:      this.state.number,
       addr_street:      'street',
       addr_city:        'city',
@@ -220,6 +234,7 @@ class AddHouse extends Component {
 
     this.setState({
 
+      title: '',
       number: '',
       street: '',
       city: '',
@@ -248,8 +263,8 @@ class AddHouse extends Component {
 
   render () {
 
-    const {number, street, city, state} = this.state;
-    const {Accommodation_Type,area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
+    const {title, number, street, city, state} = this.state;
+    const {Accommodation_Type,/*,area,*/bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
     const {classes} = this.props
 
     return (
@@ -257,7 +272,6 @@ class AddHouse extends Component {
       <Consumer>
         {value =>{
           const {dispatch} = value;
-          // const {HouseList, currentUser, myHostingList} = value;
             return (
               <div>
                 <Paper className={classes.paper}>
@@ -266,13 +280,23 @@ class AddHouse extends Component {
                     </Avatar>
 
                     <form className={classes.form} onSubmit={this.onSubmit.bind(this, dispatch)}>
+                      <Typography className={classes.typo} variant="headline" >Title</Typography>
+                        <FormControl margin="normal" required fullWidth style={{marginBottom:'30px'}}>
+                          <TextField
+                            error={this.state.error_title}
+                            value={title}
+                            autoFocus
+                            onChange={this.onChange.bind(this)}
+                            name="title"
+                            type="text"
+                          />
+                        </FormControl>
                       <Typography className={classes.typo} variant="headline" >Address</Typography>
                       <FormControl margin="normal" required fullWidth>
                         <TextField
                           error={this.state.error_number}
                           label="Number"
                           value={number}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="number"
                           type="text"
@@ -283,7 +307,6 @@ class AddHouse extends Component {
                           error={this.state.error_street}
                           label="Street"
                           value={street}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="street"
                           type="text"
@@ -294,7 +317,6 @@ class AddHouse extends Component {
                           error={this.state.error_city}
                           label="City"
                           value={city}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="city"
                           type="text"
@@ -305,14 +327,13 @@ class AddHouse extends Component {
                           error={this.state.error_state}
                           label="State"
                           value={state}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="state"
                           type="text"
                         />
                       </FormControl>
                       <Typography className={classes.typo} variant="headline">Category</Typography>
-                      <FormControl className={classes.formControl}>
+                      <FormControl className={classes.formControl} error={this.state.error_Accommodation_Type}>
                         <InputLabel htmlFor="accom-type">select</InputLabel>
                         <Select
                           value={Accommodation_Type}
@@ -334,7 +355,6 @@ class AddHouse extends Component {
                         <TextField
                           label="Bedroom"
                           value={bedroom}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="bedroom"
                           type="text"
@@ -344,7 +364,6 @@ class AddHouse extends Component {
                         <TextField
                           label="Bedroom Master"
                           value={bedroom_master}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="bedroom_master"
                           type="text"
@@ -354,7 +373,6 @@ class AddHouse extends Component {
                         <TextField
                           label="Bathroom"
                           value={bathroom}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="bathroom"
                           type="text"
@@ -364,7 +382,6 @@ class AddHouse extends Component {
                         <TextField
                           label="Kitchen"
                           value={kitchen}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="kitchen"
                           type="text"
@@ -374,7 +391,6 @@ class AddHouse extends Component {
                         <TextField
                           label="Gym"
                           value={gym}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="gym"
                           type="text"
@@ -384,7 +400,6 @@ class AddHouse extends Component {
                         <TextField
                           label="Pool"
                           value={pool}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="pool"
                           type="text"
@@ -394,7 +409,6 @@ class AddHouse extends Component {
                         <TextField
                           label="Carpark"
                           value={carpark}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="carpark"
                           type="text"
@@ -405,7 +419,6 @@ class AddHouse extends Component {
                         <TextField
                           label="Description"
                           value={description}
-                          autoFocus
                           onChange={this.onChange.bind(this)}
                           name="description"
                           type="text"

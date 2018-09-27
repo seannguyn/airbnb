@@ -33,17 +33,15 @@ export default class FormDialog extends React.Component {
 	handleSubmit = async () => {
 		const { star, comment, currentUser } = this.state;
 		const { requireReviewItem } = this.props;
-		console.log("THIS PROPSSSS: ", this.props);
-		console.log("CLOASE: ", star, " ", comment, currentUser);
 		let newReview = {
 			user: currentUser[0].user_id,
 			accommodation: requireReviewItem.accommodation,
-			user: requireReviewItem.booker,
+			// user: requireReviewItem.booker,
 			booking: requireReviewItem.id,
 			star: star,
 			review: comment
 		}
-		const res = await axios.post("https://localhost:8000/reviews/", newReview);
+		await axios.post("https://localhost:8000/reviews/", newReview);
 		console.log("Review Successfully");
 		this.setState({ open: false });
 	}
@@ -67,8 +65,7 @@ export default class FormDialog extends React.Component {
 
   render() {
     console.log("Dialog Props: ", this.props);
-		const { requireReviewItem } = this.props,
-					{ star, comment} = this.state;
+		const { requireReviewItem } = this.props;
     return (
       <div>
         <Button onClick={this.handleClickOpen}>Open form dialog</Button>
@@ -87,8 +84,8 @@ export default class FormDialog extends React.Component {
 						</DialogContentText>
 						<Rating
 							initialRating={this.state.star}
-							emptySymbol={<img src={like_empty} className="icon" />}
-							fullSymbol={<img src={like} className="icon" />}
+							emptySymbol={<img src={like_empty} className="icon" alt="empty"/>}
+							fullSymbol={<img src={like} className="icon" alt="full"/>}
 							onChange={this.handleReviewOnChange}
 						/>
             <TextField

@@ -24,6 +24,17 @@ TabContainer.propTypes = {
 };
 
 const styles = theme => ({
+  layout: {
+    width: 'auto',
+    display: 'block', // Fix IE11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 700,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
 });
 
 class AddOverAll extends React.Component {
@@ -48,12 +59,13 @@ class AddOverAll extends React.Component {
   render () {
 
     const {swipe} = this.state;
-    const { theme } = this.props;
+    const { theme, classes } = this.props;
 
     return (
       <Consumer>
         {value => {
-          const { currentUser } = value;
+          
+          const {currentUser} = value;
           if(currentUser.length === 0){
                return (
                 <Forbidden/>
@@ -74,6 +86,7 @@ class AddOverAll extends React.Component {
                     <Tab disabled label="Host" />
                   </Tabs>
                 </AppBar>
+                <main className={classes.layout}>
                 <SwipeableViews
                   axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                   index={swipe}
@@ -92,6 +105,7 @@ class AddOverAll extends React.Component {
 
 
                 </SwipeableViews>
+              </main>
               </div>
             )
           }

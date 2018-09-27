@@ -70,9 +70,6 @@ class House extends React.Component {
 
     const {showDetail} = this.state;
 
-    // const isMyHouse = false; // flag to check if which current user's houses - for hosting button
-    // const isHosting = false;// flag to check if the accom is hosting
-
     const { classes} = this.props;
 
     return (

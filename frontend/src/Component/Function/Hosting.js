@@ -18,18 +18,17 @@ import Carousel from "react-slick";
 import '../../Styles/ImageSlide.css';
 
 // Rating
-import StarRating from 'react-star-rating';
 import like from '../../assets/img/icons/like.png'
 import like_empty from '../../assets/img/icons/like_empty.png'
 
-const styles = {
-  card: {
-    maxWidth: 300,
-  },
-  media: {
-    height: 140,
-  },
-};
+// const styles = {
+//   card: {
+//     maxWidth: 300,
+//   },
+//   media: {
+//     height: 140,
+//   },
+// };
 
 class Hosting extends React.Component {
 
@@ -99,11 +98,11 @@ class Hosting extends React.Component {
   render () {
     // console.log('PROPS ', this.props);
     const readonly = true,
-          {house, SingleHost} = this.props,
-          {id} = this.props.house,
-          {showHosting, images, reviews} = this.state,
+          { house, SingleHost } = this.props,
+          { id } = this.props.house,
+          { images, reviews } = this.state,
           avgRating =  this.starCalculator(reviews),
-          { classes} = this.props;
+          { classes } = this.props;
     let Rating = require('react-rating');
     let settings = {
         dots: true,
@@ -119,9 +118,10 @@ class Hosting extends React.Component {
     images.map( (image) => {
       imagesDiv.push(
           <div key={image.id}>
-            <img src={image.a_image} height="150" width="345"/>
+            <img src={image.a_image} height="150" width="345" alt="hostingimg"/>
           </div>
       )
+      return 0;
     })
 
     return (
@@ -134,7 +134,7 @@ class Hosting extends React.Component {
             imagesDiv
           :
           <div>
-              <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345"/>
+              <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345" alt="noimage"/>
           </div>
           }
           </Carousel>
@@ -155,8 +155,8 @@ class Hosting extends React.Component {
               <Rating
                 readonly={readonly}
                 initialRating={avgRating}
-                emptySymbol={<img src={like_empty} className="icon" />}
-                fullSymbol={<img src={like} className="icon" />}
+                emptySymbol={<img src={like_empty} className="icon" alt="empty"/>}
+                fullSymbol={<img src={like} className="icon" alt="full"/>}
               />
               <Link to="" onClick={() => this.setState({seeReviews: !this.state.seeReviews})}>({reviews.length})</Link>
             </div>
@@ -164,8 +164,8 @@ class Hosting extends React.Component {
             <Rating
               readonly={readonly}
               initialRating={0}
-              emptySymbol={<img src={like_empty} className="icon" />}
-              fullSymbol={<img src={like} className="icon" />}
+              emptySymbol={<img src={like_empty} className="icon" alt="empty"/>}
+              fullSymbol={<img src={like} className="icon" alt="full"/>}
             />
             }
             {this.state.seeReviews ?

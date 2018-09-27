@@ -46,7 +46,6 @@ class Images extends React.Component {
         }
     }
 
-    // const urlFile = URL.createObjectURL(file);
 
     var i;
     var formData = new FormData()
@@ -55,8 +54,8 @@ class Images extends React.Component {
 
     await axios.put(`https://localhost:8000/accommodationImage/${imgId}/`, formData, config)
 
-    var new_images = this.state.images.map((img) => {img})
-    var new_files = this.state.images.map((url) => {url})
+    var new_images = this.state.images.map((img) => {return img})
+    var new_files = this.state.images.map((url) => {return url})
     for (i = 0; i < this.state.idList.length; i++) {
       if (this.state.idList[i] === imgId) {
         new_images[i] = file;

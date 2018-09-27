@@ -10,15 +10,20 @@ class Review extends Component {
 			console.log("RES: ", res.data);
     }
     render() {
-			const { star, review, user } = this.props;
-			return (
-				<React.Fragment>
-					<div className="container" style={{background:"#f7f7f7"}}>
-						Rating {star}
-					<p><b>{review}  <i>(by {user})</i></b></p>
-					</div>
-				</React.Fragment>
-			);
-		}
-}
+        console.log("GO TO REVIEW");
+        console.log("props reivw: ", this.props)
+        const {/*text, closeReview, */star, review, user} = this.props;
+        return (
+            <React.Fragment>
+
+                <div className="container" style={{background:"#f7f7f7"}}>
+                Rating {star}
+                <p><b>{review}  <i>(by {user})</i></b></p>
+                </div>
+
+            </React.Fragment>
+        );
+      }
+    }
+
 export default Review;
