@@ -294,6 +294,9 @@ class EditHouse extends Component {
       location: city
     }
     await axios.patch(`https://localhost:8000/search/${this.props.id}/`,searchAccommodation)
+    .catch(error => {
+      console.log(error.response,)
+    });
 
     dispatch({type:'EDIT_HOUSE', payload:editHouse})
 

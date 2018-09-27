@@ -116,18 +116,21 @@ class Hosting extends Component {
 
 
         await axios.post('https://localhost:8000/search/',searchAccommodation)
+        .catch(error => {
+          console.log(error.response,)
+        });
         // AXIOS call here
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
-        await axios.post('https://localhost:8000/accommodationHosting/', hostingHouse,
+        const postHosting = await axios.post('https://localhost:8000/accommodationHosting/', hostingHouse,
                 {headers:{
                     'Authorization': {token}
                 }
             }
         )
 
-        dispatch({type:'HOSTING', payload:hostingHouse});
+        dispatch({type:'HOSTING', payload:postHosting.data});
 
         // Add error handling here
         // ......
