@@ -335,7 +335,8 @@ class CustomAuthToken(ObtainAuthToken):
 class SearchViews(viewsets.ModelViewSet):
     queryset = Search.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
-    serializer_class = SearchSerializer
+    serializer_class = AccommodationHostingSerializer
+    # AccommodationHostingSerializer
 
 # issue comes when:
     # 1. modify location        : check
@@ -344,7 +345,10 @@ class SearchViews(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """ allow rest api to filter by submissions """
+
         queryset = Search.objects.all()
+        queryset_accommodation = AccommodationHosting.objects.all()
+
         date_start = self.request.query_params.get('start', None)
         date_end = self.request.query_params.get('end', None)
         price_upper = self.request.query_params.get('price_upper', None)
@@ -353,10 +357,10 @@ class SearchViews(viewsets.ModelViewSet):
         location = self.request.query_params.get('location', None)
 
         if guest is not None:
-            print("guest at: " + guest)
+            queryset = queryset.filter(guest__gte=guest)
 
         if location is not None:
-            print("location at: " + location)
+            queryset = queryset.filter(location=location)
 
         if price_upper is not None:
             queryset = queryset.filter(price__lte=price_upper)
@@ -376,9 +380,13 @@ class SearchViews(viewsets.ModelViewSet):
                 x = begin + timedelta(i)
                 y.append(str(x.date())+",")
 
-            print(y)
+
 
             condition = functools.reduce(operator.and_, [Q(date_free__icontains=day) for day in y])
             queryset = queryset.filter(condition)
 
-        return queryset
+        newQ = list(queryset.values_list('accommodation', flat=True))
+        print(newQ)
+        queryset_accommodation = queryset_accommodation.filter(accommodation__in=set(newQ))
+
+        return queryset_accommodation

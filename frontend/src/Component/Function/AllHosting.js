@@ -1,7 +1,7 @@
 import React from 'react'
 // import AllHostingContext from '../Contexts/AllHostingContext'
 import Hosting from './Hosting'
-
+import SearchSection from '../Search/SearchSection'
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -48,15 +48,7 @@ class AllHosting extends React.Component {
     // console.log("SINGLEHOUSE: ", SingleHosting)
     return (
       <React.Fragment>
-        <TextField
-          fullWidth
-          label="Search Bar"
-          name="search"
-          type="text"
-          id="search"
-          onChange={this.filterHouse.bind(this)}
-          className={classes.search}
-        />
+        <SearchSection />
         <div className="row">
             {SingleHosting}
           </div>
