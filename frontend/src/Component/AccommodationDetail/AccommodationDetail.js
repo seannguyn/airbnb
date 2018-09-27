@@ -89,8 +89,6 @@ class AccommodationDetail extends Component {
         return (
           <Consumer>
             {value =>{
-
-
               if (status === 0 ) {
                 return(
                   <div>
@@ -133,7 +131,6 @@ class AccommodationDetail extends Component {
                               </div>
                           </div>
                       </div>
-
                       <div className="row">
                           <div className="col-8" style={{border:'2px solid blue'}}>
                             <GoogleMap/>
@@ -142,18 +139,13 @@ class AccommodationDetail extends Component {
 
                           </div>
                       </div>
-
                       <div className="row">
                           <div className="col-8" style={{border:'2px solid blue'}}>
                             <ReviewComponent review={this.props.reviews}/>
                           </div>
                           <div className="col-4">
-
                           </div>
                       </div>
-
-
-
                     </div>
                   </div>
                  );
