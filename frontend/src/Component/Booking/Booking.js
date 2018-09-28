@@ -23,6 +23,7 @@ import isEmpty from '../../utils/isEmpty.js'
 
 import FormDialog from '../Popup/FormDialog'
 import {enumerateDaysBetweenDates, concatString} from '../Helper/Helper'
+import BookingDiaglog from './BookingDiaglog';
 
 // const styles = {
 //   card: {
@@ -287,9 +288,6 @@ class Booking extends Component {
 						<Button onClick={this.handleDelete.bind(this, id)}>
 							<i className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
 						</Button>
-						<Button variant="contained" color="primary" onClick={this.handlePayment}>
-                            Pay
-                        </Button>
 					</div>
 				</div>
         {payButton}

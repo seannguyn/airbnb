@@ -41,13 +41,29 @@ const reducer = (state,action) => {
           },
         };
 
+      case 'SEARCH':
+        console.log("SEARCH context",action.payload);
+        return {
+          ...state,
+          AllHostingList: action.payload,
+          searchStatus: true
+        };
+
+      case 'CLEAR_SEARCH':
+
+        return {
+          ...state,
+          AllHostingList: action.payload,
+          searchStatus: false
+        };
+
       case 'HOSTING':
         console.log("host context",action.payload);
-      return {
-        ...state,
-        myHostingList: [action.payload,...state.myHostingList],
-        AllHostingList: [action.payload,...state.AllHostingList],
-      }
+        return {
+          ...state,
+          myHostingList: [action.payload,...state.myHostingList],
+          AllHostingList: [action.payload,...state.AllHostingList],
+        }
 
       case 'EDITHOST':
         return {
@@ -129,6 +145,7 @@ export class Provider extends Component {
         open: false,
         login: true,
       },
+      searchStatus: false,
       mounted: 0,
       didmount: 0,
       dispatch: (action) => {

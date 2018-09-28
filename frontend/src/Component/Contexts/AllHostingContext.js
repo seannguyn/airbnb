@@ -1,30 +1,57 @@
 import React from 'react'
 import {Consumer} from '../../Context.js'
 import AllHosting from '../Function/AllHosting'
+import SearchSection from '../Search/SearchSection'
+import MapList from '../Search/MapList'
+import { withStyles } from '@material-ui/core/styles';
 
+const styles = theme => ({
 
-const AllHostingContext = (props) => {
-  // console.log("this is is: ",props.match.params.id);
-  // console.log("history.........",props.history);
+});
 
-  return(
-  <Consumer>
-    {value => {
-      const {AllHostingList,HouseList} = value;
-      console.log("hereee",AllHostingList);
-      return (
-        <div>
-          <AllHosting history={props.history}
-             AllHostingList={AllHostingList}
-             HouseList={HouseList}
-             >
-           </AllHosting>
-        </div>
-      )
-    }}
+class AllHostingContext extends React.Component {
 
-  </Consumer>
-);
-};
+  constructor(props) {
+    super(props);
+    this.state = {
+      display: 'list',
+    }
+  }
 
-export default AllHostingContext;
+  changeDisplay(display) {
+    this.setState({
+      display: display
+    })
+  }
+
+  render () {
+    return(
+    <Consumer>
+      {value => {
+        const {AllHostingList,HouseList} = value;
+
+        var rendering = []
+
+        if (this.state.display === "list") {
+          rendering.push(<AllHosting key="list" history={this.props.history} AllHostingList={AllHostingList} HouseList={HouseList}></AllHosting>)
+        } else {
+          rendering.push(<h1 key="map">RENDER MAP BRO</h1>)
+        }
+        console.log("RENDERING LIST MAP",rendering);
+
+        return (
+          <div>
+            <SearchSection />
+            <MapList display={this.state.display} changeDisplay={this.changeDisplay.bind(this)}/>
+            {rendering}
+
+          </div>
+        )
+      }}
+
+    </Consumer>
+  );
+  }
+}
+
+export default withStyles(styles)(AllHostingContext);

@@ -1,5 +1,9 @@
 import moment from 'moment';
 
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
 export function enumerateDaysBetweenDates (startDate, endDate) {
     var dates = "";
 
@@ -31,4 +35,27 @@ export function removeString(period_1,start,end) {
 export function concatString(dates, string) {
   const ret = dates.concat(string)
   return ret;
+}
+
+export function findDateRange(startDate, endDate) {
+  var string = ""
+
+  let tempStartDate = moment(startDate).format('YYYY-MM-DD');
+  let tempEndDate = moment(endDate).format('YYYY-MM-DD');
+
+  const startM = monthNames[new Date(tempStartDate).getMonth()]
+  const endM = monthNames[new Date(tempEndDate).getMonth()]
+
+  const startD = new Date(tempStartDate).getDate()
+  const endD = new Date(tempEndDate).getDate()
+
+  if(startM === endM) {
+    string = string.concat(startM," ",startD," - ",endD);
+    console.log(string,"findDateRange");
+  } else {
+    string = string.concat(startM," ",startD," - ",endM," ",endD);
+    console.log(string,"findDateRange");
+  }
+
+  return string;
 }
