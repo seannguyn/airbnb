@@ -335,6 +335,15 @@ class CustomAuthToken(ObtainAuthToken):
 class SearchViews(viewsets.ModelViewSet):
     queryset = Search.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
+    serializer_class = SearchSerializer
+
+    def get_queryset(self):
+        queryset = Search.objects.all()
+        return queryset
+
+class SearchHostingViews(viewsets.ModelViewSet):
+    queryset = Search.objects.all()
+    # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
 
 # issue comes when:

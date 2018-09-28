@@ -9,7 +9,7 @@ class AccommodationSerializer(serializers.ModelSerializer):
         model = Accommodation
         fields = ('id','user','title',
                     'addr_number','addr_street','addr_city','addr_state',
-                    'Accomodation_Type','area','bedroom_master','bedroom',
+                    'Accomodation_Type','bed','bedroom',
                     'kitchen','bathroom','pool',
                     'gym','carpark','description')
 

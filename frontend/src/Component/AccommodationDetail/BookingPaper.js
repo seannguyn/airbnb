@@ -96,15 +96,27 @@ class BookingPaper extends React.Component {
         // console.log("Component will receive props",nextProps);
         const {currentUser} = nextProps.context;
 
+
+
         if (currentUser.length !== 0 && this.state.booking === true) {
           console.log("Component will receive props", currentUser);
           let tempStartDate = moment(this.state.startDate).format('YYYY-MM-DD');
           let tempEndDate = moment(this.state.endDate).format('YYYY-MM-DD');
 
+          // let stayPeriod = this.state.endDate.diff(this.state.startDate, 'days');
+
+          // Find the date user have to pay by
+          var now = moment();
+          let daysDiff = now.diff(this.state.startDate,'days');
+          now.subtract(daysDiff/2, 'days');
+          let paidDate = moment(now).format('YYYY-MM-DD');
+
           const newDetail = {
 
             startDate: tempStartDate,
             endDate: tempEndDate,
+
+            paidDate: paidDate,
 
             guest: this.state.guest,
 

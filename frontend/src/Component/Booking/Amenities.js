@@ -8,32 +8,36 @@ import uuid from 'uuid';
 
 class Amenities extends React.Component {
   render () {
-    // const {accommodation} = this.props;
+    const {accommodation} = this.props;
     var amenites = []
-
-    amenites.push(
-      <div className="row" key={uuid.v4()} >
-         <Typography align='center' variant="caption" style={{fontSize:'25px'}}><FontAwesomeIcon icon="utensils" size='xs' style={{marginRight: '20px'}}/> kitchen</Typography>
-      </div>
-    )
-
-    amenites.push(
-      <div className="row" key={uuid.v4()} >
-         <Typography align='center' variant="caption" style={{fontSize:'25px'}}><FontAwesomeIcon icon="swimming-pool" size='xs' style={{marginRight: '20px'}}/> swimming pool</Typography>
-      </div>
-    )
-
-    amenites.push(
-      <div className="row" key={uuid.v4()} >
-         <Typography align='center' variant="caption" style={{fontSize:'25px'}}><FontAwesomeIcon icon="dumbbell" size='xs' style={{marginRight: '20px'}}/> gym</Typography>
-      </div>
-    )
-
-    amenites.push(
-      <div className="row" key={uuid.v4()} >
-         <Typography align='center' variant="caption" style={{fontSize:'25px'}}><FontAwesomeIcon icon="car" size='xs' style={{marginRight: '20px'}}/> car park</Typography>
-      </div>
-    )
+    if (accommodation.kitchen === true) {
+      amenites.push(
+        <div className="row" key={uuid.v4()} >
+           <Typography align='center' variant="caption" style={{fontSize:'25px'}}><FontAwesomeIcon icon="utensils" size='xs' style={{marginRight: '20px'}}/> kitchen</Typography>
+        </div>
+      )
+    }
+    if (accommodation.pool === true) {
+      amenites.push(
+        <div className="row" key={uuid.v4()} >
+           <Typography align='center' variant="caption" style={{fontSize:'25px'}}><FontAwesomeIcon icon="swimming-pool" size='xs' style={{marginRight: '20px'}}/> swimming pool</Typography>
+        </div>
+      )
+    }
+    if (accommodation.gym === true) {
+      amenites.push(
+        <div className="row" key={uuid.v4()} >
+           <Typography align='center' variant="caption" style={{fontSize:'25px'}}><FontAwesomeIcon icon="dumbbell" size='xs' style={{marginRight: '20px'}}/> gym</Typography>
+        </div>
+      )
+    }
+    if (accommodation.carpark === true) {
+      amenites.push(
+        <div className="row" key={uuid.v4()} >
+           <Typography align='center' variant="caption" style={{fontSize:'25px'}}><FontAwesomeIcon icon="car" size='xs' style={{marginRight: '20px'}}/> car park</Typography>
+        </div>
+      )
+    }
 
     return (
       <div style={{marginBottom:'50px'}}>

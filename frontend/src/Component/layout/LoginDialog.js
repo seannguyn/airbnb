@@ -92,7 +92,8 @@ class LoginDialog extends React.Component {
   }
 
   async handleLogin(dispatch,e) {
-    e.preventDefault()
+    e.preventDefault();
+    var userInfo;
     if (this.errorCheck() === true) {
       return
     } else if (this.props.Signin_form === true){
@@ -105,7 +106,7 @@ class LoginDialog extends React.Component {
 
       await axios.post('https://localhost:8000/api-token-auth/', account)
           .then(response => {
-
+              userInfo = response.data
               dispatch({type:'LOGIN', payload:response.data});
               this.setState({error:{}, error_bool: false})
           })
@@ -120,6 +121,7 @@ class LoginDialog extends React.Component {
             password_confirm:'',
 
           })
+
 
     } else {
       console.log("signup");
@@ -152,11 +154,17 @@ class LoginDialog extends React.Component {
 
           await axios.post('https://localhost:8000/api-token-auth/', account)
               .then(response => {
+                userInfo = response.data
                   dispatch({type:'LOGIN', payload:response.data});
                   this.setState({error:{}, error_bool: false})
               })
 
     }
+    console.log("WE GOT USER: ",userInfo);
+    var array = []
+    array.push(userInfo)
+    localStorage.setItem('currentUser', JSON.stringify(array));
+
 
   }
 

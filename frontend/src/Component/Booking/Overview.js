@@ -10,6 +10,7 @@ class Overview extends React.Component {
 
     var amenites = []
     const {accommodation, guest} = this.props;
+    console.log("OVERVIEW",accommodation);
     amenites.push(
       <div key={uuid.v4()} className="col-3" >
         <div className="row">
@@ -27,7 +28,7 @@ class Overview extends React.Component {
     amenites.push(
       <div key={uuid.v4()} className="col-3" align="center" >
         <div className="row">
-           <Typography align='center' variant="caption" style={{fontSize:'25px'}}><FontAwesomeIcon icon="bed" size='xs'/> {accommodation.bedroom} beds</Typography>
+           <Typography align='center' variant="caption" style={{fontSize:'25px'}}><FontAwesomeIcon icon="bed" size='xs'/> {accommodation.bed} beds</Typography>
         </div>
       </div>
     );

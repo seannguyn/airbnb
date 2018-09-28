@@ -82,7 +82,7 @@ class SearchSection extends React.Component {
 
     // "https://localhost:8000/search/?start=2018-11-4&end=2018-11-8"
     // "https://localhost:8000/search/?price_lower=12&price_upper=13"
-    var url = `https://localhost:8000/search/?guest=${this.state.guest}`;
+    var url = `https://localhost:8000/searchHosting/?guest=${this.state.guest}`;
 
     if (this.state.location.length > 0) {
       url = url.concat(`&location=${this.state.location}`);

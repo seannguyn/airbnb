@@ -85,11 +85,13 @@ class AccommodationDetail extends Component {
         //         bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
 
 
-        const {bathroom,bedroom,kitchen,carpark,description} = this.state.accomDetail
+
+
         // const {currentHost} = this.state;
         const isDayBlocked = day => this.props.booking.filter(d => d.isSame(day, 'day')).length > 0;
         const {status} = this.state;
         console.log(this.props,"here it is",this.state);
+        const {bathroom,bedroom,bed,title,description} = this.props.accommodation;
         return (
           <Consumer>
             {value =>{
@@ -102,7 +104,7 @@ class AccommodationDetail extends Component {
               } else {
                 return (
                   <div>
-                    <img src="https://cdn.photographylife.com/wp-content/uploads/2010/04/20100415-Dead-Horse-Point-040.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
+                    <img src="http://www.designdeveloprealize.com/wp-content/uploads/2018/03/high-resolution-house-photos-inside-high-resolution-house-pictures-house-interior.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
 
                     <div className="container">
                       <div className="row">
@@ -111,15 +113,14 @@ class AccommodationDetail extends Component {
                       </div>
                       <div className="row">
                           <div className="col-8" style={{border:'2px solid blue'}}>
-                              <div><h1>House Name Here</h1></div>
+                              <div><h1>{title}</h1></div>
                               <div className="description">
                                   <h4>Description: {description}</h4>
                               </div>
                               <div className="row">
-                                  <i className="fas fa-bed"> {bedroom} bedrooms</i>&#160;
+                                  <i className="fas fa-door-open"> {bedroom} bedrooms</i>&#160;
+                                    <i className="fas fa-bed"> {bed} bed</i>&#160;
                                   <i className="fas fa-bath"> {bathroom} bathrooms</i>&#160;
-                                  <i className="fas fa-utensils"> {kitchen} kitchens</i>&#160;
-                                  <i className="fas fa-car"> {carpark} carparks</i>&#160;
                               </div>
                           </div>
                           <div className="col-4">

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-// import {enumerateDaysBetweenDates} from '../Helper/Helper'
+import {enumerateDaysBetweenDates,yyyymmdd} from '../Helper/Helper'
 import {Link} from 'react-router-dom'
 
 import FormControl from '@material-ui/core/FormControl';
@@ -63,11 +63,17 @@ class EditHosting extends Component {
             date_end: '',
             check_in: '',
             check_out: '',
-            price: '',
+            price: 0,
             guest: 2,
             description: '',
 
-            error: {}
+            date_start_old: '',
+            date_end_old: '',
+            error: false,
+            error_price: false,
+            error_date: false,
+            error_guest: false,
+            deleteDisable: false,
         }
     }
 
@@ -76,7 +82,7 @@ class EditHosting extends Component {
     //     localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
     // }
 
-    componentDidMount(){
+    async componentDidMount(){
         console.log("from edithousingjs: ", this.props);
         const{myHostingList} = this.props;
         const{id} = this.props;
@@ -89,6 +95,11 @@ class EditHosting extends Component {
             result = myHostingList[i];
           }
         }
+        const booking = await axios.get(`https://localhost:8000/booking/?host=${result.id}`);
+        var deleteDisable = false;
+        if (booking.data.length > 0) {
+          deleteDisable = true;
+        }
         // console.log("FILTER EDITHOUSING: ", result);
         // console.log("FILTER EDITHOUSING: ", result.date_start);
         this.setState({
@@ -96,27 +107,61 @@ class EditHosting extends Component {
             accommodation: result.accommodation,
             date_start: result.date_start,
             date_end: result.date_end,
+            date_start_old: new Date(result.date_start),
+            date_end_old: new Date(result.date_end),
             check_in: result.check_in,
             check_out: result.check_out,
             description: result.description,
-            price: result.price
+            price: result.price,
+            deleteDisable: deleteDisable,
+            date_start_onchange: new Date(result.date_start)
         }, () => {console.log("STATE IS:", this.state);})
     }
 
     //set State when changing text
     onChange = (e) => {
         if( e.target.name === 'date_start'){
-            let date_start = new Date(e.target.value)
+          let date_start = new Date(e.target.value)
+
+          if(date_start > this.state.date_start_old){
+            console.log("DATE INVALID", typeof(e.target.value));
+            this.setState({error_date: true, error: true})
+          } else {
+            this.setState({error_date: false, error: false})
+          }
+
+
             this.setState({date_start_onchange: date_start});
         }
 
+
         if(e.target.name === 'date_end'){
-            console.log("DATE END: ", this.state.date_start_onchange);
+
             let date_end = new Date(e.target.value)
-            console.log("DATE INVALID", typeof(date_end));
-            if(date_end < this.state.date_start_onchange){
-                console.log("DATE INVALID", typeof(e.target.value));
+
+            // console.log("DATE INVALID", typeof(date_end));
+
+            if(date_end < this.state.date_start_onchange || date_end < this.state.date_end_old){
+
+              this.setState({error_date: true, error: true})
+            } else {
+              this.setState({error_date: false, error: false})
             }
+        }
+        if(e.target.name === 'price') {
+           if(e.target.value.length === 0 || e.target.value <= 0) {
+             this.setState({error_price: true, error: true})
+           }else {
+             this.setState({error_price: false, error: false})
+           }
+        }
+        if(e.target.name === 'guest') {
+          console.log("SUPPP...",e.target.value);
+           if(e.target.value.length === 0 || e.target.value <= 0) {
+             this.setState({error_guest: true, error: true})
+           }else {
+             this.setState({error_guest: false, error: false})
+           }
         }
         this.setState({[e.target.name] : e.target.value});
     }
@@ -149,19 +194,45 @@ class EditHosting extends Component {
             description: description
         }
 
-        // const date_free = enumerateDaysBetweenDates(date_start,date_end)
-        //
-        // const searchAccommodation = {
-        //   accommodation: this.props.id,
-        //   date_free: date_free,
-        //   price: price,
-        //   guest: guest,
-        // }
-        // await axios.put(`https://localhost:8000/search/${this.props.id}/`,searchAccommodation)
+        console.log("ABOUT TO PUT", hostingHouse);
+        let newStartDate = new Date(date_start)
+        let newEndDate = new Date(date_end)
+
+        // DEAL WITH SEARCH DATA
+        var date_free_1="", date_free_2="";
+        if (newStartDate < this.state.date_start_old) {
+          date_free_1 = date_free_1.concat(enumerateDaysBetweenDates(date_start,yyyymmdd(new Date(this.state.date_start_old.setDate( this.state.date_start_old.getDate() - 1) ))))
+          console.log("HEY HEY",date_free_1);
+        }
+        if (newEndDate > this.state.date_end_old) {
+          date_free_2 = date_free_2.concat(enumerateDaysBetweenDates(yyyymmdd(new Date(this.state.date_end_old.setDate( this.state.date_end_old.getDate() + 1) )),date_end))
+          console.log("HEY HEY",date_free_2);
+        }
+
+        const oldSearch = await axios.get(`https://localhost:8000/search/${this.props.id}/`)
+
+
+        const {date_free} = oldSearch.data
+        console.log(date_free);
+
+        var newDateFree = date_free.concat(date_free_1,date_free_2)
+
+
+        const searchAccommodation = {
+          accommodation: this.props.id,
+          date_free: newDateFree,
+          price: price,
+          guest: guest,
+        }
+
+        console.log(searchAccommodation,"new SEARCH");
+        await axios.patch(`https://localhost:8000/search/${this.props.id}/`,searchAccommodation)
 
         // AXIOS call here - PUT REQUEST
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
+
+
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
         console.log("ID IS: ",id);
         await axios.put(`https://localhost:8000/accommodationHosting/${id}/`, hostingHouse,
@@ -171,9 +242,6 @@ class EditHosting extends Component {
             }
         )
         dispatch({type:'EDITHOST', payload:hostingHouse});
-        // Add error handling here
-        // ......
-        // error handling
 
 
         this.props.history.push("/myHouses")
@@ -191,8 +259,9 @@ class EditHosting extends Component {
     }
 
     render() {
-        const {id, date_start, date_end, price, description, check_in, check_out} = this.state;
+        const {id, date_start, date_end, price, description, check_in, check_out, guest} = this.state;
         const { classes } = this.props;
+        console.log("ERROR", this.state.error);
         return (
             <Consumer>
                 {value => {
@@ -207,6 +276,8 @@ class EditHosting extends Component {
                         <form className={classes.form} onSubmit={this.onSubmit.bind(this, dispatch, currentUser)}>
                             <FormControl margin="normal" required fullWidth style={{marginBottom:'15px'}}>
                               <TextField
+                                error={this.state.error_date}
+                                helperText={this.state.error_date === true ? 'Invalid Date' : ''}
                                 id="date"
                                 name="date_start"
                                 label="Start date"
@@ -221,6 +292,8 @@ class EditHosting extends Component {
                             </FormControl>
                             <FormControl margin="normal" required fullWidth style={{marginBottom:'15px'}}>
                               <TextField
+                                error={this.state.error_date}
+                                helperText={this.state.error_date === true ? 'Invalid Date' : ''}
                                 id="date"
                                 name="date_end"
                                 label="End date"
@@ -267,11 +340,25 @@ class EditHosting extends Component {
                             </FormControl>
                             <FormControl margin="normal" required fullWidth style={{marginBottom:'15px'}}>
                               <TextField
+                                error={this.state.error_price}
+                                helperText={this.state.error_price === true ? 'Invalid Price' : ''}
                                 label="price"
                                 value={price}
                                 onChange={this.onChange.bind(this)}
                                 name="price"
-                                type="text"
+                                type="number"
+                                className={classes.textField}
+                              />
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth style={{marginBottom:'15px'}}>
+                              <TextField
+                                error={this.state.error_guest}
+                                helperText={this.state.error_guest === true ? 'Invalid Guest' : ''}
+                                label="Guest"
+                                value={guest}
+                                onChange={this.onChange.bind(this)}
+                                name="guest"
+                                type="number"
                                 className={classes.textField}
                               />
                           </FormControl>
@@ -282,7 +369,6 @@ class EditHosting extends Component {
                                 onChange={this.onChange.bind(this)}
                                 name="description"
                                 type="text"
-
                               />
                             </FormControl>
                             <Button
@@ -291,20 +377,22 @@ class EditHosting extends Component {
                                 variant="raised"
                                 color="primary"
                                 className={classes.submit}
+                                disabled={this.state.error}
                               >
                                 Edit Hosting
                               </Button>
-                              <Link to="/myHouses">
+
                                 <Button
                                     fullWidth
                                     variant="raised"
                                     color="secondary"
                                     className={classes.submit}
                                     onClick={this.handleAlternate.bind(this, id, dispatch)}
-                                  >
-                                  Stop Hosting this accommodation
+                                    disabled={this.state.deleteDisable}
+                                  ><Link to="/myHouses" style={{ textDecoration: 'none',color:'grey' }}>
+                                  Stop Hosting this accommodation</Link>
                                 </Button>
-                              </Link>
+
                           </form>
                         </Paper>
                       </div>

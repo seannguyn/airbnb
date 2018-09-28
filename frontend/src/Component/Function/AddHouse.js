@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {Consumer} from '../../Context.js';
 import axios from 'axios';
-
-
-
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import HomeIcon from '@material-ui/icons/Home';
 import { withStyles } from '@material-ui/core/styles';
@@ -91,14 +90,15 @@ class AddHouse extends Component {
       state: '',
 
       Accommodation_Type:'',
-      area: '',
-      bedroom_master: '',
-      bedroom:'',
-      bathroom:'',
-      kitchen:'',
-      gym:'',
-      pool: '',
-      carpark: '',
+
+      bed: 1,
+      bedroom: 1,
+      bathroom: 1,
+
+      kitchen: false,
+      gym: false,
+      pool: false,
+      carpark: false,
       description:'',
 
       error_title: false,
@@ -132,10 +132,14 @@ class AddHouse extends Component {
     this.setState({[e.target.name] : e.target.value});
   }
 
+  onCheck(e) {
+    this.setState({ [e.target.name]: e.target.checked });
+  }
+
   errorCheck(current) {
     const { Accommodation_Type, number} = current;
     // const {id, user, Accommodation_Type, number, street, city, state} = current;
-    // const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
+    // const {bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
 
     var flag = false;
     if (number === '') {
@@ -181,21 +185,9 @@ class AddHouse extends Component {
     e.preventDefault();
 
     const {user/*,number, street, city, state*/} = this.state;
-    const {/*Accommodation_Type, */area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark/*,description*/} = this.state;
+    const {/*Accommodation_Type, */bed,bedroom,bathroom,kitchen,gym,pool,carpark/*,description*/} = this.state;
 
     if(this.errorCheck(this.state) === true) return;
-
-
-    this.setState({
-      bathroom        : (bathroom === '' )          ? 0 : 1,
-      bedroom         : (bedroom        === '' )    ? 0 : 1,
-      area            : (area === '' )              ? 0 : 1,
-      bedroom_master  : (bedroom_master === '' )    ? 0 : 1,
-      kitchen         : (kitchen === '' )           ? 0 : 1,
-      gym             : (gym === '' )               ? 0 : 1,
-      pool            : (pool === '' )              ? 0 : 1,
-      carpark         : (carpark === '' )           ? 0 : 1,
-    })
 
     const newHouse ={
 
@@ -209,15 +201,14 @@ class AddHouse extends Component {
       addr_city:        'city',
       addr_state:       'NSW',
 
-      area:             (area === '' )              ? 0 : 1,
-      bedroom_master:   (bedroom_master === '' )    ? 0 : 1,
-      bedroom:          (bedroom        === '' )    ? 0 : 1,
-      bathroom:         (bathroom === '' )          ? 0 : 1,
-      kitchen:          (kitchen === '' )           ? 0 : 1,
+      bed:              bed,
+      bedroom:          bedroom,
+      bathroom:         bathroom,
 
-      pool:             (pool === '' )              ? 0 : 1,
-      gym:              (gym === '' )               ? 0 : 1,
-      carpark:          (carpark === '' )           ? 0 : 1,
+      kitchen:          kitchen,
+      pool:             pool,
+      gym:              gym,
+      carpark:          carpark,
 
       description:      this.state.description
     }
@@ -239,14 +230,13 @@ class AddHouse extends Component {
       state: '',
 
       Accomodation_Type:'',
-      area: '',
-      bedroom_master: '',
-      bedroom:'',
-      bathroom:'',
-      kitchen:'',
-      gym:'',
-      pool: '',
-      carpark: '',
+      bed: 0,
+      bedroom:0,
+      bathroom:0,
+      kitchen:false,
+      gym:false,
+      pool: false,
+      carpark: false,
       description:'',
       error:{}
     })
@@ -262,7 +252,7 @@ class AddHouse extends Component {
   render () {
 
     const {title, number, street, city, state} = this.state;
-    const {Accommodation_Type,/*,area,*/bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
+    const {Accommodation_Type,bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
     const {classes} = this.props
 
     return (
@@ -348,23 +338,23 @@ class AddHouse extends Component {
                           <MenuItem value="Villa">Villa</MenuItem>
                         </Select>
                       </FormControl>
-                      <Typography className={classes.typo} variant="headline">Amenities</Typography>
+                      <Typography className={classes.typo} variant="headline">Basic</Typography>
                       <FormControl margin="normal" required fullWidth>
                         <TextField
                           label="Bedroom"
                           value={bedroom}
                           onChange={this.onChange.bind(this)}
                           name="bedroom"
-                          type="text"
+                          type="number"
                         />
                       </FormControl>
                       <FormControl margin="normal" required fullWidth>
                         <TextField
-                          label="Bedroom Master"
-                          value={bedroom_master}
+                          label="Bed"
+                          value={bed}
                           onChange={this.onChange.bind(this)}
-                          name="bedroom_master"
-                          type="text"
+                          name="bed"
+                          type="number"
                         />
                       </FormControl>
                       <FormControl margin="normal" required fullWidth>
@@ -373,45 +363,54 @@ class AddHouse extends Component {
                           value={bathroom}
                           onChange={this.onChange.bind(this)}
                           name="bathroom"
-                          type="text"
+                          type="number"
                         />
                       </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
+                      <Typography className={classes.typo} variant="headline">Amenities</Typography>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={kitchen}
+                              onChange={this.onCheck.bind(this)}
+                              value="kitchen"
+                              name="kitchen"
+                              />
+                          }
                           label="Kitchen"
-                          value={kitchen}
-                          onChange={this.onChange.bind(this)}
-                          name="kitchen"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
+                          />
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={gym}
+                              onChange={this.onCheck.bind(this)}
+                              value="gym"
+                              name="gym"
+                              />
+                          }
                           label="Gym"
-                          value={gym}
-                          onChange={this.onChange.bind(this)}
-                          name="gym"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
+                          />
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={pool}
+                              onChange={this.onCheck.bind(this)}
+                              value="pool"
+                              name="pool"
+                              />
+                          }
                           label="Pool"
-                          value={pool}
-                          onChange={this.onChange.bind(this)}
-                          name="pool"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
+                          />
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={carpark}
+                              onChange={this.onCheck.bind(this)}
+                              value="carpark"
+                              name="carpark"
+                              />
+                          }
                           label="Carpark"
-                          value={carpark}
-                          onChange={this.onChange.bind(this)}
-                          name="carpark"
-                          type="text"
-                        />
-                      </FormControl>
+                          />
                       <Typography className={classes.typo} variant="headline">Description</Typography>
                       <FormControl margin="normal" required fullWidth>
                         <TextField

@@ -3,15 +3,22 @@ import axios from 'axios'
 import Booking from './Booking'
 import moment from 'moment'
 // import Popup from "reactjs-popup";
-
+import Forbidden from '../layout/Forbidden'
 import '../../Styles/Popup.css'
-
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import isEmpty from '../../utils/isEmpty.js';
 
 // Rating
 // import Rating from 'react-rating'
 // import like from '../../assets/img/icons/like.png'
 // import like_empty from '../../assets/img/icons/like_empty.png'
+
+const styles = theme => ({
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
+});
 
 class MyBookings extends Component {
 
@@ -24,8 +31,16 @@ class MyBookings extends Component {
 			currentStay: [], // still in the accomm
 			pastStay: [], // already check in
 			earliestBooking: {},
-			requireReviewList : []
+			requireReviewList : [],
+			logged_in: false,
+			mounted: false,
+			status: 0
 		}
+		setTimeout(() => {
+				this.setState({
+						status: 1
+				});
+		},1000);
 	}
 
 	getBookings = (userID, bookingList) => {
@@ -123,105 +138,157 @@ class MyBookings extends Component {
 		this.setState({requireReviewList: tempRequireReviewList})
 	}
 
+	async shouldComponentUpdate(nextProps, nextState) {
+		const logged_in = localStorage.getItem('currentUser');
+
+		if (logged_in !== null && this.state.mounted === false) {
+			this.setState({
+				logged_in: true,
+				mounted: true,
+			})
+			localStorage.getItem('currentUser')
+				&& this.setState({
+					currentUser: JSON.parse(localStorage.getItem('currentUser'))
+				});
+			const user = JSON.parse(localStorage.getItem('currentUser'));
+			console.log("USER BOOKING", user);
+				//       this.setState({currentUser: user});
+			// Get all bookings and find that current user booked
+			const res2 = await axios.get(`https://localhost:8000/booking/?booker=${user[0].user_id}`);
+
+			this.getBookings(this.state.currentUser[0].user_id, res2.data);
+			this.separateFutureCurrentPast();
+			this.requireReview(this.state.pastStay);
+			return true
+		} else {
+			return false;
+		}
+
+  }
+
 	async componentDidMount() {
-		localStorage.getItem('currentUser')
-			&& this.setState({
-				currentUser: JSON.parse(localStorage.getItem('currentUser'))
-			});
-		const user = JSON.parse(localStorage.getItem('currentUser'));
+		const logged_in = localStorage.getItem('currentUser');
 
-			//       this.setState({currentUser: user});
-		// Get all bookings and find that current user booked
-		const res2 = await axios.get(`https://localhost:8000/booking/?booker=${user[0].user_id}`);
+		if (logged_in !== null) {
+			this.setState({logged_in: true})
+			localStorage.getItem('currentUser')
+				&& this.setState({
+					currentUser: JSON.parse(localStorage.getItem('currentUser'))
+				});
+			const user = JSON.parse(localStorage.getItem('currentUser'));
+			console.log("USER BOOKING", user);
+				//       this.setState({currentUser: user});
+			// Get all bookings and find that current user booked
+			const res2 = await axios.get(`https://localhost:8000/booking/?booker=${user[0].user_id}`);
 
-		this.getBookings(this.state.currentUser[0].user_id, res2.data);
-		this.separateFutureCurrentPast();
-		this.requireReview(this.state.pastStay);
+			this.getBookings(this.state.currentUser[0].user_id, res2.data);
+			this.separateFutureCurrentPast();
+			this.requireReview(this.state.pastStay);
+		} else {
+			this.setState({logged_in: false})
+		}
+
 	}
 	render() {
-		const { myBookings, futureStay, currentStay, pastStay, earliestBooking, currentUser, requireReviewList } = this.state;
+		const { myBookings, futureStay, currentStay, pastStay, earliestBooking, currentUser, requireReviewList,logged_in,status } = this.state;
 		// this.getReviewRequiredList(pastStay);
-		return (
-			<React.Fragment>
-				<center>
-					{!isEmpty(earliestBooking) ?
-						<div>
-							<center><h1>Next Stay</h1></center>
-							<Booking key={earliestBooking.id} booking={earliestBooking} history={this.props.history}></Booking>
-						</div>
-						: null
-					}
-				</center>
-				<center>
-					{!isEmpty(pastStay[0]) ?
-						<div key={pastStay[0].id}>
-							<center><h1>Recent Stay</h1></center>
-							<Booking key={pastStay[0].id} booking={pastStay[0]} requireReviewItem={requireReviewList[0]} history={this.props.history}></Booking>
-						</div>
-						: null
-					}
-				</center>
-				{futureStay.length !== 0 ? <center><h1>Incoming</h1></center> : null}
-				<div className="row">
-					{futureStay.length !== 0 ?
-						futureStay.map((booking) => {
-							return (
-								<div key={booking.id}>
-									<div style={{ padding: '1rem' }}>
-										<center>
-												<Booking key={booking.id} booking={booking}  earliestBooking={earliestBooking} history={this.props.history}></Booking>
-										</center>
+		const { classes } = this.props;
+		if(logged_in === false){
+			 return (
+				<Forbidden/>
+			);
+		}
+		else if (status === 0 ) {
+			return(
+				<div>
+					<CircularProgress className={classes.progress} color="primary" size={50}/>
+				</div>
+			)
+		}
+		else {
+			return (
+				<React.Fragment>
+					<center>
+						{!isEmpty(earliestBooking) ?
+							<div>
+								<center><h1>Next Stay</h1></center>
+								<Booking key={earliestBooking.id} booking={earliestBooking} history={this.props.history}></Booking>
+							</div>
+							: null
+						}
+					</center>
+					<center>
+						{!isEmpty(pastStay[0]) ?
+							<div key={pastStay[0].id}>
+								<center><h1>Recent Stay</h1></center>
+								<Booking key={pastStay[0].id} booking={pastStay[0]} requireReviewItem={requireReviewList[0]} history={this.props.history}></Booking>
+							</div>
+							: null
+						}
+					</center>
+					{futureStay.length !== 0 ? <center><h1>Incoming</h1></center> : null}
+					<div className="row">
+						{futureStay.length !== 0 ?
+							futureStay.map((booking) => {
+								return (
+									<div key={booking.id}>
+										<div style={{ padding: '1rem' }}>
+											<center>
+													<Booking key={booking.id} booking={booking}  earliestBooking={earliestBooking} history={this.props.history}></Booking>
+											</center>
+										</div>
 									</div>
-								</div>
-							);
-						})
-						: null
-					}
-				</div>
-				<div className="row">
-					{currentStay.length !== 0 ?
-						<h1>Current</h1>
-						: null
-					}
-				</div>
+								);
+							})
+							: null
+						}
+					</div>
+					<div className="row">
+						{currentStay.length !== 0 ?
+							<h1>Current</h1>
+							: null
+						}
+					</div>
 
-				{pastStay.length !== 0 ? <center><h1>In The Past</h1></center> : null}
-				<div className="row">
-					{pastStay.length !== 0 ?
-						pastStay.map((booking) => {
-							return (
-								<div key={booking.id}>
+					{pastStay.length !== 0 ? <center><h1>In The Past</h1></center> : null}
+					<div className="row">
+						{pastStay.length !== 0 ?
+							pastStay.map((booking) => {
+								return (
+									<div key={booking.id}>
+										<div key={booking.id} style={{ padding: '1rem' }}>
+											<center>
+												<Booking key={booking.id} booking={booking}></Booking>
+											</center>
+										</div>
+									</div>
+								);
+							})
+							: null
+						}
+					</div>
+					<center><h1>All Bookings</h1></center>
+					<div className="row">
+						{myBookings.length !== 0 ?
+							myBookings.map((booking) => {
+								return (
 									<div key={booking.id} style={{ padding: '1rem' }}>
 										<center>
-											<Booking key={booking.id} booking={booking}></Booking>
+											<Booking key={booking.id} booking={booking} pastStay={pastStay} currentUser={currentUser} history={this.props.history}></Booking>
 										</center>
 									</div>
-								</div>
-							);
-						})
-						: null
-					}
-				</div>
-				<center><h1>All Bookings</h1></center>
-				<div className="row">
-					{myBookings.length !== 0 ?
-						myBookings.map((booking) => {
-							return (
-								<div key={booking.id} style={{ padding: '1rem' }}>
-									<center>
-										<Booking key={booking.id} booking={booking} pastStay={pastStay} currentUser={currentUser} history={this.props.history}></Booking>
-									</center>
-								</div>
-							);
-						})
-					: <p>You have not booked any accommodation with us</p>
-					}
-				</div>
-			</React.Fragment>
-		);
+								);
+							})
+						: <p>You have not booked any accommodation with us</p>
+						}
+					</div>
+				</React.Fragment>
+			);
+		}
+
 	}
 }
-export default MyBookings;
+export default withStyles(styles)(MyBookings);
 
 //     constructor(){
 //         super();
