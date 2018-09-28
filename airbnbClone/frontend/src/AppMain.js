@@ -1,14 +1,9 @@
 import React from 'react'
-import {Consumer} from './Context';
+import { Consumer } from './Context';
 import { withStyles } from '@material-ui/core/styles';
-import Header from './Component/layout/Header'
-// import Signin from './components/layouts/Signin'
-
-import Sidebar from './Component/layout/Sidebar'
-import Main from './Component/layout/Main'
-
-// import Main from './components/layouts/Main'
-
+import Header from './components/layout/Header'
+import Sidebar from './components/layout/Sidebar'
+import Main from './components/layout/Main'
 
 const styles = theme => ({
   root: {
@@ -23,14 +18,15 @@ const styles = theme => ({
 class AppMain extends React.Component {
   render() {
     const { classes } = this.props;
+
     return (
       <Consumer>
         {value => {
           const { logged_in } = value;
           return (
-            <div className={classes.root}>
+            <div className={ classes.root }>
               <Header />
-              {logged_in === true ? <Sidebar /> : null}
+              { logged_in === true ? <Sidebar /> : null }
               <Main />
             </div>
           )
