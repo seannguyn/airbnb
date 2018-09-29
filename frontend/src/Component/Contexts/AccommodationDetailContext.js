@@ -16,7 +16,8 @@ class AccommodationDetailContext extends React.Component {
       accommodationHosting: {},
       booking: [],
       minDateSet: [],
-      reviews: []
+      reviews: [],
+      images: [],
     }
 
   }
@@ -83,6 +84,12 @@ class AccommodationDetailContext extends React.Component {
     const res4 = await axios.get(`https://localhost:8000/accommodation/${id}/reviews/`)
     this.setState({reviews: res4.data})
 
+
+    // axios images
+    const res5 = await axios.get(`https://localhost:8000/accommodationImage/?accommodation=${id}`)
+    this.setState({images: res5.data},()=>{console.log("WE HAVE IMAGE",this.state.images)})
+
+
 }
 
 
@@ -104,6 +111,7 @@ class AccommodationDetailContext extends React.Component {
               booking={this.state.booking}
               minDateSet={this.state.minDateSet}
               reviews={this.state.reviews}
+              images={this.state.images}
               />
           )
         }}

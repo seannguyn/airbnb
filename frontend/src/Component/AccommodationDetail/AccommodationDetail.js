@@ -8,6 +8,11 @@ import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ReviewComponent from '../Review/ReviewComponent'
 import GoogleMap from '../GoogleMap/GoogleMap'
+// Image Slider
+import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
+import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx";
+import Carousel from "react-slick";
+import '../../Styles/ImageSlide.css';
 
 const styles = theme => ({
   progress: {
@@ -84,8 +89,29 @@ class AccommodationDetail extends Component {
         // const {Accommodation_Type, area, bathroom,
         //         bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
 
+        // IMAGES ======
+        let settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: true,
+        };
 
+        // Map image in images array to div
 
+        let imagesDiv = [];
+        this.props.images.map( (image) => {
+          imagesDiv.push(
+              <div key={image.id}>
+                <img src={image.a_image} height="150" width="345" alt="hostingimg"/>
+              </div>
+          )
+          return 0;
+        })
+        console.log(imagesDiv,"IMG DIV");
+        // IMAGES ======
 
         // const {currentHost} = this.state;
         const isDayBlocked = day => this.props.booking.filter(d => d.isSame(day, 'day')).length > 0;
@@ -108,8 +134,6 @@ class AccommodationDetail extends Component {
 
                     <div className="container">
                       <div className="row">
-                        <div className="col-12">
-                        </div>
                       </div>
                       <div className="row">
                           <div className="col-8" style={{border:'2px solid blue'}}>
@@ -121,6 +145,19 @@ class AccommodationDetail extends Component {
                                   <i className="fas fa-door-open"> {bedroom} bedrooms</i>&#160;
                                     <i className="fas fa-bed"> {bed} bed</i>&#160;
                                   <i className="fas fa-bath"> {bathroom} bathrooms</i>&#160;
+                              </div>
+                              <div className="row">
+                                <div className="col-6">
+                                  <Carousel {...settings} dots={false}>
+                                  { this.props.images.length !== 0 ?
+                                    imagesDiv
+                                  :
+                                  <div>
+                                      <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345" alt="noimage"/>
+                                  </div>
+                                  }
+                                  </Carousel>
+                                </div>
                               </div>
                           </div>
                           <div className="col-4">
@@ -161,4 +198,4 @@ class AccommodationDetail extends Component {
         )
     }
 }
-export default withStyles(styles)(AccommodationDetail);
+export default withStyles(styles,carouselStyle,dashboardStyle)(AccommodationDetail);
