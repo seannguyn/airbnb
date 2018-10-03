@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import {Consumer} from '../../Context.js';
-
 import classNames from 'classnames';
-
-
 import { withStyles, createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -19,8 +16,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import LoginDialog from './LoginDialog'
 import green from '@material-ui/core/colors/green';
-
-const drawerWidth = 240;
 
 const customColor = createMuiTheme({
   palette: {
@@ -38,14 +33,6 @@ const styles = theme => ({
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
     }),
   },
   menuButton: {
@@ -173,7 +160,7 @@ class Header extends Component {
               <AppBar
                 color="secondary"
                 position="absolute"
-                className={classNames(classes.appBar, sidebar_show && classes.appBarShift)}
+                className={classNames(classes.appBar)}
               >
                 <Toolbar disableGutters={!sidebar_show}>
                   <IconButton

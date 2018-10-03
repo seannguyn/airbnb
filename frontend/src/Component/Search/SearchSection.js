@@ -164,7 +164,6 @@ class SearchSection extends React.Component {
                           <div className="row">
                             <div className="col-12">
                               <TextField
-                                id="outlined-name"
                                 label="Where"
                                 className={classes.textField}
                                 value={this.state.location}
@@ -179,7 +178,6 @@ class SearchSection extends React.Component {
                           <div className="row">
                             <div className="col-6">
                               <TextField
-                                id="outlined-name"
                                 label="Price Upper"
                                 error={this.state.error}
                                 className={classes.textField}
@@ -194,7 +192,6 @@ class SearchSection extends React.Component {
 
                             <div className="col-6">
                               <TextField
-                                id="outlined-name"
                                 label="Price Lower"
                                 error={this.state.error}
                                 className={classes.textField}
@@ -215,8 +212,8 @@ class SearchSection extends React.Component {
                               <br/>
                               <DateRangePicker
                                 startDate={this.state.startDate}
-                                startDateId=""
-                                endDateId=""
+                                startDateId="1"
+                                endDateId="2"
                                 endDate={this.state.endDate}
                                 onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })}
                                 focusedInput={this.state.focusedInput}
@@ -240,23 +237,15 @@ class SearchSection extends React.Component {
                                 variant="contained"
                                 type="submit"
                                 disabled={disabledSearch}
-
                                 >
                                 Search
                               </Button>
                             </div>
                             <div className="col-2"></div>
                           </div>
-
-
-
                         </div>
-
-
                       </Paper>
                     </form>
-
-
                   </div>
                 </div>
               </div>
