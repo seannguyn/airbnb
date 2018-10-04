@@ -71,6 +71,7 @@ class MyBookings extends Component {
 	}
 
 	requireReview = async (pastStay) => {
+		console.log("PAST: ", pastStay);
 		let isReviewed = false,
 				tempRequireReviewList = [],
 				tempPastStay = [];
@@ -133,6 +134,7 @@ class MyBookings extends Component {
 	render() {
 		const { myBookings, futureStay, currentStay, pastStay, earliestBooking, currentUser, requireReviewList } = this.state;
 		// this.getReviewRequiredList(pastStay);
+		console.log("MOTHERFUCK ", pastStay);
 		return (
 			<React.Fragment>
 				<center>

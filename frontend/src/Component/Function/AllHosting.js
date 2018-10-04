@@ -16,12 +16,9 @@ const styles = theme => ({
 class AllHosting extends React.Component {
 
   getData(SingleHost) {
-
     const {HouseList} = this.props;
-
     let i =0;
     var house;
-
     for(i=0; i < HouseList.length; i++){
       if(HouseList[i].id === parseInt(SingleHost.accommodation,10)){
         house = HouseList[i];

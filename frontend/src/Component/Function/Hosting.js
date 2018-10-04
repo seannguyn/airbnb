@@ -186,11 +186,11 @@ class Hosting extends React.Component {
             </div>
           </CardBody>
           <CardFooter product>
-              <div className={classes.price}>
-                {/* <Typography gutterBottom variant="headline" component="h6"> */}
-                  <h4>${SingleHost.price}/night</h4>
-                {/* </Typography> */}
-              </div>
+            <div className={classes.price}>
+              {/* <Typography gutterBottom variant="headline" component="h6"> */}
+                <h4>${SingleHost.price}/night</h4>
+              {/* </Typography> */}
+            </div>
           </CardFooter>
         </Card>
       </div>

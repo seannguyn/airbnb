@@ -147,7 +147,11 @@ export class Provider extends Component {
 
     const allHosting = await axios.get('https://localhost:8000/accommodationHosting/');
     this.setState({AllHostingList: allHosting.data});
-
+    
+    if(allHosting.data !== []){
+      this.addPlaceMaker(allHosting.data);
+    }
+    
     if(this.state.currentUser.length === 1) {
       const {token,user_id} = this.state.currentUser[0];
 
@@ -195,30 +199,51 @@ export class Provider extends Component {
     // console.log("should it update?",nextProps,nextState);
     if (nextState.currentUser.length > 0 && this.state.mounted === 0) {
       this.setState({mounted: 1})
-      console.log("it updated",nextState);
       localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
-
       const {token,user_id} = nextState.currentUser[0];
-
       const res = await axios.get('https://localhost:8000/accommodationHosting/',
         {
-          headers:{
-            'Authorization': {token}
-          }
+          headers:{ 'Authorization': {token} }
         }
       )
-
       const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
       this.setState({myHouseList: myHouse.data});
       this.setState({myHostingList: res.data});
       console.log(myHouse.data,"my hosting");
-
       return true;
     }
     return true;
   }
 
-
+  addPlaceMaker = async (AllHostingList) => {
+    console.log("All Hosting List: ", AllHostingList);
+    const places = [];
+    for( let i = 0; i <  AllHostingList.length; i++){
+        console.log(AllHostingList[i].accommodation)
+        const accommodation = AllHostingList[i].accommodation;
+        await axios.get(`https://localhost:8000/accommodation/${accommodation}/`)
+                    .then(response => {
+                        console.log("RES: ", response.data);
+                        const info = {
+                            id : response.data.id, 
+                            lat: response.data.latitude,
+                            lng: response.data.longitude,
+                            price: AllHostingList[i].price,
+                            name: response.data.title,
+                            description: response.data.description,
+                            address: response.data.address
+                        };
+                        places.push(
+                            info
+                        )
+                    })
+        
+        
+    }
+    console.log("places: ", places, typeof(places));
+    this.setState({places: places});
+    return places;
+}
 
   render () {
     // const fh = this.findHostingAccommodation(this.state.currentUser);

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import {Consumer} from '../../Context.js';
 import axios from 'axios';
 
-
-
 import Paper from '@material-ui/core/Paper';
 import HomeIcon from '@material-ui/icons/Home';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,13 +9,14 @@ import Avatar from '@material-ui/core/Avatar';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
+
+import SearchBar from '../PlacesAutoComplete/LocationSearchInput'
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
 const styles = theme => ({
   paper: {
@@ -86,6 +85,10 @@ class AddHouse extends Component {
       user:{},
 
       title: '',
+
+      address: '',
+      latitude: 0,
+      longitude: 0,
 
       number: '',
       street: '',
@@ -183,7 +186,7 @@ class AddHouse extends Component {
     e.preventDefault();
 
     const {user/*,number, street, city, state*/} = this.state;
-    const {/*Accommodation_Type, */area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark/*,description*/} = this.state;
+    const {/*Accommodation_Type, */address, latitude, longitude, area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark/*,description*/} = this.state;
 
     if(this.errorCheck(this.state) === true) return;
 
@@ -204,6 +207,10 @@ class AddHouse extends Component {
       user:             user.user_id,
 
       Accomodation_Type: this.state.Accommodation_Type,
+
+      address:          address,
+      latitude:         latitude,
+      longitude:        longitude,
 
       title:            this.state.title,
       addr_number:      this.state.number,
@@ -256,17 +263,32 @@ class AddHouse extends Component {
     this.props.history.push({
       pathname: `/editHouse/${id.data.id}`,
     })
-
-
   }
 
+  handleSelect = selected => {
+    this.setState({ isGeocoding: true, address: selected });
+    geocodeByAddress(selected)
+      .then(res => getLatLng(res[0]))
+      .then(({ lat, lng }) => {
+        this.setState({
+          latitude: lat,
+          longitude: lng,
+          isGeocoding: false,
+        });
+        console.log("state: ", this.state);
+      })
+      .catch(error => {
+        this.setState({ isGeocoding: false });
+        console.log('error', error); // eslint-disable-line no-console
+      });
+  };
 
   render () {
 
     const {title, number, street, city, state} = this.state;
     const {Accommodation_Type,/*,area,*/bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
     const {classes} = this.props
-
+    console.log("PROPS: ", this.props);
     return (
 
       <Consumer>
@@ -278,7 +300,6 @@ class AddHouse extends Component {
                     <Avatar className={classes.avatar}>
                       <HomeIcon/>
                     </Avatar>
-
                     <form className={classes.form} onSubmit={this.onSubmit.bind(this, dispatch)}>
                       <Typography className={classes.typo} variant="headline" >Title</Typography>
                         <FormControl margin="normal" required fullWidth style={{marginBottom:'30px'}}>
@@ -292,6 +313,7 @@ class AddHouse extends Component {
                           />
                         </FormControl>
                       <Typography className={classes.typo} variant="headline" >Address</Typography>
+                      <SearchBar handleSelect={this.handleSelect}/>
                       <FormControl margin="normal" required fullWidth>
                         <TextField
                           error={this.state.error_number}
@@ -456,8 +478,6 @@ class AddHouse extends Component {
 
         }}
       </Consumer>
-
-
     )
   }
 }

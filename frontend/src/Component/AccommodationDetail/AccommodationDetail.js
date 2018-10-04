@@ -7,7 +7,7 @@ import BookingPaper from './BookingPaper'
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ReviewComponent from '../Review/ReviewComponent'
-import GoogleMap from '../GoogleMap/GoogleMap'
+import Maps from '../GoogleMap/Maps';
 
 const styles = theme => ({
   progress: {
@@ -73,13 +73,13 @@ class AccommodationDetail extends Component {
 
     }
 
-
     render() {
         // console.log("props acom detail: ", this.state);
-        const { classes } = this.props;
+        const { classes, accommodation } = this.props;
+        const { longitude, latitude, id } = accommodation;
+        console.log("ACCOMODATION ", accommodation);
         // const {Accommodation_Type, area, bathroom,
         //         bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
-
 
         const {bathroom,bedroom,kitchen,carpark,description} = this.state.accomDetail
         // const {currentHost} = this.state;
@@ -133,7 +133,7 @@ class AccommodationDetail extends Component {
                       </div>
                       <div className="row">
                           <div className="col-8" style={{border:'2px solid blue'}}>
-                            <GoogleMap/>
+                            <Maps latitude={latitude} longitude={longitude} accommodation={id} />
                           </div>
                           <div className="col-4">
 

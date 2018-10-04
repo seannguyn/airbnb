@@ -32,6 +32,10 @@ class Accommodation(models.Model):
 
     title = models.CharField(blank=False, max_length=100,default=uuid.uuid4())
 
+    address = models.CharField(blank=False, max_length=300, default='default address')
+    latitude = models.FloatField(blank=False, default=1)
+    longitude = models.FloatField(blank=False, default=1)
+
     addr_number = models.PositiveIntegerField(blank=False, default=1)
     addr_street = models.CharField(blank=False, max_length=100,default='dedault')
     addr_city   = models.CharField(blank=False, max_length=100,default='default')
