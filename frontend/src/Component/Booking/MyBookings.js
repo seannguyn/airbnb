@@ -93,6 +93,7 @@ class MyBookings extends Component {
 	}
 
 	requireReview = async (pastStay) => {
+		console.log("PAST: ", pastStay);
 		let isReviewed = false,
 				tempRequireReviewList = [],
 				tempPastStay = [];
@@ -133,7 +134,6 @@ class MyBookings extends Component {
 			else {isReviewed = false;}
 		}
 
-		console.log("TEMEEEE: ", tempRequireReviewList);
 		tempRequireReviewList = tempRequireReviewList.concat(requireReviewList);
 		this.setState({requireReviewList: tempRequireReviewList})
 	}
@@ -192,6 +192,7 @@ class MyBookings extends Component {
 	render() {
 		const { myBookings, futureStay, currentStay, pastStay, earliestBooking, currentUser, requireReviewList,logged_in,status } = this.state;
 		// this.getReviewRequiredList(pastStay);
+// <<<<<<< HEAD
 		const { classes } = this.props;
 		if(logged_in === false){
 			 return (
@@ -202,6 +203,51 @@ class MyBookings extends Component {
 			return(
 				<div>
 					<CircularProgress className={classes.progress} color="primary" size={50}/>
+{/* // =======
+// 
+// 		return (
+// 			<React.Fragment>
+// 				<center>
+// 					{!isEmpty(earliestBooking) ?
+// 						<div>
+// 							<center><h1>Next Stay</h1></center>
+// 							<Booking key={earliestBooking.id} booking={earliestBooking} history={this.props.history}></Booking>
+// 						</div>
+// 						: null
+// 					}
+// 				</center>
+// 				<center>
+// 					{!isEmpty(pastStay[0]) ?
+// 						<div key={pastStay[0].id}>
+// 							<center><h1>Recent Stay</h1></center>
+// 							<Booking key={pastStay[0].id} booking={pastStay[0]} requireReviewItem={requireReviewList[0]} history={this.props.history}></Booking>
+// 						</div>
+// 						: null
+// 					}
+// 				</center>
+// 				{futureStay.length !== 0 ? <center><h1>Incoming</h1></center> : null}
+// 				<div className="row">
+// 					{futureStay.length !== 0 ?
+// 						futureStay.map((booking) => {
+// 							return (
+// 								<div key={booking.id}>
+// 									<div style={{ padding: '1rem' }}>
+// 										<center>
+// 												<Booking key={booking.id} booking={booking}  earliestBooking={earliestBooking} history={this.props.history}></Booking>
+// 										</center>
+// 									</div>
+// 								</div>
+// 							);
+// 						})
+// 						: null
+// 					}
+// 				</div>
+// 				<div className="row">
+// 					{currentStay.length !== 0 ?
+// 						<h1>Current</h1>
+// 						: null
+// 					} */}
+{/* >>>>>>> FE-MAPS */}
 				</div>
 			)
 		}

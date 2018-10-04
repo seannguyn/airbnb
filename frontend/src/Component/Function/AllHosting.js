@@ -15,41 +15,29 @@ const styles = theme => ({
 class AllHosting extends React.Component {
 
   getData(SingleHost) {
-
     const {HouseList} = this.props;
-
     let i =0;
     var house;
-
     for(i=0; i < HouseList.length; i++){
       if(HouseList[i].id === parseInt(SingleHost.accommodation,10)){
         house = HouseList[i];
       }
     }
-    console.log("house is", HouseList, SingleHost);
+    // console.log("house is", HouseList, SingleHost);
     return (
       <Hosting key={SingleHost.accommodation} house={house} SingleHost={SingleHost}/>
 
     );
   }
 
-  filterHouse() {
-
-  }
-
   render () {
-
-    // console.log("all Hosting",this.props.AllHostingList);
-    // console.log("all House",this.props.HouseList);
     const SingleHosting = this.props.AllHostingList.map((SingleHost) => this.getData(SingleHost))
-    // console.log("SINGLEHOUSE: ", SingleHosting)
     return (
       <React.Fragment>
-
         <div className="row">
             {SingleHosting}
           </div>
-        </React.Fragment>
+      </React.Fragment>
       );
   }
 }

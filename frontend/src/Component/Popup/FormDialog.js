@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios'
+import moment from 'moment'
 
 // Material UI
 import Button from '@material-ui/core/Button';
@@ -14,6 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Rating from 'react-rating'
 import like from '../../assets/img/icons/like.png'
 import like_empty from '../../assets/img/icons/like_empty.png'
+import { isMoment } from 'moment';
 
 export default class FormDialog extends React.Component {
   state = {
@@ -34,11 +36,12 @@ export default class FormDialog extends React.Component {
 		const { star, comment, currentUser } = this.state;
 		const { requireReviewItem } = this.props;
 		let newReview = {
+			user: currentUser[0].user_id,
 			accommodation: requireReviewItem.accommodation,
-			// user: requireReviewItem.booker,
 			booking: requireReviewItem.id,
 			star: star,
-			review: comment
+			review: comment,
+			date_posted: moment().format('YYYY-MM-DD')
 		}
 		await axios.post("https://localhost:8000/reviews/", newReview);
 		console.log("Review Successfully");

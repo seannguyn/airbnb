@@ -14,6 +14,7 @@ import AccommodationDetailContext from '../Contexts/AccommodationDetailContext';
 import ReserveOverallBooking from '../Booking/ReserveOverallBooking'
 import EditOverallBooking from '../Booking/EditOverallBooking'
 import ConfirmOverallBooking from '../Booking/ConfirmOverallBooking'
+import { Map } from '../GoogleMap/Maps'
 
 
 const styles = theme => ({
@@ -56,6 +57,9 @@ class Main extends React.Component {
             <Route exact path="/overallbooking/reserve/:id" component={ReserveOverallBooking}></Route>
             <Route exact path="/overallbooking/payment/:id" component={EditOverallBooking}></Route>
             <Route exact path="/overallbooking/confirm/:id" component={ConfirmOverallBooking}></Route>
+
+            <Route exact path="/map" component={Map}/>
+
             <Route component={NotFound}></Route>
 
           </Switch>

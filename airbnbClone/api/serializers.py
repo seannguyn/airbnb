@@ -7,7 +7,7 @@ class AccommodationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Accommodation
-        fields = ('id','user','title',
+        fields = ('id','user','title', 'address', 'latitude', 'longitude',
                     'addr_number','addr_street','addr_city','addr_state',
                     'Accomodation_Type','bed','bedroom',
                     'kitchen','bathroom','pool',
@@ -36,7 +36,7 @@ class BookingSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('id', 'user', 'accommodation','booking', 'star', 'review', 'date_posted')
+        fields = ('id', 'user', 'accommodation', 'booking', 'star', 'review', 'date_posted')
 
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:

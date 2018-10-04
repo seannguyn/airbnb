@@ -7,12 +7,12 @@ import BookingPaper from './BookingPaper'
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ReviewComponent from '../Review/ReviewComponent'
-import GoogleMap from '../GoogleMap/GoogleMap'
 // Image Slider
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
 import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx";
 import Carousel from "react-slick";
 import '../../Styles/ImageSlide.css';
+import Maps from '../GoogleMap/Maps';
 
 const styles = theme => ({
   progress: {
@@ -82,10 +82,11 @@ class AccommodationDetail extends Component {
         }
     }
 
-
     render() {
         // console.log("props acom detail: ", this.state);
-        const { classes } = this.props;
+        const { classes, accommodation } = this.props;
+        const { longitude, latitude, id } = accommodation;
+        console.log("ACCOMODATION ", accommodation);
         // const {Accommodation_Type, area, bathroom,
         //         bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
 
@@ -113,6 +114,7 @@ class AccommodationDetail extends Component {
         console.log(imagesDiv,"IMG DIV");
         // IMAGES ======
 
+        // const {bathroom,bedroom,kitchen,carpark,description} = this.state.accomDetail
         // const {currentHost} = this.state;
         const isDayBlocked = day => this.props.booking.filter(d => d.isSame(day, 'day')).length > 0;
         const {status} = this.state;
@@ -137,7 +139,6 @@ class AccommodationDetail extends Component {
                       </div>
                       <div className="row">
                           <div className="col-8" style={{border:'2px solid blue'}}>
-                              <div><h1>{title}</h1></div>
                               <div className="description">
                                   <h4>Description: {description}</h4>
                               </div>
@@ -175,7 +176,7 @@ class AccommodationDetail extends Component {
                       </div>
                       <div className="row">
                           <div className="col-8" style={{border:'2px solid blue'}}>
-                            <GoogleMap/>
+                            <Maps latitude={latitude} longitude={longitude} accommodation={id} />
                           </div>
                           <div className="col-4">
 

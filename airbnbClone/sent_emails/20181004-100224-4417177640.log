@@ -1,0 +1,18 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: [example.com] Please Confirm Your E-mail Address
+From: webmaster@localhost
+To: guest@zmail.com
+Date: Thu, 04 Oct 2018 10:02:24 -0000
+Message-ID: <153864734420.4351.15519451069869343046@Nams-MacBook-Pro.local>
+
+Hello from example.com!
+
+You're receiving this e-mail because user guest has given yours as an e-mail address to connect their account.
+
+To confirm this is correct, go to https://localhost:8000/rest-auth/registration/account-confirm-email/NA:1g80Se:AQmskIdpZItnTKjAnVDCol6t_hA/
+
+Thank you from example.com!
+example.com
+-------------------------------------------------------------------------------

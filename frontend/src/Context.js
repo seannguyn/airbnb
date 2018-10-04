@@ -58,7 +58,6 @@ const reducer = (state,action) => {
         };
 
       case 'HOSTING':
-        console.log("host context",action.payload);
         return {
           ...state,
           myHostingList: [action.payload,...state.myHostingList],
@@ -92,7 +91,6 @@ const reducer = (state,action) => {
           sidebar_show: !sidebar_show
         }
       case 'LOGOUT':
-        console.log("here LOGOUT");
         localStorage.clear();
         return {
           ...state,
@@ -160,11 +158,14 @@ export class Provider extends Component {
     const res = await axios.get('https://localhost:8000/accommodation/');
     this.setState({HouseList: res.data});
     this.setState({didmount: 1});
-    // console.log(this.state.currentUser);
 
     const allHosting = await axios.get('https://localhost:8000/accommodationHosting/');
     this.setState({AllHostingList: allHosting.data});
-
+    
+    if(allHosting.data !== []){
+      this.addPlaceMaker(allHosting.data);
+    }
+    
     if(this.state.currentUser.length === 1) {
       const {token,user_id} = this.state.currentUser[0];
 
@@ -191,56 +192,60 @@ export class Provider extends Component {
     if (currentUser  === null) {
       currentUser = []
     }
-    console.log("WILL MOUNT",currentUser);
     if( currentUser.length > 0) {
       this.setState({
         currentUser: JSON.parse(localStorage.getItem('currentUser')),
         logged_in: true,
-        // HouseList: JSON.parse(localStorage.getItem('HouseList')),
-        // myHostingList: JSON.parse(localStorage.getItem('myHostingList')),
-        // AllHostingList: JSON.parse(localStorage.getItem('AllHostingList')),
       });
     }
-
-    // && localStorage.getItem('HouseList')
-    // localStorage.getItem('myHostingList') && localStorage.getItem('AllHostingList')
-
-
   }
 
   async shouldComponentUpdate(nextProps, nextState) {
-    // console.log("should it update?",nextProps,nextState);
     if (nextState.currentUser.length > 0 && this.state.mounted === 0) {
       this.setState({mounted: 1})
-      console.log("it updated",nextState);
       localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
-
       const {token,user_id} = nextState.currentUser[0];
-
       const res = await axios.get('https://localhost:8000/accommodationHosting/',
         {
-          headers:{
-            'Authorization': {token}
-          }
+          headers:{ 'Authorization': {token} }
         }
       )
-
       const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
       this.setState({myHouseList: myHouse.data});
       this.setState({myHostingList: res.data});
-      console.log(myHouse.data,"my hosting");
-
       return true;
     }
     return true;
   }
 
-
+  addPlaceMaker = async (AllHostingList) => {
+    const places = [];
+    for( let i = 0; i <  AllHostingList.length; i++){
+        console.log(AllHostingList[i].accommodation)
+        const accommodation = AllHostingList[i].accommodation;
+        await axios.get(`https://localhost:8000/accommodation/${accommodation}/`)
+                    .then(response => {
+                        const info = {
+                            id : response.data.id, 
+                            lat: response.data.latitude,
+                            lng: response.data.longitude,
+                            price: AllHostingList[i].price,
+                            name: response.data.title,
+                            description: response.data.description,
+                            address: response.data.address
+                        };
+                        places.push(
+                            info
+                        )
+                    })
+        
+        
+    }
+    this.setState({places: places});
+    return places;
+}
 
   render () {
-    // const fh = this.findHostingAccommodation(this.state.currentUser);
-    // console.log("IN REDNER CONTEXt: ", this.state.currentUser);
-    // console.log(this.state.myHostingList);
     if (this.state.didmount === 0) {
       return(
         <div>
