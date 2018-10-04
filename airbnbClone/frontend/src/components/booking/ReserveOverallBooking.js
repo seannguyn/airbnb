@@ -46,11 +46,32 @@ class OverallBooking extends React.Component {
   async postBooking(detail, booker) {
     const note = 'hello';
 
+<<<<<<< HEAD:airbnbClone/frontend/src/components/booking/ReserveOverallBooking.js
     console.log("THIS MOMENT", detail.paidDate);
     console.log("HOSSSSTING: ", detail.currentHost.id);
     console.log("booker: ", booker);
     console.log("detail: ", detail);
     console.log("Props: ", this.props);
+=======
+    if (this.props.location.state.booking_id > 0) {
+      const {booking_id,booking} = this.props.location.state;
+      console.log("GOTCHA",booking_id,booking);
+      const date_free = enumerateDaysBetweenDates(booking.date_start,booking.date_end)
+      const res_temp = await axios.get(`https://localhost:8000/search/${detail.accommodation.id}/`)
+
+      const newDateFree_temp = concatString(res_temp.data.date_free,date_free)
+
+      const searchAccommodationTemp = {
+        date_free: newDateFree_temp
+      }
+
+      await axios.patch(`https://localhost:8000/search/${detail.accommodation.id}/`,searchAccommodationTemp)
+
+      await axios.delete(`https://localhost:8000/booking/${booking_id}/`);
+      alert("Delete OLD BOOKING successfully");
+    }
+
+>>>>>>> db6bc384b1eb44650cd09533c228c42b00c8a650:frontend/src/Component/Booking/ReserveOverallBooking.js
 
     const newBooking = {
       booker: booker,

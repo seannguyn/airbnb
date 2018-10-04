@@ -14,6 +14,8 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 function getModalStyle() {
 
@@ -97,8 +99,7 @@ class EditHouse extends Component {
       city: '',
       state: '',
 
-      area: '',
-      bedroom_master: '',
+      bed: '',
       bedroom:'',
       bathroom:'',
       kitchen:'',
@@ -170,8 +171,7 @@ class EditHouse extends Component {
             city:  result.addr_city,
             state: result.addr_state,
 
-            area: result.area,
-            bedroom_master: result.bedroom_master,
+            bed: result.bed,
             bedroom: result.bedroom,
             bathroom: result.bathroom,
             kitchen: result.kitchen,
@@ -198,14 +198,18 @@ class EditHouse extends Component {
   }
 
   onChange(e) {
-    console.log(e.target.name);
+
     this.setState({[e.target.name] : e.target.value});
+  }
+
+  onCheck(e) {
+    this.setState({ [e.target.name]: e.target.checked });
   }
 
   errorCheck(current) {
     const {number,Accommodation_Type} = current;
     // const {id, user, Accommodation_Type, number, street, city, state, title} = current;
-    // const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
+    // const {bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
 
     var flag = false;
     if (number === '') {
@@ -251,7 +255,7 @@ class EditHouse extends Component {
     e.preventDefault();
 
     const {id, user, Accommodation_Type, number, street, city, state, title} = this.state;
-    const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
+    const {bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
 
     if(this.errorCheck(this.state) === true) return;
 
@@ -266,8 +270,7 @@ class EditHouse extends Component {
       addr_city: city,
       addr_state: state,
 
-      area:area,
-      bedroom_master:bedroom_master,
+      bed:bed,
       bedroom:bedroom,
       bathroom:bathroom,
       kitchen:kitchen,
@@ -290,6 +293,18 @@ class EditHouse extends Component {
         }
     )
 
+<<<<<<< HEAD:airbnbClone/frontend/src/components/functions/EditHouse.js
+=======
+    const searchAccommodation = {
+      accommodation: this.props.id,
+      location: city
+    }
+    await axios.patch(`https://localhost:8000/search/${this.props.id}/`,searchAccommodation)
+    .catch(error => {
+      console.log(error.response,)
+    });
+
+>>>>>>> db6bc384b1eb44650cd09533c228c42b00c8a650:frontend/src/Component/Function/EditHouse.js
     dispatch({type:'EDIT_HOUSE', payload:editHouse})
 
     this.setState({
@@ -319,7 +334,7 @@ class EditHouse extends Component {
   render () {
     const {status} = this.state;
     const {Accommodation_Type,number, street, city, state, title} = this.state;
-    const {bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
+    const {bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
     console.log(Accommodation_Type,"accomm type");
     const {classes} = this.props
     return (
@@ -417,77 +432,79 @@ class EditHouse extends Component {
                           <MenuItem value="Villa">Villa</MenuItem>
                         </Select>
                       </FormControl>
-                      <Typography className={classes.typo} variant="headline">Amenities</Typography>
+                      <Typography className={classes.typo} variant="headline">Basic</Typography>
                       <FormControl margin="normal" required fullWidth>
                         <TextField
                           label="Bedroom"
                           value={bedroom}
-
                           onChange={this.onChange.bind(this)}
                           name="bedroom"
-                          type="text"
+                          type="number"
                         />
                       </FormControl>
                       <FormControl margin="normal" required fullWidth>
                         <TextField
-                          label="Bedroom Master"
-                          value={bedroom_master}
-
+                          label="Bed"
+                          value={bed}
                           onChange={this.onChange.bind(this)}
-                          name="bedroom_master"
-                          type="text"
+                          name="bed"
+                          type="number"
                         />
                       </FormControl>
                       <FormControl margin="normal" required fullWidth>
                         <TextField
                           label="Bathroom"
                           value={bathroom}
-
                           onChange={this.onChange.bind(this)}
                           name="bathroom"
-                          type="text"
+                          type="number"
                         />
                       </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
+                      <Typography className={classes.typo} variant="headline">Amenities</Typography>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={kitchen}
+                              onChange={this.onCheck.bind(this)}
+                              value="kitchen"
+                              name="kitchen"
+                              />
+                          }
                           label="Kitchen"
-                          value={kitchen}
-
-                          onChange={this.onChange.bind(this)}
-                          name="kitchen"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
+                          />
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={gym}
+                              onChange={this.onCheck.bind(this)}
+                              value="gym"
+                              name="gym"
+                              />
+                          }
                           label="Gym"
-                          value={gym}
-
-                          onChange={this.onChange.bind(this)}
-                          name="gym"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
+                          />
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={pool}
+                              onChange={this.onCheck.bind(this)}
+                              value="pool"
+                              name="pool"
+                              />
+                          }
                           label="Pool"
-                          value={pool}
-
-                          onChange={this.onChange.bind(this)}
-                          name="pool"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
+                          />
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={carpark}
+                              onChange={this.onCheck.bind(this)}
+                              value="carpark"
+                              name="carpark"
+                              />
+                          }
                           label="Carpark"
-                          value={carpark}
-
-                          onChange={this.onChange.bind(this)}
-                          name="carpark"
-                          type="text"
-                        />
-                      </FormControl>
+                          />
                       <Typography className={classes.typo} variant="headline">Description</Typography>
                       <FormControl margin="normal" required fullWidth>
                         <TextField

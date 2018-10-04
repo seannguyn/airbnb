@@ -53,6 +53,7 @@ class Payment extends React.Component {
   }
 
   getPayment(payment) {
+<<<<<<< HEAD:airbnbClone/frontend/src/components/payment/Payment.js
     let stuff = [];
 
     if (payment === 'credit') {
@@ -60,6 +61,20 @@ class Payment extends React.Component {
         submitPayment={this.submitPayment.bind(this)} handleChange={this.props.handleChange} />)
     } else if (payment === 'paypal') {
       stuff.push(<h1 key={uuid.v4()}>hihihi</h1>)
+=======
+    var stuff = []
+    if (payment === 'credit') {
+      stuff.push(<CardForm
+        key={uuid.v4()}
+        onChange={this.onChange.bind(this)}
+        submitPayment={this.submitPayment.bind(this)}
+        handleChange={this.props.handleChange}
+        />)
+    }
+    //
+    else if (payment === 'paypal') {
+        stuff.push(<h1 key={uuid.v4()}>hihihi</h1>)
+>>>>>>> db6bc384b1eb44650cd09533c228c42b00c8a650:frontend/src/Component/Payment/Payment.js
     }
 
     return stuff;

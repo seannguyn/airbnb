@@ -16,6 +16,7 @@ router.register('booking',views.BookingView)
 router.register('users', views.Users)
 router.register('reviews', views.GetReviews)
 router.register('search', views.SearchViews)
+router.register('searchHosting', views.SearchHostingViews,base_name='searchHosting')
 
 """ accomodation nested resources setup """
 accommodation_router = routers.NestedSimpleRouter(router, r'accommodation', lookup='accommodation')

@@ -102,7 +102,11 @@ class Hosting extends React.Component {
           {id} = this.props.house,
           {images, reviews} = this.state,
           avgRating =  this.starCalculator(reviews),
+<<<<<<< HEAD:airbnbClone/frontend/src/components/functions/Hosting.js
           { classes} = this.props;
+=======
+          { classes } = this.props;
+>>>>>>> db6bc384b1eb44650cd09533c228c42b00c8a650:frontend/src/Component/Function/Hosting.js
     let Rating = require('react-rating');
     let settings = {
         dots: true,
@@ -118,10 +122,10 @@ class Hosting extends React.Component {
     images.map( (image) => {
       imagesDiv.push(
           <div key={image.id}>
-            <img src={image.a_image} height="150" width="345" alt="no"/>
+            <img src={image.a_image} height="150" width="345" alt="hostingimg"/>
           </div>
       )
-      return 1;
+      return 0;
     })
 
     return (
@@ -134,7 +138,7 @@ class Hosting extends React.Component {
             imagesDiv
           :
           <div>
-              <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345" alt="nohouse"/>
+              <img src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg" height="150" width="345" alt="noimage"/>
           </div>
           }
           </Carousel>

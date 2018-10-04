@@ -30,6 +30,7 @@ export default class FormDialog extends React.Component {
     this.setState({open: false});
   };
 
+<<<<<<< HEAD:airbnbClone/frontend/src/components/popup/FormDialog.js
   handleSubmit = async () => {
     const {star, comment, currentUser} = this.state;
     const {requireReviewItem} = this.props;
@@ -46,6 +47,22 @@ export default class FormDialog extends React.Component {
     console.log("Review Successfully");
     this.setState({open: false});
   };
+=======
+	handleSubmit = async () => {
+		const { star, comment, currentUser } = this.state;
+		const { requireReviewItem } = this.props;
+		let newReview = {
+			accommodation: requireReviewItem.accommodation,
+			// user: requireReviewItem.booker,
+			booking: requireReviewItem.id,
+			star: star,
+			review: comment
+		}
+		await axios.post("https://localhost:8000/reviews/", newReview);
+		console.log("Review Successfully");
+		this.setState({ open: false });
+	}
+>>>>>>> db6bc384b1eb44650cd09533c228c42b00c8a650:frontend/src/Component/Popup/FormDialog.js
 
   handleReviewOnChange = (value) => {
     console.log("Star Given: ", value);

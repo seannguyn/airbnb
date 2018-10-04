@@ -1,78 +1,36 @@
 import React from 'react'
+<<<<<<< HEAD:airbnbClone/frontend/src/components/layout/Sidebar.js
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 
 import Divider from '@material-ui/core/Divider';
+=======
+// import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+// import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+>>>>>>> db6bc384b1eb44650cd09533c228c42b00c8a650:frontend/src/Component/layout/Sidebar.js
 import Items from './Items';
-
 import {Consumer} from '../../Context';
 
-const drawerWidth = 240;
-
-const styles = theme => ({
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing.unit * 7,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-  },
-});
+const styles = theme => ({})
 
 class Sidebar extends React.Component {
+<<<<<<< HEAD:airbnbClone/frontend/src/components/layout/Sidebar.js
   render() {
     const {classes} = this.props;
+=======
+
+  render () {
+>>>>>>> db6bc384b1eb44650cd09533c228c42b00c8a650:frontend/src/Component/layout/Sidebar.js
     return (
       <Consumer>
 
         {value => {
-          const {sidebar_show} = value;
+          const {sidebar_show,} = value;
           return (
+<<<<<<< HEAD:airbnbClone/frontend/src/components/layout/Sidebar.js
             <Drawer
               variant="permanent"
               classes={{
@@ -86,6 +44,16 @@ class Sidebar extends React.Component {
               <Items/>
               <Divider/>
             </Drawer>
+=======
+            <Drawer open={sidebar_show}>
+          <div
+            tabIndex={0}
+            role="button"
+          >
+            <Items/>
+          </div>
+        </Drawer>
+>>>>>>> db6bc384b1eb44650cd09533c228c42b00c8a650:frontend/src/Component/layout/Sidebar.js
           )
         }}
 
@@ -94,4 +62,8 @@ class Sidebar extends React.Component {
   }
 }
 
+<<<<<<< HEAD:airbnbClone/frontend/src/components/layout/Sidebar.js
 export default withStyles(styles, {withTheme: true})(Sidebar);
+=======
+export default withStyles(styles)(Sidebar);
+>>>>>>> db6bc384b1eb44650cd09533c228c42b00c8a650:frontend/src/Component/layout/Sidebar.js

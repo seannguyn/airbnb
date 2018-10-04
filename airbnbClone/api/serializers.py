@@ -9,7 +9,7 @@ class AccommodationSerializer(serializers.ModelSerializer):
         model = Accommodation
         fields = ('id','user','title',
                     'addr_number','addr_street','addr_city','addr_state',
-                    'Accomodation_Type','area','bedroom_master','bedroom',
+                    'Accomodation_Type','bed','bedroom',
                     'kitchen','bathroom','pool',
                     'gym','carpark','description')
 
@@ -36,11 +36,7 @@ class BookingSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-<<<<<<< HEAD
-        fields = ('id', 'user', 'accommodation', 'booking' ,'star', 'review')
-=======
-        fields = ('id', 'user', 'accommodation', 'star', 'review', 'date_posted')
->>>>>>> 5d50f2dbc6a6379bb262f4cb3f7f39d4d8c81030
+        fields = ('id', 'user', 'accommodation','booking', 'star', 'review', 'date_posted')
 
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:

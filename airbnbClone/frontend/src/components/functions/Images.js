@@ -46,6 +46,7 @@ class Images extends React.Component {
         }
     }
 
+
     var i;
     var formData = new FormData()
     formData.append('a_image',file);
