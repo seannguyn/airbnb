@@ -140,6 +140,9 @@ class AccommodationDetail extends Component {
                       <div className="row">
                           <div className="col-8" style={{border:'2px solid blue'}}>
                               <div className="description">
+                                  <h4>Title: {title}</h4>
+                              </div>
+                              <div className="description">
                                   <h4>Description: {description}</h4>
                               </div>
                               <div className="row">
