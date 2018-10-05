@@ -3,10 +3,9 @@ import {Consumer} from './Context';
 import { withStyles } from '@material-ui/core/styles';
 import Header from './Component/layout/Header'
 // import Signin from './components/layouts/Signin'
-
+import { SnackbarProvider } from 'notistack';
 import Sidebar from './Component/layout/Sidebar'
 import Main from './Component/layout/Main'
-
 // import Main from './components/layouts/Main'
 
 
@@ -24,18 +23,27 @@ class AppMain extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Consumer>
-        {value => {
-          const { logged_in } = value;
-          return (
-            <div className={classes.root}>
-              <Header />
-              {logged_in === true ? <Sidebar /> : null}
-              <Main />
-            </div>
-          )
+      <SnackbarProvider
+        maxSnack={4}
+        autoHideDuration={4000}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
         }}
-      </Consumer>
+        >
+        <Consumer>
+          {value => {
+            const { logged_in } = value;
+            return (
+              <div className={classes.root}>
+                <Header />
+                {logged_in === true ? <Sidebar /> : null}
+                <Main />
+              </div>
+            )
+          }}
+        </Consumer>
+      </SnackbarProvider>
     )
   }
 }

@@ -16,11 +16,11 @@ import Modal from '@material-ui/core/Modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import SearchBar from '../PlacesAutoComplete/LocationSearchInput'
 
 function getModalStyle() {
 
   const top = 25;
-
 
   return {
     top: `${top}%`,
@@ -163,19 +163,21 @@ class EditHouse extends Component {
 
             title: result.title,
 
-            number: result.addr_number,
-            street: result.addr_street,
-            city:  result.addr_city,
-            state: result.addr_state,
+            address: result.address,
+            latitude: result.latitude,
+            longitude: result.longitude,
 
             bed: result.bed,
             bedroom: result.bedroom,
             bathroom: result.bathroom,
+
             kitchen: result.kitchen,
             gym: result.gym,
             pool: result.pool,
             carpark: result.carpark,
+
             description: result.description,
+
             currentUser: currentUser
           })
         }
@@ -187,15 +189,8 @@ class EditHouse extends Component {
 
   }
 
-  componentWillMount() {
-
-
-    // =>
-
-  }
 
   onChange(e) {
-
     this.setState({[e.target.name] : e.target.value});
   }
 
@@ -204,41 +199,16 @@ class EditHouse extends Component {
   }
 
   errorCheck(current) {
-    const {number,Accommodation_Type} = current;
+    const {Accommodation_Type} = current;
     // const {id, user, Accommodation_Type, number, street, city, state, title} = current;
     // const {bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
 
     var flag = false;
-    if (number === '') {
-      this.setState({error:{number:"number is required"}, error_number: true})
-      flag = true;
-    } else if (!isFinite(String(number))) {
-      this.setState({error:{number:"numeric please"}, error_number: true})
-      flag = true;
-    }
 
     if (Accommodation_Type === '') {
       this.setState({error:{Accommodation_Type:"required"}, error_Accommodation_Type: true})
       flag = true;
     }
-
-    // if (street === '' ) {
-    //   this.setState({error:{street:"street is required"}})
-    //   return;
-    // }
-    // if (city === '' ) {
-    //   this.setState({error:{city:"city is required"}})
-    //   return;
-    // }
-    //
-    // if (bedroom === ''  || !isFinite(String(bedroom))) {
-    //   this.setState({error:{bedroom:"bedroom is required"}})
-    //   return;
-    // }
-    // if (bathroom === '' || !isFinite(String(bathroom))) {
-    //   this.setState({error:{bathroom:"bathroom is required"}})
-    //   return;
-    // }
 
     if (flag === true) {
       return true;
@@ -251,7 +221,7 @@ class EditHouse extends Component {
   async onSubmit(dispatch, e) {
     e.preventDefault();
 
-    const {id, user, Accommodation_Type, number, street, city, state, title} = this.state;
+    const {id, user, Accommodation_Type, title} = this.state;
     const {bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
 
     if(this.errorCheck(this.state) === true) return;
@@ -262,10 +232,6 @@ class EditHouse extends Component {
       user:user,
       Accomodation_Type: Accommodation_Type,
       title: title,
-      addr_number: number,
-      addr_street: street,
-      addr_city: city,
-      addr_state: state,
 
       bed:bed,
       bedroom:bedroom,
@@ -290,30 +256,15 @@ class EditHouse extends Component {
         }
     )
 
-    const searchAccommodation = {
-      accommodation: this.props.id,
-      location: city
-    }
-    await axios.patch(`https://localhost:8000/search/${this.props.id}/`,searchAccommodation)
-    .catch(error => {
-      console.log(error.response,)
-    });
-
     dispatch({type:'EDIT_HOUSE', payload:editHouse})
 
     this.setState({
-      error_number: false,
-      error_street: false,
-      error_city: false,
-      error_state: false,
+      error_bed    : false,
       error_bedroom: false,
       error_bathroom: false,
 
       error: {
-        number: '',
-        street: '',
-        city: '',
-        state: '',
+        bed: '',
         bedroom: '',
         bathroom: '',
       },
@@ -327,7 +278,7 @@ class EditHouse extends Component {
 
   render () {
     const {status} = this.state;
-    const {Accommodation_Type,number, street, city, state, title} = this.state;
+    const {Accommodation_Type, title, address} = this.state;
     const {bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
     console.log(Accommodation_Type,"accomm type");
     const {classes} = this.props
@@ -364,50 +315,9 @@ class EditHouse extends Component {
                           />
                         </FormControl>
                       <Typography className={classes.typo} variant="headline">Address</Typography>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
-                          error={this.state.error_number}
-                          label="Number"
-                          value={number}
 
-                          onChange={this.onChange.bind(this)}
-                          name="number"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
-                          error={this.state.error_street}
-                          label="Street"
-                          value={street}
+                      <Typography className={classes.typo} variant="subheading">{address}</Typography>
 
-                          onChange={this.onChange.bind(this)}
-                          name="street"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
-                          error={this.state.error_city}
-                          label="City"
-                          value={city}
-
-                          onChange={this.onChange.bind(this)}
-                          name="city"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
-                          error={this.state.error_state}
-                          label="State"
-                          value={state}
-
-                          onChange={this.onChange.bind(this)}
-                          name="state"
-                          type="text"
-                        />
-                      </FormControl>
                       <Typography className={classes.typo} variant="headline">Category</Typography>
                       <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="accom-type">select</InputLabel>

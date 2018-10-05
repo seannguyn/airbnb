@@ -44,7 +44,6 @@ class Hosting extends React.Component {
   }
 
   handleExpand() {
-    console.log("HEREEEE", this.state.showHosting);
     this.setState({showHosting : !this.state.showHosting})
   }
 
@@ -75,18 +74,25 @@ class Hosting extends React.Component {
 
   async componentDidMount  () {
     const {id} = this.props.house;
-    let reviews, err;
-    await axios.get(`https://localhost:8000/accommodation/${id}/reviews/`)
-                .then(
-                    response => {
-                      reviews = response.data
+    var reviews = [];
+    var err;
+
+    const count = await axios.get(`https://localhost:8000/reviewCounter/${id}/`)
+
+    if (count.data.count > 0) {
+      await axios.get(`https://localhost:8000/accommodation/${id}/reviews/`)
+                  .then(response => {
+                        reviews = response.data
+                      }
+                  )
+                  .catch(
+                    error => {
+                      console.log("EROR: ", error)
+                      err = error.response;
                     }
-                ).catch(
-                  error => {
-                    console.log("EROR: ", error)
-                    err = error.response;
-                  }
-                )
+                  )
+    }
+
 
     if(err == null && reviews.length > 0){
       this.setState({reviews:reviews});
@@ -97,13 +103,12 @@ class Hosting extends React.Component {
   }
 
   render () {
-    // console.log('PROPS ', this.props);
-    const readonly = true,
-          {house, SingleHost} = this.props,
-          {id} = this.props.house,
-          {images, reviews} = this.state,
-          avgRating =  this.starCalculator(reviews),
-          { classes } = this.props;
+    const readonly = true;
+    const {house, SingleHost} = this.props;
+    const {id} = this.props.house;
+    const {images, reviews} = this.state;
+    const avgRating =  this.starCalculator(reviews);
+    const { classes } = this.props;
     let Rating = require('react-rating');
     let settings = {
         dots: true,
@@ -144,7 +149,7 @@ class Hosting extends React.Component {
           <CardBody>
             <div className={classes.cardHoverUnder}>
               <h4 className={classes.cardProductTitle}>
-                {house.addr_number}, {house.addr_street}, {house.addr_city}, {house.addr_state}
+                {house.address}
                 <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
               </h4>
               {/* <p className={classes.cardProductDesciprion}> */}

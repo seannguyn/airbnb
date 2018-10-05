@@ -15,7 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
-
+import { withSnackbar } from 'notistack';
 import SearchBar from '../PlacesAutoComplete/LocationSearchInput'
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
@@ -91,11 +91,6 @@ class AddHouse extends Component {
       latitude: 0,
       longitude: 0,
 
-      number: '',
-      street: '',
-      city: '',
-      state: '',
-
       Accommodation_Type:'',
 
       bed: 1,
@@ -119,10 +114,6 @@ class AddHouse extends Component {
 
       error: {
         title: '',
-        number: '',
-        street: '',
-        city: '',
-        state: '',
         Accommodation_Type: '',
         bedroom: '',
         bathroom: '',
@@ -144,41 +135,16 @@ class AddHouse extends Component {
   }
 
   errorCheck(current) {
-    const { Accommodation_Type, number} = current;
+    const { Accommodation_Type} = current;
     // const {id, user, Accommodation_Type, number, street, city, state} = current;
     // const {bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
 
     var flag = false;
-    if (number === '') {
-      this.setState({error:{number:"number is required"}, error_number: true})
-      flag = true;
-    } else if (!isFinite(String(number))) {
-      this.setState({error:{number:"numeric please"}, error_number: true})
-      flag = true;
-    }
 
     if (Accommodation_Type === '') {
       this.setState({error:{Accommodation_Type:"required"}, error_Accommodation_Type: true})
       flag = true;
     }
-
-    // if (street === '' ) {
-    //   this.setState({error:{street:"street is required"}})
-    //   return;
-    // }
-    // if (city === '' ) {
-    //   this.setState({error:{city:"city is required"}})
-    //   return;
-    // }
-    //
-    // if (bedroom === ''  || !isFinite(String(bedroom))) {
-    //   this.setState({error:{bedroom:"bedroom is required"}})
-    //   return;
-    // }
-    // if (bathroom === '' || !isFinite(String(bathroom))) {
-    //   this.setState({error:{bathroom:"bathroom is required"}})
-    //   return;
-    // }
 
     if (flag === true) {
       return true;
@@ -191,7 +157,7 @@ class AddHouse extends Component {
   async onSubmit(dispatch, e) {
     e.preventDefault();
 
-    const {user/*,number, street, city, state*/} = this.state;
+    const {user} = this.state;
     const {/*Accommodation_Type, */bed ,address, latitude, longitude, bedroom,bathroom,kitchen,gym,pool,carpark/*,description*/} = this.state;
 
     if(this.errorCheck(this.state) === true) return;
@@ -202,15 +168,11 @@ class AddHouse extends Component {
 
       Accomodation_Type: this.state.Accommodation_Type,
 
-      address:          address,
+      address:          address.toLowerCase(),
       latitude:         latitude,
       longitude:        longitude,
 
       title:            this.state.title,
-      addr_number:      this.state.number,
-      addr_street:      'street',
-      addr_city:        'city',
-      addr_state:       'NSW',
 
       bed:              bed,
       bedroom:          bedroom,
@@ -227,18 +189,17 @@ class AddHouse extends Component {
     console.log(newHouse);
 
     const id = await axios.post('https://localhost:8000/accommodation/',newHouse)
-    const res = await axios.get(`https://localhost:8000/accommodation/?user=${newHouse.user}`);
+    const res = await axios.get(`https://localhost:8000/accommodation/`);
 
-    console.log("NEW ID ISSSSS: ",id.data.id);
+    // create review count
+    await axios.post(`https://localhost:8000/reviewCounter/`,{accommodation: id.data.id, count: 0})
+
     dispatch({type:'ADD_HOUSE', payload:res.data})
 
     this.setState({
 
       title: '',
-      number: '',
-      street: '',
-      city: '',
-      state: '',
+      address: '',
 
       Accomodation_Type:'',
       bed: 0,
@@ -255,6 +216,9 @@ class AddHouse extends Component {
     this.props.history.push({
       pathname: `/editHouse/${id.data.id}`,
     })
+
+    this.props.onPresentSnackbar('success','Accommodation is added');
+
   }
 
   handleSelect = selected => {
@@ -277,10 +241,10 @@ class AddHouse extends Component {
 
   render () {
 
-    const {title, number, street, city, state} = this.state;
+    const {title} = this.state;
     const {Accommodation_Type,bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.state;
     const {classes} = this.props
-    console.log("PROPS: ", this.props);
+
     return (
 
       <Consumer>
@@ -306,46 +270,7 @@ class AddHouse extends Component {
                         </FormControl>
                       <Typography className={classes.typo} variant="headline" >Address</Typography>
                       <SearchBar handleSelect={this.handleSelect}/>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
-                          error={this.state.error_number}
-                          label="Number"
-                          value={number}
-                          onChange={this.onChange.bind(this)}
-                          name="number"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
-                          error={this.state.error_street}
-                          label="Street"
-                          value={street}
-                          onChange={this.onChange.bind(this)}
-                          name="street"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
-                          error={this.state.error_city}
-                          label="City"
-                          value={city}
-                          onChange={this.onChange.bind(this)}
-                          name="city"
-                          type="text"
-                        />
-                      </FormControl>
-                      <FormControl margin="normal" required fullWidth>
-                        <TextField
-                          error={this.state.error_state}
-                          label="State"
-                          value={state}
-                          onChange={this.onChange.bind(this)}
-                          name="state"
-                          type="text"
-                        />
-                      </FormControl>
+
                       <Typography className={classes.typo} variant="headline">Category</Typography>
                       <FormControl className={classes.formControl} error={this.state.error_Accommodation_Type}>
                         <InputLabel htmlFor="accom-type">select</InputLabel>
@@ -483,4 +408,4 @@ class AddHouse extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(AddHouse);
+export default withSnackbar(withStyles(styles, { withTheme: true })(AddHouse));

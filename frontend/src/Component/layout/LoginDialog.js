@@ -12,6 +12,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Divider from '@material-ui/core/Divider';
 import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
+import { withSnackbar } from 'notistack';
+
 
 const styles = theme => ({
   layout: {
@@ -160,7 +162,10 @@ class LoginDialog extends React.Component {
               })
 
     }
-    console.log("WE GOT USER: ",userInfo);
+    
+    var string = 'Welcome '.concat(userInfo.username)
+    this.props.onPresentSnackbar('success',string)
+
     var array = []
     array.push(userInfo)
     localStorage.setItem('currentUser', JSON.stringify(array));
@@ -315,4 +320,4 @@ class LoginDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(LoginDialog);
+export default withSnackbar(withStyles(styles)(LoginDialog));

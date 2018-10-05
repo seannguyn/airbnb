@@ -44,6 +44,12 @@ export default class FormDialog extends React.Component {
 			date_posted: moment().format('YYYY-MM-DD')
 		}
 		await axios.post("https://localhost:8000/reviews/", newReview);
+
+    // update review count
+    const reviewCount = await axios.get(`https://localhost:8000/reviewCounter/${requireReviewItem.accommodation}/`)
+    var newCount = reviewCount.data.count + 1
+    await axios.patch(`https://localhost:8000/reviewCounter/${requireReviewItem.accommodation}/`,{count: newCount})
+
 		console.log("Review Successfully");
 		this.setState({ open: false });
 	}

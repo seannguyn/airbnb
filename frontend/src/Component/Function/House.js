@@ -9,6 +9,8 @@ import CardContent from '@material-ui/core/CardContent'
 // import CardMedia from '@material-ui/core/CardMedia';
 // import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
+import { withSnackbar } from 'notistack';
+import axios from 'axios'
 
 const styles = {
   card: {
@@ -41,9 +43,9 @@ class House extends React.Component {
 
       const {myHostingList} = this.props.value;
       let i =0;
-      var deletable=true;
+      var deletable = true;
 
-      for(i=0; i<myHostingList.length; i++){
+      for(i=0; i < myHostingList.length; i++){
         if(myHostingList[i].accommodation === id){
           deletable =false;
           break;
@@ -51,17 +53,28 @@ class House extends React.Component {
       }
 
       if (deletable === true) {
-        alert("can delete")
-        // dispatch({type:'DELETE_HOUSE',payload:id})
+
+        await axios.delete(`https://localhost:8000/accommodation/${id}/`)
+        const houselist = await axios.get(`https://localhost:8000/accommodation/`)
+        const myHouseList = await axios.get(`https://localhost:8000/accommodation/?user=${this.props.value.currentUser[0].user_id}`)
+
+        dispatch({
+          type:'DELETE_HOUSE',
+          payload: {
+            houselist: houselist.data,
+            myHouseList: myHouseList.data
+          }
+        })
+        this.props.onPresentSnackbar('error', 'Accommodation deleted')
       }
       else {
-        alert("cant delete, have hosting")
+        alert("CANT DELETE, you are hosting this house")
       }
     }
 
   render () {
 
-    const {addr_number, addr_street, addr_city} = this.props.houseDetail;
+    const {address} = this.props.houseDetail;
     const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.props.houseDetail;
     const {user} = this.props.houseDetail; //-- from houses.js -- user id in each house in houselist
     const {id} = this.props.houseDetail;
@@ -83,7 +96,7 @@ class House extends React.Component {
             }
 
             let i = 0;
-            for(i=0; i < myHostingList.length; i++){
+            for(i = 0; i < myHostingList.length; i++){
               if(parseInt(myHostingList[i].accommodation, 10) === id){
                 this.isHosting = true;
                 break;
@@ -98,7 +111,7 @@ class House extends React.Component {
               <Card className={classes.card} style={{width:'30vw'}} >
                 <CardContent>
                   <Typography gutterBottom variant="headline" component="h2">
-                    {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
+                    {address} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
                     <i  className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)} style={{cursor:'pointer', float:'right',color:'red'}}/>
                   </Typography>
                   <Link to={`editHouse/${id}`}>
@@ -134,4 +147,4 @@ class House extends React.Component {
     );
   }
 }
-export default withStyles(styles)(House);
+export default withSnackbar(withStyles(styles)(House));

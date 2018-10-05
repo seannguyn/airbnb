@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import {enumerateDaysBetweenDates} from '../Helper/Helper'
 import FormControl from '@material-ui/core/FormControl';
-
+import { withSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
@@ -79,7 +79,6 @@ class Hosting extends Component {
     // handle when form is submitted
     onSubmit = async (dispatch, currUser, e) => {
         e.preventDefault();
-        console.log('start host: ', currUser);
         const {
                 date_start,
                 date_end,
@@ -100,8 +99,6 @@ class Hosting extends Component {
             price: price,
             description: description
         }
-        console.log('start host: ', hostingHouse);
-
         const date_free = enumerateDaysBetweenDates(date_start,date_end)
 
         const res = await axios.get(`https://localhost:8000/accommodation/${this.props.id}/`)
@@ -111,7 +108,7 @@ class Hosting extends Component {
           date_free: date_free,
           price: price,
           guest: guest,
-          location: res.data.addr_city
+          location: res.data.address
         }
 
 
@@ -132,12 +129,9 @@ class Hosting extends Component {
 
         dispatch({type:'HOSTING', payload:postHosting.data});
 
-        // Add error handling here
-        // ......
-        // error handling
-
-        // push back to myhosts page
         this.props.history.push("/myHouses");
+
+        this.props.onPresentSnackbar('success','Accommodation is live');
     }
 
     render() {
@@ -149,7 +143,6 @@ class Hosting extends Component {
                 {value => {
                     const {dispatch} = value;
                     const {currentUser} = value;
-                    console.log(currentUser);
                 return (
 
                 <div className="card-body mb-3">
@@ -258,4 +251,4 @@ class Hosting extends Component {
     }
 }
 
-export default withStyles(styles)(Hosting);
+export default withSnackbar(withStyles(styles)(Hosting));
