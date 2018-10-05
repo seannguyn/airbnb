@@ -14,13 +14,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from basic_func import views
-from django.conf.urls import url
 from api import views
 
 from rest_framework import routers
-from rest_framework.authtoken import views as authviews
 
 router = routers.DefaultRouter()
 router.register('accommodation',views.AccommodationView)
@@ -33,7 +29,6 @@ urlpatterns = [
     # old stuffs
     path('accounts/', include('allauth.urls')),
     path('api/', include('api.urls')),
-    path('basic_func/', include('basic_func.urls')),
 
     path('api/v1/', include('api.urls')), #api urls
     # url(r'^users/', include('api.urls')),

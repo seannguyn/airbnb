@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     
     'rest_auth',
     'api',
-    'basic_func',
     'tawkto',
     'django.contrib.sites', # new
     'rest_auth.registration', #new
