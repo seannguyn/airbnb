@@ -16,7 +16,6 @@ import Modal from '@material-ui/core/Modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import SearchBar from '../PlacesAutoComplete/LocationSearchInput'
 
 function getModalStyle() {
 

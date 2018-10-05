@@ -15,7 +15,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Rating from 'react-rating'
 import like from '../../assets/img/icons/like.png'
 import like_empty from '../../assets/img/icons/like_empty.png'
-import { isMoment } from 'moment';
 
 export default class FormDialog extends React.Component {
   state = {

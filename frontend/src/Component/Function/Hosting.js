@@ -77,10 +77,10 @@ class Hosting extends React.Component {
     var reviews = [];
     var err;
 
-    const count = await axios.get(`https://localhost:8000/reviewCounter/${id}/`)
+    const count = await axios.get(`/reviewCounter/${id}/`)
 
     if (count.data.count > 0) {
-      await axios.get(`https://localhost:8000/accommodation/${id}/reviews/`)
+      await axios.get(`/accommodation/${id}/reviews/`)
                   .then(response => {
                         reviews = response.data
                       }
