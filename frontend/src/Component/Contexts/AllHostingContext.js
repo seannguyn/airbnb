@@ -34,7 +34,7 @@ class AllHostingContext extends React.Component {
         var rendering = []
 
         if (this.state.display === "list") {
-          rendering.push(<AllHosting key="list" history={this.props.history} AllHostingList={AllHostingList} HouseList={HouseList}></AllHosting>)
+          rendering.push(<AllHosting key="list" history={this.props.history} AllHostingList={AllHostingList} HouseList={HouseList}/>)
         } else {
           rendering.push(<h1 key="map"><Map/></h1>)
         }

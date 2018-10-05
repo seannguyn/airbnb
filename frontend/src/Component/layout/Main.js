@@ -1,20 +1,20 @@
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles';
-import {Switch, Route} from 'react-router-dom';
-import NotFound from './NotFound'
-import AllHostingContext from '../Contexts/AllHostingContext'
-import ContextApi from '../Contexts/Context_api.js';
-import AddHouseContext from '../Contexts/AddHouseContext.js';
+import {Switch, Route} from 'react-router-dom'
+import {Map} from '../GoogleMap/Maps'
+import {withStyles} from '@material-ui/core/styles'
 
-import MyHouses from '../Function/MyHouses'
-import MyBookings from '../Booking/MyBookings';
-// import AccommodationDetail from '../AccommodationDetail/AccommodationDetail';
-// import MyApp from '../Payment/paypal'
-import AccommodationDetailContext from '../Contexts/AccommodationDetailContext';
+import NotFound from './NotFound'
+
+import AllHostingContext from '../Contexts/AllHostingContext'
+import ContextApi from '../Contexts/Context_api.js'
+import AddHouseContext from '../Contexts/AddHouseContext.js'
+import AccommodationDetailContext from '../Contexts/AccommodationDetailContext'
+
+import MyBookings from '../Booking/MyBookings'
 import ReserveOverallBooking from '../Booking/ReserveOverallBooking'
 import EditOverallBooking from '../Booking/EditOverallBooking'
 import ConfirmOverallBooking from '../Booking/ConfirmOverallBooking'
-import { Map } from '../GoogleMap/Maps'
+import MyHouses from '../Function/MyHouses'
 
 
 const styles = theme => ({
@@ -25,47 +25,42 @@ const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
+
   content: {
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit,
     width: '90%',
     height: '90%',
-    // position:'fixed',
-    // margin:'0',
-    // top:'0',
-    // left:'0',
-
   },
 });
 
 class Main extends React.Component {
   render() {
 
-    const { classes } = this.props
+    const {classes} = this.props;
 
     return (
       <main className={classes.content}>
-        <div className={classes.toolbar} />
-          <Switch>
-            <Route exact path="/" component={AllHostingContext}></Route>
-            <Route exact path="/myhouses" component={MyHouses}></Route>
-            <Route exact path="/editHouse/:id" component={ContextApi}></Route>
-            <Route exact path="/addHouse" component={AddHouseContext}></Route>
+        <div className={classes.toolbar}/>
+        <Switch>
+          <Route exact path="/" component={AllHostingContext}/>
+          <Route exact path="/myhouses" component={MyHouses}/>
+          <Route exact path="/editHouse/:id" component={ContextApi}/>
+          <Route exact path="/addHouse" component={AddHouseContext}/>
 
-            <Route exact path="/accommodations/:id" component={AccommodationDetailContext}></Route>
-            <Route exact path="/mybookings" component={MyBookings}></Route>
-            <Route exact path="/overallbooking/reserve/:id" component={ReserveOverallBooking}></Route>
-            <Route exact path="/overallbooking/payment/:id" component={EditOverallBooking}></Route>
-            <Route exact path="/overallbooking/confirm/:id" component={ConfirmOverallBooking}></Route>
+          <Route exact path="/accommodations/:id" component={AccommodationDetailContext}/>
+          <Route exact path="/mybookings" component={MyBookings}/>
+          <Route exact path="/overallbooking/reserve/:id" component={ReserveOverallBooking}/>
+          <Route exact path="/overallbooking/payment/:id" component={EditOverallBooking}/>
+          <Route exact path="/overallbooking/confirm/:id" component={ConfirmOverallBooking}/>
 
-            <Route exact path="/map" component={Map}/>
+          <Route exact path="/map" component={Map}/>
 
-            <Route component={NotFound}></Route>
-
-          </Switch>
+          <Route component={NotFound}/>
+        </Switch>
       </main>
     )
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Main);
+export default withStyles(styles, {withTheme: true})(Main);

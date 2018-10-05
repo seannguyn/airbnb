@@ -1,26 +1,22 @@
 import React from 'react';
-import PlacesAutocomplete  from 'react-places-autocomplete'
-import { classnames } from './helpers'
+import PlacesAutocomplete from 'react-places-autocomplete'
+import {classnames} from './helpers'
 import '../../Styles/searchLocation.css'
 
 class SearchBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      address: '',
-      errorMessage: '',
-      latitude: null,
-      longitude: null,
-      isGeocoding: false,
-    };
-  }
-
   handleChange = address => {
     this.setState({
       address,
       latitude: null,
       longitude: null,
       errorMessage: '',
+    });
+  };
+  handleCloseClick = () => {
+    this.setState({
+      address: '',
+      latitude: null,
+      longitude: null,
     });
   };
 
@@ -40,21 +36,23 @@ class SearchBar extends React.Component {
 //         console.log('error', error); // eslint-disable-line no-console
 //       });
 //   };
-
-  handleCloseClick = () => {
-    this.setState({
-      address: '',
-      latitude: null,
-      longitude: null,
-    });
-  };
-
   handleError = (status, clearSuggestions) => {
     console.log('Error from Google Maps API', status); // eslint-disable-line no-console
-    this.setState({ errorMessage: status }, () => {
+    this.setState({errorMessage: status}, () => {
       clearSuggestions();
     });
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      address: '',
+      errorMessage: '',
+      latitude: null,
+      longitude: null,
+      isGeocoding: false,
+    };
+  }
 
   render() {
     const {
@@ -72,9 +70,9 @@ class SearchBar extends React.Component {
           value={address}
           onSelect={this.props.handleSelect}
           onError={this.handleError}
-          shouldFetchSuggestions={address.length > 2}
-        >
-          {({ getInputProps, suggestions, getSuggestionItemProps }) => {
+          shouldFetchSuggestions={address.length > 2} >
+
+          {({getInputProps, suggestions, getSuggestionItemProps}) => {
             return (
               <div className="Demo__search-bar-container">
                 <div className="Demo__search-input-container">
@@ -103,7 +101,7 @@ class SearchBar extends React.Component {
                       return (
                         /* eslint-disable react/jsx-key */
                         <div
-                          {...getSuggestionItemProps(suggestion, { className })}
+                          {...getSuggestionItemProps(suggestion, {className})}
                         >
                           <strong>
                             {suggestion.formattedSuggestion.mainText}
@@ -115,7 +113,7 @@ class SearchBar extends React.Component {
                       );
                       /* eslint-enable react/jsx-key */
                     })}
-                   
+
                   </div>
                 )}
               </div>
@@ -131,7 +129,7 @@ class SearchBar extends React.Component {
             <h3 className="Demo__geocode-result-header">Geocode result</h3>
             {isGeocoding ? (
               <div>
-                <i className="fa fa-spinner fa-pulse fa-3x fa-fw Demo__spinner" />
+                <i className="fa fa-spinner fa-pulse fa-3x fa-fw Demo__spinner"/>
               </div>
             ) : (
               <div>

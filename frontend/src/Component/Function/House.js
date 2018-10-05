@@ -1,7 +1,7 @@
 import React from 'react'
 import {Consumer} from '../../Context'
 import {Link} from 'react-router-dom'
-import { withStyles } from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 // import CardActionArea from '@material-ui/core/CardActionArea';
 // import CardActions from '@material-ui/core/CardActions';
@@ -21,112 +21,124 @@ const styles = {
 
 class House extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showDetail: false, // flag to toggle house detail
     }
   }
 
   handleExpand() {
-    this.setState({showDetail : !this.state.showDetail }, () => {
+    this.setState({showDetail: !this.state.showDetail}, () => {
       console.log(this.state.showDetail);
     })
   }
 
   // pass an axios to backend, requesting for delete
-    async handleDelete(id, dispatch) {
+  async handleDelete(id, dispatch) {
 
-      // console.log('delete',this.props.value,this.props.myHouses,id);
+    // console.log('delete', this.props.value, this.props.myHouses, id);
 
-      const {myHostingList} = this.props.value;
-      let i =0;
-      var deletable=true;
+    const {myHostingList} = this.props.value;
+    let i = 0;
+    let deletable = true;
 
-      for(i=0; i<myHostingList.length; i++){
-        if(myHostingList[i].accommodation === id){
-          deletable =false;
-          break;
-        }
-      }
-
-      if (deletable === true) {
-        alert("can delete")
-        // dispatch({type:'DELETE_HOUSE',payload:id})
-      }
-      else {
-        alert("cant delete, have hosting")
+    for (i = 0; i < myHostingList.length; i++) {
+      if (myHostingList[i].accommodation === id) {
+        deletable = false;
+        break;
       }
     }
 
-  render () {
+    if (deletable === true) {
+      alert("can delete")
+      // dispatch({type:'DELETE_HOUSE', payload:id})
+    } else {
+      alert("cant delete, have hosting")
+    }
+  }
+
+  render() {
 
     const {addr_number, addr_street, addr_city} = this.props.houseDetail;
-    const {area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark,description} = this.props.houseDetail;
+    const {area, bedroom_master, bedroom, bathroom, kitchen, gym, pool, carpark, description} = this.props.houseDetail;
     const {user} = this.props.houseDetail; //-- from houses.js -- user id in each house in houselist
     const {id} = this.props.houseDetail;
     const {showDetail} = this.state;
-    const { classes} = this.props;
+    const {classes} = this.props;
 
     return (
       <Consumer>
-        { value => {
+        {value => {
           const {dispatch} = value;
 
           const {currentUser, myHostingList} = value;
 
-          if(currentUser[0] !== null){
+          if (currentUser[0] !== null) {
             const {user_id} = currentUser[0];
 
-            if(user_id === user){
+            if (user_id === user) {
               this.isMyHouse = true;
             }
 
             let i = 0;
-            for(i=0; i < myHostingList.length; i++){
-              if(parseInt(myHostingList[i].accommodation, 10) === id){
+            for (i = 0; i < myHostingList.length; i++) {
+              if (parseInt(myHostingList[i].accommodation, 10) === id) {
                 this.isHosting = true;
                 break;
-              }else{
+              } else {
                 this.isHosting = false;
               }
             }
           }
 
           return (
-            <div style={{padding:"1rem"}}>
-              <Card className={classes.card} style={{width:'30vw'}} >
+            <div style={{padding: "1rem"}}>
+              <Card className={classes.card} style={{width: '30vw'}}>
                 <CardContent>
                   <Typography gutterBottom variant="headline" component="h2">
-                    {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/>
-                    <i  className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)} style={{cursor:'pointer', float:'right',color:'red'}}/>
+                    {addr_number} {addr_street}, {addr_city} <i onClick={this.handleExpand.bind(this)}
+                                                                className="fas fa-sort-down"
+                                                                style={{cursor: 'pointer'}}/>
+                    <i className="fas fa-times" onClick={this.handleDelete.bind(this, id, dispatch)}
+                       style={{cursor: 'pointer', float: 'right', color: 'red'}}/>
                   </Typography>
                   <Link to={`editHouse/${id}`}>
-                    <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
+                    <i className="fas fa-pencil-alt" style={{cursor: 'pointer', float: 'right', color: 'black'}}/>
                   </Link>
-              </CardContent>
-                  {this.isMyHouse === true && this.isHosting === true?
-                      <Link to={{ pathname: `/editHouse/${id}`, state: { stage: 3} }}>
-                        <i className="fas fa-circle" style={{color:"green"}}>Active</i>
-                      </Link>
+                </CardContent>
+                {this.isMyHouse === true && this.isHosting === true ?
+                  <Link to={{pathname: `/editHouse/${id}`, state: {stage: 3}}}>
+                    <i className="fas fa-circle" style={{color: "green"}}>Active</i>
+                  </Link>
                   : <Link to={`/editHouse/${id}`}>
-                        <i className="fas fa-circle" style={{color:"grey"}}>Inactive Host</i>
-                      </Link>
-                  }
-                  {showDetail === true ?
-                    <ul className="list-group">
-                      {area           !=='0' ? <li className="list-group-item">Area <i className="fas fa-th-large"/> {area}  sq meters</li>         : null}
-                      {bedroom_master !=='0' ? <li className="list-group-item">Master Bedroom <i className="fas fa-bed"/> x {bedroom_master} </li>  : null}
-                      {bedroom        !=='0' ? <li className="list-group-item">Bedroom <i className="fas fa-bed"/> x {bedroom} </li>                : null}
-                      {bathroom       !=='0' ? <li className="list-group-item">Bathroom <i className="fas fa-bath"/> x {bathroom} </li>             : null}
-                      {kitchen        !=='0' ? <li className="list-group-item">Kitchen <i className="fas fa-utensils"/> x {kitchen} </li>           : null}
-                      {gym            !=='0' ? <li className="list-group-item">Gym <i className="fas fa-dumbbell"/> x {gym} </li>                   : null}
-                      {pool           !=='0' ? <li className="list-group-item">Pool <i className="fas fa-swimming-pool"/> x {pool} </li>            : null}
-                      {carpark        !=='0' ? <li className="list-group-item">Carpark <i className="fas fa-car-side"/> x {carpark} </li>           : null}
-                      <li className="list-group-item">Description :{description} </li>
-                    </ul>
-                    : null}
-                </Card>
+                    <i className="fas fa-circle" style={{color: "grey"}}>Inactive Host</i>
+                  </Link>
+                }
+                {showDetail === true ?
+                  <ul className="list-group">
+                    {area !== '0' ?
+                      <li className="list-group-item">Area <i className="fas fa-th-large"/> {area} sq meters
+                      </li> : null}
+                    {bedroom_master !== '0' ?
+                      <li className="list-group-item">Master Bedroom <i className="fas fa-bed"/> x {bedroom_master}
+                      </li> : null}
+                    {bedroom !== '0' ?
+                      <li className="list-group-item">Bedroom <i className="fas fa-bed"/> x {bedroom} </li> : null}
+                    {bathroom !== '0' ?
+                      <li className="list-group-item">Bathroom <i className="fas fa-bath"/> x {bathroom} </li> : null}
+                    {kitchen !== '0' ?
+                      <li className="list-group-item">Kitchen <i className="fas fa-utensils"/> x {kitchen} </li> : null}
+                    {gym !== '0' ?
+                      <li className="list-group-item">Gym <i className="fas fa-dumbbell"/> x {gym} </li> : null}
+                    {pool !== '0' ?
+                      <li className="list-group-item">Pool <i className="fas fa-swimming-pool"/> x {pool} </li> : null}
+                    {carpark !== '0' ?
+                      <li className="list-group-item">Carpark <i className="fas fa-car-side"/> x {carpark} </li> : null}
+                    <li className="list-group-item">Description :{description} </li>
+                  </ul>
+                  : null}
+              </Card>
             </div>
           )
         }}
@@ -134,4 +146,5 @@ class House extends React.Component {
     );
   }
 }
+
 export default withStyles(styles)(House);
