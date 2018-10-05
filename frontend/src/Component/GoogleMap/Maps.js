@@ -1,11 +1,9 @@
-/* eslint-disable no-undef */ 
+/* eslint-disable no-undef */
 // The line above fix google is undefined problem - don't delete
 import React, { Component } from 'react'
 import { withGoogleMap, GoogleMap } from 'react-google-maps'
 import PlaceMarker from '../PlaceMarker/PlaceMarker'
 import {Consumer} from '../../Context'
-
-const uuidv1 = require('uuid/v1');
 
 const AirbnbMap = withGoogleMap(props => (
   <GoogleMap
@@ -25,13 +23,13 @@ export class Map extends Component {
     super(props)
     this.xMapBounds = { min: null, max: null }
     this.yMapBounds = { min: null, max: null }
- 
+
     this.mapFullyLoaded = false;
     this.zoom = 12;
 
     this.state = {
     // lat and lng for map center
-      lat: -33.88994, 
+      lat: -33.88994,
       lng: 151.20633900000007
     };
   }
@@ -41,43 +39,43 @@ export class Map extends Component {
     this.setMapCenterPoint()
     this.fetchPlacesFromApi()
   }
- 
+
   handleMapMounted(map) {
     this.map = map
   }
- 
+
   handleMapFullyLoaded() {
     if (this.mapFullyLoaded)
       return
- 
+
     this.mapFullyLoaded = true
     this.handleMapChanged()
   }
- 
+
     setMapCenterPoint() {
         this.setState({
         lat: this.map.getCenter().lat(),
         lng: this.map.getCenter().lng()
         })
     }
- 
+
     fetchPlacesFromApi() {
     const place = <PlaceMarker lat={50.0515918} lng={19.9357531} price={20} name={"Hotel"} description={"Hotel desc"} />
     this.setState({ places: [place] })
     }
- 
+
     getMapBounds() {
         var mapBounds = this.map.getBounds()
         var xMapBounds = mapBounds.b
         var yMapBounds = mapBounds.f
-    
+
         this.xMapBounds.min = xMapBounds.b
         this.xMapBounds.max = xMapBounds.f
-    
+
         this.yMapBounds.min = yMapBounds.f
         this.yMapBounds.max = yMapBounds.b
     }
-    
+
     render() {
     const { accommodation } = this.props;
     // console.log("MAPS PROPS:", this.props);
@@ -92,31 +90,30 @@ export class Map extends Component {
                 placeMarkers = places;
                 let markers = [];
                 placeMarkers.map(placeMarker => {
-                    let key = uuidv1()
                     if(accommodation !== undefined && accommodation === placeMarker.id){
                         markers.push(
-                            <PlaceMarker 
+                            <PlaceMarker
                                 key={placeMarker.lng}
-                                lat={placeMarker.lat} 
-                                lng={placeMarker.lng} 
-                                price={placeMarker.price} 
-                                name={placeMarker.title} 
-                                description={placeMarker.description} 
+                                lat={placeMarker.lat}
+                                lng={placeMarker.lng}
+                                price={placeMarker.price}
+                                name={placeMarker.title}
+                                description={placeMarker.description}
                                 accommodation = {placeMarker.id}
                                 address = {placeMarker.address}
                                 accommodationChosen = {accommodation}
                             />);
-                        
+
                     }
                     else{
                         markers.push(
                             <PlaceMarker
                                 key={placeMarker.lng}
-                                lat={placeMarker.lat} 
-                                lng={placeMarker.lng} 
-                                price={placeMarker.price} 
-                                name={placeMarker.title} 
-                                description={placeMarker.description} 
+                                lat={placeMarker.lat}
+                                lng={placeMarker.lng}
+                                price={placeMarker.price}
+                                name={placeMarker.title}
+                                description={placeMarker.description}
                                 accommodation = {placeMarker.id}
                                 address = {placeMarker.address}
                             />
@@ -149,7 +146,7 @@ export class Map extends Component {
                  </div>
             );
         }}
-        </Consumer> 
+        </Consumer>
     );
   }
 }

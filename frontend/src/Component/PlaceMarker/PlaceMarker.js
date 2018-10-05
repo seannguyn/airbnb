@@ -17,20 +17,11 @@ export class PlaceMarker extends Component {
     clickTooltip() {
         this.setState({ showTooltip: !this.state.showTooltip })
     }
-     
+
     closeWindow() {
         this.setState({ showTooltip: false })
     }
 
-    findImagesByAccommID(images, accommID){
-        const retImages = [];
-        for( let i = 0; i < images.length; i++){
-          if(accommID === images[i].accommodation){
-            retImages.push(images[i]);
-          }
-        }
-        return retImages;
-    }
 
     async componentDidMount  () {
         const { accommodation } = this.props;
@@ -48,9 +39,9 @@ export class PlaceMarker extends Component {
         if(err == null && reviews.length > 0){
           this.setState({reviews:reviews});
         }
-    
+
         const images = await axios.get('https://localhost:8000/accommodationImage/');
-        const retImages =  this.findImagesByAccommID(images.data, accommodation);
+        const retImages =  findImagesByAccommID(images.data, accommodation);
         this.setState({images: retImages});
     }
 
@@ -80,7 +71,7 @@ export class PlaceMarker extends Component {
                             accommodation={accommodation}
                             address={address}
                             closeWindow={this.closeWindow.bind(this)}/>)}
-            </Marker>            
+            </Marker>
         :
             <Marker className="map-price-container"
             markerWithLabel={window.MarkerWithLabel}
@@ -104,7 +95,7 @@ export class PlaceMarker extends Component {
             </Marker>
         }
         </React.Fragment>
-        
+
         );
     }
 }

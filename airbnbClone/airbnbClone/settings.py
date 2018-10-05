@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'rest_auth',
     'api',
     'tawkto',
@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'django_adminlte',
     'django_adminlte_theme',
     'rest_framework',
-   
+
 ]
 
 REST_FRAMEWORK = {
@@ -67,7 +67,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated', # uncomment this line to enable authentication
     ],
 
-    'DEFAULT_AUTHENTICATION_CLASSES': [   
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
 

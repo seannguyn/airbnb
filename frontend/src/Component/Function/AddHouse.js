@@ -192,7 +192,7 @@ class AddHouse extends Component {
     e.preventDefault();
 
     const {user/*,number, street, city, state*/} = this.state;
-    const {/*Accommodation_Type, */address, latitude, longitude, area,bedroom_master,bedroom,bathroom,kitchen,gym,pool,carpark/*,description*/} = this.state;
+    const {/*Accommodation_Type, */bed ,address, latitude, longitude, bedroom,bathroom,kitchen,gym,pool,carpark/*,description*/} = this.state;
 
     if(this.errorCheck(this.state) === true) return;
 
@@ -212,9 +212,9 @@ class AddHouse extends Component {
       addr_city:        'city',
       addr_state:       'NSW',
 
-      bed:              1,
-      bedroom:          1,
-      bathroom:         1,
+      bed:              bed,
+      bedroom:          bedroom,
+      bathroom:         bathroom,
 
       kitchen:          kitchen,
       pool:             pool,
