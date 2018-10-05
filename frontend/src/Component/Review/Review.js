@@ -6,7 +6,7 @@ class Review extends Component {
 
     async componentDidMount(){
 			console.log("DIDMOUTNREVIEW: ", this.props);
-			const res = await axios.get("https://localhost:8000/users/1/");
+			const res = await axios.get("/users/1/");
 			console.log("RES: ", res.data);
     }
     render() {

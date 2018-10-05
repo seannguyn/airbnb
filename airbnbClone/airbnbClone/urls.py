@@ -14,11 +14,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-<<<<<<< HEAD
-=======
-from django.conf import settings
-from django.conf.urls import url
->>>>>>> 152cb825cc572c4d3dd31dd4aeda46f2d771046c
 from api import views
 
 from rest_framework import routers

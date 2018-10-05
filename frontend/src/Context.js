@@ -155,11 +155,11 @@ export class Provider extends Component {
 
   async componentDidMount(){
 
-    const res = await axios.get('https://localhost:8000/accommodation/');
+    const res = await axios.get('/accommodation/');
     this.setState({HouseList: res.data});
     this.setState({didmount: 1});
 
-    const allHosting = await axios.get('https://localhost:8000/accommodationHosting/');
+    const allHosting = await axios.get('/accommodationHosting/');
     this.setState({AllHostingList: allHosting.data});
     
     if(allHosting.data !== []){
@@ -169,7 +169,7 @@ export class Provider extends Component {
     if(this.state.currentUser.length === 1) {
       const {token,user_id} = this.state.currentUser[0];
 
-      const res = await axios.get(`https://localhost:8000/accommodationHosting/?user=${user_id}`,
+      const res = await axios.get(`/accommodationHosting/?user=${user_id}`,
       {
         headers:{
           'Authorization': {token}
@@ -205,12 +205,12 @@ export class Provider extends Component {
       this.setState({mounted: 1})
       localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
       const {token,user_id} = nextState.currentUser[0];
-      const res = await axios.get('https://localhost:8000/accommodationHosting/',
+      const res = await axios.get('/accommodationHosting/',
         {
           headers:{ 'Authorization': {token} }
         }
       )
-      const myHouse = await axios.get(`https://localhost:8000/accommodation/?user=${user_id}`)
+      const myHouse = await axios.get(`/accommodation/?user=${user_id}`)
       this.setState({myHouseList: myHouse.data});
       this.setState({myHostingList: res.data});
       return true;
@@ -223,7 +223,7 @@ export class Provider extends Component {
     for( let i = 0; i <  AllHostingList.length; i++){
         console.log(AllHostingList[i].accommodation)
         const accommodation = AllHostingList[i].accommodation;
-        await axios.get(`https://localhost:8000/accommodation/${accommodation}/`)
+        await axios.get(`/accommodation/${accommodation}/`)
                     .then(response => {
                         const info = {
                             id : response.data.id, 

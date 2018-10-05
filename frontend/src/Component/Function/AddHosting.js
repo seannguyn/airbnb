@@ -104,7 +104,7 @@ class Hosting extends Component {
 
         const date_free = enumerateDaysBetweenDates(date_start,date_end)
 
-        const res = await axios.get(`https://localhost:8000/accommodation/${this.props.id}/`)
+        const res = await axios.get(`/accommodation/${this.props.id}/`)
 
         const searchAccommodation = {
           accommodation: res.data.id,
@@ -115,7 +115,7 @@ class Hosting extends Component {
         }
 
 
-        await axios.post('https://localhost:8000/search/',searchAccommodation)
+        await axios.post('/search/',searchAccommodation)
         .catch(error => {
           console.log(error.response,)
         });
@@ -123,7 +123,7 @@ class Hosting extends Component {
         // Notes: need backend validation for date and available date to
         //        avoid conflicts.
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
-        const postHosting = await axios.post('https://localhost:8000/accommodationHosting/', hostingHouse,
+        const postHosting = await axios.post('/accommodationHosting/', hostingHouse,
                 {headers:{
                     'Authorization': {token}
                 }

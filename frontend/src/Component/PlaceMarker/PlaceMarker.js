@@ -26,7 +26,7 @@ export class PlaceMarker extends Component {
     async componentDidMount  () {
         const { accommodation } = this.props;
         let reviews, err;
-        await axios.get(`https://localhost:8000/accommodation/${accommodation}/reviews/`)
+        await axios.get(`/accommodation/${accommodation}/reviews/`)
                     .then(
                         response => {
                             reviews = response.data
@@ -40,7 +40,7 @@ export class PlaceMarker extends Component {
           this.setState({reviews:reviews});
         }
 
-        const images = await axios.get('https://localhost:8000/accommodationImage/');
+        const images = await axios.get('/accommodationImage/');
         const retImages =  findImagesByAccommID(images.data, accommodation);
         this.setState({images: retImages});
     }

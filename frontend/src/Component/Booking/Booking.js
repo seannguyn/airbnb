@@ -109,11 +109,11 @@ class Booking extends Component {
   }
 
   handleDelete = async (id) => {
-    await axios.delete(`https://localhost:8000/booking/${id}/`);
+    await axios.delete(`/booking/${id}/`);
     alert("Delete successfully - reload page");
     const {accommodation} = this.state;
     const date_free = enumerateDaysBetweenDates(this.props.booking.date_start, this.props.booking.date_end)
-    const res_temp = await axios.get(`https://localhost:8000/search/${accommodation.id}/`)
+    const res_temp = await axios.get(`/search/${accommodation.id}/`)
 
     const newDateFree_temp = concatString(res_temp.data.date_free,date_free)
 
@@ -121,7 +121,7 @@ class Booking extends Component {
       date_free: newDateFree_temp
     }
 
-    await axios.patch(`https://localhost:8000/search/${accommodation.id}/`,searchAccommodationTemp)
+    await axios.patch(`/search/${accommodation.id}/`,searchAccommodationTemp)
     window.location.reload();
   }
 
@@ -181,23 +181,23 @@ class Booking extends Component {
 		// console.log("Props: ", this.props.booking);
 		const { booking, /*pastStay, isPast*/ } = this.props,
 					hosting = booking.hosting;
-		const res = await axios.get(`https://localhost:8000/accommodationHosting/${hosting}/`);
+		const res = await axios.get(`/accommodationHosting/${hosting}/`);
 		const accommID = res.data.accommodation;
 		this.setState({currentAccommodationID: accommID});
-		let images = await axios.get(`https://localhost:8000/accommodationImage/`);
+		let images = await axios.get(`/accommodationImage/`);
 		// console.log("images: ", images.data);
 		images = this.findImagesByAccommID(images.data, accommID);
     this.setState({images:images});
 
-    const res1 = await axios.get(`https://localhost:8000/accommodationHosting/${this.props.booking.hosting}/`)
+    const res1 = await axios.get(`/accommodationHosting/${this.props.booking.hosting}/`)
     this.setState({host: res1.data})
 
 
-  const res2 = await axios.get(`https://localhost:8000/accommodation/${res1.data.accommodation}/`)
+  const res2 = await axios.get(`/accommodation/${res1.data.accommodation}/`)
   this.setState({accommodation: res2.data})
 
 
-  const res3 = await axios.get(`https://localhost:8000/booking/?host=${this.props.booking.hosting}`)
+  const res3 = await axios.get(`/booking/?host=${this.props.booking.hosting}`)
   this.blockBookedPeriod(res3.data);
 	}
 

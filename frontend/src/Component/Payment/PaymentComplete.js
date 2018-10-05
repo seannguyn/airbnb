@@ -30,7 +30,7 @@ class Payment extends React.Component {
       guest: booking.guest,
       note: "Paid pp...",
     }
-    axios.put(`https://localhost:8000/booking/${booking.id}/`, paidBooking);
+    axios.put(`/booking/${booking.id}/`, paidBooking);
 
     const {detail,booker} = this.props;
 

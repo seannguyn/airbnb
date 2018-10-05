@@ -76,7 +76,7 @@ class Hosting extends React.Component {
   async componentDidMount  () {
     const {id} = this.props.house;
     let reviews, err;
-    await axios.get(`https://localhost:8000/accommodation/${id}/reviews/`)
+    await axios.get(`/accommodation/${id}/reviews/`)
                 .then(
                     response => {
                       reviews = response.data
@@ -92,7 +92,7 @@ class Hosting extends React.Component {
       this.setState({reviews:reviews});
     }
 
-    const images = await axios.get('https://localhost:8000/accommodationImage/');
+    const images = await axios.get('/accommodationImage/');
     this.findImagesByAccommID(images.data, this.props.house.id);
   }
 

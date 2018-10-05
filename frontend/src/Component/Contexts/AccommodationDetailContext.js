@@ -70,23 +70,23 @@ class AccommodationDetailContext extends React.Component {
 
     const {id} = this.props.match.params;
 
-    const res1 = await axios.get(`https://localhost:8000/accommodation/${id}/`)
+    const res1 = await axios.get(`/accommodation/${id}/`)
     this.setState({accommodation:res1.data})
 
 
-    const res2 = await axios.get(`https://localhost:8000/accommodationHosting/?accomm=${id}`)
+    const res2 = await axios.get(`/accommodationHosting/?accomm=${id}`)
     this.setState({accommodationHosting:res2.data[0]})
 
-    const res3 = await axios.get(`https://localhost:8000/booking/?host=${this.state.accommodationHosting.id}`)
+    const res3 = await axios.get(`/booking/?host=${this.state.accommodationHosting.id}`)
     this.blockBookedPeriod(res3.data)
 
     // axios review, pass review down
-    const res4 = await axios.get(`https://localhost:8000/accommodation/${id}/reviews/`)
+    const res4 = await axios.get(`/accommodation/${id}/reviews/`)
     this.setState({reviews: res4.data})
 
 
     // axios images
-    const res5 = await axios.get(`https://localhost:8000/accommodationImage/?accommodation=${id}`)
+    const res5 = await axios.get(`/accommodationImage/?accommodation=${id}`)
     this.setState({images: res5.data},()=>{console.log("WE HAVE IMAGE",this.state.images)})
 
 

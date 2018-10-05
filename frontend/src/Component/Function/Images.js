@@ -16,7 +16,7 @@ class Images extends React.Component {
   }
 
   async componentWillMount() {
-    const res = await axios.get(`https://localhost:8000/accommodationImage/?accommodation=${this.props.id}`)
+    const res = await axios.get(`/accommodationImage/?accommodation=${this.props.id}`)
     console.log(res.data,'component will mount');
 
     var i;
@@ -52,7 +52,7 @@ class Images extends React.Component {
     formData.append('a_image',file);
     formData.append('accommodation',this.props.id);
 
-    await axios.put(`https://localhost:8000/accommodationImage/${imgId}/`, formData, config)
+    await axios.put(`/accommodationImage/${imgId}/`, formData, config)
 
     var new_images = this.state.images.map((img) => {return img})
     var new_files = this.state.images.map((url) => {return url})
@@ -81,7 +81,7 @@ class Images extends React.Component {
     var formData = new FormData()
     formData.append('a_image',file);
     formData.append('accommodation',this.props.id);
-    const rest = await axios.post("https://localhost:8000/accommodationImage/",formData,config)
+    const rest = await axios.post("/accommodationImage/",formData,config)
     console.log("postdata",rest.data);
 
     this.setState({
@@ -108,7 +108,7 @@ class Images extends React.Component {
       return id!==imgId
     })
 
-    await axios.delete(`https://localhost:8000/accommodationImage/${imgId}/`)
+    await axios.delete(`/accommodationImage/${imgId}/`)
     this.setState({images: newImages, files: newURL, idList:idList })
     this.props.imgNumber(idList.length);
   }

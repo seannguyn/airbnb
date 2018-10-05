@@ -43,7 +43,7 @@ export default class FormDialog extends React.Component {
 			review: comment,
 			date_posted: moment().format('YYYY-MM-DD')
 		}
-		await axios.post("https://localhost:8000/reviews/", newReview);
+		await axios.post("/reviews/", newReview);
 		console.log("Review Successfully");
 		this.setState({ open: false });
 	}

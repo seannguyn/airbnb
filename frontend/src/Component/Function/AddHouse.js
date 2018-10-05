@@ -226,8 +226,8 @@ class AddHouse extends Component {
 
     console.log(newHouse);
 
-    const id = await axios.post('https://localhost:8000/accommodation/',newHouse)
-    const res = await axios.get(`https://localhost:8000/accommodation/?user=${newHouse.user}`);
+    const id = await axios.post('/accommodation/',newHouse)
+    const res = await axios.get(`/accommodation/?user=${newHouse.user}`);
 
     console.log("NEW ID ISSSSS: ",id.data.id);
     dispatch({type:'ADD_HOUSE', payload:res.data})

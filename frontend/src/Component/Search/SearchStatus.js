@@ -46,7 +46,7 @@ class SearchStatus extends React.Component {
 
   async clearSearch(dispatch) {
 
-    const allHosting = await axios.get('https://localhost:8000/accommodationHosting/');
+    const allHosting = await axios.get('/accommodationHosting/');
 
 
     dispatch({

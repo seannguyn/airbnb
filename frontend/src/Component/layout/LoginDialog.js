@@ -104,7 +104,7 @@ class LoginDialog extends React.Component {
       // dispatch({type:"LOGIN", payload: account});
 
 
-      await axios.post('https://localhost:8000/api-token-auth/', account)
+      await axios.post('/api-token-auth/', account)
           .then(response => {
               userInfo = response.data
               dispatch({type:'LOGIN', payload:response.data});
@@ -132,7 +132,7 @@ class LoginDialog extends React.Component {
           password2: password_confirm,
           email: username+'@zmail.com'
       }
-      await axios.post('https://localhost:8000/rest-auth/registration/', newAccount)
+      await axios.post('/rest-auth/registration/', newAccount)
           .then((response) => {
 
           })
@@ -152,7 +152,7 @@ class LoginDialog extends React.Component {
             password: password,
           }
 
-          await axios.post('https://localhost:8000/api-token-auth/', account)
+          await axios.post('/api-token-auth/', account)
               .then(response => {
                 userInfo = response.data
                   dispatch({type:'LOGIN', payload:response.data});

@@ -104,14 +104,14 @@ class MyBookings extends Component {
 
 		// const accommodationIDs = [];
 		for( let i = 0; i < pastStay.length; i++){
-			const res = await axios.get(`https://localhost:8000/accommodationHosting/${pastStay[i].hosting}/`);
+			const res = await axios.get(`/accommodationHosting/${pastStay[i].hosting}/`);
 			pastStay[i].accommodation = res.data.accommodation;
 			tempPastStay.push(pastStay[i]);
 		}
 		console.log("TEMPAST STAY: ", tempPastStay);
 		for(let i = 0; i < tempPastStay.length; i++){
 			let reviews = [];
-			await axios.get(`https://localhost:8000/accommodation/${tempPastStay[i].accommodation}/reviews/`)
+			await axios.get(`/accommodation/${tempPastStay[i].accommodation}/reviews/`)
 												.then( response => {
 													reviews = response.data
 												})
@@ -154,7 +154,7 @@ class MyBookings extends Component {
 			console.log("USER BOOKING", user);
 				//       this.setState({currentUser: user});
 			// Get all bookings and find that current user booked
-			const res2 = await axios.get(`https://localhost:8000/booking/?booker=${user[0].user_id}`);
+			const res2 = await axios.get(`/booking/?booker=${user[0].user_id}`);
 
 			this.getBookings(this.state.currentUser[0].user_id, res2.data);
 			this.separateFutureCurrentPast();
@@ -179,7 +179,7 @@ class MyBookings extends Component {
 			console.log("USER BOOKING", user);
 				//       this.setState({currentUser: user});
 			// Get all bookings and find that current user booked
-			const res2 = await axios.get(`https://localhost:8000/booking/?booker=${user[0].user_id}`);
+			const res2 = await axios.get(`/booking/?booker=${user[0].user_id}`);
 
 			this.getBookings(this.state.currentUser[0].user_id, res2.data);
 			this.separateFutureCurrentPast();

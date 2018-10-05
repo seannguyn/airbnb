@@ -95,7 +95,7 @@ class EditHosting extends Component {
             result = myHostingList[i];
           }
         }
-        const booking = await axios.get(`https://localhost:8000/booking/?host=${result.id}`);
+        const booking = await axios.get(`/booking/?host=${result.id}`);
         var deleteDisable = false;
         if (booking.data.length > 0) {
           deleteDisable = true;
@@ -209,7 +209,7 @@ class EditHosting extends Component {
           console.log("HEY HEY",date_free_2);
         }
 
-        const oldSearch = await axios.get(`https://localhost:8000/search/${this.props.id}/`)
+        const oldSearch = await axios.get(`/search/${this.props.id}/`)
 
 
         const {date_free} = oldSearch.data
@@ -226,7 +226,7 @@ class EditHosting extends Component {
         }
 
         console.log(searchAccommodation,"new SEARCH");
-        await axios.patch(`https://localhost:8000/search/${this.props.id}/`,searchAccommodation)
+        await axios.patch(`/search/${this.props.id}/`,searchAccommodation)
 
         // AXIOS call here - PUT REQUEST
         // Notes: need backend validation for date and available date to
@@ -235,7 +235,7 @@ class EditHosting extends Component {
 
         const {token} = currUser[0]; //GET TOKEN FROM CURRENT USER
         console.log("ID IS: ",id);
-        await axios.put(`https://localhost:8000/accommodationHosting/${id}/`, hostingHouse,
+        await axios.put(`/accommodationHosting/${id}/`, hostingHouse,
                 {headers:{
                     'Authorization': {token}
                 }
@@ -251,7 +251,7 @@ class EditHosting extends Component {
       e.preventDefault();
       console.log("stop hosting",id);
 
-      axios.delete(`https://localhost:8000/accommodationHosting/${id}/`)
+      axios.delete(`/accommodationHosting/${id}/`)
       .then(res => {
         dispatch({type: "DELETE_HOST", payload: id})
       })

@@ -50,7 +50,7 @@ class OverallBooking extends React.Component {
       const {booking_id,booking} = this.props.location.state;
       console.log("GOTCHA",booking_id,booking);
       const date_free = enumerateDaysBetweenDates(booking.date_start,booking.date_end)
-      const res_temp = await axios.get(`https://localhost:8000/search/${detail.accommodation.id}/`)
+      const res_temp = await axios.get(`/search/${detail.accommodation.id}/`)
 
       const newDateFree_temp = concatString(res_temp.data.date_free,date_free)
 
@@ -58,9 +58,9 @@ class OverallBooking extends React.Component {
         date_free: newDateFree_temp
       }
 
-      await axios.patch(`https://localhost:8000/search/${detail.accommodation.id}/`,searchAccommodationTemp)
+      await axios.patch(`/search/${detail.accommodation.id}/`,searchAccommodationTemp)
 
-      await axios.delete(`https://localhost:8000/booking/${booking_id}/`);
+      await axios.delete(`/booking/${booking_id}/`);
       alert("Delete OLD BOOKING successfully");
     }
 
@@ -79,17 +79,17 @@ class OverallBooking extends React.Component {
     // * REMOVE FROM SEARCH DB
     const{ startDate, endDate} = this.props.location.state.detail
 
-    const res = await axios.get(`https://localhost:8000/search/${detail.accommodation.id}/`)
+    const res = await axios.get(`/search/${detail.accommodation.id}/`)
     const newDateFree = removeString(res.data.date_free,startDate,endDate)
 
     const searchAccommodation = {
       date_free: newDateFree
     }
 
-    await axios.patch(`https://localhost:8000/search/${detail.accommodation.id}/`,searchAccommodation)
+    await axios.patch(`/search/${detail.accommodation.id}/`,searchAccommodation)
     // * REMOVE FROM SEARCH DB
 
-    const booking = await axios.post('https://localhost:8000/booking/', newBooking);
+    const booking = await axios.post('/booking/', newBooking);
     console.log("SUCCESSFully Booking", booking.data);
 
     this.props.history.push({

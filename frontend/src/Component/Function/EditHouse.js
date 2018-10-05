@@ -283,7 +283,7 @@ class EditHouse extends Component {
 
     // const res = await axios.put(`${id}`,editHouse)
     const {token} = this.state.currentUser; //GET TOKEN FROM CURRENT USER
-    await axios.put(`https://localhost:8000/accommodation/${id}/`, editHouse,
+    await axios.put(`/accommodation/${id}/`, editHouse,
             {headers:{
                 'Authorization': {token}
             }
@@ -294,7 +294,7 @@ class EditHouse extends Component {
       accommodation: this.props.id,
       location: city
     }
-    await axios.patch(`https://localhost:8000/search/${this.props.id}/`,searchAccommodation)
+    await axios.patch(`/search/${this.props.id}/`,searchAccommodation)
     .catch(error => {
       console.log(error.response,)
     });
