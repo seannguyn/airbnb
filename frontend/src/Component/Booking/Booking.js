@@ -21,7 +21,7 @@ import Carousel from "react-slick"
 import isEmpty from '../../utils/isEmpty.js'
 // import {Link} from 'react-router-dom'
 
-import FormDialog from '../Popup/FormDialog'
+import ReviewPopup from '../Popup/ReviewPopup.js'
 import {enumerateDaysBetweenDates, concatString} from '../Helper/Helper'
 import BookingDiaglog from './BookingDiaglog';
 
@@ -55,12 +55,13 @@ class Booking extends Component {
       minDateSet: [],
       images: [],
 			currentAccommodationID : -1,
-			review: false
+      // review: false,
+      isReviewed: props.booking.isReviewed,
+      openReviewPopup: false
     }
   }
 
     handleEdit = () => {
-
       this.setState({
         open:true
       })
@@ -89,22 +90,20 @@ class Booking extends Component {
         currentHost: this.state.host,
       }
 
-      console.log("NEW_DETAIL",newDetail);
-
       this.props.history.push({
         pathname: `/overallbooking/payment/${this.state.host.id}`,
         search: '?query=abc',
         state: {
           detail: newDetail,
           booker: this.props.booking.booker,
-          booking: this.props.booking,
+          booking: this.props.booking
         }
       })
     }
 
   closeDiaglog() {
     this.setState({
-      open: !this.state.open
+      openReviewPopup: !this.state.openReviewPopup
     })
   }
 
@@ -125,48 +124,43 @@ class Booking extends Component {
     window.location.reload();
   }
 
-    // find dates between 2 dates
-    datesInPeriod = (startDate, endDate) => {
-        var dates = [];
+  // find dates between 2 dates
+  datesInPeriod = (startDate, endDate) => {
+      var dates = [];
 
-        var currDate = startDate,
-            lastDate  = endDate;
-        dates.push(currDate.clone());
-        while(currDate.add(1, 'days').diff(lastDate) < 0) {
-            dates.push(currDate.clone());
-        }
-        dates.push(lastDate.clone());
-        return dates;
-    };
+      var currDate = startDate,
+          lastDate  = endDate;
+      dates.push(currDate.clone());
+      while(currDate.add(1, 'days').diff(lastDate) < 0) {
+          dates.push(currDate.clone());
+      }
+      dates.push(lastDate.clone());
+      return dates;
+  };
 
-    blockBookedPeriod(bookingList) {
-
-        let startDate, endDate;
-        let  currentPeriod = [];
-        var tempBookedPeriods = [];
-        var minDateSet=[];
-        for( let i = 0; i < bookingList.length; i++){
-            if (bookingList[i].id === this.props.booking.id) continue;
-            startDate = bookingList[i].date_start;
-            endDate = bookingList[i].date_end;
-            startDate = moment(startDate);
-            endDate = moment(endDate);
-            currentPeriod = this.datesInPeriod(startDate, endDate);
-
-
-            tempBookedPeriods=tempBookedPeriods.concat(currentPeriod);
-            minDateSet = this.state.minDateSet;
-
-            minDateSet.push(currentPeriod[0]);
-
-        }
+  blockBookedPeriod(bookingList) {
+      let startDate, endDate;
+      let  currentPeriod = [];
+      var tempBookedPeriods = [];
+      var minDateSet=[];
+      for( let i = 0; i < bookingList.length; i++){
+          if (bookingList[i].id === this.props.booking.id) continue;
+          startDate = bookingList[i].date_start;
+          endDate = bookingList[i].date_end;
+          startDate = moment(startDate);
+          endDate = moment(endDate);
+          currentPeriod = this.datesInPeriod(startDate, endDate);
 
 
-        this.setState({minDateSet: minDateSet})
-        this.setState({booking: tempBookedPeriods});
-    }
+          tempBookedPeriods=tempBookedPeriods.concat(currentPeriod);
+          minDateSet = this.state.minDateSet;
+          minDateSet.push(currentPeriod[0]);
+      }
+      this.setState({minDateSet: minDateSet})
+      this.setState({booking: tempBookedPeriods});
+  }
 
-// find this accomm's images
+  // find this accomm's images
 	findImagesByAccommID = (images, accommID)=> {
 		const retImages = [];
 		for( let i = 0; i < images.length; i++){
@@ -177,21 +171,41 @@ class Booking extends Component {
 		return retImages;
 	}
 
-	handleReview = () => {
-		this.setState({
-			review: !this.state.review,
-		})
-	}
+  
+  handleReviewPopup = () => {
+    this.setState({
+      openReviewPopup: !this.state.openReviewPopup,
+    })
+  }
+
+  handleSubmitReview = async (star, comment, currentUser, requireReviewItem) => {
+    let newReview = {
+      user: currentUser[0].user_id,
+      accommodation: requireReviewItem.accommodation,
+      booking: requireReviewItem.id,
+      star: star,
+      review: comment,
+      date_posted: moment().format('YYYY-MM-DD')
+	  }
+		await axios.post("http://localhost:8000/reviews/", newReview);
+
+    // update review count
+    const reviewCount = await axios.get(`http://localhost:8000/reviewCounter/${requireReviewItem.accommodation}/`)
+    var newCount = reviewCount.data.count + 1
+    await axios.patch(`http://localhost:8000/reviewCounter/${requireReviewItem.accommodation}/`,{count: newCount})
+
+		this.setState({ openReviewPopup: false, isReviewed: true });
+  }
 
 	async componentDidMount(){
-		// console.log("Props: ", this.props.booking);
 		const { booking, /*pastStay, isPast*/ } = this.props,
 					hosting = booking.hosting;
-		const res = await axios.get(`/accommodationHosting/${hosting}/`);
+    
+          const res = await axios.get(`/accommodationHosting/${hosting}/`);
 		const accommID = res.data.accommodation;
-		this.setState({currentAccommodationID: accommID});
+    this.setState({currentAccommodationID: accommID});
+    
 		let images = await axios.get(`/accommodationImage/`);
-		// console.log("images: ", images.data);
 		images = this.findImagesByAccommID(images.data, accommID);
     this.setState({images:images});
 
@@ -199,20 +213,21 @@ class Booking extends Component {
     this.setState({host: res1.data})
 
 
-  const res2 = await axios.get(`/accommodation/${res1.data.accommodation}/`)
-  this.setState({accommodation: res2.data})
+    const res2 = await axios.get(`/accommodation/${res1.data.accommodation}/`)
+    this.setState({accommodation: res2.data})
 
 
-  const res3 = await axios.get(`/booking/?host=${this.props.booking.hosting}`)
-  this.blockBookedPeriod(res3.data);
+    const res3 = await axios.get(`/booking/?host=${this.props.booking.hosting}`)
+    this.blockBookedPeriod(res3.data);
 	}
 
 	render() {
     let {daysLeft, hoursLeft, minutesLeft} = 0;
-    const { open } =this.state;
-		const { images } = this.state,
+    const { open, images } =this.state,
 					{ classes, booking, requireReviewItem } = this.props,
-					{ id, date_start, date_end, note, isPaid } = booking;
+          { id, date_start, date_end, note, isPaid } = booking,
+          { isReviewed, openReviewPopup, accommodation } = this.state
+          
 		daysLeft = Math.abs(moment(date_start).diff(moment(), 'hours'))/24;
 		hoursLeft = Math.abs((daysLeft - Math.round(daysLeft))) * 24;
 		daysLeft = Math.round(daysLeft);
@@ -220,7 +235,7 @@ class Booking extends Component {
 		if(hoursLeft > 1){
 			minutesLeft = Math.round(Math.abs((Math.round(hoursLeft) - hoursLeft ))) * 60;
 		}
-		else{
+		else {
 			minutesLeft = Math.round(hoursLeft * 60);
 			hoursLeft = 0;
 		}
@@ -253,8 +268,8 @@ class Booking extends Component {
 		return (
 			<React.Fragment>
 			<center>
-			{this.state.review === true ?
-				<FormDialog handleReview={this.handleReview} requireReviewItem={requireReviewItem}/>
+			{this.state.openReviewPopup === true ?
+				<ReviewPopup handleSubmitReview={this.handleSubmitReview} requireReviewItem={booking} open={openReviewPopup} accommodation={accommodation}/>
 				: null
 			}
 		</center>
@@ -295,11 +310,15 @@ class Booking extends Component {
 								<Button onClick={this.handleDelete.bind(this, id)}>
 									<i className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
 								</Button>
-							</div> :
-							<Button onClick={this.handleReview} color="secondary" variant="contained">
-								Review
-							</Button>
-						}
+							</div> : null
+            }
+            {isReviewed === false ? 
+              <Button onClick={this.handleReviewPopup} color="secondary" variant="contained">
+                Review
+              </Button>
+              : null 
+            }
+
 					</div>
 				</div>
 
@@ -319,7 +338,6 @@ class Booking extends Component {
 		</React.Fragment>
 		);
   }
-
 }
 
 Booking.defaultProps = {

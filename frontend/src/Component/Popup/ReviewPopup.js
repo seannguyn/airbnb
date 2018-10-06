@@ -16,51 +16,29 @@ import Rating from 'react-rating'
 import like from '../../assets/img/icons/like.png'
 import like_empty from '../../assets/img/icons/like_empty.png'
 
-export default class FormDialog extends React.Component {
-  state = {
-		open: true,
-		star: 0,
-		comment: ''
-  };
+export default class ReviewPopup extends React.Component {
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
+	constructor(props){
+		super(props)
+		this.state = {
+			accommodation: props.accommodation,
+			open: props.open,
+			star: 0,
+			comment: ''
+		};
+	}
+
 
   handleClose = () => {
     this.setState({ open: false });
   };
 
-	handleSubmit = async () => {
-		const { star, comment, currentUser } = this.state;
-		const { requireReviewItem } = this.props;
-		let newReview = {
-			user: currentUser[0].user_id,
-			accommodation: requireReviewItem.accommodation,
-			booking: requireReviewItem.id,
-			star: star,
-			review: comment,
-			date_posted: moment().format('YYYY-MM-DD')
-		}
-		await axios.post("https://localhost:8000/reviews/", newReview);
-
-    // update review count
-    const reviewCount = await axios.get(`https://localhost:8000/reviewCounter/${requireReviewItem.accommodation}/`)
-    var newCount = reviewCount.data.count + 1
-    await axios.patch(`https://localhost:8000/reviewCounter/${requireReviewItem.accommodation}/`,{count: newCount})
-
-		console.log("Review Successfully");
-		this.setState({ open: false });
-	}
-
 	handleReviewOnChange = (value) => {
-		console.log("Star Given: ", value);
 		this.setState({star: value});
 	}
 
 	handleTextFieldChange = (e) => {
 		this.setState({comment: e.target.value});
-		console.log("TEXT: ", e.target.value);
 	}
 
 	componentDidMount(){
@@ -71,21 +49,21 @@ export default class FormDialog extends React.Component {
 	}
 
   render() {
-    console.log("Dialog Props: ", this.props);
 		const { requireReviewItem } = this.props;
-					// { star, comment} = this.state;
+		const { star, comment, currentUser } = this.state;
+		console.log("REUSJD: ", requireReviewItem)
+		const { open, accommodation } = this.state
     return (
       <div>
-        <Button onClick={this.handleClickOpen}>Open form dialog</Button>
         <Dialog
-          open={this.state.open}
+          open={open}
           onClose={this.handleClose}
 					aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Review</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              You recently stay from ACCOMM_NAME from {requireReviewItem.date_start} to {requireReviewItem.date_end}
+              You recently stay from {accommodation.title} from {requireReviewItem.date_start} to {requireReviewItem.date_end}
 						</DialogContentText>
 						<DialogContentText>
 						Can you kindly give us your thought about it?
@@ -110,7 +88,9 @@ export default class FormDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               No, thanks
             </Button>
-            <Button onClick={this.handleSubmit} color="primary">
+            <Button onClick={this.props.handleSubmitReview.bind(
+							this, star, comment, currentUser, requireReviewItem
+						)} color="primary">
               Submit
             </Button>
           </DialogActions>

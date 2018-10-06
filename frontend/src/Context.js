@@ -8,25 +8,29 @@ const reducer = (state,action) => {
 
   switch(action.type) {
     case 'DELETE_HOUSE':
+      console.log("deleting house",action.payload);
       return {
-        ...state,
-        HouseList: action.payload.houselist,
-        myHouseList: action.payload.myHouseList
+        HouseList: state.HouseList.filter((eachHouse) => eachHouse.id !== action.payload),
       }
 
+
     case 'ADD_HOUSE':
+      console.log("ADD_HOUSE");
+
       return {
         ...state,
         HouseList: action.payload
       }
 
     case 'EDIT_HOUSE':
+      console.log("edit house");
       return {
         ...state,
         HouseList: state.HouseList.map((eachHouse) => eachHouse.id === action.payload.id ? (eachHouse = action.payload) : eachHouse)
       }
 
       case 'LOGIN':
+        console.log('login user login');
         return {
           ...state,
           currentUser: [action.payload],
@@ -38,6 +42,7 @@ const reducer = (state,action) => {
         };
 
       case 'SEARCH':
+        console.log("SEARCH context",action.payload);
         return {
           ...state,
           AllHostingList: action.payload,
@@ -65,6 +70,12 @@ const reducer = (state,action) => {
           myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
         }
       case 'DELETE_HOST':
+        console.log("deleting hosting",action.payload);
+
+        // var updateHouse;
+        // for ( var i = 0; i < this.state.myHouseList.length; i++) {
+        //   if
+        // }
 
         return {
           ...state,
@@ -150,11 +161,11 @@ export class Provider extends Component {
 
     const allHosting = await axios.get('/accommodationHosting/');
     this.setState({AllHostingList: allHosting.data});
-
+    
     if(allHosting.data !== []){
       this.addPlaceMaker(allHosting.data);
     }
-
+    
     if(this.state.currentUser.length === 1) {
       const {token,user_id} = this.state.currentUser[0];
 
@@ -164,8 +175,12 @@ export class Provider extends Component {
           'Authorization': {token}
         }
       })
-        this.setState({myHostingList: res.data});
 
+
+      // if(this.state.myHostingList.length === 0 ){
+        this.setState({myHostingList: res.data});
+        // console.log("did mount my hostung lis: ", this.state.myHostingList);
+      // }
     }
 
   }
@@ -206,11 +221,12 @@ export class Provider extends Component {
   addPlaceMaker = async (AllHostingList) => {
     const places = [];
     for( let i = 0; i <  AllHostingList.length; i++){
+        console.log(AllHostingList[i].accommodation)
         const accommodation = AllHostingList[i].accommodation;
         await axios.get(`/accommodation/${accommodation}/`)
                     .then(response => {
                         const info = {
-                            id : response.data.id,
+                            id : response.data.id, 
                             lat: response.data.latitude,
                             lng: response.data.longitude,
                             price: AllHostingList[i].price,
@@ -221,9 +237,7 @@ export class Provider extends Component {
                         places.push(
                             info
                         )
-                    })
-
-
+                    })     
     }
     this.setState({places: places});
     return places;

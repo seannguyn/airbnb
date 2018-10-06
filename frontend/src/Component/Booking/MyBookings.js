@@ -92,6 +92,7 @@ class MyBookings extends Component {
 		return earliestBooking;
 	}
 
+	// find the past bookings that need to reviews 
 	requireReview = async (pastStay) => {
 		console.log("PAST: ", pastStay);
 		let isReviewed = false,
@@ -99,10 +100,8 @@ class MyBookings extends Component {
 				tempPastStay = [];
 
 		const { requireReviewList } = this.state,
-					// { booking } = this.props,
 					currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-		// const accommodationIDs = [];
 		for( let i = 0; i < pastStay.length; i++){
 			const res = await axios.get(`/accommodationHosting/${pastStay[i].hosting}/`);
 			pastStay[i].accommodation = res.data.accommodation;
@@ -128,10 +127,15 @@ class MyBookings extends Component {
 				}
 			}
 			if(isReviewed === false){
-				tempRequireReviewList.push(tempPastStay[i]);
-				console.log("ADDDD: ", tempPastStay[i]);
+				tempRequireReviewList.push(tempPastStay[i])
+				tempPastStay[i].isReviewed = false
+				console.log("ADDDD: ", tempPastStay[i])
 			}
-			else {isReviewed = false;}
+			else {
+				isReviewed = false
+				tempPastStay[i].isReviewed = true
+				tempRequireReviewList.push(tempPastStay[i])
+			}
 		}
 
 		tempRequireReviewList = tempRequireReviewList.concat(requireReviewList);
@@ -191,8 +195,7 @@ class MyBookings extends Component {
 	}
 	render() {
 		const { myBookings, futureStay, currentStay, pastStay, earliestBooking, currentUser, requireReviewList,logged_in,status } = this.state;
-
-  console.log("REQUIRE REVIEW LIST: ",requireReviewList);
+  		console.log("REQUIRE REVIEW LIST: ",requireReviewList);
 		const { classes } = this.props;
 		if(logged_in === false){
 			 return (
@@ -203,51 +206,6 @@ class MyBookings extends Component {
 			return(
 				<div>
 					<CircularProgress className={classes.progress} color="primary" size={50}/>
-{/* // =======
-//
-// 		return (
-// 			<React.Fragment>
-// 				<center>
-// 					{!isEmpty(earliestBooking) ?
-// 						<div>
-// 							<center><h1>Next Stay</h1></center>
-// 							<Booking key={earliestBooking.id} booking={earliestBooking} history={this.props.history}></Booking>
-// 						</div>
-// 						: null
-// 					}
-// 				</center>
-// 				<center>
-// 					{!isEmpty(pastStay[0]) ?
-// 						<div key={pastStay[0].id}>
-// 							<center><h1>Recent Stay</h1></center>
-// 							<Booking key={pastStay[0].id} booking={pastStay[0]} requireReviewItem={requireReviewList[0]} history={this.props.history}></Booking>
-// 						</div>
-// 						: null
-// 					}
-// 				</center>
-// 				{futureStay.length !== 0 ? <center><h1>Incoming</h1></center> : null}
-// 				<div className="row">
-// 					{futureStay.length !== 0 ?
-// 						futureStay.map((booking) => {
-// 							return (
-// 								<div key={booking.id}>
-// 									<div style={{ padding: '1rem' }}>
-// 										<center>
-// 												<Booking key={booking.id} booking={booking}  earliestBooking={earliestBooking} history={this.props.history}></Booking>
-// 										</center>
-// 									</div>
-// 								</div>
-// 							);
-// 						})
-// 						: null
-// 					}
-// 				</div>
-// 				<div className="row">
-// 					{currentStay.length !== 0 ?
-// 						<h1>Current</h1>
-// 						: null
-// 					} */}
-{/* >>>>>>> FE-MAPS */}
 				</div>
 			)
 		}
@@ -298,8 +256,8 @@ class MyBookings extends Component {
 
 					<center><h1>In The Past</h1></center>
 					<div className="row">
-						{pastStay.length !== 0 ?
-							pastStay.map((booking) => {
+						{requireReviewList.length !== 0 ?
+							requireReviewList.map((booking) => {
 								return (
 									<div key={booking.id}>
 										<div key={booking.id} style={{ padding: '1rem' }}>
