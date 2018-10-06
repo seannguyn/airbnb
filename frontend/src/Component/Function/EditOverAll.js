@@ -43,7 +43,7 @@ class EditOverAll extends React.Component {
     super();
     this.state = {
       HouseList: [],
-      swipe: 0
+      swipe: 1
     }
   }
 

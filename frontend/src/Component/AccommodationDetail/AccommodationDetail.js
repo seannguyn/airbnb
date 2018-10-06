@@ -75,7 +75,6 @@ class AccommodationDetail extends Component {
 
         if (nextState.status === 1) {
           this.props = nextProps;
-          console.log("Should Component update", this.props, this.state);
           return true;
         } else {
           return false;
@@ -86,7 +85,6 @@ class AccommodationDetail extends Component {
         // console.log("props acom detail: ", this.state);
         const { classes, accommodation } = this.props;
         const { longitude, latitude, id } = accommodation;
-        console.log("ACCOMODATION ", accommodation);
         // const {Accommodation_Type, area, bathroom,
         //         bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
 
@@ -111,14 +109,12 @@ class AccommodationDetail extends Component {
           )
           return 0;
         })
-        console.log(imagesDiv,"IMG DIV");
         // IMAGES ======
 
         // const {bathroom,bedroom,kitchen,carpark,description} = this.state.accomDetail
         // const {currentHost} = this.state;
         const isDayBlocked = day => this.props.booking.filter(d => d.isSame(day, 'day')).length > 0;
         const {status} = this.state;
-        console.log(this.props,"here it is",this.state);
         const {bathroom,bedroom,bed,title,description} = this.props.accommodation;
         return (
           <Consumer>
@@ -132,7 +128,6 @@ class AccommodationDetail extends Component {
               } else {
                 return (
                   <div>
-                    <img src="http://www.designdeveloprealize.com/wp-content/uploads/2018/03/high-resolution-house-photos-inside-high-resolution-house-pictures-house-interior.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
 
                     <div className="container">
                       <div className="row">
@@ -202,4 +197,8 @@ class AccommodationDetail extends Component {
         )
     }
 }
+
+// <img src="http://www.designdeveloprealize.com/wp-content/uploads/2018/03/high-resolution-house-photos-inside-high-resolution-house-pictures-house-interior.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
+
+
 export default withStyles(styles,carouselStyle,dashboardStyle)(AccommodationDetail);

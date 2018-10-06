@@ -2,8 +2,8 @@ from django.shortcuts import render
 # from api.serializers import UserSerializer
 
 from django.contrib.auth.models import User
-from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search
-from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer,BookingSerializer, ReviewSerializer, UserInfoSerializer, SearchSerializer
+from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search, ReviewCount
+from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer,BookingSerializer, ReviewSerializer, UserInfoSerializer, SearchSerializer, ReviewCountSerializer
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from datetime import datetime, timedelta
 from django.http import HttpResponse, HttpResponseNotFound, Http404
@@ -368,7 +368,7 @@ class SearchHostingViews(viewsets.ModelViewSet):
             queryset = queryset.filter(guest__gte=guest)
 
         if location is not None:
-            queryset = queryset.filter(location=location)
+            queryset = queryset.filter(location__icontains=location)
 
         if price_upper is not None:
             queryset = queryset.filter(price__lte=price_upper)
@@ -399,3 +399,12 @@ class SearchHostingViews(viewsets.ModelViewSet):
         queryset_accommodation = queryset_accommodation.filter(accommodation__in=set(newQ))
 
         return queryset_accommodation
+
+class ReviewCountViews(viewsets.ModelViewSet):
+    queryset = ReviewCount.objects.all()
+    # queryset = Accomodation.objects.filter(user__username__exact="sean")
+    serializer_class = ReviewCountSerializer
+
+    def get_queryset(self):
+        queryset = ReviewCount.objects.all()
+        return queryset

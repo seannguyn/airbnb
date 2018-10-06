@@ -17,6 +17,7 @@ import Carousel from "react-slick"
 import '../../Styles/ImageSlide.css'
 
 import api  from '../Services/api'
+import findImagesByAccommID from '../../utils/findImagesByAccommID';
 
 const styles = {
   card: {
@@ -68,9 +69,13 @@ class House extends React.Component {
   }
 
   async componentDidMount() {
-    console.log("accoomid: ", this.props)
-    const images = await api.async_get(`/accommodationImage/`)
-    
+    console.log("accoomid: ", this.props.houseDetail)
+    const { houseDetail } = this.props,
+          { id } = houseDetail
+
+    let images = await api.async_get(`/accommodationImage/`)
+    images = findImagesByAccommID(images, id)
+    console.log("IMAGES: ", images)
   }
 
   render () {
@@ -80,7 +85,7 @@ class House extends React.Component {
     const {user} = this.props.houseDetail; //-- from houses.js -- user id in each house in houselist
     const {id} = this.props.houseDetail;
     const {showDetail} = this.state;
-    const { classes} = this.props;
+    const { classes } = this.props;
 
     let settings = {
       dots: true,

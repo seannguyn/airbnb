@@ -24,22 +24,12 @@ class SearchBar extends React.Component {
     });
   };
 
-//   handleSelect = selected => {
-//     this.setState({ isGeocoding: true, address: selected });
-//     geocodeByAddress(selected)
-//       .then(res => getLatLng(res[0]))
-//       .then(({ lat, lng }) => {
-//         this.setState({
-//           latitude: lat,
-//           longitude: lng,
-//           isGeocoding: false,
-//         });
-//       })
-//       .catch(error => {
-//         this.setState({ isGeocoding: false });
-//         console.log('error', error); // eslint-disable-line no-console
-//       });
-//   };
+  handleSelect = (selected) => {
+    this.setState({
+      address: selected
+    })
+    this.props.handleSelect(selected)
+  }
 
   handleCloseClick = () => {
     this.setState({
@@ -70,9 +60,10 @@ class SearchBar extends React.Component {
         <PlacesAutocomplete
           onChange={this.handleChange}
           value={address}
-          onSelect={this.props.handleSelect}
+          onSelect={this.handleSelect}
           onError={this.handleError}
           shouldFetchSuggestions={address.length > 2}
+          disabled={this.props.disable}
         >
           {({ getInputProps, suggestions, getSuggestionItemProps }) => {
             return (
@@ -115,7 +106,7 @@ class SearchBar extends React.Component {
                       );
                       /* eslint-enable react/jsx-key */
                     })}
-                   
+
                   </div>
                 )}
               </div>
@@ -150,6 +141,10 @@ class SearchBar extends React.Component {
       </div>
     );
   }
+}
+
+SearchBar.defaultProps = {
+  disable: false
 }
 
 export default SearchBar;

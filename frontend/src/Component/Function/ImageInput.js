@@ -72,7 +72,7 @@ class ImageInput extends React.Component {
                     <br/>
                     <img height="150px" width="150px" src={fileURL} alt="images"/>
                     <br/>
-                    <button style={{height:"25px", width:"60px"}} onClick={this.deletePic.bind(this, fileURL, file, imgId )} className="btn btn-danger"></button>
+                    <button style={{height:"25px", width:"60px"}} onClick={this.deletePic.bind(this, fileURL, file, imgId )} className="btn btn-danger">X</button>
       						</div>
       					</div>
       				</div>
