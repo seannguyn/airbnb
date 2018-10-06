@@ -1,15 +1,13 @@
-import React from 'react';
-import axios from 'axios'
-import moment from 'moment'
+import React from 'react'
 
 // Material UI
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
 // Rating
 import Rating from 'react-rating'
@@ -51,7 +49,6 @@ export default class ReviewPopup extends React.Component {
   render() {
 		const { requireReviewItem } = this.props;
 		const { star, comment, currentUser } = this.state;
-		console.log("REUSJD: ", requireReviewItem)
 		const { open, accommodation } = this.state
     return (
       <div>

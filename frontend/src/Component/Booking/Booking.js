@@ -17,22 +17,9 @@ import CardHeader from "Component/Card/CardHeader.jsx"
 import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx"
 import Carousel from "react-slick"
 
-// check empty object
-import isEmpty from '../../utils/isEmpty.js'
-// import {Link} from 'react-router-dom'
-
 import ReviewPopup from '../Popup/ReviewPopup.js'
 import {enumerateDaysBetweenDates, concatString} from '../Helper/Helper'
 import BookingDiaglog from './BookingDiaglog';
-
-// const styles = {
-//   card: {
-//     maxWidth: 345,
-//   },
-//   media: {
-//     height: 200,
-//   },
-// };
 
 let settings = {
 	dots: true,
@@ -224,7 +211,7 @@ class Booking extends Component {
 	render() {
     let {daysLeft, hoursLeft, minutesLeft} = 0;
     const { open, images } =this.state,
-					{ classes, booking, requireReviewItem } = this.props,
+					{ classes, booking } = this.props,
           { id, date_start, date_end, note, isPaid } = booking,
           { isReviewed, openReviewPopup, accommodation } = this.state
           

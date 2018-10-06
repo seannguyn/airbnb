@@ -87,7 +87,6 @@ class Hosting extends React.Component {
                   )
                   .catch(
                     error => {
-                      console.log("EROR: ", error)
                       err = error.response;
                     }
                   )

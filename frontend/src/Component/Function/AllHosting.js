@@ -23,7 +23,6 @@ class AllHosting extends React.Component {
         house = HouseList[i];
       }
     }
-    // console.log("house is..............", HouseList, SingleHost, house);
     return (
       <Hosting key={SingleHost.accommodation} house={house} SingleHost={SingleHost}/>
 

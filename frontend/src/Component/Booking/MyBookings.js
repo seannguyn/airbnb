@@ -194,7 +194,7 @@ class MyBookings extends Component {
 
 	}
 	render() {
-		const { myBookings, futureStay, currentStay, pastStay, earliestBooking, currentUser, requireReviewList,logged_in,status } = this.state;
+		const { myBookings, futureStay, currentStay, pastStay, earliestBooking, requireReviewList, logged_in, status } = this.state;
   		console.log("REQUIRE REVIEW LIST: ",requireReviewList);
 		const { classes } = this.props;
 		if(logged_in === false){
