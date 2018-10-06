@@ -244,8 +244,6 @@ class Booking extends Component {
         Paid
       </Button>)
     }
-    console.log("props booking: ", this.props.booking);
-    console.log("props currntHostL ", this.props.currentHost);
 		return (
 			<React.Fragment>
 			<center>
