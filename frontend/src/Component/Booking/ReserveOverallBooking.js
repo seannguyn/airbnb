@@ -1,70 +1,75 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from "@material-ui/core/styles";
-import SwipeableViews from "react-swipeable-views";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import CheckIcon from '@material-ui/icons/Check';
-import BookingInfo from '../Booking/BookingInfo';
-import Price from '../AccommodationDetail/Price'
-import Divider from '@material-ui/core/Divider';
-import Overview from '../Booking/Overview';
-import Days from '../Booking/Days';
-import Amenities from '../Booking/Amenities';
-import Reminder from '../Booking/Reminder';
-import 'react-credit-cards/es/styles-compiled.css';
-import axios from 'axios';
-import { withSnackbar } from 'notistack';
-import {enumerateDaysBetweenDates, removeString, concatString} from '../Helper/Helper'
+import React from "react"
+import PropTypes from "prop-types"
+import { withStyles } from "@material-ui/core/styles"
+import SwipeableViews from "react-swipeable-views"
+import AppBar from "@material-ui/core/AppBar"
+import Tabs from "@material-ui/core/Tabs"
+import Tab from "@material-ui/core/Tab"
+import Typography from "@material-ui/core/Typography"
+import Button from "@material-ui/core/Button"
+import CheckIcon from "@material-ui/icons/Check"
+import BookingInfo from "../Booking/BookingInfo"
+import Price from "../AccommodationDetail/Price"
+import Divider from "@material-ui/core/Divider"
+import Overview from "../Booking/Overview"
+import Days from "../Booking/Days"
+import Amenities from "../Booking/Amenities"
+import Reminder from "../Booking/Reminder"
+import "react-credit-cards/es/styles-compiled.css"
+import axios from "axios"
+import { withSnackbar } from "notistack"
+import {
+  enumerateDaysBetweenDates,
+  removeString,
+  concatString
+} from "../Helper/Helper"
 
 function TabContainer({ children, dir }) {
   return (
     <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
       {children}
     </Typography>
-  );
+  )
 }
 
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
   dir: PropTypes.string.isRequired
-};
+}
 
-const styles = theme => ({
-
-});
+const styles = theme => ({})
 
 class OverallBooking extends React.Component {
-
   state = {
-    value: 0,
-  };
+    value: 0
+  }
 
   async postBooking(detail, booker) {
-
-    const note = 'hello';
+    const note = "hello"
 
     if (this.props.location.state.booking_id > 0) {
-      const {booking_id,booking} = this.props.location.state;
-      console.log("GOTCHA",booking_id,booking);
-      const date_free = enumerateDaysBetweenDates(booking.date_start,booking.date_end)
+      const { booking_id, booking } = this.props.location.state
+      console.log("GOTCHA", booking_id, booking)
+      const date_free = enumerateDaysBetweenDates(
+        booking.date_start,
+        booking.date_end
+      )
       const res_temp = await axios.get(`/search/${detail.accommodation.id}/`)
 
-      const newDateFree_temp = concatString(res_temp.data.date_free,date_free)
+      const newDateFree_temp = concatString(res_temp.data.date_free, date_free)
 
       const searchAccommodationTemp = {
         date_free: newDateFree_temp
       }
 
-      await axios.patch(`/search/${detail.accommodation.id}/`,searchAccommodationTemp)
+      await axios.patch(
+        `/search/${detail.accommodation.id}/`,
+        searchAccommodationTemp
+      )
 
-      await axios.delete(`/booking/${booking_id}/`);
-      alert("Delete OLD BOOKING successfully");
+      await axios.delete(`/booking/${booking_id}/`)
+      alert("Delete OLD BOOKING successfully")
     }
-
 
     const newBooking = {
       booker: booker,
@@ -78,48 +83,49 @@ class OverallBooking extends React.Component {
     }
 
     // * REMOVE FROM SEARCH DB
-    const{ startDate, endDate} = this.props.location.state.detail
+    const { startDate, endDate } = this.props.location.state.detail
 
     const res = await axios.get(`/search/${detail.accommodation.id}/`)
-    const newDateFree = removeString(res.data.date_free,startDate,endDate)
+    const newDateFree = removeString(res.data.date_free, startDate, endDate)
 
     const searchAccommodation = {
       date_free: newDateFree
     }
 
-    await axios.patch(`/search/${detail.accommodation.id}/`,searchAccommodation)
+    await axios.patch(
+      `/search/${detail.accommodation.id}/`,
+      searchAccommodation
+    )
     // * REMOVE FROM SEARCH DB
 
-    const booking = await axios.post('/booking/', newBooking);
-    console.log("SUCCESSFully Booking", booking.data);
+    const booking = await axios.post("/booking/", newBooking)
+    console.log("SUCCESSFully Booking", booking.data)
 
     this.props.history.push({
       pathname: `/overallbooking/payment/${detail.currentHost.id}`,
-      search: '?query=abc',
+      search: "?query=abc",
       state: {
         detail: detail,
         booker: booker,
-        booking: booking.data,
+        booking: booking.data
       }
     })
 
-    this.props.onPresentSnackbar('success','Booking has been reserved');
-
+    this.props.onPresentSnackbar("success", "Booking has been reserved")
   }
 
-
-
-  render () {
-    const { theme } = this.props;
+  render() {
+    const { theme } = this.props
 
     if (typeof this.props.location.state !== "undefined") {
-
-      const {detail,booker} = this.props.location.state
-      const price = (<Price
-      pricePerNight={parseFloat(detail.price.pricePerNight)}
-      daysDiff={parseFloat(detail.price.daysDiff)}
-      promotion={parseFloat(detail.price.promotion)}
-      />);
+      const { detail, booker } = this.props.location.state
+      const price = (
+        <Price
+          pricePerNight={parseFloat(detail.price.pricePerNight)}
+          daysDiff={parseFloat(detail.price.daysDiff)}
+          promotion={parseFloat(detail.price.promotion)}
+        />
+      )
 
       return (
         <div>
@@ -130,24 +136,38 @@ class OverallBooking extends React.Component {
               textColor="primary"
               fullWidth
             >
-              <Tab label="Review Detail" icon={<CheckIcon hidden={this.state.value > 0 ? false : true}/>} disabled={this.state.value === 0 ? false : true}></Tab>
-              <Tab label="Payment" icon={<CheckIcon hidden={this.state.value > 1 ? false : true}/>} disabled={this.state.value === 1 ? false : true} />
-              <Tab label="Confirmation" disabled={this.state.value === 2 ? false : true} />
+              <Tab
+                label="Review Detail"
+                icon={
+                  <CheckIcon hidden={this.state.value > 0 ? false : true} />
+                }
+                disabled={this.state.value === 0 ? false : true}
+              />
+              <Tab
+                label="Payment"
+                icon={
+                  <CheckIcon hidden={this.state.value > 1 ? false : true} />
+                }
+                disabled={this.state.value === 1 ? false : true}
+              />
+              <Tab
+                label="Confirmation"
+                disabled={this.state.value === 2 ? false : true}
+              />
             </Tabs>
           </AppBar>
           <div className="container">
             <div className="row">
-            <div className="col-8">
-            <SwipeableViews
-
-            >
-
+              <div className="col-8">
+                <SwipeableViews>
                   <TabContainer dir={theme.direction}>
+                    <Overview
+                      accommodation={detail.accommodation}
+                      guest={detail.guest}
+                    />
 
-                    <Overview accommodation={detail.accommodation} guest={detail.guest}/>
-
-                    <Divider/>
-                    <Divider/>
+                    <Divider />
+                    <Divider />
 
                     <Days
                       daysDiff={detail.price.daysDiff}
@@ -156,45 +176,44 @@ class OverallBooking extends React.Component {
                       endDate={detail.endDate}
                       checkIn={detail.currentHost.check_in}
                       checkOut={detail.currentHost.check_out}
-                      />
+                    />
 
-                    <Divider/>
-                    <Divider/>
-                    <Amenities accommodation={detail.accommodation}/>
+                    <Divider />
+                    <Divider />
+                    <Amenities accommodation={detail.accommodation} />
 
-                    <Divider/>
-                    <Divider/>
+                    <Divider />
+                    <Divider />
 
-                    <Reminder/>
+                    <Reminder />
 
-                    <Divider/>
+                    <Divider />
 
-                    <div className="row" style={{marginTop:'20px'}}>
-                      <Button variant="contained" color="primary" onClick={this.postBooking.bind(this, detail, booker)}>Agree and Continue</Button>
+                    <div className="row" style={{ marginTop: "20px" }}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.postBooking.bind(this, detail, booker)}
+                      >
+                        Agree and Continue
+                      </Button>
                     </div>
-
-
                   </TabContainer>
-            </SwipeableViews>
-            </div>
-            <div className="col-4" style={{border: '3px solid green'}}>
-              <BookingInfo
-                price={price}
-                detail={detail}
-                />
-            </div>
+                </SwipeableViews>
+              </div>
+              <div className="col-4" style={{ border: "3px solid green" }}>
+                <BookingInfo price={price} detail={detail} />
+              </div>
             </div>
           </div>
         </div>
       )
     } else {
-      return(
-        <h1>Illegal to refresh</h1>
-      )
-
+      return <h1>Illegal to refresh</h1>
     }
-
   }
 }
 
-export default withSnackbar(withStyles(styles, { withTheme: true })(OverallBooking));
+export default withSnackbar(
+  withStyles(styles, { withTheme: true })(OverallBooking)
+)

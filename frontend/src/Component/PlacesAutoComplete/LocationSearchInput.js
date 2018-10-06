@@ -1,18 +1,18 @@
-import React from 'react';
-import PlacesAutocomplete  from 'react-places-autocomplete'
-import { classnames } from './helpers'
-import '../../Styles/searchLocation.css'
+import React from "react"
+import PlacesAutocomplete from "react-places-autocomplete"
+import { classnames } from "./helpers"
+import "../../Styles/searchLocation.css"
 
 class SearchBar extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      address: '',
-      errorMessage: '',
+      address: "",
+      errorMessage: "",
       latitude: null,
       longitude: null,
-      isGeocoding: false,
-    };
+      isGeocoding: false
+    }
   }
 
   handleChange = address => {
@@ -20,11 +20,11 @@ class SearchBar extends React.Component {
       address,
       latitude: null,
       longitude: null,
-      errorMessage: '',
-    });
-  };
+      errorMessage: ""
+    })
+  }
 
-  handleSelect = (selected) => {
+  handleSelect = selected => {
     this.setState({
       address: selected
     })
@@ -33,18 +33,18 @@ class SearchBar extends React.Component {
 
   handleCloseClick = () => {
     this.setState({
-      address: '',
+      address: "",
       latitude: null,
-      longitude: null,
-    });
-  };
+      longitude: null
+    })
+  }
 
   handleError = (status, clearSuggestions) => {
-    console.log('Error from Google Maps API', status); // eslint-disable-line no-console
+    console.log("Error from Google Maps API", status) // eslint-disable-line no-console
     this.setState({ errorMessage: status }, () => {
-      clearSuggestions();
-    });
-  };
+      clearSuggestions()
+    })
+  }
 
   render() {
     const {
@@ -52,8 +52,8 @@ class SearchBar extends React.Component {
       errorMessage,
       latitude,
       longitude,
-      isGeocoding,
-    } = this.state;
+      isGeocoding
+    } = this.state
 
     return (
       <div>
@@ -71,8 +71,8 @@ class SearchBar extends React.Component {
                 <div className="Demo__search-input-container">
                   <input
                     {...getInputProps({
-                      placeholder: 'Search Places...',
-                      className: 'Demo__search-input',
+                      placeholder: "Search Places...",
+                      className: "Demo__search-input"
                     })}
                   />
                   {this.state.address.length > 0 && (
@@ -87,9 +87,9 @@ class SearchBar extends React.Component {
                 {suggestions.length > 0 && (
                   <div className="Demo__autocomplete-container">
                     {suggestions.map(suggestion => {
-                      const className = classnames('Demo__suggestion-item', {
-                        'Demo__suggestion-item--active': suggestion.active,
-                      });
+                      const className = classnames("Demo__suggestion-item", {
+                        "Demo__suggestion-item--active": suggestion.active
+                      })
 
                       return (
                         /* eslint-disable react/jsx-key */
@@ -98,19 +98,18 @@ class SearchBar extends React.Component {
                         >
                           <strong>
                             {suggestion.formattedSuggestion.mainText}
-                          </strong>{' '}
+                          </strong>{" "}
                           <small>
                             {suggestion.formattedSuggestion.secondaryText}
                           </small>
                         </div>
-                      );
+                      )
                       /* eslint-enable react/jsx-key */
                     })}
-
                   </div>
                 )}
               </div>
-            );
+            )
           }}
         </PlacesAutocomplete>
         {errorMessage.length > 0 && (
@@ -139,7 +138,7 @@ class SearchBar extends React.Component {
           </div>
         )}
       </div>
-    );
+    )
   }
 }
 
@@ -147,4 +146,4 @@ SearchBar.defaultProps = {
   disable: false
 }
 
-export default SearchBar;
+export default SearchBar

@@ -1,113 +1,111 @@
-import React from 'react'
-import { withSnackbar } from 'notistack';
-import Cards from 'react-credit-cards';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import {Link} from 'react-router-dom'
+import React from "react"
+import { withSnackbar } from "notistack"
+import Cards from "react-credit-cards"
+import TextField from "@material-ui/core/TextField"
+import FormControl from "@material-ui/core/FormControl"
+import { withStyles } from "@material-ui/core/styles"
+import Button from "@material-ui/core/Button"
+import { Link } from "react-router-dom"
 
 const styles = theme => ({
   form: {
-    width: '80%', // Fix IE11 issue.
-    marginTop: theme.spacing.unit,
-  },
+    width: "80%", // Fix IE11 issue.
+    marginTop: theme.spacing.unit
+  }
 })
 
 class CardForm extends React.Component {
   state = {
     value: 0,
     error: false,
-    card_number:'4900000000000000',
-    name:'sean',
-    valid:'12/12',
-    cvc:'555',
-    focus:'name',
-
-  };
+    card_number: "4900000000000000",
+    name: "sean",
+    valid: "12/12",
+    cvc: "555",
+    focus: "name"
+  }
 
   errorCheck(credit) {
-    if (credit.card_number.length < 16 ||
-        credit.name.length === 0 ||
-        credit.valid.length < 5 ||
-        credit.cvc.length < 3) {
-      this.setState({error: true})
-      return true;
+    if (
+      credit.card_number.length < 16 ||
+      credit.name.length === 0 ||
+      credit.valid.length < 5 ||
+      credit.cvc.length < 3
+    ) {
+      this.setState({ error: true })
+      return true
     } else {
-      this.setState({error: false})
-      return false;
+      this.setState({ error: false })
+      return false
     }
   }
 
   onSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     if (this.errorCheck(this.state) === true) {
-      return;
+      return
     } else if (this.errorCheck(this.state) === false) {
-      this.props.submitPayment();
+      this.props.submitPayment()
     }
 
-    this.props.onPresentSnackbar('success','Payment is successful');
-
+    this.props.onPresentSnackbar("success", "Payment is successful")
   }
 
   onChange(e) {
-    this.setState({error: false})
-    if (e.target.name === 'valid' && e.target.value.length <=5) {
+    this.setState({ error: false })
+    if (e.target.name === "valid" && e.target.value.length <= 5) {
       if (e.target.value.length === 1) {
         if (e.target.value > 1) {
-          this.setState({[e.target.name]: '0'+e.target.value+'/'})
-        }
-        else {
-          this.setState({[e.target.name]: e.target.value})
+          this.setState({ [e.target.name]: "0" + e.target.value + "/" })
+        } else {
+          this.setState({ [e.target.name]: e.target.value })
         }
       } else if (e.target.value.length === 2) {
         if (this.state.valid.length === 3) {
-          this.setState({[e.target.name]: ''})
-        }else {
-          this.setState({[e.target.name]: e.target.value+'/'})
+          this.setState({ [e.target.name]: "" })
+        } else {
+          this.setState({ [e.target.name]: e.target.value + "/" })
         }
       } else if (e.target.value.length >= 3) {
-        this.setState({[e.target.name]: e.target.value})
+        this.setState({ [e.target.name]: e.target.value })
       } else {
-        this.setState({[e.target.name]: e.target.value})
+        this.setState({ [e.target.name]: e.target.value })
       }
-    } else if (e.target.name === 'cvc' && e.target.value.length <=4) {
-      this.setState({[e.target.name]:e.target.value})
-    } else if (e.target.name === 'card_number' && e.target.value.length <= 16) {
-      this.setState({[e.target.name]:e.target.value})
-    } else if (e.target.name === 'name') {
-      this.setState({[e.target.name]:e.target.value})
+    } else if (e.target.name === "cvc" && e.target.value.length <= 4) {
+      this.setState({ [e.target.name]: e.target.value })
+    } else if (e.target.name === "card_number" && e.target.value.length <= 16) {
+      this.setState({ [e.target.name]: e.target.value })
+    } else if (e.target.name === "name") {
+      this.setState({ [e.target.name]: e.target.value })
     }
 
     const credit = {
       card_number: this.state.card_number,
       name: this.state.name,
       valid: this.state.valid,
-      cvc: this.state.cvc,
+      cvc: this.state.cvc
     }
 
-    this.props.onChange(credit);
-
+    this.props.onChange(credit)
   }
 
   onFocus(focus) {
-    this.setState({focus:focus});
+    this.setState({ focus: focus })
   }
 
   goBack() {
-    this.props.handleChange(0);
+    this.props.handleChange(0)
   }
 
-  render () {
-    const{card_number,name,valid,cvc,focus,error} = this.state;
-    const {classes} = this.props;
+  render() {
+    const { card_number, name, valid, cvc, focus, error } = this.state
+    const { classes } = this.props
     return (
       <div>
         <div className="row">
           <div className="col-6">
-            <div style={{marginTop:'20px'}}>
+            <div style={{ marginTop: "20px" }}>
               <Cards
                 number={card_number}
                 name={name}
@@ -119,55 +117,79 @@ class CardForm extends React.Component {
             </div>
           </div>
           <div className="col-6">
-            <form className={classes.form} onSubmit={this.onSubmit.bind(this)} id="form1">
-              <FormControl margin="normal" required fullWidth style={{marginBottom:'10px'}}>
+            <form
+              className={classes.form}
+              onSubmit={this.onSubmit.bind(this)}
+              id="form1"
+            >
+              <FormControl
+                margin="normal"
+                required
+                fullWidth
+                style={{ marginBottom: "10px" }}
+              >
                 <TextField
                   error={error}
                   label="Card Number"
                   name="card_number"
                   value={card_number}
                   onChange={this.onChange.bind(this)}
-                  onFocus={this.onFocus.bind(this,"number")}
+                  onFocus={this.onFocus.bind(this, "number")}
                   InputLabelProps={{ shrink: true }}
                   type="number"
                 />
               </FormControl>
-              <FormControl margin="normal" required fullWidth style={{marginBottom:'10px'}}>
+              <FormControl
+                margin="normal"
+                required
+                fullWidth
+                style={{ marginBottom: "10px" }}
+              >
                 <TextField
                   error={error}
                   label="Name"
                   name="name"
                   value={name}
                   onChange={this.onChange.bind(this)}
-                  onFocus={this.onFocus.bind(this,"name")}
+                  onFocus={this.onFocus.bind(this, "name")}
                   InputLabelProps={{ shrink: true }}
                   type="text"
                 />
               </FormControl>
               <div className="row">
                 <div className="col-6">
-                  <FormControl margin="normal" required fullWidth style={{marginBottom:'10px'}}>
+                  <FormControl
+                    margin="normal"
+                    required
+                    fullWidth
+                    style={{ marginBottom: "10px" }}
+                  >
                     <TextField
                       error={error}
                       label="Valid till"
                       name="valid"
                       value={valid}
                       onChange={this.onChange.bind(this)}
-                      onFocus={this.onFocus.bind(this,"expiry")}
+                      onFocus={this.onFocus.bind(this, "expiry")}
                       InputLabelProps={{ shrink: true }}
                       type="text"
                     />
                   </FormControl>
                 </div>
                 <div className="col-6">
-                  <FormControl margin="normal" required fullWidth style={{marginBottom:'10px'}}>
+                  <FormControl
+                    margin="normal"
+                    required
+                    fullWidth
+                    style={{ marginBottom: "10px" }}
+                  >
                     <TextField
                       error={error}
                       label="CVC"
                       name="cvc"
                       value={cvc}
                       onChange={this.onChange.bind(this)}
-                      onFocus={this.onFocus.bind(this,"cvc")}
+                      onFocus={this.onFocus.bind(this, "cvc")}
                       InputLabelProps={{ shrink: true }}
                       type="number"
                     />
@@ -175,12 +197,17 @@ class CardForm extends React.Component {
                 </div>
               </div>
             </form>
-
           </div>
-
         </div>
-        <div className="row" style={{marginTop:'15px'}}>
-          <Button variant="contained" color="primary" type="submit" form="form1">Confirm and Pay</Button>
+        <div className="row" style={{ marginTop: "15px" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            form="form1"
+          >
+            Confirm and Pay
+          </Button>
           <Button onClick={this.goBack.bind(this)}>Review detail</Button>
           <Link to="/mybookings">
             <Button>Pay Later</Button>
@@ -191,4 +218,4 @@ class CardForm extends React.Component {
   }
 }
 
-export default withSnackbar(withStyles(styles, { withTheme: true })(CardForm));
+export default withSnackbar(withStyles(styles, { withTheme: true })(CardForm))
