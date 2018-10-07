@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Provider} from './Context';
+import {RequestProvider} from './Component/BookingRequest/RequestContext';
 import AppMain from './AppMain'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStroopwafel, faBed, faBath, faDoorOpen, faUsers,
@@ -14,9 +15,11 @@ class App extends Component {
   render() {
     return (
       <Provider>
-        <Router>
-          <AppMain />
-        </Router>
+        <RequestProvider>
+          <Router>
+            <AppMain />
+          </Router>
+        </RequestProvider>
       </Provider>
     );
   }

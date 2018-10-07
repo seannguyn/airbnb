@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import {Consumer} from '../../Context';
+import {RequestConsumer} from '../BookingRequest/RequestContext';
 import Avatar from '@material-ui/core/Avatar';
 import FormControl from '@material-ui/core/FormControl';
 import LockIcon from '@material-ui/icons/LockOutlined';
@@ -162,7 +163,7 @@ class LoginDialog extends React.Component {
               })
 
     }
-    
+
     var string = 'Welcome '.concat(userInfo.username)
     this.props.onPresentSnackbar('success',string)
 
@@ -314,6 +315,8 @@ class LoginDialog extends React.Component {
               </Paper>
             </Dialog>
           )
+
+
         }}
       </Consumer>
     )

@@ -48,12 +48,6 @@ class Items extends React.Component {
                  <ListItemText primary="Explore" />
                </ListItem>
               </Link>
-               <ListItem button onClick={this.closeSideBar.bind(this, dispatch)}>
-                 <ListItemIcon>
-                   <StarBorder />
-                 </ListItemIcon>
-                 <ListItemText primary="Starred" />
-               </ListItem>
               <Link to="/myHouses">
                <ListItem button onClick={this.closeSideBar.bind(this, dispatch)}>
                  <ListItemIcon>
@@ -69,6 +63,14 @@ class Items extends React.Component {
                </ListItemIcon>
                <ListItemText primary="Booking" />
              </ListItem>
+             </Link>
+             <Link to="/bookingRequest">
+               <ListItem button onClick={this.closeSideBar.bind(this, dispatch)}>
+                 <ListItemIcon>
+                   <StarBorder />
+                 </ListItemIcon>
+                 <ListItemText primary="Booking Request" />
+               </ListItem>
              </Link>
              <Divider/>
              <ListItem button onClick={this.closeSideBar.bind(this, dispatch)}>
