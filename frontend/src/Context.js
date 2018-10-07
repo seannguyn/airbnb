@@ -135,7 +135,7 @@ export class Provider extends Component {
   addPlaceMaker = async (AllHostingList) => {
     const places = [];
     for (let i = 0; i < AllHostingList.length; i++) {
-      console.log(AllHostingList[i].accommodation)
+      console.log(AllHostingList[i].accommodation);
       const accommodation = AllHostingList[i].accommodation;
       await axios.get(`/accommodation/${accommodation}/`)
         .then(response => {
@@ -215,7 +215,7 @@ export class Provider extends Component {
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
-    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
     if (currentUser === null) {
       currentUser = []

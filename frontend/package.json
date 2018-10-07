@@ -41,7 +41,8 @@
     "react-star-rating-component": "^1.4.1",
     "react-swipeable-views": "^0.12.17",
     "reactjs-popup": "^1.2.0",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "prop-types": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

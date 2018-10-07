@@ -232,7 +232,6 @@ class BookingPaper extends React.Component {
     }
   }
 
-
   render() {
     const {classes} = this.props;
     const book = (!(this.state.startDate !== null && this.state.endDate !== null));
@@ -248,10 +247,11 @@ class BookingPaper extends React.Component {
     }
 
     const promotion = 0.1;
+    const hostID = this.props.accommodation.id;
 
     return (
       <div>
-        <RequestForm open={this.state.dialogOpen} handleClose={this.closeRequestDialog}/>
+        <RequestForm open={this.state.dialogOpen} handleClose={this.closeRequestDialog} host={hostID}/>
         <Consumer>
           {value => {
             const {dispatch} = value;

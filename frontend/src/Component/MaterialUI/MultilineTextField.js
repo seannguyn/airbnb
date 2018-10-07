@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
@@ -46,7 +45,6 @@ class FilledTextFields extends React.Component {
           onChange={this.handleChange('multiline')}
           className={classes.textField}
           margin="dense"
-          //helperText="hello"
           variant="filled"
         />
     );
