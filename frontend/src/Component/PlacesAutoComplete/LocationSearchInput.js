@@ -20,6 +20,7 @@ class SearchBar extends React.Component {
     });
   };
 
+<<<<<<< HEAD
 //   handleSelect = selected => {
 //     this.setState({ isGeocoding: true, address: selected });
 //     geocodeByAddress(selected)
@@ -36,6 +37,23 @@ class SearchBar extends React.Component {
 //         console.log('error', error); // eslint-disable-line no-console
 //       });
 //   };
+=======
+  handleSelect = (selected) => {
+    this.setState({
+      address: selected
+    })
+    this.props.handleSelect(selected)
+  }
+
+  handleCloseClick = () => {
+    this.setState({
+      address: '',
+      latitude: null,
+      longitude: null,
+    });
+  };
+
+>>>>>>> 842d408b6e1db33d0ba6ee3bb1382796030bab0d
   handleError = (status, clearSuggestions) => {
     console.log('Error from Google Maps API', status); // eslint-disable-line no-console
     this.setState({errorMessage: status}, () => {
@@ -68,11 +86,18 @@ class SearchBar extends React.Component {
         <PlacesAutocomplete
           onChange={this.handleChange}
           value={address}
-          onSelect={this.props.handleSelect}
+          onSelect={this.handleSelect}
           onError={this.handleError}
+<<<<<<< HEAD
           shouldFetchSuggestions={address.length > 2} >
 
           {({getInputProps, suggestions, getSuggestionItemProps}) => {
+=======
+          shouldFetchSuggestions={address.length > 2}
+          disabled={this.props.disable}
+        >
+          {({ getInputProps, suggestions, getSuggestionItemProps }) => {
+>>>>>>> 842d408b6e1db33d0ba6ee3bb1382796030bab0d
             return (
               <div className="Demo__search-bar-container">
                 <div className="Demo__search-input-container">
@@ -148,6 +173,10 @@ class SearchBar extends React.Component {
       </div>
     );
   }
+}
+
+SearchBar.defaultProps = {
+  disable: false
 }
 
 export default SearchBar;

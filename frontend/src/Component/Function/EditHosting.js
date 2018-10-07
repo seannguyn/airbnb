@@ -6,10 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import {enumerateDaysBetweenDates,yyyymmdd} from '../Helper/Helper'
 import {Link} from 'react-router-dom'
-
 import FormControl from '@material-ui/core/FormControl';
-
 import Button from '@material-ui/core/Button';
+import { withSnackbar } from 'notistack';
 
 const styles = theme => ({
   textField: {
@@ -243,6 +242,7 @@ class EditHosting extends Component {
         )
         dispatch({type:'EDITHOST', payload:hostingHouse});
 
+        this.props.onPresentSnackbar('success','Edited Hosting');
 
         this.props.history.push("/myHouses")
     }
@@ -255,7 +255,7 @@ class EditHosting extends Component {
       .then(res => {
         dispatch({type: "DELETE_HOST", payload: id})
       })
-
+      this.props.onPresentSnackbar('error','delete hosting');
     }
 
     render() {
@@ -402,4 +402,4 @@ class EditHosting extends Component {
         );
     }
 }
-export default withStyles(styles)(EditHosting);
+export default withSnackbar(withStyles(styles)(EditHosting));

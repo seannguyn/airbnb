@@ -38,7 +38,6 @@ class AllHostingContext extends React.Component {
         } else {
           rendering.push(<h1 key="map"><Map/></h1>)
         }
-        console.log("RENDERING LIST MAP",rendering);
 
         return (
           <div>

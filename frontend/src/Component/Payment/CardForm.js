@@ -1,6 +1,5 @@
 import React from 'react'
-
-
+import { withSnackbar } from 'notistack';
 import Cards from 'react-credit-cards';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
@@ -48,6 +47,8 @@ class CardForm extends React.Component {
     } else if (this.errorCheck(this.state) === false) {
       this.props.submitPayment();
     }
+
+    this.props.onPresentSnackbar('success','Payment is successful');
 
   }
 
@@ -190,4 +191,4 @@ class CardForm extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(CardForm);
+export default withSnackbar(withStyles(styles, { withTheme: true })(CardForm));

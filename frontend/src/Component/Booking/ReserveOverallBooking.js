@@ -17,6 +17,7 @@ import Amenities from '../Booking/Amenities';
 import Reminder from '../Booking/Reminder';
 import 'react-credit-cards/es/styles-compiled.css';
 import axios from 'axios';
+import { withSnackbar } from 'notistack';
 import {enumerateDaysBetweenDates, removeString, concatString} from '../Helper/Helper'
 
 function TabContainer({ children, dir }) {
@@ -101,6 +102,8 @@ class OverallBooking extends React.Component {
         booking: booking.data,
       }
     })
+
+    this.props.onPresentSnackbar('success','Booking has been reserved');
 
   }
 
@@ -194,4 +197,4 @@ class OverallBooking extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(OverallBooking);
+export default withSnackbar(withStyles(styles, { withTheme: true })(OverallBooking));

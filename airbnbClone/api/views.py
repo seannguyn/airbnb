@@ -2,8 +2,8 @@ from django.shortcuts import render
 # from api.serializers import UserSerializer
 
 from django.contrib.auth.models import User
-from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search
-from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer,BookingSerializer, ReviewSerializer, UserInfoSerializer, SearchSerializer
+from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search, ReviewCount, BookRequest
+from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer,BookingSerializer, ReviewSerializer, UserInfoSerializer, SearchSerializer, ReviewCountSerializer,BookRequestSerializer
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from datetime import datetime, timedelta
 from django.http import HttpResponse, HttpResponseNotFound, Http404
@@ -198,9 +198,8 @@ class AccommodationHostingView(viewsets.ModelViewSet):
     #         return queryset
 
 class BookingView(viewsets.ModelViewSet):
-    queryset = Booking.objects.all()
 
-    # queryset = Accomodation.objects.filter(user__username__exact="sean")
+    queryset = Booking.objects.all()
     serializer_class = BookingSerializer
 
     def get_queryset(self):
@@ -346,11 +345,6 @@ class SearchHostingViews(viewsets.ModelViewSet):
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
 
-# issue comes when:
-    # 1. modify location        : check
-    # 2. modify booking date    : ugh..., add old booking date back date_free, delete the new booking date from date_free
-    # 2. modify hosting date    : ugh..., lien quan den booking,
-
     def get_queryset(self):
         """ allow rest api to filter by submissions """
 
@@ -368,7 +362,7 @@ class SearchHostingViews(viewsets.ModelViewSet):
             queryset = queryset.filter(guest__gte=guest)
 
         if location is not None:
-            queryset = queryset.filter(location=location)
+            queryset = queryset.filter(location__icontains=location)
 
         if price_upper is not None:
             queryset = queryset.filter(price__lte=price_upper)
@@ -399,3 +393,31 @@ class SearchHostingViews(viewsets.ModelViewSet):
         queryset_accommodation = queryset_accommodation.filter(accommodation__in=set(newQ))
 
         return queryset_accommodation
+
+class ReviewCountViews(viewsets.ModelViewSet):
+    queryset = ReviewCount.objects.all()
+    # queryset = Accomodation.objects.filter(user__username__exact="sean")
+    serializer_class = ReviewCountSerializer
+
+    def get_queryset(self):
+        queryset = ReviewCount.objects.all()
+        return queryset
+
+class BookRequestViews(viewsets.ModelViewSet):
+    queryset = BookRequest.objects.all()
+    serializer_class = BookRequestSerializer
+
+    def get_queryset(self):
+
+        queryset = BookRequest.objects.all()
+
+        hasReply = self.request.query_params.get('hasReply', None)
+        toHost = self.request.query_params.get('toHost', None)
+
+        if (toHost != None):
+            queryset = queryset.filter(toHost=toHost)
+
+        if (hasReply != None):
+            queryset = queryset.filter(hasReply=hasReply)
+
+        return queryset

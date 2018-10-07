@@ -22,6 +22,7 @@
     "jquery": "^3.3.1",
     "material-ui": "^0.20.2",
     "moment": "^2.22.2",
+    "notistack": "^0.2.1",
     "npm": "^6.4.1",
     "paypal": "^1.0.1",
     "react": "^16.4.2",

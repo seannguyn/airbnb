@@ -1,10 +1,6 @@
 import React from 'react';
-import {Consumer} from '../../Context.js';
 import axios from 'axios';
-
-import Checkbox from '@material-ui/core/Checkbox';
-import Paper from '@material-ui/core/Paper';
-import HomeIcon from '@material-ui/icons/Home';
+import {withSnackbar} from 'notistack';
 
 import {withStyles} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -17,9 +13,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
+import Checkbox from '@material-ui/core/Checkbox';
+import Paper from '@material-ui/core/Paper';
+import HomeIcon from '@material-ui/icons/Home';
 
 import SearchBar from '../PlacesAutoComplete/LocationSearchInput'
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
+
+import {Consumer} from '../../Context.js';
 
 const styles = theme => ({
   paper: {
@@ -126,10 +127,6 @@ class AddHouse extends React.Component {
 
       error: {
         title: '',
-        number: '',
-        street: '',
-        city: '',
-        state: '',
         Accommodation_Type: '',
         bedroom: '',
         bathroom: '',
@@ -167,24 +164,6 @@ class AddHouse extends React.Component {
       flag = true;
     }
 
-    // if (street === '' ) {
-    //   this.setState({error:{street:"street is required"}})
-    //   return;
-    // }
-    // if (city === '' ) {
-    //   this.setState({error:{city:"city is required"}})
-    //   return;
-    // }
-    //
-    // if (bedroom === ''  || !isFinite(String(bedroom))) {
-    //   this.setState({error:{bedroom:"bedroom is required"}})
-    //   return;
-    // }
-    // if (bathroom === '' || !isFinite(String(bathroom))) {
-    //   this.setState({error:{bathroom:"bathroom is required"}})
-    //   return;
-    // }
-
     return flag === true;
   }
 
@@ -201,15 +180,11 @@ class AddHouse extends React.Component {
 
       Accomodation_Type: this.state.Accommodation_Type,
 
-      address: address,
+      address: address.toLowerCase(),
       latitude: latitude,
       longitude: longitude,
 
       title: this.state.title,
-      addr_number: this.state.number,
-      addr_street: 'street',
-      addr_city: 'city',
-      addr_state: 'NSW',
 
       bed: bed,
       bedroom: bedroom,
@@ -228,16 +203,15 @@ class AddHouse extends React.Component {
     const id = await axios.post('/accommodation/', newHouse);
     const res = await axios.get(`/accommodation/?user=${newHouse.user}`);
 
-    console.log("NEW ID ISSSSS: ", id.data.id);
+    // create review count
+    await axios.post(`https://localhost:8000/reviewCounter/`, {accommodation: id.data.id, count: 0})
+
     dispatch({type: 'ADD_HOUSE', payload: res.data});
 
     this.setState({
 
       title: '',
-      number: '',
-      street: '',
-      city: '',
-      state: '',
+      address: '',
 
       Accomodation_Type: '',
       bed: 0,
@@ -253,7 +227,10 @@ class AddHouse extends React.Component {
 
     this.props.history.push({
       pathname: `/editHouse/${id.data.id}`,
-    })
+    });
+
+    this.props.onPresentSnackbar('success', 'Accommodation is added');
+
   }
 
   render() {
@@ -261,7 +238,6 @@ class AddHouse extends React.Component {
     const {Accommodation_Type, bed, bedroom, bathroom, kitchen, gym, pool, carpark, description} = this.state;
     const {classes} = this.props;
 
-    console.log("PROPS: ", this.props);
     return (
 
       <Consumer>
@@ -442,7 +418,7 @@ class AddHouse extends React.Component {
                       value={description}
                       onChange={this.onChange.bind(this)}
                       name="description"
-                      type="text" />
+                      type="text"/>
                   </FormControl>
 
                   <Button
@@ -462,7 +438,7 @@ class AddHouse extends React.Component {
                 aria-describedby="simple-modal-description"
                 style={{alignItems: 'center', justifyContent: 'center'}}
                 open={this.state.modalOpen}
-                onClose={this.handleClose} >
+                onClose={this.handleClose}>
                 <div style={getModalStyle()} className={classes.modal}>
                   <Typography variant="title" id="modal-title">
                     Information Saved Successful
@@ -482,4 +458,4 @@ class AddHouse extends React.Component {
   }
 }
 
-export default withStyles(styles, {withTheme: true})(AddHouse);
+export default withSnackbar(withStyles(styles, {withTheme: true})(AddHouse));

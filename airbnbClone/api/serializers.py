@@ -1,14 +1,13 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
-from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search
+from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search, ReviewCount, BookRequest
 
 class AccommodationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Accommodation
         fields = ('id','user','title', 'address', 'latitude', 'longitude',
-                    'addr_number','addr_street','addr_city','addr_state',
                     'Accomodation_Type','bed','bedroom',
                     'kitchen','bathroom','pool',
                     'gym','carpark','description')
@@ -47,3 +46,13 @@ class SearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Search
         fields = ('accommodation', 'date_free', 'price', 'guest', 'location')
+
+class ReviewCountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReviewCount
+        fields = ('accommodation', 'count')
+
+class BookRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BookRequest
+        fields = '__all__'

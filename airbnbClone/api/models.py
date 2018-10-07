@@ -36,12 +36,6 @@ class Accommodation(models.Model):
     latitude = models.FloatField(blank=False, default=1)
     longitude = models.FloatField(blank=False, default=1)
 
-    addr_number = models.PositiveIntegerField(blank=False, default=1)
-    addr_street = models.CharField(blank=False, max_length=100,default='dedault')
-    addr_city   = models.CharField(blank=False, max_length=100,default='default')
-    addr_state  = models.CharField(max_length=10, choices=STATES,default='NSW')
-
-
     bed             = models.IntegerField(default=1, blank=False)
     bedroom         = models.IntegerField(default=1, blank=False)
     bathroom        = models.IntegerField(default=1, blank=False)
@@ -123,3 +117,18 @@ class Search(models.Model):
     price = models.PositiveIntegerField(blank=False,default=100)
     guest = models.IntegerField(blank=False, default=1)
     location = models.CharField(blank=False, max_length=100,default='default')
+
+class ReviewCount(models.Model):
+
+    accommodation = models.OneToOneField(Accommodation, on_delete=models.CASCADE, primary_key="true")
+    count = models.IntegerField(blank=False, default=0)
+
+class BookRequest(models.Model):
+
+    title       = models.TextField(blank=False)
+    date        = models.TextField(blank=True)
+    content     = models.TextField(blank=False)
+    sender      = models.TextField(blank=True)
+    toHost      = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    hasReply    = models.BooleanField(default=False)
+    reply       = models.TextField(blank=True)

@@ -76,10 +76,8 @@ class AccommodationDetail extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-
     if (nextState.status === 1) {
       this.props = nextProps;
-      console.log("Should Component update", this.props, this.state);
       return true;
     } else {
       return false;
@@ -90,7 +88,6 @@ class AccommodationDetail extends React.Component {
     // console.log("props acom detail: ", this.state);
     const {classes, accommodation} = this.props;
     const {longitude, latitude, id} = accommodation;
-    console.log("ACCOMODATION ", accommodation);
     // const {Accommodation_Type, area, bathroom,
     //         bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
 
@@ -115,14 +112,12 @@ class AccommodationDetail extends React.Component {
       )
       return 0;
     })
-    console.log(imagesDiv, "IMG DIV");
     // IMAGES ======
 
     // const {bathroom,bedroom,kitchen,carpark,description} = this.state.accomDetail
     // const {currentHost} = this.state;
     const isDayBlocked = day => this.props.booking.filter(d => d.isSame(day, 'day')).length > 0;
     const {status} = this.state;
-    console.log(this.props, "here it is", this.state);
     const {bathroom, bedroom, bed, title, description} = this.props.accommodation;
     return (
       <Consumer>
@@ -136,73 +131,95 @@ class AccommodationDetail extends React.Component {
           } else {
             return (
               <div>
-                <img
-                  src="http://www.designdeveloprealize.com/wp-content/uploads/2018/03/high-resolution-house-photos-inside-high-resolution-house-pictures-house-interior.jpg"
-                  className="img-fluid" alt="Responsive" style={{width: '100%'}}/>
 
                 <div className="container">
                   <div className="row">
                   </div>
-                  <div className="row">
-                    <div className="col-8" style={{border: '2px solid blue'}}>
-                      <div className="description">
-                        <h4>Title: {title}</h4>
-                      </div>
-                      <div className="description">
-                        <h4>Description: {description}</h4>
-                      </div>
-                      <div className="row">
-                        <i className="fas fa-door-open"> {bedroom} bedrooms</i>&#160;
-                        <i className="fas fa-bed"> {bed} bed</i>&#160;
-                        <i className="fas fa-bath"> {bathroom} bathrooms</i>&#160;
-                      </div>
-                      <div className="row">
-                        <div className="col-6">
-                          <Carousel {...settings} dots={false}>
-                            {this.props.images.length !== 0 ?
-                              imagesDiv
-                              :
-                              <div>
-                                <img
-                                  src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg"
-                                  height="150" width="345" alt="noimage"/>
-                              </div>
-                            }
-                          </Carousel>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-4">
-                      <div style={{paddingTop: '3rem'}}>
-                        <BookingPaper
-                          isDayBlocked={isDayBlocked}
-                          minDateSet={this.props.minDateSet}
-                          context={value}
-                          currentHost={this.props.accommodationHosting}
-                          history={this.props.history}
-                          accommodation={this.props.accommodation}
-                        />
-                      </div>
-                    </div>
+                  <div className="description">
+                    <h4>Description: {description}</h4>
                   </div>
                   <div className="row">
-                    <div className="col-8" style={{border: '2px solid blue'}}>
-                      <Maps latitude={latitude} longitude={longitude} accommodation={id}/>
-                    </div>
-                    <div className="col-4">
-
-                    </div>
+                    <i className="fas fa-door-open"> {bedroom} bedrooms</i>&#160;
+                    <i className="fas fa-bed"> {bed} bed</i>&#160;
+                    <i className="fas fa-bath"> {bathroom} bathrooms</i>&#160;
                   </div>
                   <div className="row">
-                    <div className="col-8" style={{border: '2px solid blue'}}>
-                      <ReviewComponent review={this.props.reviews}/>
-                    </div>
-                    <div className="col-4">
+                    <div className="col-6">
+                      <Carousel {...settings} dots={false}>
+                        {this.props.images.length !== 0 ?
+                          imagesDiv
+                          :
+                          <div>
+                            <img
+                              src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg"
+                              height="150" width="345" alt="noimage"/>
+                          </div>
+                        }
+                      </Carousel>
                     </div>
                   </div>
                 </div>
+                <div className="col-4">
+                  <div style={{paddingTop: '3rem'}}>
+                    <BookingPaper
+                      isDayBlocked={isDayBlocked}
+                      minDateSet={this.props.minDateSet}
+                      context={value}
+                      currentHost={this.props.accommodationHosting}
+                      history={this.props.history}
+                      accommodation={this.props.accommodation}
+                    />
+                  </div>
+                </div>
               </div>
-            );
+              < div
+            className = "row" >
+              < div
+            className = "col-8"
+            style = {
+            {
+              border: '2px solid blue'
+            }
+          }>
+          <
+            Maps
+            latitude = {latitude}
+            longitude = {longitude}
+            accommodation = {id}
+            />
+          </div>
+          <
+            div
+            className = "col-4" >
+
+              < /div>
+          </div>
+          <
+            div
+            className = "row" >
+              < div
+            className = "col-8"
+            style = {
+            {
+              border: '2px solid blue'
+            }
+          }>
+          <
+            ReviewComponent
+            review = {this.props.reviews
+          }
+            />
+          </div>
+          <
+            div
+            className = "col-4" >
+              < /div>
+          </div>
+          <
+            /div>
+          </div>
+          )
+            ;
           }
 
         }}
@@ -212,3 +229,6 @@ class AccommodationDetail extends React.Component {
 }
 
 export default withStyles(styles, carouselStyle, dashboardStyle)(AccommodationDetail);
+// <img src="http://www.designdeveloprealize.com/wp-content/uploads/2018/03/high-resolution-house-photos-inside-high-resolution-house-pictures-house-interior.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
+
+

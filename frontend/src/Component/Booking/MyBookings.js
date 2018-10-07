@@ -177,8 +177,8 @@ class MyBookings extends Component {
 				});
 			const user = JSON.parse(localStorage.getItem('currentUser'));
 			console.log("USER BOOKING", user);
-				//       this.setState({currentUser: user});
-			// Get all bookings and find that current user booked
+      
+
 			const res2 = await axios.get(`/booking/?booker=${user[0].user_id}`);
 
 			this.getBookings(this.state.currentUser[0].user_id, res2.data);
@@ -191,8 +191,8 @@ class MyBookings extends Component {
 	}
 	render() {
 		const { myBookings, futureStay, currentStay, pastStay, earliestBooking, currentUser, requireReviewList,logged_in,status } = this.state;
-		// this.getReviewRequiredList(pastStay);
-// <<<<<<< HEAD
+
+  console.log("REQUIRE REVIEW LIST: ",requireReviewList);
 		const { classes } = this.props;
 		if(logged_in === false){
 			 return (
@@ -204,7 +204,7 @@ class MyBookings extends Component {
 				<div>
 					<CircularProgress className={classes.progress} color="primary" size={50}/>
 {/* // =======
-// 
+//
 // 		return (
 // 			<React.Fragment>
 // 				<center>
@@ -267,7 +267,7 @@ class MyBookings extends Component {
 						{!isEmpty(pastStay[0]) ?
 							<div key={pastStay[0].id}>
 								<center><h1>Recent Stay</h1></center>
-								<Booking key={pastStay[0].id} booking={pastStay[0]} requireReviewItem={requireReviewList[0]} history={this.props.history}></Booking>
+								<Booking key={pastStay[0].id} booking={pastStay[0]} editable={false} requireReviewItem={requireReviewList[0]} history={this.props.history}></Booking>
 							</div>
 							: null
 						}
@@ -280,7 +280,7 @@ class MyBookings extends Component {
 									<div key={booking.id}>
 										<div style={{ padding: '1rem' }}>
 											<center>
-													<Booking key={booking.id} booking={booking}  earliestBooking={earliestBooking} history={this.props.history}></Booking>
+													<Booking key={booking.id} booking={booking} earliestBooking={earliestBooking} history={this.props.history}></Booking>
 											</center>
 										</div>
 									</div>
@@ -296,7 +296,7 @@ class MyBookings extends Component {
 						}
 					</div>
 
-					{pastStay.length !== 0 ? <center><h1>In The Past</h1></center> : null}
+					<center><h1>In The Past</h1></center>
 					<div className="row">
 						{pastStay.length !== 0 ?
 							pastStay.map((booking) => {
@@ -304,7 +304,7 @@ class MyBookings extends Component {
 									<div key={booking.id}>
 										<div key={booking.id} style={{ padding: '1rem' }}>
 											<center>
-												<Booking key={booking.id} booking={booking}></Booking>
+												<Booking key={booking.id} booking={booking} editable={false}></Booking>
 											</center>
 										</div>
 									</div>
@@ -313,18 +313,9 @@ class MyBookings extends Component {
 							: null
 						}
 					</div>
-					<center><h1>All Bookings</h1></center>
 					<div className="row">
 						{myBookings.length !== 0 ?
-							myBookings.map((booking) => {
-								return (
-									<div key={booking.id} style={{ padding: '1rem' }}>
-										<center>
-											<Booking key={booking.id} booking={booking} pastStay={pastStay} currentUser={currentUser} history={this.props.history}></Booking>
-										</center>
-									</div>
-								);
-							})
+							null
 						: <p>You have not booked any accommodation with us</p>
 						}
 					</div>

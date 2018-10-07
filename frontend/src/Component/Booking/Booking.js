@@ -55,7 +55,7 @@ class Booking extends Component {
       minDateSet: [],
       images: [],
 			currentAccommodationID : -1,
-
+			review: false
     }
   }
 
@@ -177,6 +177,12 @@ class Booking extends Component {
 		return retImages;
 	}
 
+	handleReview = () => {
+		this.setState({
+			review: !this.state.review,
+		})
+	}
+
 	async componentDidMount(){
 		// console.log("Props: ", this.props.booking);
 		const { booking, /*pastStay, isPast*/ } = this.props,
@@ -249,8 +255,8 @@ class Booking extends Component {
 		return (
 			<React.Fragment>
 			<center>
-			{!isEmpty(requireReviewItem) ?
-				<FormDialog requireReviewItem={requireReviewItem}/>
+			{this.state.review === true ?
+				<FormDialog handleReview={this.handleReview} requireReviewItem={requireReviewItem}/>
 				: null
 			}
 		</center>
@@ -277,20 +283,28 @@ class Booking extends Component {
 					<Typography gutterBottom variant="headline" component="p">
 						Note: {note}
 					</Typography>
-					{daysLeft >= 0?
+					{daysLeft >= 0 && this.props.editable === true ?
 						<p>You stay will start in {daysLeft} days {hoursLeft} hours {minutesLeft} minutes</p>
 					:null
 					}
 					<div style={{float:'right'}}>
-          <Button onClick={this.handleEdit}>
-            <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
-          </Button>
-						<Button onClick={this.handleDelete.bind(this, id)}>
-							<i className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
-						</Button>
+						{this.props.editable === true ?
+							<div>
+								{payButton}
+								<Button onClick={this.handleEdit}>
+									<i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
+								</Button>
+								<Button onClick={this.handleDelete.bind(this, id)}>
+									<i className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
+								</Button>
+							</div> :
+							<Button onClick={this.handleReview} color="secondary" variant="contained">
+								Review
+							</Button>
+						}
 					</div>
 				</div>
-        {payButton}
+
 			</CardBody>
       <BookingDiaglog
         closeDiaglog={this.closeDiaglog.bind(this)}
@@ -308,148 +322,10 @@ class Booking extends Component {
 		);
   }
 
-// =======
-//     handleEdit = () => {
-
-//       this.setState({
-//         open:true
-//       })
-//     }
-
-//     handlePayment= () => {
-
-//       let stayPeriod = moment(this.props.booking.date_end).diff(moment(this.props.booking.date_start), 'days');
-
-
-//       const newDetail = {
-
-//         startDate: this.props.booking.date_start,
-//         endDate: this.props.booking.date_end,
-//         paidDate: this.props.booking.date_paymentDue,
-
-//         guest: this.props.booking.guest,
-
-//         price: {
-//           pricePerNight: this.state.host.price,
-//           daysDiff: stayPeriod,
-//           promotion: 0.1,
-//         },
-
-//         accommodation: this.state.accommodation,
-//         currentHost: this.state.host,
-//       }
-
-//       console.log("NEW_DETAIL",newDetail);
-
-//       this.props.history.push({
-//         pathname: `/overallbooking/payment/${this.state.host.id}`,
-//         search: '?query=abc',
-//         state: {
-//           detail: newDetail,
-//           booker: this.props.booking.booker,
-//           booking: this.props.booking,
-//         }
-//       })
-//     }
-
-//     findImages = (images) => {
-
-//     }
-
-//     async componentDidMount(){
-
-//         const images = await axios.get('https://localhost:8000/accommodationImage/');
-//         this.findImages(images.data);
-
-//         const res1 = await axios.get(`https://localhost:8000/accommodationHosting/${this.props.booking.hosting}/`)
-//         this.setState({host: res1.data})
-
-
-//         const res2 = await axios.get(`https://localhost:8000/accommodation/${res1.data.accommodation}/`)
-//         this.setState({accommodation: res2.data})
-
-
-//         const res3 = await axios.get(`https://localhost:8000/booking/?host=${this.props.booking.hosting}`)
-//         this.blockBookedPeriod(res3.data);
-
-//     }
-
-//     closeDiaglog() {
-//       this.setState({
-//         open: !this.state.open
-//       })
-//     }
-
-//     render() {
-//         const { id, date_start, date_end, note, isPaid } = this.props.booking;
-//         const { classes } = this.props;
-//         console.log("Propsss: ", this.props);
-//         const {open} = this.state;
-
-//         const isDayBlocked = day => this.state.booking.filter(d => d.isSame(day, 'day')).length > 0;
-
-//         var payButton = []
-//         if (isPaid === false) {
-//           payButton.push(
-//             <Button key={1} variant="contained" color="primary" onClick={this.handlePayment}>
-//               Pay
-//           </Button>)
-//         } else {
-//           payButton.push(
-//           <Button key={2} color="primary">
-//             Paid
-//           </Button>)
-//         }
-
-//         return (
-//             <React.Fragment>
-//                 <Card className={classes.card} style={{width:'30vw'}} >
-
-//                     <CardActions>
-//                         {/* <CardMedia>
-
-//                         </CardMedia> */}
-//                     </CardActions>
-
-//                     <CardContent>
-//                         <Typography gutterBottom variant="headline" component="h2">
-//                         From: {date_start}
-//                         </Typography>
-
-//                         <Typography gutterBottom variant="headline" component="p">
-//                          To: {date_end} Note: {note}
-//                         </Typography>
-
-//                         <Typography gutterBottom variant="headline" component="p">
-//                             Note: {note}
-//                         </Typography>
-
-//                         <Button onClick={this.handleEdit}>
-//                             <i className="fas fa-pencil-alt" style={{cursor:'pointer', float:'right',color:'black'}}></i>
-//                         </Button>
-
-//                         <Button onClick={this.handleDelete.bind(this, id)}>
-//                             <i  className="fas fa-times" style={{cursor:'pointer', float:'right',color:'red'}}/>
-//                         </Button>
-
-//                         {payButton}
-
-//                      </CardContent>
-//                 </Card>
-                // <BookingDiaglog
-                //   closeDiaglog={this.closeDiaglog.bind(this)}
-                //   open={open}
-
-                //   isDayBlocked={isDayBlocked}
-                //   minDateSet={this.state.minDateSet}
-                //   currentHost={this.state.host}
-                //   history={this.props.history}
-                //   accommodation={this.state.accommodation}
-                //   booking_id={this.props.booking.id}
-                //   booking={this.props.booking}
-                //   />
-//             </React.Fragment>
-//          );
-//     }
 }
+
+Booking.defaultProps = {
+	editable: true
+}
+
 export default withStyles(carouselStyle)(Booking);

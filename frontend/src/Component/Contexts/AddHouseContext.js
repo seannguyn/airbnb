@@ -4,14 +4,7 @@ import AddOverall from '../Function/AddOverall'
 
 
 const AddHouseContext = (props) => {
-  // console.log("this is is: ",props.match.params.id);
-  // console.log("history.........",props.history);
-  // <AddHouse history={props.history}
-  //    AllHostingList={AllHostingList}
-  //    HouseList={HouseList}
-  //    CurrentUser={currentUser}
-  //    >
-  //  </AddHouse>
+
   return(
   <Consumer>
     {value => {
