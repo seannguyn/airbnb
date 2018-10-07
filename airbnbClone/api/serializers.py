@@ -2,6 +2,14 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search, ReviewCount, BookRequest
+from pymongo import MongoClient
+import smtplib
+
+
+# set up mongodb
+MONGODB_URI = "mongodb://comp3900:comp3900@ds125293.mlab.com:25293/comp3900"
+client = MongoClient(MONGODB_URI, connectTimeoutMS=30000)
+db = client.get_database("comp3900")
 
 class AccommodationSerializer(serializers.ModelSerializer):
 
@@ -56,3 +64,31 @@ class BookRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookRequest
         fields = '__all__'
+
+    def update(self, instance, validated_data):
+
+        instance.id = validated_data.get('id', instance.id)
+        instance.title = validated_data.get('title', instance.title)
+        instance.date = validated_data.get('date', instance.date)
+        instance.content = validated_data.get('content', instance.content)
+        instance.sender = validated_data.get('sender', instance.sender)
+        instance.hasReply = validated_data.get('hasReply', instance.hasReply)
+        instance.reply = validated_data.get('reply', instance.reply)
+        instance.toHost = validated_data.get('toHost', instance.toHost)
+
+        # EMAIL SENDING
+        systemEmail = db['portBnB'].find_one( { "email" : "comp3900project3@gmail.com" } )
+
+        message = 'Subject: {}\n\n{}'.format(instance.title, instance.reply)
+
+        # Login email
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(systemEmail['email'], systemEmail['password'])
+
+        server.sendmail(systemEmail['email'], instance.sender, message)
+        server.quit()
+
+        instance.save()
+
+        return instance

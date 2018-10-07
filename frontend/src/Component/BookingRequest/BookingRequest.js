@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
 import Divider from '@material-ui/core/Divider';
-import {RequestConsumer} from './RequestContext';
 import SingleRequest from './SingleRequest'
 import RepliedRequest from './RepliedRequest'
 import {Consumer} from '../../Context.js';
@@ -24,13 +23,13 @@ class BookingRequest extends React.Component {
   render () {
     const { classes } = this.props;
     const {currentUser} = this.props.context
-    if (currentUser.length == 0) {
+    if (currentUser.length === 0) {
       return (
        <Forbidden/>
      );
     } else {
       return (
-        <RequestConsumer>
+        <Consumer>
           {value => {
             const {newRequest, repliedRequest} = value
             var newRequestComponent = []
@@ -46,7 +45,7 @@ class BookingRequest extends React.Component {
             })
 
             return (
-              <div className="container" style={{border:'2px solid red'}}>
+              <div className="container">
 
                 <div className="row" style={{ margin:'10px'}}>
                   <Badge className={classes.margin} badgeContent={<Typography style={{ color: '#FFFFFF',fontSize: '12.5px' }}>{newRequest.length}</Typography>} color="primary">
@@ -67,7 +66,7 @@ class BookingRequest extends React.Component {
               </div>
             )
           }}
-        </RequestConsumer>
+        </Consumer>
       )
     }
   }

@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import WorkIcon from '@material-ui/icons/Work';
 import CloseIcon from '@material-ui/icons/Close';
-import StarBorder from '@material-ui/icons/StarBorder';
+import InputIcon from '@material-ui/icons/Input';
 import {Consumer} from '../../Context.js';
 
 const styles = theme => ({
@@ -67,7 +67,7 @@ class Items extends React.Component {
              <Link to="/bookingRequest">
                <ListItem button onClick={this.closeSideBar.bind(this, dispatch)}>
                  <ListItemIcon>
-                   <StarBorder />
+                   <InputIcon />
                  </ListItemIcon>
                  <ListItemText primary="Booking Request" />
                </ListItem>

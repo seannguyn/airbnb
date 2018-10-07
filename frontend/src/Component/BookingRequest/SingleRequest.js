@@ -14,7 +14,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@material-ui/core/Button";
 import uuid from 'uuid';
 import ReplyDialog from './ReplyDialog'
-import {RequestConsumer} from './RequestContext'
+import {Consumer} from '../../Context'
 import axios from 'axios';
 
 const styles = theme => ({
@@ -74,25 +74,22 @@ class SingleRequest extends React.Component {
       reply: mail.content
     }
 
-    const sentRequest     = await axios.put(`/bookRequest/${this.props.request.id}/`,singleRequest)
-    const newRequest      = await axios.get(`/bookRequest/?toHost=${this.props.request.toHost}&hasReply=False`)
-    const repliedRequest  = await axios.get(`/bookRequest/?toHost=${this.props.request.toHost}&hasReply=True`)
-
     dispatch({
       type: 'REPLY_SENT',
-      payload: {newRequest: newRequest.data, repliedRequest: repliedRequest.data}
+      payload: {singleRequest: singleRequest}
     })
+
+    await axios.put(`/bookRequest/${this.props.request.id}/`,singleRequest)
   }
 
   async handleDeleteRequest(dispatch) {
-    const sentRequest     = await axios.delete(`/bookRequest/${this.props.request.id}/`)
-    const newRequest      = await axios.get(`/bookRequest/?toHost=${this.props.request.toHost}&hasReply=False`)
-    const repliedRequest  = await axios.get(`/bookRequest/?toHost=${this.props.request.toHost}&hasReply=True`)
 
     dispatch({
-      type: 'DELETE_REQUEST',
-      payload: {newRequest: newRequest.data, repliedRequest: repliedRequest.data}
+      type: 'DELETE_NEW_REQUEST',
+      payload: {singleRequest: this.props.request}
     })
+
+    await axios.delete(`/bookRequest/${this.props.request.id}/`)
   }
 
   render() {
@@ -100,7 +97,7 @@ class SingleRequest extends React.Component {
     const { request } = this.props;
 
     return (
-      <RequestConsumer>
+      <Consumer>
         {value => {
           const {dispatch} = value;
           return (
@@ -140,7 +137,7 @@ class SingleRequest extends React.Component {
             </div>
           )
         }}
-      </RequestConsumer>
+      </Consumer>
     );
   }
 }

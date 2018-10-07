@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { withSnackbar } from 'notistack';
-import {RequestConsumer} from './RequestContext'
+import {Consumer} from '../../Context'
 
 const styles = theme => ({
   textField: {
@@ -62,7 +62,7 @@ constructor(props) {
     const {classes} = this.props
     const disable = (this.state.content.length === 0 ? true : false)
     return (
-      <RequestConsumer>
+      <Consumer>
         {value => {
           const {dispatch} = value;
           return (
@@ -99,7 +99,7 @@ constructor(props) {
             </div>
           )
         }}
-      </RequestConsumer>
+      </Consumer>
 
     );
   }

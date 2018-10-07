@@ -17,10 +17,7 @@ import CardHeader from "Component/Card/CardHeader.jsx"
 import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx"
 import Carousel from "react-slick"
 
-// check empty object
-import isEmpty from '../../utils/isEmpty.js'
 // import {Link} from 'react-router-dom'
-
 import FormDialog from '../Popup/FormDialog'
 import {enumerateDaysBetweenDates, concatString} from '../Helper/Helper'
 import BookingDiaglog from './BookingDiaglog';

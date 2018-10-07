@@ -26,93 +26,112 @@ const reducer = (state,action) => {
         HouseList: state.HouseList.map((eachHouse) => eachHouse.id === action.payload.id ? (eachHouse = action.payload) : eachHouse)
       }
 
-      case 'LOGIN':
-        return {
-          ...state,
-          currentUser: [action.payload],
-          logged_in: true,
-          dialog: {
-            open: false,
-            login: true,
-          },
-        };
+    case 'LOGIN':
+      return {
+        ...state,
+        currentUser: [action.payload],
+        logged_in: true,
+        dialog: {
+          open: false,
+          login: true,
+        },
+      };
 
-      case 'SEARCH':
-        return {
-          ...state,
-          AllHostingList: action.payload,
-          searchStatus: true
-        };
+    case 'SEARCH':
+      return {
+        ...state,
+        AllHostingList: action.payload,
+        searchStatus: true
+      };
 
-      case 'CLEAR_SEARCH':
+    case 'CLEAR_SEARCH':
 
-        return {
-          ...state,
-          AllHostingList: action.payload,
-          searchStatus: false
-        };
+      return {
+        ...state,
+        AllHostingList: action.payload,
+        searchStatus: false
+      };
 
-      case 'HOSTING':
-        return {
-          ...state,
-          myHostingList: [action.payload,...state.myHostingList],
-          AllHostingList: [action.payload,...state.AllHostingList],
-        }
+    case 'HOSTING':
+      return {
+        ...state,
+        myHostingList: [action.payload,...state.myHostingList],
+        AllHostingList: [action.payload,...state.AllHostingList],
+      }
 
-      case 'EDITHOST':
-        return {
-          ...state,
-          myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
-        }
-      case 'DELETE_HOST':
+    case 'EDITHOST':
+      return {
+        ...state,
+        myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
+      }
+    case 'DELETE_HOST':
 
-        return {
-          ...state,
-          myHostingList: state.myHostingList.filter((host) => host.id !== action.payload),
-          AllHostingList: state.AllHostingList.filter((host) => host.id !== action.payload),
-          // myHouseList:
-        }
+      return {
+        ...state,
+        myHostingList: state.myHostingList.filter((host) => host.id !== action.payload),
+        AllHostingList: state.AllHostingList.filter((host) => host.id !== action.payload),
+        // myHouseList:
+      }
 
-      case 'TOGGLE_SIDEBAR':
-        const{sidebar_show} = state;
-        return {
-          ...state,
-          sidebar_show: !sidebar_show
-        }
-      case 'LOGOUT':
-        localStorage.clear();
-        return {
-          ...state,
-          logged_in: false,
-          sidebar_show: false,
-          currentUser: [],
-        }
-      case 'OPEN_DIALOG':
-        return {
-          ...state,
-          dialog: action.payload
-        }
+    case 'TOGGLE_SIDEBAR':
+      const{sidebar_show} = state;
+      return {
+        ...state,
+        sidebar_show: !sidebar_show
+      }
+    case 'LOGOUT':
+      localStorage.clear();
+      return {
+        ...state,
+        logged_in: false,
+        sidebar_show: false,
+        currentUser: [],
+      }
+    case 'OPEN_DIALOG':
+      return {
+        ...state,
+        dialog: action.payload
+      }
 
-      case 'CLOSE_DIALOG':
-        return {
-          ...state,
-          dialog: {
-            open: false,
-            login: true,
-          },
-        }
+    case 'CLOSE_DIALOG':
+      return {
+        ...state,
+        dialog: {
+          open: false,
+          login: true,
+        },
+      }
 
-      case 'TOGGLE_SIGNIN':
-        return {
-          ...state,
-          dialog: {
-            open: true,
-            login: !state.dialog.login,
-          },
-        }
+    case 'TOGGLE_SIGNIN':
+      return {
+        ...state,
+        dialog: {
+          open: true,
+          login: !state.dialog.login,
+        },
+      }
 
-      default:
-        return state;
+    case 'REPLY_SENT':
+      console.log("SEND.....");
+      return {
+        ...state,
+        newRequest:       state.newRequest.filter((request) => request.id !== action.payload.singleRequest.id),
+        repliedRequest:   [...state.repliedRequest,action.payload.singleRequest],
+      }
+    case 'DELETE_NEW_REQUEST':
+      return {
+        ...state,
+        newRequest:       state.newRequest.filter((request) => request.id !== action.payload.singleRequest.id),
+      }
+
+    case 'DELETE_REPLIED_REQUEST':
+      return {
+        ...state,
+        repliedRequest:   state.repliedRequest.filter((request) => request.id !== action.payload.singleRequest.id),
+      }
+
+    default:
+      return state;
   }
 }
 
@@ -126,6 +145,8 @@ export class Provider extends Component {
       currentUser: [],
       myHostingList: [],
       AllHostingList: [],
+      newRequest: [],
+      repliedRequest: [],
       sidebar_show: false,
       logged_in: false,
       dialog: {
@@ -158,13 +179,20 @@ export class Provider extends Component {
     if(this.state.currentUser.length === 1) {
       const {token,user_id} = this.state.currentUser[0];
 
+      const newRequest      = await axios.get(`/bookRequest/?toHost=${user_id}&hasReply=False`)
+      const repliedRequest  = await axios.get(`/bookRequest/?toHost=${user_id}&hasReply=True`)
+
       const res = await axios.get(`/accommodationHosting/?user=${user_id}`,
       {
         headers:{
           'Authorization': {token}
         }
       })
-        this.setState({myHostingList: res.data});
+        this.setState({
+          myHostingList: res.data,
+          newRequest: newRequest.data,
+          repliedRequest: repliedRequest.data,
+        });
 
     }
 
@@ -195,10 +223,16 @@ export class Provider extends Component {
           headers:{ 'Authorization': {token} }
         }
       )
+      const newRequest      = await axios.get(`/bookRequest/?toHost=${user_id}&hasReply=False`)
+      const repliedRequest  = await axios.get(`/bookRequest/?toHost=${user_id}&hasReply=True`)
       const myHouse = await axios.get(`/accommodation/?user=${user_id}`)
-      this.setState({myHouseList: myHouse.data});
-      this.setState({myHostingList: res.data});
-      return true;
+
+      this.setState({
+        myHouseList: myHouse.data,
+        myHostingList: res.data,
+        newRequest: newRequest.data,
+        repliedRequest: repliedRequest.data,
+      });
     }
     return true;
   }

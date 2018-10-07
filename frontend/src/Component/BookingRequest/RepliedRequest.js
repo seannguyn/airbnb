@@ -13,7 +13,7 @@ import red from "@material-ui/core/colors/red";
 import BlockIcon from "@material-ui/icons/Block";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import axios from 'axios'
-import {RequestConsumer} from './RequestContext';
+import {Consumer} from '../../Context';
 
 const styles = theme => ({
   card: {
@@ -53,14 +53,12 @@ class RepliedRequest extends React.Component {
 
   async handleDelete(dispatch) {
 
-    const sentRequest     = await axios.delete(`/bookRequest/${this.props.request.id}/`)
-    const newRequest      = await axios.get(`/bookRequest/?toHost=${this.props.request.toHost}&hasReply=False`)
-    const repliedRequest  = await axios.get(`/bookRequest/?toHost=${this.props.request.toHost}&hasReply=True`)
-
     dispatch({
-      type: 'DELETE_REQUEST',
-      payload: {newRequest: newRequest.data, repliedRequest: repliedRequest.data}
+      type: 'DELETE_REPLIED_REQUEST',
+      payload: {singleRequest: this.props.request}
     })
+
+    await axios.delete(`/bookRequest/${this.props.request.id}/`)
 
   }
 
@@ -68,7 +66,7 @@ class RepliedRequest extends React.Component {
     const { classes, request } = this.props;
 
     return (
-      <RequestConsumer>
+      <Consumer>
         {value => {
           const {dispatch} = value;
           return (
@@ -104,7 +102,7 @@ class RepliedRequest extends React.Component {
             </div>
           )
         }}
-      </RequestConsumer>
+      </Consumer>
     );
   }
 }
