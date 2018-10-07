@@ -122,3 +122,13 @@ class ReviewCount(models.Model):
 
     accommodation = models.OneToOneField(Accommodation, on_delete=models.CASCADE, primary_key="true")
     count = models.IntegerField(blank=False, default=0)
+
+class BookRequest(models.Model):
+
+    title       = models.TextField(blank=False)
+    date        = models.TextField(blank=True)
+    content     = models.TextField(blank=False)
+    sender      = models.TextField(blank=True)
+    toHost      = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    hasReply    = models.BooleanField(default=False)
+    reply       = models.TextField(blank=True)
