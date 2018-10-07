@@ -117,7 +117,7 @@ class MyBookings extends Component {
 												})
 												.catch(error => {
 													reviews = [];
-												})
+												});
 
 
 			for(let j = 0; j < reviews.length; j++){

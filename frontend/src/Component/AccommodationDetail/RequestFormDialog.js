@@ -19,19 +19,25 @@ export default class FormDialog extends React.Component {
     e.preventDefault();
     this.setState({submitted: true});
 
-    console.log("FORM STUFF: ", this.state);
-
     const hostID = this.props.host;
     const request = {
-      title: "Pet Request",
+      title: this.state.title,
       date: 'Oct 5 2016',
-      content: "Can i bring my dog?",
-      sender: "seannguyen5696@gmail.com",
+      content: this.state.content,
+      sender: this.state.email,
       toHost: hostID,
       hasReply: false,
       reply: "",
     };
-    //const res = await axios.post('/requests/', request);
+    await axios.post('/bookRequest/', request)
+      .then(res => {
+        console.log("SUCCESS: ", res);
+      })
+      .catch(error => {
+        console.log("REQUEST ERROR: ", error);
+      });
+
+    console.log("FORM STUFF: ", this.state);
   };
 
   constructor(props) {

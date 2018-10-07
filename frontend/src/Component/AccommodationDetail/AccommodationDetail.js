@@ -135,91 +135,66 @@ class AccommodationDetail extends React.Component {
                 <div className="container">
                   <div className="row">
                   </div>
-                  <div className="description">
-                    <h4>Description: {description}</h4>
+                  <div className="row">
+                    <div className="col-8" style={{border: '2px solid blue'}}>
+                      <div className="description">
+                        <h4>Title: {title}</h4>
+                      </div>
+                      <div className="description">
+                        <h4>Description: {description}</h4>
+                      </div>
+                      <div className="row">
+                        <i className="fas fa-door-open"> {bedroom} bedrooms</i>&#160;
+                        <i className="fas fa-bed"> {bed} bed</i>&#160;
+                        <i className="fas fa-bath"> {bathroom} bathrooms</i>&#160;
+                      </div>
+                      <div className="row">
+                        <div className="col-6">
+                          <Carousel {...settings} dots={false}>
+                            {this.props.images.length !== 0 ?
+                              imagesDiv
+                              :
+                              <div>
+                                <img
+                                  src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg"
+                                  height="150" width="345" alt="noimage"/>
+                              </div>
+                            }
+                          </Carousel>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-4">
+                      <div style={{paddingTop: '3rem'}}>
+                        <BookingPaper
+                          isDayBlocked={isDayBlocked}
+                          minDateSet={this.props.minDateSet}
+                          context={value}
+                          currentHost={this.props.accommodationHosting}
+                          history={this.props.history}
+                          accommodation={this.props.accommodation}
+                        />
+                      </div>
+                    </div>
                   </div>
                   <div className="row">
-                    <i className="fas fa-door-open"> {bedroom} bedrooms</i>&#160;
-                    <i className="fas fa-bed"> {bed} bed</i>&#160;
-                    <i className="fas fa-bath"> {bathroom} bathrooms</i>&#160;
+                    <div className="col-8" style={{border: '2px solid blue'}}>
+                      <Maps latitude={latitude} longitude={longitude} accommodation={id}/>
+                    </div>
+                    <div className="col-4">
+
+                    </div>
                   </div>
                   <div className="row">
-                    <div className="col-6">
-                      <Carousel {...settings} dots={false}>
-                        {this.props.images.length !== 0 ?
-                          imagesDiv
-                          :
-                          <div>
-                            <img
-                              src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg"
-                              height="150" width="345" alt="noimage"/>
-                          </div>
-                        }
-                      </Carousel>
+                    <div className="col-8" style={{border: '2px solid blue'}}>
+                      <ReviewComponent review={this.props.reviews}/>
+                    </div>
+                    <div className="col-4">
                     </div>
                   </div>
                 </div>
-                <div className="col-4">
-                  <div style={{paddingTop: '3rem'}}>
-                    <BookingPaper
-                      isDayBlocked={isDayBlocked}
-                      minDateSet={this.props.minDateSet}
-                      context={value}
-                      currentHost={this.props.accommodationHosting}
-                      history={this.props.history}
-                      accommodation={this.props.accommodation}
-                    />
-                  </div>
-                </div>
               </div>
-              < div
-            className = "row" >
-              < div
-            className = "col-8"
-            style = {
-            {
-              border: '2px solid blue'
-            }
-          }>
-          <
-            Maps
-            latitude = {latitude}
-            longitude = {longitude}
-            accommodation = {id}
-            />
-          </div>
-          <
-            div
-            className = "col-4" >
-
-              < /div>
-          </div>
-          <
-            div
-            className = "row" >
-              < div
-            className = "col-8"
-            style = {
-            {
-              border: '2px solid blue'
-            }
-          }>
-          <
-            ReviewComponent
-            review = {this.props.reviews
-          }
-            />
-          </div>
-          <
-            div
-            className = "col-4" >
-              < /div>
-          </div>
-          <
-            /div>
-          </div>
-          )
-            ;
+            );
           }
 
         }}

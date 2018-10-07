@@ -247,7 +247,7 @@ class BookingPaper extends React.Component {
     }
 
     const promotion = 0.1;
-    const hostID = this.props.accommodation.id;
+    const hostID = this.props.accommodation.user;
 
     return (
       <div>
