@@ -1,12 +1,12 @@
 import React, { Component } from "react"
-import axios from "axios"
+// import axios from "axios"
 
 class Review extends Component {
   state = {}
 
-  async componentDidMount() {
-    const res = await axios.get("/users/1/")
-  }
+  // async componentDidMount() {
+  //   const res = await axios.get("/users/1/")
+  // }
   render() {
     const { /*text, closeReview, */ star, review, user } = this.props
     return (

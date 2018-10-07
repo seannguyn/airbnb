@@ -287,9 +287,12 @@ class MyBookings extends Component {
             {currentStay.length !== 0 ? <h1>Current</h1> : null}
           </div>
 
+          {requireReviewList.length !== 0
+            ?
           <center>
             <h1>In The Past</h1>
-          </center>
+          </center> : null }
+          
           <div className="row">
             {requireReviewList.length !== 0
               ? requireReviewList.map(booking => {

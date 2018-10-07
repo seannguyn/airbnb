@@ -147,6 +147,7 @@ export class Provider extends Component {
       currentUser: [],
       myHostingList: [],
       AllHostingList: [],
+      places: [],
       sidebar_show: false,
       logged_in: false,
       dialog: {
@@ -206,6 +207,7 @@ export class Provider extends Component {
   }
 
   async shouldComponentUpdate(nextProps, nextState) {
+    console.log('...SCU...',nextState);
     if (nextState.currentUser.length > 0 && this.state.mounted === 0) {
       this.setState({ mounted: 1 })
       localStorage.setItem("currentUser", JSON.stringify(nextState.currentUser))
@@ -224,7 +226,6 @@ export class Provider extends Component {
   addPlaceMaker = async AllHostingList => {
     const places = []
     for (let i = 0; i < AllHostingList.length; i++) {
-      console.log(AllHostingList[i].accommodation)
       const accommodation = AllHostingList[i].accommodation
       await axios.get(`/accommodation/${accommodation}/`).then(response => {
         const info = {

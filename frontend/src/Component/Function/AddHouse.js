@@ -196,16 +196,14 @@ class AddHouse extends Component {
       description: this.state.description
     }
 
-    console.log(newHouse)
-
     const id = await axios.post(
-      "https://localhost:8000/accommodation/",
+      "/accommodation/",
       newHouse
     )
-    const res = await axios.get(`https://localhost:8000/accommodation/`)
+    const res = await axios.get(`/accommodation/`)
 
     // create review count
-    await axios.post(`https://localhost:8000/reviewCounter/`, {
+    await axios.post(`/reviewCounter/`, {
       accommodation: id.data.id,
       count: 0
     })
@@ -245,7 +243,6 @@ class AddHouse extends Component {
           longitude: lng,
           isGeocoding: false
         })
-        console.log("state: ", this.state)
       })
       .catch(error => {
         this.setState({ isGeocoding: false })

@@ -85,13 +85,13 @@ export class Map extends Component {
 
   render() {
     const { accommodation } = this.props
-    // console.log("MAPS PROPS:", this.props);
+    console.log("MAPS PROPS:", this.props);
     return (
       <Consumer>
         {value => {
           const { lat, lng } = this.state
           const { places } = value
-          // console.log("PLACES: ", value)
+          console.log("PLACES: ", value)
           let placeMarkers = []
           if (places !== null && places !== undefined) {
             placeMarkers = places
