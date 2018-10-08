@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react"
 
 class NotFound extends React.Component {
-  render () {
-    return(
+  render() {
+    return (
       <React.Fragment>
         <p>404 Page not found</p>
       </React.Fragment>
@@ -10,4 +10,4 @@ class NotFound extends React.Component {
   }
 }
 
-export default NotFound;
+export default NotFound

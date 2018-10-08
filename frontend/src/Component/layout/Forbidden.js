@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react"
 
 class Forbidden extends React.Component {
-  render () {
-    return(
+  render() {
+    return (
       <React.Fragment>
         <p>You are not login yet</p>
       </React.Fragment>
@@ -10,4 +10,4 @@ class Forbidden extends React.Component {
   }
 }
 
-export default Forbidden;
+export default Forbidden

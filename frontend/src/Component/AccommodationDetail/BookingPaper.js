@@ -1,13 +1,9 @@
 import React from 'react'
-import moment from 'moment';
-
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-
-import {DateRangePicker} from 'react-dates';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 
@@ -21,29 +17,30 @@ import RequestForm from './RequestFormDialog'
 
 const styles = theme => ({
   paper: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-    width: 'relative'
+    flexDirection: "column",
+    alignItems: "center",
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+      .spacing.unit * 3}px`,
+    width: "relative"
   },
   avatar: {
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main,
     width: 60,
-    height: 60,
+    height: 60
   },
   form: {
-    width: '100%', // Fix IE11 issue.
-    marginTop: theme.spacing.unit,
+    width: "100%", // Fix IE11 issue.
+    marginTop: theme.spacing.unit
   },
   submit: {
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 3
   },
   typo: {
     marginBottom: theme.spacing.unit,
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing.unit
   },
   button: {
     margin: theme.spacing.unit * 3,
@@ -79,9 +76,9 @@ class BookingPaper extends React.Component {
       endDate: null,
       guest: 1,
       price: {
-        pricePerNight: '',
-        daysDiff: '',
-        promotion: '',
+        pricePerNight: "",
+        daysDiff: "",
+        promotion: ""
       },
       accommodation: {},
       currentHost: {},
@@ -94,13 +91,13 @@ class BookingPaper extends React.Component {
     if (minDateSet.length === 0) {
       return null
     }
-    let max = minDateSet[0];
-    for (let i = 0; i < minDateSet.length; i++) {
+    var max = minDateSet[0]
+    for (var i = 0; i < minDateSet.length; i++) {
       if (isAfterDay(minDateSet[i], max) === true) {
-        max = minDateSet[i].clone();
+        max = minDateSet[i].clone()
       }
     }
-    return max;
+    return max
   }
 
   componentWillReceiveProps(nextProps) {
@@ -141,6 +138,30 @@ class BookingPaper extends React.Component {
 
       this.goToPayment(currentUser[0].user_id, newDetail);
 
+  handleBooking(
+    dispatch,
+    currentHost,
+    daysDiff,
+    promotion,
+    accommodation,
+    totalPrice,
+    guest,
+    startDate,
+    endDate
+  ) {
+    this.setState({
+      price: {
+        pricePerNight: currentHost.price,
+        daysDiff: daysDiff,
+        promotion: promotion
+      },
+      guest: guest,
+      startDate: startDate,
+      endDate: endDate,
+      accommodation: accommodation,
+      currentHost: currentHost,
+      booking: true
+    })
 
     }
   }
@@ -210,10 +231,10 @@ class BookingPaper extends React.Component {
   }
 
   goToPayment(booker, newDetail) {
-    console.log("NOT YET", this.props.booking_id);
+    console.log("NOT YET", this.props.booking_id)
     this.props.history.push({
       pathname: `/overallbooking/reserve/${newDetail.currentHost.id}`,
-      search: '?query=abc',
+      search: "?query=abc",
       state: {
         detail: newDetail,
         booker: booker,
@@ -224,11 +245,11 @@ class BookingPaper extends React.Component {
   }
 
   handleGuest(ops, num) {
-    const limit = 5;
+    const limit = 5
     if (ops === "-" && num > 1) {
-      this.setState({guest: parseFloat(num) - 1})
+      this.setState({ guest: parseFloat(num) - 1 })
     } else if (ops === "+" && num < limit) {
-      this.setState({guest: parseFloat(num) + 1})
+      this.setState({ guest: parseFloat(num) + 1 })
     }
   }
 
@@ -358,6 +379,6 @@ class BookingPaper extends React.Component {
 BookingPaper.defaultProps = {
   booking_id: -1,
   booking: {}
-};
+}
 
-export default withStyles(styles)(BookingPaper);
+export default withStyles(styles)(BookingPaper)
