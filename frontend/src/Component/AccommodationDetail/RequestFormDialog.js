@@ -8,8 +8,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { withSnackbar } from "notistack"
 
-export default class FormDialog extends React.Component {
+class RequestFormDialog extends React.Component {
 
   constructor(props) {
     super(props);
@@ -45,8 +46,8 @@ export default class FormDialog extends React.Component {
       type: 'NEW_REQUEST',
       payload: newRequest.data
     })
-
     this.props.handleClose();
+    this.props.onPresentSnackbar('success','Request Sent to Host')
 
   };
 
@@ -123,3 +124,5 @@ export default class FormDialog extends React.Component {
     );
   }
 }
+
+export default withSnackbar(RequestFormDialog)

@@ -14,7 +14,7 @@ import Divider from '@material-ui/core/Divider';
 import GuestSelect from './GuestSelect';
 import Price from './Price'
 import HeaderPrice from './HeaderPrice'
-import RequestForm from './RequestFormDialog'
+import RequestFormDialog from './RequestFormDialog'
 
 const styles = theme => ({
   paper: {
@@ -255,7 +255,7 @@ class BookingPaper extends React.Component {
     const hostID = this.props.accommodation.user;
     return (
       <div>
-        <RequestForm open={this.state.dialogOpen} handleClose={this.closeRequestDialog.bind(this)} host={hostID}/>
+        <RequestFormDialog open={this.state.dialogOpen} handleClose={this.closeRequestDialog.bind(this)} host={hostID}/>
         <Consumer>
           {value => {
             const { dispatch } = value

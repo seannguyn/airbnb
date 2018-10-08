@@ -193,11 +193,7 @@ class LoginDialog extends React.Component {
 
   onChange(e) {
     console.log("here", e.target.name, e.target.value)
-    this.setState({ [e.target.name]: e.target.value })
-  }
-
-  haha() {
-    console.log("wtf")
+    this.setState({ [e.target.name]: e.target.value, error_bool: false, error: {} })
   }
 
   render() {
