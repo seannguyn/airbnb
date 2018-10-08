@@ -23,3 +23,21 @@ cd frontend
 ```
 npm start
 ```
+# Demo
+## Authentication
+
+## Views Hosting Accommodation
+
+## Booking Accommodation
+
+## Views Booking Accommodation
+
+## Reserve An Accommodation
+
+## Request Your Host
+
+## Book Accommodation
+
+## Host An Accommodation
+
+
