@@ -1,7 +1,8 @@
 import React, { Component } from "react"
-import {addPlaceMaker} from './Component/GoogleMap/helper'
+import { addPlaceMaker } from "./Component/GoogleMap/helper"
 import axios from "axios"
 import CircularProgress from "@material-ui/core/CircularProgress"
+
 const Context = React.createContext()
 
 const reducer = (state, action) => {
@@ -48,21 +49,25 @@ const reducer = (state, action) => {
       }
 
     case "SEARCH":
-      places = addPlaceMaker(action.payload)
-      console.log("SEARCH context", places)
+      places = addPlaceMaker(
+        action.payload.AllHostingList,
+        action.payload.HouseList
+      )
       return {
         ...state,
-        AllHostingList: action.payload,
+        AllHostingList: action.payload.AllHostingList,
         places: places,
         searchStatus: true
       }
 
     case "CLEAR_SEARCH":
-      places = addPlaceMaker(action.payload)
-      console.log("CLEAR SEARCH context", places)
+      places = addPlaceMaker(
+        action.payload.AllHostingList,
+        action.payload.HouseList
+      )
       return {
         ...state,
-        AllHostingList: action.payload,
+        AllHostingList: action.payload.AllHostingList,
         places: places,
         searchStatus: false
       }
@@ -83,7 +88,6 @@ const reducer = (state, action) => {
         )
       }
     case "DELETE_HOST":
-
       return {
         ...state,
         myHostingList: state.myHostingList.filter(
@@ -169,9 +173,10 @@ export class Provider extends Component {
 
     const allHosting = await axios.get("/accommodationHosting/")
     this.setState({ AllHostingList: allHosting.data })
-
     if (allHosting.data !== []) {
-      this.addPlaceMaker(allHosting.data)
+      const places = addPlaceMaker(allHosting.data, this.state.HouseList)
+
+      this.setState({ places: places })
     }
 
     if (this.state.currentUser.length === 1) {
@@ -220,28 +225,6 @@ export class Provider extends Component {
     }
     return true
   }
-
-  addPlaceMaker = async AllHostingList => {
-    const places = []
-    for (let i = 0; i < AllHostingList.length; i++) {
-      const accommodation = AllHostingList[i].accommodation
-      await axios.get(`/accommodation/${accommodation}/`).then(response => {
-        const info = {
-          id: response.data.id,
-          lat: response.data.latitude,
-          lng: response.data.longitude,
-          price: AllHostingList[i].price,
-          name: response.data.title,
-          description: response.data.description,
-          address: response.data.address
-        }
-        places.push(info)
-      })
-    }
-    this.setState({ places: places })
-    return places
-  }
-
   render() {
     if (this.state.didmount === 0) {
       return (

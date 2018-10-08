@@ -26,7 +26,7 @@ class AllHostingContext extends React.Component {
     return (
       <Consumer>
         {value => {
-          const { AllHostingList, HouseList, places } = value
+          const { AllHostingList, HouseList } = value
 
           var rendering = []
 
@@ -42,7 +42,7 @@ class AllHostingContext extends React.Component {
           } else {
             rendering.push(
               <h1 key="map">
-                <Map places={places}/>
+                <Map />
               </h1>
             )
           }

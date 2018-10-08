@@ -4,6 +4,7 @@ import React, { Component } from "react"
 import { withGoogleMap, GoogleMap } from "react-google-maps"
 import PlaceMarker from "../PlaceMarker/PlaceMarker"
 import { Consumer } from "../../Context"
+import { addPlaceMaker } from "./helper"
 
 const AirbnbMap = withGoogleMap(props => (
   <GoogleMap
@@ -85,35 +86,37 @@ export class Map extends Component {
 
   render() {
     const { accommodation } = this.props
+    // console.log("accomoodation: ", accommodation)
     return (
       <Consumer>
         {value => {
           const { lat, lng } = this.state
-          const { places } = this.props
+          const { places } = value
           let placeMarkers = []
           if (places !== null && places !== undefined) {
             placeMarkers = places
-            console.log("PLACESMAKERS: ", placeMarkers)
             let markers = []
             placeMarkers.map(placeMarker => {
-              if (
-                accommodation !== undefined &&
-                accommodation === placeMarker.id
-              ) {
-                markers.push(
-                  <PlaceMarker
-                    key={placeMarker.lng}
-                    lat={placeMarker.lat}
-                    lng={placeMarker.lng}
-                    price={placeMarker.price}
-                    name={placeMarker.title}
-                    description={placeMarker.description}
-                    accommodation={placeMarker.id}
-                    address={placeMarker.address}
-                    accommodationChosen={accommodation}
-                  />
-                )
-              } else {
+              // Render specific accommodation with different icons
+              if (accommodation !== undefined) {
+                if (accommodation === placeMarker.id) {
+                  markers.push(
+                    <PlaceMarker
+                      key={placeMarker.lng}
+                      lat={placeMarker.lat}
+                      lng={placeMarker.lng}
+                      price={placeMarker.price}
+                      name={placeMarker.title}
+                      description={placeMarker.description}
+                      accommodation={placeMarker.id}
+                      address={placeMarker.address}
+                      accommodationChosen={accommodation}
+                    />
+                  )
+                }
+              }
+              // Render all the accommodations with default placemarker icons
+              else {
                 markers.push(
                   <PlaceMarker
                     key={placeMarker.lng}
