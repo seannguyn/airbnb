@@ -20,18 +20,26 @@ python manage.py runserver
 ```
 Access http://127.0.0.1:8000
 ```
+
+
+Just in case our app does not run as expected, you might need to: 
+```
+python manage.py migrate
+```
+
+
 Run client:
 ```
-npm install
-```
-```
 cd frontend
+```
+```
+npm install
 ```
 ```
 npm start
 ```
 ```
-http:localhost:3000
+Access http:localhost:3000
 ```
 # Demo
 ## Authentication
