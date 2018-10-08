@@ -8,6 +8,8 @@ Setup guide:
 pip install -r requirements.txt
 ```
 
+portBnB is built based on server and client architecture.
+
 Run server:
 ```
 cd airbnbClone
@@ -15,13 +17,21 @@ cd airbnbClone
 ```
 python manage.py runserver
 ```
-
+```
+Access http://127.0.0.1:8000
+```
 Run client:
+```
+npm install
+```
 ```
 cd frontend
 ```
 ```
 npm start
+```
+```
+http:localhost:3000
 ```
 # Demo
 ## Authentication
