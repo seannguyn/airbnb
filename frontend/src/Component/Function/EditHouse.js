@@ -12,19 +12,10 @@ import InputLabel from "@material-ui/core/InputLabel"
 import MenuItem from "@material-ui/core/MenuItem"
 import Select from "@material-ui/core/Select"
 import Button from "@material-ui/core/Button"
-import Modal from "@material-ui/core/Modal"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
-
-function getModalStyle() {
-  const top = 25
-
-  return {
-    top: `${top}%`,
-    margin: "auto"
-  }
-}
+import { withSnackbar } from "notistack"
 
 const styles = theme => ({
   progress: {
@@ -123,7 +114,6 @@ class EditHouse extends Component {
         bedroom: "",
         bathroom: ""
       },
-      modalOpen: false
     }
     setTimeout(() => {
       this.setState({
@@ -214,7 +204,7 @@ class EditHouse extends Component {
   async onSubmit(dispatch, e) {
     e.preventDefault()
 
-    const { id, user, Accommodation_Type, title } = this.state
+    const { id, user, Accommodation_Type, title, address } = this.state
     const {
       bed,
       bedroom,
@@ -233,6 +223,8 @@ class EditHouse extends Component {
       user: user,
       Accomodation_Type: Accommodation_Type,
       title: title,
+
+      address: address,
 
       bed: bed,
       bedroom: bedroom,
@@ -268,12 +260,11 @@ class EditHouse extends Component {
         bedroom: "",
         bathroom: ""
       },
-      modalOpen: true
+    }, () => {
+      this.props.onPresentSnackbar('success','Information Saved')
     })
   }
-  handleClose = () => {
-    this.setState({ modalOpen: false })
-  }
+
 
   render() {
     const { status } = this.state
@@ -462,26 +453,6 @@ class EditHouse extends Component {
                     </Button>
                   </form>
                 </Paper>
-                <Modal
-                  aria-labelledby="simple-modal-title"
-                  aria-describedby="simple-modal-description"
-                  style={{ alignItems: "center", justifyContent: "center" }}
-                  open={this.state.modalOpen}
-                  onClose={this.handleClose}
-                >
-                  <div style={getModalStyle()} className={classes.modal}>
-                    <Typography variant="title" id="modal-title">
-                      Information Saved Successful
-                    </Typography>
-                    <Button
-                      variant="raised"
-                      onClick={this.handleClose}
-                      color="primary"
-                    >
-                      Close
-                    </Button>
-                  </div>
-                </Modal>
               </div>
             )
           }
@@ -491,4 +462,4 @@ class EditHouse extends Component {
   }
 }
 
-export default withStyles(styles)(EditHouse)
+export default withSnackbar(withStyles(styles)(EditHouse))
