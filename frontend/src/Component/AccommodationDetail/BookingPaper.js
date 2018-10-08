@@ -14,6 +14,7 @@ import Divider from '@material-ui/core/Divider';
 import GuestSelect from './GuestSelect';
 import Price from './Price'
 import HeaderPrice from './HeaderPrice'
+import RequestForm from './RequestFormDialog'
 
 const styles = theme => ({
   paper: {
@@ -65,9 +66,23 @@ class BookingPaper extends React.Component {
       },
 
       accommodation: {},
-      currentHost: {}
+      currentHost: {},
+
+      dialogOpen: false,
     }
   }
+
+  openRequestDialog = () => {
+    this.setState({
+      dialogOpen: true
+    })
+  };
+
+  closeRequestDialog() {
+    this.setState({
+      dialogOpen: false
+    })
+  };
 
   // check if object is empty
   isEmpty = obj => {
@@ -234,120 +249,131 @@ class BookingPaper extends React.Component {
     }
 
     const book =
-      this.state.startDate !== null && this.state.endDate !== null
+      (this.state.startDate !== null && this.state.endDate !== null
         ? false
-        : true
-
+        : true)
+    const hostID = this.props.accommodation.user;
     return (
-      <Consumer>
-        {value => {
-          const { dispatch } = value
-          return (
-            <Paper className={classes.paper}>
-              <Typography
-                className={classes.typo}
-                align="center"
-                variant="display1"
-              >
-                Booking
-              </Typography>
-              <Divider />
+      <div>
+        <RequestForm open={this.state.dialogOpen} handleClose={this.closeRequestDialog.bind(this)} host={hostID}/>
+        <Consumer>
+          {value => {
+            const { dispatch } = value
+            return (
+              <Paper className={classes.paper}>
+                <Typography
+                  className={classes.typo}
+                  align="center"
+                  variant="display1"
+                >
+                  Booking
+                </Typography>
+                <Divider />
 
-              <HeaderPrice
-                totalPrice={parseFloat(totalPrice)}
-                caption={caption}
-              />
+                <HeaderPrice
+                  totalPrice={parseFloat(totalPrice)}
+                  caption={caption}
+                />
 
-              <DateRangePicker
-                startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-                startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-                endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-                endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-                onDatesChange={({ startDate, endDate }) => {
-                  this.setState({ startDate, endDate })
-                  if (startDate !== null) {
-                    const { minDateSet } = this.props
-                    // in order to work, gotta be max
-                    var min = this.findMax(minDateSet)
-                    for (var i = 0; i < minDateSet.length; i++) {
-                      if (isAfterDay(minDateSet[i], startDate) === true) {
-                        if (isBeforeDay(minDateSet[i], min) === true) {
-                          min = minDateSet[i].clone()
+                <DateRangePicker
+                  startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+                  startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+                  endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+                  endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+                  onDatesChange={({ startDate, endDate }) => {
+                    this.setState({ startDate, endDate })
+                    if (startDate !== null) {
+                      const { minDateSet } = this.props
+                      // in order to work, gotta be max
+                      var min = this.findMax(minDateSet)
+                      for (var i = 0; i < minDateSet.length; i++) {
+                        if (isAfterDay(minDateSet[i], startDate) === true) {
+                          if (isBeforeDay(minDateSet[i], min) === true) {
+                            min = minDateSet[i].clone()
+                          }
                         }
                       }
+                      if (isBeforeDay(min, startDate) === true) {
+                        min = null
+                      }
+                      this.setState({ minDate: min })
+                    } else {
+                      this.setState({ minDate: null })
                     }
-                    if (isBeforeDay(min, startDate) === true) {
-                      min = null
-                    }
-                    this.setState({ minDate: min })
-                  } else {
-                    this.setState({ minDate: null })
+                  }}
+                  focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                  onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                  isDayBlocked={this.props.isDayBlocked}
+                  isOutsideRange={day =>
+                    isBeforeDay(day, moment(this.props.currentHost.date_start)) ||
+                    isBeforeDay(day, moment()) ||
+                    isAfterDay(day, this.state.minDate) ||
+                    isAfterDay(day, moment(this.props.currentHost.date_end))
                   }
-                }}
-                focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-                isDayBlocked={this.props.isDayBlocked}
-                isOutsideRange={day =>
-                  isBeforeDay(day, moment(this.props.currentHost.date_start)) ||
-                  isBeforeDay(day, moment()) ||
-                  isAfterDay(day, this.state.minDate) ||
-                  isAfterDay(day, moment(this.props.currentHost.date_end))
-                }
-                showClearDates={true}
-                minimumNights={2}
-                reopenPickerOnClearDates
-              />
-
-              <GuestSelect
-                guest={this.state.guest}
-                handleGuest={this.handleGuest.bind(this)}
-              />
-
-              {this.state.startDate !== null && this.state.endDate !== null ? (
-                <Price
-                  pricePerNight={parseFloat(this.props.currentHost.price)}
-                  daysDiff={daysDiff}
-                  promotion={promotion}
+                  showClearDates={true}
+                  minimumNights={2}
+                  reopenPickerOnClearDates
                 />
-              ) : null}
 
-              <Button
-                className={classes.submit}
-                variant="contained"
-                color="primary"
-                fullWidth
-                onClick={this.handleBooking.bind(
-                  this,
-                  dispatch,
-                  this.props.currentHost,
-                  daysDiff,
-                  promotion,
-                  this.props.accommodation,
-                  totalPrice,
-                  this.state.guest,
-                  this.state.startDate,
-                  this.state.endDate
-                )}
-                disabled={book}
-              >
-                Request Book
-              </Button>
-              <Typography
-                align="center"
-                className={classes.typo}
-                variant="caption"
-              >
-                You wont be charged yet
-              </Typography>
-              <Divider />
-              <Typography align="center" className={classes.typo}>
-                Price shown is the total trip price, including additional fees
-                and taxes.
-              </Typography>
-            </Paper>
-          )
-        }}
-      </Consumer>
+                <GuestSelect
+                  guest={this.state.guest}
+                  handleGuest={this.handleGuest.bind(this)}
+                />
+
+                {this.state.startDate !== null && this.state.endDate !== null ? (
+                  <Price
+                    pricePerNight={parseFloat(this.props.currentHost.price)}
+                    daysDiff={daysDiff}
+                    promotion={promotion}
+                  />
+                ) : null}
+
+                <Button
+                  className={classes.submit}
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={this.handleBooking.bind(
+                    this,
+                    dispatch,
+                    this.props.currentHost,
+                    daysDiff,
+                    promotion,
+                    this.props.accommodation,
+                    totalPrice,
+                    this.state.guest,
+                    this.state.startDate,
+                    this.state.endDate
+                  )}
+                  disabled={book}
+                >
+                  Request Book
+                </Button>
+                <Typography
+                  align="center"
+                  className={classes.typo}
+                  variant="caption"
+                >
+                  You wont be charged yet
+                </Typography>
+                <Divider />
+                <Typography align="center" className={classes.typo}>
+                  Price shown is the total trip price, including additional fees
+                  and taxes.
+                </Typography>
+                <Button
+                  className={classes.submit}
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={this.openRequestDialog}>
+                  Message a request
+                </Button>
+              </Paper>
+            )
+          }}
+        </Consumer>
+      </div>
     )
   }
 }

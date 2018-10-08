@@ -102,6 +102,12 @@ const reducer = (state, action) => {
         newRequest:       state.newRequest.filter((request) => request.id !== action.payload.singleRequest.id),
         repliedRequest:   [...state.repliedRequest,action.payload.singleRequest],
       }
+    case 'NEW_REQUEST':
+      console.log("SEND.....");
+      return {
+        ...state,
+        newRequest:       [...state.newRequest,action.payload],
+      }
     case 'DELETE_NEW_REQUEST':
       return {
         ...state,
