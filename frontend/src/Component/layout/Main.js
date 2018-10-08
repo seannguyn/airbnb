@@ -7,6 +7,7 @@ import ContextApi from '../Contexts/Context_api.js';
 import AddHouseContext from '../Contexts/AddHouseContext.js';
 import MyHouses from '../Function/MyHouses'
 import MyBookings from '../Booking/MyBookings';
+import AboutUs from '../AboutUs/AboutUs';
 import AccommodationDetailContext from '../Contexts/AccommodationDetailContext';
 import ReserveOverallBooking from '../Booking/ReserveOverallBooking'
 import EditOverallBooking from '../Booking/EditOverallBooking'
@@ -44,6 +45,7 @@ class Main extends React.Component {
           <div className={classes.toolbar} />
             <Switch>
               <Route exact path="/" component={AllHostingContext}></Route>
+              <Route exact path="/aboutus" component={AboutUs}></Route>
               <Route exact path="/myhouses" component={MyHouses}></Route>
               <Route exact path="/editHouse/:id" component={ContextApi}></Route>
               <Route exact path="/addHouse" component={AddHouseContext}></Route>
