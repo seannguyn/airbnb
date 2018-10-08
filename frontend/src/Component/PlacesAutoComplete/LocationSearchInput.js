@@ -46,17 +46,6 @@ class SearchBar extends React.Component {
     })
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      address: '',
-      errorMessage: '',
-      latitude: null,
-      longitude: null,
-      isGeocoding: false,
-    };
-  }
-
   render() {
     const {
       address,

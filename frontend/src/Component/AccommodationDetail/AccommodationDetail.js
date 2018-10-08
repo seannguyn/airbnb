@@ -59,15 +59,6 @@ class AccommodationDetail extends Component {
   }
 
   findMax(minDateSet) {
-<<<<<<< HEAD
-    var max = minDateSet[0];
-    for (var i = 0; i < minDateSet.length; i++) {
-      if (isAfterDay(minDateSet[i], max) === true) {
-        max = minDateSet[i].clone();
-      }
-    }
-    return max;
-=======
     var max = minDateSet[0]
     for (var i = 0; i < minDateSet.length; i++) {
       if (isAfterDay(minDateSet[i], max) === true) {
@@ -75,7 +66,6 @@ class AccommodationDetail extends Component {
       }
     }
     return max
->>>>>>> master
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -119,11 +109,6 @@ class AccommodationDetail extends Component {
 
     // const {bathroom,bedroom,kitchen,carpark,description} = this.state.accomDetail
     // const {currentHost} = this.state;
-<<<<<<< HEAD
-    const isDayBlocked = day => this.props.booking.filter(d => d.isSame(day, 'day')).length > 0;
-    const {status} = this.state;
-    const {bathroom, bedroom, bed, title, description} = this.props.accommodation;
-=======
     const isDayBlocked = day =>
       this.props.booking.filter(d => d.isSame(day, "day")).length > 0
     const { status } = this.state
@@ -134,7 +119,6 @@ class AccommodationDetail extends Component {
       title,
       description
     } = this.props.accommodation
->>>>>>> master
     return (
       <Consumer>
         {value => {
@@ -227,7 +211,6 @@ class AccommodationDetail extends Component {
   }
 }
 
-export default withStyles(styles, carouselStyle, dashboardStyle)(AccommodationDetail);
 // <img src="http://www.designdeveloprealize.com/wp-content/uploads/2018/03/high-resolution-house-photos-inside-high-resolution-house-pictures-house-interior.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
 
 export default withStyles(styles, carouselStyle, dashboardStyle)(

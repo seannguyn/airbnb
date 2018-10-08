@@ -2,7 +2,6 @@ import React from 'react'
 import {Switch, Route} from 'react-router-dom'
 import {Map} from '../GoogleMap/Maps'
 import {withStyles} from '@material-ui/core/styles'
-
 import NotFound from './NotFound'
 import AllHostingContext from '../Contexts/AllHostingContext'
 import ContextApi from '../Contexts/Context_api.js';
@@ -14,7 +13,6 @@ import ReserveOverallBooking from '../Booking/ReserveOverallBooking'
 import EditOverallBooking from '../Booking/EditOverallBooking'
 import ConfirmOverallBooking from '../Booking/ConfirmOverallBooking'
 import BookingRequest from '../BookingRequest/BookingRequest'
-import { Map } from '../GoogleMap/Maps'
 
 
 const styles = theme => ({

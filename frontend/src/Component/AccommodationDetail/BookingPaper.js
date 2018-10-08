@@ -163,7 +163,6 @@ class BookingPaper extends React.Component {
       booking: true
     })
 
-    }
   }
 
   handleBooking(dispatch, currentHost, daysDiff, promotion, accommodation,
