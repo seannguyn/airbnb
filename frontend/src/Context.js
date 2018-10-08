@@ -60,6 +60,69 @@ const reducer = (state, action) => {
         searchStatus: true
       }
 
+    case 'TOGGLE_SIDEBAR':
+      const{sidebar_show} = state;
+      return {
+        ...state,
+        sidebar_show: !sidebar_show
+      }
+    case 'LOGOUT':
+      localStorage.clear();
+      return {
+        ...state,
+        logged_in: false,
+        sidebar_show: false,
+        currentUser: [],
+      }
+    case 'OPEN_DIALOG':
+      return {
+        ...state,
+        dialog: action.payload
+      }
+
+    case 'CLOSE_DIALOG':
+      return {
+        ...state,
+        dialog: {
+          open: false,
+          login: true,
+        },
+      }
+
+    case 'TOGGLE_SIGNIN':
+      return {
+        ...state,
+        dialog: {
+          open: true,
+          login: !state.dialog.login,
+        },
+      }
+
+    case 'REPLY_SENT':
+      console.log("SEND.....");
+      return {
+        ...state,
+        newRequest:       state.newRequest.filter((request) => request.id !== action.payload.singleRequest.id),
+        repliedRequest:   [...state.repliedRequest,action.payload.singleRequest],
+      }
+    case 'NEW_REQUEST':
+      console.log("SEND.....");
+      return {
+        ...state,
+        newRequest:       [...state.newRequest,action.payload],
+      }
+    case 'DELETE_NEW_REQUEST':
+      return {
+        ...state,
+        newRequest:       state.newRequest.filter((request) => request.id !== action.payload.singleRequest.id),
+      }
+
+    case 'DELETE_REPLIED_REQUEST':
+      return {
+        ...state,
+        repliedRequest:   state.repliedRequest.filter((request) => request.id !== action.payload.singleRequest.id),
+      }
+
     case "CLEAR_SEARCH":
       places = addPlaceMaker(
         action.payload.AllHostingList,
@@ -98,44 +161,6 @@ const reducer = (state, action) => {
         )
       }
 
-    case "TOGGLE_SIDEBAR":
-      const { sidebar_show } = state
-      return {
-        ...state,
-        sidebar_show: !sidebar_show
-      }
-    case "LOGOUT":
-      localStorage.clear()
-      return {
-        ...state,
-        logged_in: false,
-        sidebar_show: false,
-        currentUser: []
-      }
-    case "OPEN_DIALOG":
-      return {
-        ...state,
-        dialog: action.payload
-      }
-
-    case "CLOSE_DIALOG":
-      return {
-        ...state,
-        dialog: {
-          open: false,
-          login: true
-        }
-      }
-
-    case "TOGGLE_SIGNIN":
-      return {
-        ...state,
-        dialog: {
-          open: true,
-          login: !state.dialog.login
-        }
-      }
-
     default:
       return state
   }
@@ -150,6 +175,8 @@ export class Provider extends Component {
       currentUser: [],
       myHostingList: [],
       AllHostingList: [],
+      newRequest: [],
+      repliedRequest: [],
       places: [],
       sidebar_show: false,
       logged_in: false,
@@ -182,16 +209,21 @@ export class Provider extends Component {
     if (this.state.currentUser.length === 1) {
       const { token, user_id } = this.state.currentUser[0]
 
-      const res = await axios.get(`/accommodationHosting/?user=${user_id}`, {
-        headers: {
-          Authorization: { token }
+      const newRequest      = await axios.get(`/bookRequest/?toHost=${user_id}&hasReply=False`)
+      const repliedRequest  = await axios.get(`/bookRequest/?toHost=${user_id}&hasReply=True`)
+
+      const res = await axios.get(`/accommodationHosting/?user=${user_id}`,
+      {
+        headers:{
+          'Authorization': {token}
         }
       })
+        this.setState({
+          myHostingList: res.data,
+          newRequest: newRequest.data,
+          repliedRequest: repliedRequest.data,
+        });
 
-      // if(this.state.myHostingList.length === 0 ){
-      this.setState({ myHostingList: res.data })
-      // console.log("did mount my hostung lis: ", this.state.myHostingList);
-      // }
     }
   }
 
@@ -212,16 +244,24 @@ export class Provider extends Component {
 
   async shouldComponentUpdate(nextProps, nextState) {
     if (nextState.currentUser.length > 0 && this.state.mounted === 0) {
-      this.setState({ mounted: 1 })
-      localStorage.setItem("currentUser", JSON.stringify(nextState.currentUser))
-      const { token, user_id } = nextState.currentUser[0]
-      const res = await axios.get("/accommodationHosting/", {
-        headers: { Authorization: { token } }
-      })
+      this.setState({mounted: 1})
+      localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
+      const {token,user_id} = nextState.currentUser[0];
+      const res = await axios.get('/accommodationHosting/',
+        {
+          headers:{ 'Authorization': {token} }
+        }
+      )
+      const newRequest      = await axios.get(`/bookRequest/?toHost=${user_id}&hasReply=False`)
+      const repliedRequest  = await axios.get(`/bookRequest/?toHost=${user_id}&hasReply=True`)
       const myHouse = await axios.get(`/accommodation/?user=${user_id}`)
-      this.setState({ myHouseList: myHouse.data })
-      this.setState({ myHostingList: res.data })
-      return true
+
+      this.setState({
+        myHouseList: myHouse.data,
+        myHostingList: res.data,
+        newRequest: newRequest.data,
+        repliedRequest: repliedRequest.data,
+      });
     }
     return true
   }

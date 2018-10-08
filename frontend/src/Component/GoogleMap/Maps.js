@@ -4,7 +4,6 @@ import React, { Component } from "react"
 import { withGoogleMap, GoogleMap } from "react-google-maps"
 import PlaceMarker from "../PlaceMarker/PlaceMarker"
 import { Consumer } from "../../Context"
-import { addPlaceMaker } from "./helper"
 
 const AirbnbMap = withGoogleMap(props => (
   <GoogleMap

@@ -8,7 +8,7 @@ import { withStyles } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 // import { CardMedia, CardActions } from '../../../node_modules/@material-ui/core'
-
+import { withSnackbar } from "notistack"
 import Card from "Component/Card/Card.jsx"
 import CardBody from "Component/Card/CardBody.jsx"
 import CardHeader from "Component/Card/CardHeader.jsx"
@@ -16,6 +16,7 @@ import CardHeader from "Component/Card/CardHeader.jsx"
 // Images Slider
 import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx"
 import Carousel from "react-slick"
+
 
 import ReviewPopup from "../Popup/ReviewPopup.js"
 import { enumerateDaysBetweenDates, concatString } from "../Helper/Helper"
@@ -192,6 +193,7 @@ class Booking extends Component {
     )
 
     this.setState({ openReviewPopup: false, isReviewed: true })
+    this.props.onPresentSnackbar('success', 'Thanks for your Review');
   }
 
   async componentDidMount() {
@@ -382,4 +384,4 @@ Booking.defaultProps = {
   editable: true
 }
 
-export default withStyles(carouselStyle)(Booking)
+export default withSnackbar(withStyles(carouselStyle)(Booking))

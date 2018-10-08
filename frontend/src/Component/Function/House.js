@@ -70,9 +70,8 @@ class House extends React.Component {
   render() {
     const { address } = this.props.houseDetail
     const {
-      area,
-      bedroom_master,
       bedroom,
+      bed,
       bathroom,
       kitchen,
       gym,
@@ -191,21 +190,14 @@ class House extends React.Component {
                   </div>
                   {showDetail === true ? (
                     <ul className="list-group">
-                      {area !== "0" ? (
-                        <li className="list-group-item">
-                          Area <i className="fas fa-th-large" /> {area} sq
-                          meters
-                        </li>
-                      ) : null}
-                      {bedroom_master !== "0" ? (
-                        <li className="list-group-item">
-                          Master Bedroom <i className="fas fa-bed" /> x{" "}
-                          {bedroom_master}{" "}
-                        </li>
-                      ) : null}
                       {bedroom !== "0" ? (
                         <li className="list-group-item">
                           Bedroom <i className="fas fa-bed" /> x {bedroom}{" "}
+                        </li>
+                      ) : null}
+                      {bed !== "0" ? (
+                        <li className="list-group-item">
+                          Bed <i className="fas fa-bed" /> x {bed}{" "}
                         </li>
                       ) : null}
                       {bathroom !== "0" ? (
@@ -213,24 +205,24 @@ class House extends React.Component {
                           Bathroom <i className="fas fa-bath" /> x {bathroom}{" "}
                         </li>
                       ) : null}
-                      {kitchen !== "0" ? (
+                      {kitchen !== false ? (
                         <li className="list-group-item">
-                          Kitchen <i className="fas fa-utensils" /> x {kitchen}{" "}
+                          Kitchen <i className="fas fa-utensils" /> {kitchen}{" "}
                         </li>
                       ) : null}
-                      {gym !== "0" ? (
+                      {gym !== false ? (
                         <li className="list-group-item">
-                          Gym <i className="fas fa-dumbbell" /> x {gym}{" "}
+                          Gym <i className="fas fa-dumbbell" /> {gym}{" "}
                         </li>
                       ) : null}
-                      {pool !== "0" ? (
+                      {pool !== false ? (
                         <li className="list-group-item">
-                          Pool <i className="fas fa-swimming-pool" /> x {pool}{" "}
+                          Pool <i className="fas fa-swimming-pool" /> {pool}{" "}
                         </li>
                       ) : null}
-                      {carpark !== "0" ? (
+                      {carpark !== false ? (
                         <li className="list-group-item">
-                          Carpark <i className="fas fa-car-side" /> x {carpark}{" "}
+                          Carpark <i className="fas fa-car-side" /> {carpark}{" "}
                         </li>
                       ) : null}
                       <li className="list-group-item">

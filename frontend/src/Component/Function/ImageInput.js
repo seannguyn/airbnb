@@ -1,5 +1,7 @@
 import React from "react"
 import "./ImageInput.css"
+import { withSnackbar } from "notistack"
+
 class ImageInput extends React.Component {
   constructor(props) {
     super(props)
@@ -38,13 +40,14 @@ class ImageInput extends React.Component {
     } else {
       this.props.onChang(e.target.files[0])
     }
-    // this.props.onChange(e.target.files[0]);
+    this.props.onPresentSnackbar('success',"Upload Successful")
   }
 
   deletePic(fileURL, file, imgId) {
     if (this.props.imgId) {
       console.log("delete pic", fileURL, file, imgId)
       this.props.onClick(fileURL, file, imgId)
+      this.props.onPresentSnackbar('error',"Delete Successful")
     }
   }
 
@@ -110,4 +113,4 @@ class ImageInput extends React.Component {
   }
 }
 
-export default ImageInput
+export default withSnackbar(ImageInput)
