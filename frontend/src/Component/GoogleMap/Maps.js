@@ -85,16 +85,15 @@ export class Map extends Component {
 
   render() {
     const { accommodation } = this.props
-    console.log("MAPS PROPS:", this.props);
     return (
       <Consumer>
         {value => {
           const { lat, lng } = this.state
-          const { places } = value
-          console.log("PLACES: ", value)
+          const { places } = this.props
           let placeMarkers = []
           if (places !== null && places !== undefined) {
             placeMarkers = places
+            console.log("PLACESMAKERS: ", placeMarkers)
             let markers = []
             placeMarkers.map(placeMarker => {
               if (
@@ -132,7 +131,6 @@ export class Map extends Component {
               return 0
             })
           }
-
           return (
             <div style={{ width: `750px`, height: `750px` }}>
               <AirbnbMap

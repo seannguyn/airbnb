@@ -1,10 +1,11 @@
 import React, { Component } from "react"
-
+import {addPlaceMaker} from './Component/GoogleMap/helper'
 import axios from "axios"
 import CircularProgress from "@material-ui/core/CircularProgress"
 const Context = React.createContext()
 
 const reducer = (state, action) => {
+  var places = []
   switch (action.type) {
     case "DELETE_HOUSE":
       console.log("deleting house", action.payload)
@@ -47,17 +48,22 @@ const reducer = (state, action) => {
       }
 
     case "SEARCH":
-      console.log("SEARCH context", action.payload)
+      places = addPlaceMaker(action.payload)
+      console.log("SEARCH context", places)
       return {
         ...state,
         AllHostingList: action.payload,
+        places: places,
         searchStatus: true
       }
 
     case "CLEAR_SEARCH":
+      places = addPlaceMaker(action.payload)
+      console.log("CLEAR SEARCH context", places)
       return {
         ...state,
         AllHostingList: action.payload,
+        places: places,
         searchStatus: false
       }
 
@@ -77,12 +83,6 @@ const reducer = (state, action) => {
         )
       }
     case "DELETE_HOST":
-      console.log("deleting hosting", action.payload)
-
-      // var updateHouse;
-      // for ( var i = 0; i < this.state.myHouseList.length; i++) {
-      //   if
-      // }
 
       return {
         ...state,
@@ -92,7 +92,6 @@ const reducer = (state, action) => {
         AllHostingList: state.AllHostingList.filter(
           host => host.id !== action.payload
         )
-        // myHouseList:
       }
 
     case "TOGGLE_SIDEBAR":
@@ -157,7 +156,7 @@ export class Provider extends Component {
       searchStatus: false,
       mounted: 0,
       didmount: 0,
-      dispatch: action => {
+      dispatch: async action => {
         this.setState(state => reducer(state, action))
       }
     }
@@ -207,7 +206,6 @@ export class Provider extends Component {
   }
 
   async shouldComponentUpdate(nextProps, nextState) {
-    console.log('...SCU...',nextState);
     if (nextState.currentUser.length > 0 && this.state.mounted === 0) {
       this.setState({ mounted: 1 })
       localStorage.setItem("currentUser", JSON.stringify(nextState.currentUser))
