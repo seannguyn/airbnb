@@ -61,17 +61,6 @@ class Items extends React.Component {
                   <ListItemText primary="Property" />
                 </ListItem>
               </Link>
-              <Link to="/mybookings">
-                <ListItem
-                  button
-                  onClick={this.closeSideBar.bind(this, dispatch)}
-                >
-                  <ListItemIcon>
-                    <WorkIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Booking" />
-                </ListItem>
-              </Link>
             <Link to="/mybookings">
              <ListItem button onClick={this.closeSideBar.bind(this, dispatch)}>
                <ListItemIcon>
