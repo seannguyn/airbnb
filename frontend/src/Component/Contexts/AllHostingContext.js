@@ -1,21 +1,18 @@
-import React from 'react'
-import {Consumer} from '../../Context.js'
-import AllHosting from '../Function/AllHosting'
-import SearchSection from '../Search/SearchSection'
-import MapList from '../Search/MapList'
-import { withStyles } from '@material-ui/core/styles';
-import { Map } from '../GoogleMap/Maps.js';
+import React from "react"
+import { Consumer } from "../../Context.js"
+import AllHosting from "../Function/AllHosting"
+import SearchSection from "../Search/SearchSection"
+import MapList from "../Search/MapList"
+import { withStyles } from "@material-ui/core/styles"
+import { Map } from "../GoogleMap/Maps.js"
 
-const styles = theme => ({
-
-});
+const styles = theme => ({})
 
 class AllHostingContext extends React.Component {
-
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      display: 'list',
+      display: "list"
     }
   }
 
@@ -25,33 +22,45 @@ class AllHostingContext extends React.Component {
     })
   }
 
-  render () {
-    return(
-    <Consumer>
-      {value => {
-        const {AllHostingList,HouseList} = value;
+  render() {
+    return (
+      <Consumer>
+        {value => {
+          const { AllHostingList, HouseList, places } = value
 
-        var rendering = []
+          var rendering = []
 
-        if (this.state.display === "list") {
-          rendering.push(<AllHosting key="list" history={this.props.history} AllHostingList={AllHostingList} HouseList={HouseList}></AllHosting>)
-        } else {
-          rendering.push(<h1 key="map"><Map/></h1>)
-        }
+          if (this.state.display === "list") {
+            rendering.push(
+              <AllHosting
+                key="list"
+                history={this.props.history}
+                AllHostingList={AllHostingList}
+                HouseList={HouseList}
+              />
+            )
+          } else {
+            rendering.push(
+              <h1 key="map">
+                <Map places={places}/>
+              </h1>
+            )
+          }
 
-        return (
-          <div>
-            <SearchSection />
-            <MapList display={this.state.display} changeDisplay={this.changeDisplay.bind(this)}/>
-            {rendering}
-
-          </div>
-        )
-      }}
-
-    </Consumer>
-  );
+          return (
+            <div>
+              <SearchSection />
+              <MapList
+                display={this.state.display}
+                changeDisplay={this.changeDisplay.bind(this)}
+              />
+              {rendering}
+            </div>
+          )
+        }}
+      </Consumer>
+    )
   }
 }
 
-export default withStyles(styles)(AllHostingContext);
+export default withStyles(styles)(AllHostingContext)

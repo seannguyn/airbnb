@@ -7,8 +7,6 @@ import ContextApi from '../Contexts/Context_api.js';
 import AddHouseContext from '../Contexts/AddHouseContext.js';
 import MyHouses from '../Function/MyHouses'
 import MyBookings from '../Booking/MyBookings';
-// import AccommodationDetail from '../AccommodationDetail/AccommodationDetail';
-// import MyApp from '../Payment/paypal'
 import AccommodationDetailContext from '../Contexts/AccommodationDetailContext';
 import ReserveOverallBooking from '../Booking/ReserveOverallBooking'
 import EditOverallBooking from '../Booking/EditOverallBooking'
@@ -19,27 +17,29 @@ import { Map } from '../GoogleMap/Maps'
 
 const styles = theme => ({
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0 8px",
+    ...theme.mixins.toolbar
   },
   content: {
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit,
-    width: '90%',
-    height: '90%',
-  },
-});
+    width: "90%",
+    height: "90%"
+    // position:'fixed',
+    // margin:'0',
+    // top:'0',
+    // left:'0',
+  }
+})
 
 class Main extends React.Component {
   render() {
-
     const { classes } = this.props
 
     return (
-
         <main className={classes.content}>
           <div className={classes.toolbar} />
             <Switch>
@@ -60,11 +60,13 @@ class Main extends React.Component {
 
               <Route component={NotFound}></Route>
 
-            </Switch>
-        </main>
+          <Route exact path="/map" component={Map} />
 
+          <Route component={NotFound} />
+        </Switch>
+      </main>
     )
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Main);
+export default withStyles(styles, { withTheme: true })(Main)

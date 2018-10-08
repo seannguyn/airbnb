@@ -1,76 +1,60 @@
-import React, { Component } from 'react';
+import React, { Component } from "react"
+import {addPlaceMaker} from './Component/GoogleMap/helper'
+import axios from "axios"
+import CircularProgress from "@material-ui/core/CircularProgress"
+const Context = React.createContext()
 
-import axios from 'axios';
-import CircularProgress from '@material-ui/core/CircularProgress';
-const Context = React.createContext();
-
-const reducer = (state,action) => {
-
-  switch(action.type) {
-    case 'DELETE_HOUSE':
+const reducer = (state, action) => {
+  var places = []
+  switch (action.type) {
+    case "DELETE_HOUSE":
+      console.log("deleting house", action.payload)
       return {
-        ...state,
-        HouseList: action.payload.houselist,
-        myHouseList: action.payload.myHouseList
+        HouseList: state.HouseList.filter(
+          eachHouse => eachHouse.id !== action.payload
+        )
       }
 
-    case 'ADD_HOUSE':
+    case "ADD_HOUSE":
+      console.log("ADD_HOUSE")
+
       return {
         ...state,
         HouseList: action.payload
       }
 
-    case 'EDIT_HOUSE':
+    case "EDIT_HOUSE":
+      console.log("edit house")
       return {
         ...state,
-        HouseList: state.HouseList.map((eachHouse) => eachHouse.id === action.payload.id ? (eachHouse = action.payload) : eachHouse)
+        HouseList: state.HouseList.map(
+          eachHouse =>
+            eachHouse.id === action.payload.id
+              ? (eachHouse = action.payload)
+              : eachHouse
+        )
       }
 
-    case 'LOGIN':
+    case "LOGIN":
+      console.log("login user login")
       return {
         ...state,
         currentUser: [action.payload],
         logged_in: true,
         dialog: {
           open: false,
-          login: true,
-        },
-      };
+          login: true
+        }
+      }
 
-    case 'SEARCH':
+    case "SEARCH":
+      places = addPlaceMaker(action.payload)
+      console.log("SEARCH context", places)
       return {
         ...state,
         AllHostingList: action.payload,
+        places: places,
         searchStatus: true
-      };
-
-    case 'CLEAR_SEARCH':
-
-      return {
-        ...state,
-        AllHostingList: action.payload,
-        searchStatus: false
-      };
-
-    case 'HOSTING':
-      return {
-        ...state,
-        myHostingList: [action.payload,...state.myHostingList],
-        AllHostingList: [action.payload,...state.AllHostingList],
-      }
-
-    case 'EDITHOST':
-      return {
-        ...state,
-        myHostingList: state.myHostingList.map((host) => host.id === action.payload.id ? (host = action.payload) : host)
-      }
-    case 'DELETE_HOST':
-
-      return {
-        ...state,
-        myHostingList: state.myHostingList.filter((host) => host.id !== action.payload),
-        AllHostingList: state.AllHostingList.filter((host) => host.id !== action.payload),
-        // myHouseList:
       }
 
     case 'TOGGLE_SIDEBAR':
@@ -130,54 +114,89 @@ const reducer = (state,action) => {
         repliedRequest:   state.repliedRequest.filter((request) => request.id !== action.payload.singleRequest.id),
       }
 
+    case "CLEAR_SEARCH":
+      places = addPlaceMaker(action.payload)
+      console.log("CLEAR SEARCH context", places)
+      return {
+        ...state,
+        AllHostingList: action.payload,
+        places: places,
+        searchStatus: false
+      }
+
+    case "HOSTING":
+      return {
+        ...state,
+        myHostingList: [action.payload, ...state.myHostingList],
+        AllHostingList: [action.payload, ...state.AllHostingList]
+      }
+
+    case "EDITHOST":
+      return {
+        ...state,
+        myHostingList: state.myHostingList.map(
+          host =>
+            host.id === action.payload.id ? (host = action.payload) : host
+        )
+      }
+    case "DELETE_HOST":
+
+      return {
+        ...state,
+        myHostingList: state.myHostingList.filter(
+          host => host.id !== action.payload
+        ),
+        AllHostingList: state.AllHostingList.filter(
+          host => host.id !== action.payload
+        )
+      }
+
     default:
-      return state;
+      return state
   }
 }
 
 export class Provider extends Component {
-
   constructor() {
-    super();
+    super()
     this.state = {
-      HouseList : [],
+      HouseList: [],
       myHouseList: [],
       currentUser: [],
       myHostingList: [],
       AllHostingList: [],
       newRequest: [],
       repliedRequest: [],
+      places: [],
       sidebar_show: false,
       logged_in: false,
       dialog: {
         open: false,
-        login: true,
+        login: true
       },
       searchStatus: false,
       mounted: 0,
       didmount: 0,
-      dispatch: (action) => {
-        this.setState((state) => reducer(state,action))
+      dispatch: async action => {
+        this.setState(state => reducer(state, action))
       }
-
-    };
+    }
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
+    const res = await axios.get("/accommodation/")
+    this.setState({ HouseList: res.data })
+    this.setState({ didmount: 1 })
 
-    const res = await axios.get('/accommodation/');
-    this.setState({HouseList: res.data});
-    this.setState({didmount: 1});
+    const allHosting = await axios.get("/accommodationHosting/")
+    this.setState({ AllHostingList: allHosting.data })
 
-    const allHosting = await axios.get('/accommodationHosting/');
-    this.setState({AllHostingList: allHosting.data});
-
-    if(allHosting.data !== []){
-      this.addPlaceMaker(allHosting.data);
+    if (allHosting.data !== []) {
+      this.addPlaceMaker(allHosting.data)
     }
 
-    if(this.state.currentUser.length === 1) {
-      const {token,user_id} = this.state.currentUser[0];
+    if (this.state.currentUser.length === 1) {
+      const { token, user_id } = this.state.currentUser[0]
 
       const newRequest      = await axios.get(`/bookRequest/?toHost=${user_id}&hasReply=False`)
       const repliedRequest  = await axios.get(`/bookRequest/?toHost=${user_id}&hasReply=True`)
@@ -195,21 +214,20 @@ export class Provider extends Component {
         });
 
     }
-
   }
 
   // WARNING! To be deprecated in React v17. Use componentDidMount instead.
   componentWillMount() {
-    var currentUser= JSON.parse(localStorage.getItem('currentUser'));
+    var currentUser = JSON.parse(localStorage.getItem("currentUser"))
 
-    if (currentUser  === null) {
+    if (currentUser === null) {
       currentUser = []
     }
-    if( currentUser.length > 0) {
+    if (currentUser.length > 0) {
       this.setState({
-        currentUser: JSON.parse(localStorage.getItem('currentUser')),
-        logged_in: true,
-      });
+        currentUser: JSON.parse(localStorage.getItem("currentUser")),
+        logged_in: true
+      })
     }
   }
 
@@ -234,52 +252,45 @@ export class Provider extends Component {
         repliedRequest: repliedRequest.data,
       });
     }
-    return true;
+    return true
   }
 
-  addPlaceMaker = async (AllHostingList) => {
-    const places = [];
-    for( let i = 0; i <  AllHostingList.length; i++){
-        const accommodation = AllHostingList[i].accommodation;
-        await axios.get(`/accommodation/${accommodation}/`)
-                    .then(response => {
-                        const info = {
-                            id : response.data.id,
-                            lat: response.data.latitude,
-                            lng: response.data.longitude,
-                            price: AllHostingList[i].price,
-                            name: response.data.title,
-                            description: response.data.description,
-                            address: response.data.address
-                        };
-                        places.push(
-                            info
-                        )
-                    })
-
-
+  addPlaceMaker = async AllHostingList => {
+    const places = []
+    for (let i = 0; i < AllHostingList.length; i++) {
+      const accommodation = AllHostingList[i].accommodation
+      await axios.get(`/accommodation/${accommodation}/`).then(response => {
+        const info = {
+          id: response.data.id,
+          lat: response.data.latitude,
+          lng: response.data.longitude,
+          price: AllHostingList[i].price,
+          name: response.data.title,
+          description: response.data.description,
+          address: response.data.address
+        }
+        places.push(info)
+      })
     }
-    this.setState({places: places});
-    return places;
-}
+    this.setState({ places: places })
+    return places
+  }
 
-  render () {
+  render() {
     if (this.state.didmount === 0) {
-      return(
+      return (
         <div>
-          <CircularProgress color="primary" size={50}/>
+          <CircularProgress color="primary" size={50} />
         </div>
       )
-    }
-    else {
-      return(
+    } else {
+      return (
         <Context.Provider value={this.state}>
           {this.props.children}
         </Context.Provider>
-      );
+      )
     }
-
   }
 }
 
-export const Consumer = Context.Consumer;
+export const Consumer = Context.Consumer

@@ -16,45 +16,61 @@ import {Consumer} from '../../Context.js';
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: "100%",
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper
   },
   nested: {
-    paddingLeft: theme.spacing.unit * 4,
-  },
-});
+    paddingLeft: theme.spacing.unit * 4
+  }
+})
 
 class Items extends React.Component {
-
   closeSideBar(dispatch) {
     dispatch({
-      type: 'TOGGLE_SIDEBAR'
+      type: "TOGGLE_SIDEBAR"
     })
   }
 
-  render () {
+  render() {
     return (
       <Consumer>
         {value => {
-          const {dispatch} = value;
+          const { dispatch } = value
           return (
             <List>
               <Link to="/">
-               <ListItem button onClick={this.closeSideBar.bind(this, dispatch)}>
-                 <ListItemIcon>
-                   <ExploreIcon />
-                 </ListItemIcon>
-                 <ListItemText primary="Explore" />
-               </ListItem>
+                <ListItem
+                  button
+                  onClick={this.closeSideBar.bind(this, dispatch)}
+                >
+                  <ListItemIcon>
+                    <ExploreIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Explore" />
+                </ListItem>
               </Link>
               <Link to="/myHouses">
-               <ListItem button onClick={this.closeSideBar.bind(this, dispatch)}>
-                 <ListItemIcon>
-                   <AccountBalanceIcon />
-                 </ListItemIcon>
-                 <ListItemText primary="Property" />
-               </ListItem>
+                <ListItem
+                  button
+                  onClick={this.closeSideBar.bind(this, dispatch)}
+                >
+                  <ListItemIcon>
+                    <AccountBalanceIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Property" />
+                </ListItem>
+              </Link>
+              <Link to="/mybookings">
+                <ListItem
+                  button
+                  onClick={this.closeSideBar.bind(this, dispatch)}
+                >
+                  <ListItemIcon>
+                    <WorkIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Booking" />
+                </ListItem>
               </Link>
             <Link to="/mybookings">
              <ListItem button onClick={this.closeSideBar.bind(this, dispatch)}>
@@ -86,11 +102,8 @@ class Items extends React.Component {
           )
         }}
       </Consumer>
-
     )
   }
 }
 
-
-
-export default withStyles(styles)(Items);
+export default withStyles(styles)(Items)

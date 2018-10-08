@@ -1,24 +1,23 @@
-import React from 'react'
-import CardForm from './CardForm';
-import PaymentOptions from './PaymentOptions';
-import axios from 'axios';
-import uuid from 'uuid'
+import React from "react"
+import CardForm from "./CardForm"
+import PaymentOptions from "./PaymentOptions"
+import axios from "axios"
+import uuid from "uuid"
 
 class Payment extends React.Component {
-
   state = {
-    payment:'credit',
+    payment: "credit",
     credit: {
-      card_number:'',
-      name:'',
-      valid:'',
-      cvc:'',
+      card_number: "",
+      name: "",
+      valid: "",
+      cvc: ""
     }
   }
 
   submitPayment() {
-    console.log("credit card:        ",this.state.credit);
-    const  {booking} = this.props;
+    console.log("credit card:        ", this.state.credit)
+    const { booking } = this.props
     const paidBooking = {
       id: booking.id,
       isPaid: true,
@@ -27,62 +26,62 @@ class Payment extends React.Component {
       date_start: booking.date_start,
       date_end: booking.date_end,
       guest: booking.guest,
-      note: "Paid pp...",
+      note: "Paid pp..."
     }
-    axios.put(`/booking/${booking.id}/`, paidBooking);
+    axios.put(`/booking/${booking.id}/`, paidBooking)
 
-    const {detail,booker} = this.props;
+    const { detail, booker } = this.props
 
     this.props.previous.history.push({
       pathname: `/overallbooking/confirm/${detail.currentHost.id}`,
-      search: '?query=abc',
+      search: "?query=abc",
       state: {
         detail: detail,
-        booker: booker,
+        booker: booker
       }
     })
   }
 
   changePayment(payment) {
-    this.setState({payment: payment})
+    this.setState({ payment: payment })
   }
 
   onChange(credit) {
-
     this.setState({
       credit
     })
-
   }
 
   getPayment(payment) {
     var stuff = []
-    if (payment === 'credit') {
-      stuff.push(<CardForm
-        key={uuid.v4()}
-        onChange={this.onChange.bind(this)}
-        submitPayment={this.submitPayment.bind(this)}
-        handleChange={this.props.handleChange}
-        />)
+    if (payment === "credit") {
+      stuff.push(
+        <CardForm
+          key={uuid.v4()}
+          onChange={this.onChange.bind(this)}
+          submitPayment={this.submitPayment.bind(this)}
+          handleChange={this.props.handleChange}
+        />
+      )
     }
     //
-    else if (payment === 'paypal') {
-        stuff.push(<h1 key={uuid.v4()}>hihihi</h1>)
+    else if (payment === "paypal") {
+      stuff.push(<h1 key={uuid.v4()}>hihihi</h1>)
     }
 
-    return stuff;
+    return stuff
   }
 
-  render () {
-    const{payment} = this.state;
-    const stuff = this.getPayment(payment);
-    return(
+  render() {
+    const { payment } = this.state
+    const stuff = this.getPayment(payment)
+    return (
       <div>
-        <PaymentOptions changePayment={this.changePayment.bind(this)}/>
+        <PaymentOptions changePayment={this.changePayment.bind(this)} />
         {stuff}
       </div>
     )
   }
 }
 
-export default Payment;
+export default Payment
