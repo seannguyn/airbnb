@@ -223,7 +223,7 @@ class Booking extends Component {
 
   render() {
     let { daysLeft, hoursLeft, minutesLeft } = 0
-    const { open, images } = this.state,
+    const { images } = this.state,
       { classes, booking } = this.props,
       { id, date_start, date_end, note, isPaid } = booking,
       { isReviewed, openReviewPopup, accommodation } = this.state
