@@ -79,7 +79,7 @@ class SearchSection extends React.Component {
     )
   }
 
-  async onSubmit(dispatch, e) {
+  async onSubmit(dispatch, HouseList, e) {
     e.preventDefault()
 
     const tempStartDate = moment(this.state.startDate).format("YYYY-MM-DD")
@@ -108,7 +108,7 @@ class SearchSection extends React.Component {
 
     dispatch({
       type: "SEARCH",
-      payload: res.data
+      payload: { AllHostingList: res.data, HouseList: HouseList }
     })
 
     this.setState({
@@ -169,14 +169,16 @@ class SearchSection extends React.Component {
     return (
       <Consumer>
         {value => {
-          const { dispatch, searchStatus, AllHostingList } = value
+          const { dispatch, searchStatus, AllHostingList, HouseList } = value
 
           return (
             <div>
               <div className="container">
                 <div className="row">
                   <div className="col-8">
-                    <form onSubmit={this.onSubmit.bind(this, dispatch)}>
+                    <form
+                      onSubmit={this.onSubmit.bind(this, dispatch, HouseList)}
+                    >
                       <Paper className={classes.root} elevation={1}>
                         <Typography
                           align="center"

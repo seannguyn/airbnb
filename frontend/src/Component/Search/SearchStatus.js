@@ -41,12 +41,12 @@ class SearchStatus extends React.Component {
     }
   }
 
-  async clearSearch(dispatch) {
+  async clearSearch(dispatch, HouseList) {
     const allHosting = await axios.get("/accommodationHosting/")
 
     dispatch({
       type: "CLEAR_SEARCH",
-      payload: allHosting.data
+      payload: { AllHostingList: allHosting.data, HouseList: HouseList }
     })
   }
 
@@ -199,7 +199,7 @@ class SearchStatus extends React.Component {
       return (
         <Consumer>
           {value => {
-            const { dispatch } = value
+            const { dispatch, HouseList } = value
             return (
               <div className="row">
                 <div className="col-12">
@@ -215,7 +215,11 @@ class SearchStatus extends React.Component {
                       <div align="center">{chips}</div>
                       <div align="right">
                         <Button
-                          onClick={this.clearSearch.bind(this, dispatch)}
+                          onClick={this.clearSearch.bind(
+                            this,
+                            dispatch,
+                            HouseList
+                          )}
                           color="secondary"
                           size="small"
                         >
