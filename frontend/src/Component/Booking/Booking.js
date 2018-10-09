@@ -17,7 +17,6 @@ import CardHeader from "Component/Card/CardHeader.jsx"
 import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx"
 import Carousel from "react-slick"
 
-
 import ReviewPopup from "../Popup/ReviewPopup.js"
 import { enumerateDaysBetweenDates, concatString } from "../Helper/Helper"
 import BookingDiaglog from "./BookingDiaglog"
@@ -35,7 +34,6 @@ class Booking extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      open: false,
       host: {},
       accommodation: {},
       booking: [],
@@ -44,14 +42,9 @@ class Booking extends Component {
       currentAccommodationID: -1,
       // review: false,
       isReviewed: props.booking.isReviewed,
+      openEditBooking: false,
       openReviewPopup: false
     }
-  }
-
-  handleEdit = () => {
-    this.setState({
-      open: true
-    })
   }
 
   handlePayment = () => {
@@ -88,9 +81,17 @@ class Booking extends Component {
     })
   }
 
+  // Toggle review popup
   closeDiaglog() {
     this.setState({
       openReviewPopup: !this.state.openReviewPopup
+    })
+  }
+
+  // Toggle Edit Booking popup
+  toggleEditBooking() {
+    this.setState({
+      openEditBooking: !this.state.openEditBooking
     })
   }
 
@@ -193,7 +194,7 @@ class Booking extends Component {
     )
 
     this.setState({ openReviewPopup: false, isReviewed: true })
-    this.props.onPresentSnackbar('success', 'Thanks for your Review');
+    this.props.onPresentSnackbar("success", "Thanks for your Review")
   }
 
   async componentDidMount() {
@@ -329,7 +330,7 @@ class Booking extends Component {
                 {this.props.editable === true ? (
                   <div>
                     {payButton}
-                    <Button onClick={this.handleEdit}>
+                    <Button onClick={this.toggleEditBooking.bind(this)}>
                       <i
                         className="fas fa-pencil-alt"
                         style={{
@@ -364,8 +365,8 @@ class Booking extends Component {
             </div>
           </CardBody>
           <BookingDiaglog
-            closeDiaglog={this.closeDiaglog.bind(this)}
-            open={open}
+            closeDiaglog={this.toggleEditBooking.bind(this)}
+            open={this.state.openEditBooking}
             isDayBlocked={isDayBlocked}
             minDateSet={this.state.minDateSet}
             currentHost={this.state.host}
