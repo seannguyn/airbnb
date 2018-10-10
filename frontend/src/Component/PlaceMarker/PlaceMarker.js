@@ -89,7 +89,7 @@ export class PlaceMarker extends Component {
                   onClick={this.clickTooltip.bind(this, dispatch, accommodation)}
                   label={`${price}`}
                 >
-                  { inforWindow === accommodation ? (
+                  { inforWindow === accommodation && images !== undefined  ? (
                     <PlaceInfoWindow
                       description={description}
                       name={name}
@@ -113,7 +113,7 @@ export class PlaceMarker extends Component {
                   onClick={this.clickTooltip.bind(this, dispatch, accommodation)}
                   label={`${price}`}
                 >
-                  {inforWindow === accommodation && (
+                  {inforWindow === accommodation && images !== undefined && (
                     <PlaceInfoWindow
                       description={description}
                       name={name}

@@ -72,8 +72,25 @@ class AccommodationDetailContext extends React.Component {
     this.blockBookedPeriod(res3.data)
 
     // axios review, pass review down
-    const res4 = await axios.get(`/accommodation/${id}/reviews/`)
-    this.setState({ reviews: res4.data })
+    var reviews = []
+    var err
+
+    const count = await axios.get(`/reviewCounter/${id}/`)
+
+    if (count.data.count > 0) {
+      await axios
+        .get(`/accommodation/${id}/reviews/`)
+        .then(response => {
+          reviews = response.data
+        })
+        .catch(error => {
+          err = error.response
+        })
+    }
+
+    if (err == null && reviews.length > 0) {
+      this.setState({ reviews: reviews })
+    }
 
     // axios images
     const res5 = await axios.get(`/accommodationImage/?accommodation=${id}`)
