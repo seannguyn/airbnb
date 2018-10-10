@@ -41,14 +41,15 @@ class RequestFormDialog extends React.Component {
     };
     const newRequest = await axios.post('/bookRequest/', request)
 
-    console.log("SUCCESS REQUEST:  ",newRequest.data);
+    console.log("SUCCESS REQUEST:  ", newRequest.data);
+
     dispatch({
       type: 'NEW_REQUEST',
       payload: newRequest.data
-    })
-    this.props.handleClose();
-    this.props.onPresentSnackbar('success','Request Sent to Host')
+    });
 
+    this.props.handleClose();
+    this.props.onPresentSnackbar('success', 'Request Sent to Host')
   };
 
   onChange(e) {
@@ -57,8 +58,7 @@ class RequestFormDialog extends React.Component {
 
   render() {
     const {email, title, content} = this.state;
-
-    const disabled = (email.length === 0 || title.length === 0 || content.length === 0) ? true : false
+    const disabled = (email.length === 0 || title.length === 0 || content.length === 0);
 
     return (
       <Consumer>

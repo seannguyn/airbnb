@@ -117,6 +117,7 @@ class LoginDialog extends React.Component {
           userInfo = response.data
           dispatch({ type: "LOGIN", payload: response.data })
           this.setState({ error: {}, error_bool: false })
+          this.loggedInUser(userInfo)
         })
         .catch(error => {
           console.log("ERR: ", error.response)
@@ -129,11 +130,6 @@ class LoginDialog extends React.Component {
             error_bool: true
           })
         })
-      this.setState({
-        username: "",
-        password: "",
-        password_confirm: ""
-      })
     } else {
       console.log("signup")
       const { username, password, password_confirm } = this.state
@@ -175,9 +171,13 @@ class LoginDialog extends React.Component {
         userInfo = response.data
         dispatch({ type: "LOGIN", payload: response.data })
         this.setState({ error: {}, error_bool: false })
+        this.loggedInUser(userInfo)
       })
     }
 
+  }
+
+  loggedInUser(userInfo) {
     var string = 'Welcome '.concat(userInfo.username)
     this.props.onPresentSnackbar('success',string)
 

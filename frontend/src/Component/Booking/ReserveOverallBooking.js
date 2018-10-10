@@ -201,7 +201,7 @@ class OverallBooking extends React.Component {
                   </TabContainer>
                 </SwipeableViews>
               </div>
-              <div className="col-4" style={{ border: "3px solid green" }}>
+              <div className="col-4">
                 <BookingInfo price={price} detail={detail} />
               </div>
             </div>

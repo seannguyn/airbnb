@@ -24,15 +24,22 @@ export class PlaceMarker extends Component {
 
   async componentDidMount() {
     const { accommodation } = this.props
-    let reviews, err
-    await axios
-      .get(`/accommodation/${accommodation}/reviews/`)
-      .then(response => {
-        reviews = response.data
-      })
-      .catch(error => {
-        err = error.response
-      })
+    var reviews = []
+    var err
+
+    const count = await axios.get(`/reviewCounter/${accommodation}/`)
+
+    if (count.data.count > 0) {
+      await axios
+        .get(`/accommodation/${accommodation}/reviews/`)
+        .then(response => {
+          reviews = response.data
+        })
+        .catch(error => {
+          err = error.response
+        })
+    }
+    
     if (err == null && reviews.length > 0) {
       this.setState({ reviews: reviews })
     }
