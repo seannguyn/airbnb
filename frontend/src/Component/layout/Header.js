@@ -55,6 +55,10 @@ const styles = theme => ({
   bigAvatar: {
     width: 60,
     height: 60
+  },
+  portBnBTitle: {
+    textDecoration: 'none',
+    color: 'black'
   }
 })
 
@@ -98,11 +102,14 @@ class Header extends Component {
     dispatch({ type: "OPEN_DIALOG", payload: { open: true, login: false } })
   }
 
+  homePage() {
+
+  }
+
   render() {
     const { classes } = this.props
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
-
     return (
       <Consumer>
         {value => {
@@ -127,15 +134,18 @@ class Header extends Component {
                     >
                       <MenuIcon />
                     </IconButton>
-                    <Typography
-                      style={{ flex: 1 }}
-                      className={classNames(!logged_in && classes.transparent)}
-                      variant="title"
-                      color="inherit"
-                      noWrap
-                    >
-                      portBnB
-                    </Typography>
+                      <Typography
+                        style={{ flex: 1, cursor: 'pointer' }}
+                        className={classNames(!logged_in && classes.transparent)}
+                        variant="title"
+                        color="inherit"
+                        noWrap
+                        onClick={this.homePage.bind(this)}
+                      >
+                        <Link to="/" className={classes.portBnBTitle}>
+                          portBnB
+                        </Link>
+                      </Typography>
                     <Button color="inherit">About us</Button>
                     {logged_in === true ? (
                       <div>
@@ -145,6 +155,7 @@ class Header extends Component {
                           aria-haspopup="true"
                           onClick={this.handleMenu}
                           color="inherit"
+                          style={{ cursor: 'pointer' }}
                         >
                           <PersonIcon />
                         </Avatar>

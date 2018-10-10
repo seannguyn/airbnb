@@ -3,6 +3,7 @@ import CardForm from "./CardForm"
 import PaymentOptions from "./PaymentOptions"
 import axios from "axios"
 import uuid from "uuid"
+import Button from "@material-ui/core/Button"
 
 class Payment extends React.Component {
   state = {
@@ -66,7 +67,7 @@ class Payment extends React.Component {
     }
     //
     else if (payment === "paypal") {
-      stuff.push(<h1 key={uuid.v4()}>hihihi</h1>)
+      stuff.push(<Button key={uuid.v4()} onClick={this.submitPayment.bind(this)} color="primary" variant="contained">Pay with Paypal</Button>)
     }
 
     return stuff

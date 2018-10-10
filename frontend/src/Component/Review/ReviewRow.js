@@ -1,10 +1,8 @@
 import React from "react"
 import Avatar from "@material-ui/core/Avatar"
 import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
 import PersonIcon from "@material-ui/icons/Person"
 import { Consumer } from "../../Context"
-import ReplyForm from "./ReplyForm"
 
 class ReviewRow extends React.Component {
   state = {
@@ -71,13 +69,6 @@ class ReviewRow extends React.Component {
                   </div>
                 </div>
               </div>
-              <Button color="secondary" onClick={this.openReply}>
-                {" "}
-                Reply{" "}
-              </Button>
-              {this.state.reply === true && (
-                <ReplyForm close={this.closeReply} />
-              )}
             </div>
           )
         }}

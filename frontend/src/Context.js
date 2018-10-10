@@ -161,6 +161,18 @@ const reducer = (state, action) => {
         )
       }
 
+    case "OPEN_INFO_WINDOW":
+    
+      return {
+        ...state
+      }
+
+    case "CLOSE_INFO_WINDOW":
+
+      return {
+        ...state
+      }
+
     default:
       return state
   }
@@ -180,6 +192,7 @@ export class Provider extends Component {
       places: [],
       sidebar_show: false,
       logged_in: false,
+      inforWindow: -1,
       dialog: {
         open: false,
         login: true

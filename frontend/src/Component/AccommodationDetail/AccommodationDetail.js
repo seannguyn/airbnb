@@ -138,7 +138,7 @@ class AccommodationDetail extends Component {
                 <div className="container">
                   <div className="row" />
                   <div className="row">
-                    <div className="col-8" style={{ border: "2px solid blue" }}>
+                    <div className="col-8">
                       <div className="description">
                         <h4>Title: {title}</h4>
                       </div>
@@ -186,7 +186,7 @@ class AccommodationDetail extends Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-8" style={{ border: "2px solid blue" }}>
+                    <div className="col-8">
                       <Maps
                         latitude={latitude}
                         longitude={longitude}
@@ -196,7 +196,7 @@ class AccommodationDetail extends Component {
                     <div className="col-4" />
                   </div>
                   <div className="row">
-                    <div className="col-8" style={{ border: "2px solid blue" }}>
+                    <div className="col-8">
                       <ReviewComponent review={this.props.reviews} />
                     </div>
                     <div className="col-4" />
