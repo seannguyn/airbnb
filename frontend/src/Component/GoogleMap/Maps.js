@@ -13,6 +13,7 @@ const AirbnbMap = withGoogleMap(props => (
     onBoundsChanged={props.handleMapFullyLoaded}
     defaultCenter={props.center}
     defaultZoom={props.zoom}
+    onClick={()=>{props.dispatch({type: "CLOSE_INFO_WINDOW"})}}
   >
     {props.places}
   </GoogleMap>
@@ -90,7 +91,7 @@ export class Map extends Component {
       <Consumer>
         {value => {
           const { lat, lng } = this.state
-          const { places } = value
+          const { places, dispatch } = value
           let placeMarkers = []
           if (places !== null && places !== undefined) {
             placeMarkers = places
@@ -147,6 +148,7 @@ export class Map extends Component {
                 containerElement={<div style={{ height: `100%` }} />}
                 mapElement={<div style={{ height: `100%` }} />}
                 places={placeMarkers}
+                dispatch={dispatch}
               />
             </div>
           )

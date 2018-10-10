@@ -56,7 +56,7 @@ export class PlaceInfoWindow extends Component {
     })
 
     return (
-      <InfoWindow onCloseClick={this.props.closeWindow}>
+      <InfoWindow onClose={this.onInfoWindowClose}>
         <div>
           <h1>{name}</h1>
           <p>{description}</p>
