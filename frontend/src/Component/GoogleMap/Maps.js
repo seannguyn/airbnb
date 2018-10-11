@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 // The line above fix google is undefined problem - don't delete
-import React, { Component } from "react"
-import { withGoogleMap, GoogleMap } from "react-google-maps"
-import PlaceMarker from "../PlaceMarker/PlaceMarker"
-import { Consumer } from "../../Context"
+import React, { Component } from 'react'
+import { withGoogleMap, GoogleMap } from 'react-google-maps'
+import PlaceMarker from '../PlaceMarker/PlaceMarker'
+import { Consumer } from '../../Context'
 
 const AirbnbMap = withGoogleMap(props => (
   <GoogleMap
@@ -13,7 +13,9 @@ const AirbnbMap = withGoogleMap(props => (
     onBoundsChanged={props.handleMapFullyLoaded}
     defaultCenter={props.center}
     defaultZoom={props.zoom}
-    onClick={()=>{props.dispatch({type: "CLOSE_INFO_WINDOW"})}}
+    onClick={() => {
+      props.dispatch({ type: 'CLOSE_INFO_WINDOW' })
+    }}
   >
     {props.places}
   </GoogleMap>
@@ -65,8 +67,8 @@ export class Map extends Component {
         lat={50.0515918}
         lng={19.9357531}
         price={20}
-        name={"Hotel"}
-        description={"Hotel desc"}
+        name={'Hotel'}
+        description={'Hotel desc'}
       />
     )
     this.setState({ places: [place] })
@@ -102,7 +104,7 @@ export class Map extends Component {
                 if (accommodation === placeMarker.id) {
                   markers.push(
                     <PlaceMarker
-                      key={placeMarker.lng}
+                      key={placeMarker.id}
                       lat={placeMarker.lat}
                       lng={placeMarker.lng}
                       price={placeMarker.price}
@@ -119,7 +121,7 @@ export class Map extends Component {
               else {
                 markers.push(
                   <PlaceMarker
-                    key={placeMarker.lng}
+                    key={placeMarker.id}
                     lat={placeMarker.lat}
                     lng={placeMarker.lng}
                     price={placeMarker.price}
