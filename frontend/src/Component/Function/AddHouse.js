@@ -150,19 +150,19 @@ class AddHouse extends Component {
       })
       flag = true
     }
-    if (bedroom < 0 || bedroom === "") {
+    if (bedroom <= 0 || bedroom === "") {
       this.setState({
         error_bedroom: true
       })
       flag = true
     }
-    if (bathroom < 0 || bathroom === "") {
+    if (bathroom <= 0 || bathroom === "") {
       this.setState({
         error_bathroom: true
       })
       flag = true
     }
-    if (bed < 0 || bed === "") {
+    if (bed <= 0 || bed === "") {
       this.setState({
         error_bed: true
       })

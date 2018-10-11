@@ -76,17 +76,10 @@ class EditHosting extends Component {
     }
   }
 
-  // componentWillUpdate(nextProps, nextState){
-  //     console.log("WILL UPDATE: ", this.state.currentUser);
-  //     localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
-  // }
-
   async componentDidMount() {
-    console.log("from edithousingjs: ", this.props)
     const { myHostingList } = this.props
     const { id } = this.props
 
-    // console.log('PROPSSSShosting: ', myHostingList, id);
     let i = 0
     var result
     for (i = 0; i < myHostingList.length; i++) {
@@ -99,8 +92,7 @@ class EditHosting extends Component {
     if (booking.data.length > 0) {
       deleteDisable = true
     }
-    // console.log("FILTER EDITHOUSING: ", result);
-    // console.log("FILTER EDITHOUSING: ", result.date_start);
+
     this.setState(
       {
         id: result.id,
@@ -115,11 +107,7 @@ class EditHosting extends Component {
         price: result.price,
         deleteDisable: deleteDisable,
         date_start_onchange: new Date(result.date_start)
-      },
-      () => {
-        console.log("STATE IS:", this.state)
-      }
-    )
+      })
   }
 
   //set State when changing text
@@ -128,7 +116,6 @@ class EditHosting extends Component {
       let date_start = new Date(e.target.value)
 
       if (date_start > this.state.date_start_old) {
-        console.log("DATE INVALID", typeof e.target.value)
         this.setState({ error_date: true, error: true })
       } else {
         this.setState({ error_date: false, error: false })
@@ -139,8 +126,6 @@ class EditHosting extends Component {
 
     if (e.target.name === "date_end") {
       let date_end = new Date(e.target.value)
-
-      // console.log("DATE INVALID", typeof(date_end));
 
       if (
         date_end < this.state.date_start_onchange ||
@@ -159,7 +144,6 @@ class EditHosting extends Component {
       }
     }
     if (e.target.name === "guest") {
-      console.log("SUPPP...", e.target.value)
       if (e.target.value.length === 0 || e.target.value <= 0) {
         this.setState({ error_guest: true, error: true })
       } else {
@@ -198,7 +182,6 @@ class EditHosting extends Component {
       description: description
     }
 
-    console.log("ABOUT TO PUT", hostingHouse)
     let newStartDate = new Date(date_start)
     let newEndDate = new Date(date_end)
 
@@ -218,7 +201,6 @@ class EditHosting extends Component {
           )
         )
       )
-      console.log("HEY HEY", date_free_1)
     }
     if (newEndDate > this.state.date_end_old) {
       date_free_2 = date_free_2.concat(
@@ -233,13 +215,11 @@ class EditHosting extends Component {
           date_end
         )
       )
-      console.log("HEY HEY", date_free_2)
     }
 
     const oldSearch = await axios.get(`/search/${this.props.id}/`)
 
     const { date_free } = oldSearch.data
-    console.log(date_free)
 
     var newDateFree = date_free.concat(date_free_1, date_free_2)
 
@@ -250,15 +230,10 @@ class EditHosting extends Component {
       guest: guest
     }
 
-    console.log(searchAccommodation, "new SEARCH")
+
     await axios.patch(`/search/${this.props.id}/`, searchAccommodation)
 
-    // AXIOS call here - PUT REQUEST
-    // Notes: need backend validation for date and available date to
-    //        avoid conflicts.
-
     const { token } = currUser[0] //GET TOKEN FROM CURRENT USER
-    console.log("ID IS: ", id)
     await axios.put(`/accommodationHosting/${id}/`, hostingHouse, {
       headers: {
         Authorization: { token }
@@ -273,7 +248,6 @@ class EditHosting extends Component {
 
   handleAlternate(id, dispatch, e) {
     e.preventDefault()
-    console.log("stop hosting", id)
 
     axios.delete(`/accommodationHosting/${id}/`).then(res => {
       dispatch({ type: "DELETE_HOST", payload: id })
@@ -293,13 +267,11 @@ class EditHosting extends Component {
       guest
     } = this.state
     const { classes } = this.props
-    console.log("ERROR", this.state.error)
     return (
       <Consumer>
         {value => {
           const { dispatch } = value
           const { currentUser } = value
-          console.log(currentUser)
           return (
             <div className="card-body mb-3">
               <div className="card-header">Host Accommodation</div>

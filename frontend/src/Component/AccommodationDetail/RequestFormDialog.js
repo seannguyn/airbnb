@@ -41,8 +41,6 @@ class RequestFormDialog extends React.Component {
     };
     const newRequest = await axios.post('/bookRequest/', request)
 
-    console.log("SUCCESS REQUEST:  ", newRequest.data);
-
     dispatch({
       type: 'NEW_REQUEST',
       payload: newRequest.data

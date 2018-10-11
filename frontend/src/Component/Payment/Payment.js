@@ -17,7 +17,6 @@ class Payment extends React.Component {
   }
 
   submitPayment() {
-    console.log("credit card:        ", this.state.credit)
     const { booking } = this.props
     const paidBooking = {
       id: booking.id,

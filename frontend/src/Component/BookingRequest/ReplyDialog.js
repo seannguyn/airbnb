@@ -33,7 +33,6 @@ constructor(props) {
 
   handleClose = () => {
     this.props.handleOpenReplyForm();
-    console.log("here??",this.props);
   };
 
   handleSend(dispatch) {
@@ -44,8 +43,6 @@ constructor(props) {
       title: reply.title,
       content: this.state.content,
     }
-    console.log("SENDING: ",newMail);
-
     this.props.sendReply(newMail,dispatch)
     // axios back to server
 

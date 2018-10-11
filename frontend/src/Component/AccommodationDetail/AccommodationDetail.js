@@ -78,11 +78,8 @@ class AccommodationDetail extends Component {
   }
 
   render() {
-    // console.log("props acom detail: ", this.state);
     const { classes, accommodation } = this.props
     const { longitude, latitude, id } = accommodation
-    // const {Accommodation_Type, area, bathroom,
-    //         bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
 
     // IMAGES ======
     let settings = {
@@ -107,8 +104,6 @@ class AccommodationDetail extends Component {
     })
     // IMAGES ======
 
-    // const {bathroom,bedroom,kitchen,carpark,description} = this.state.accomDetail
-    // const {currentHost} = this.state;
     const isDayBlocked = day =>
       this.props.booking.filter(d => d.isSame(day, "day")).length > 0
     const { status } = this.state

@@ -18,7 +18,6 @@ class Images extends React.Component {
     const res = await axios.get(
       `/accommodationImage/?accommodation=${this.props.id}`
     )
-    console.log(res.data, "component will mount")
 
     var i
     for (i = 0; i < res.data.length; i++) {
@@ -34,12 +33,8 @@ class Images extends React.Component {
     //>
   }
 
-  async componentWillUpdate(nextProps, nextState) {
-    console.log("run in here after delete?", nextProps, this.props, nextState)
-  }
 
   async modifyPic(fileURL, file, imgId) {
-    console.log("modify")
     const config = {
       headers: {
         "content-type": "multipart/form-data"
@@ -73,7 +68,6 @@ class Images extends React.Component {
   }
 
   async uploadPic(file) {
-    console.log("upload parent", file)
     const config = {
       headers: {
         "content-type": "multipart/form-data"
@@ -84,7 +78,6 @@ class Images extends React.Component {
     formData.append("a_image", file)
     formData.append("accommodation", this.props.id)
     const rest = await axios.post("/accommodationImage/", formData, config)
-    console.log("postdata", rest.data)
 
     this.setState({
       images: [...this.state.images, file],

@@ -45,31 +45,16 @@ class SingleLocationMap extends React.Component {
   }
 
   async componentDidMount() {
-    // const res = await Geocode.fromAddress("Kingsford, NSW")
-    // const { lat, lng } = res.results[0].geometry.location;
 
-    this.setState(
-      {
-        // center:{
-        //   lat: parseFloat(lat),
-        //   lng: parseFloat(lng)
-        // },
-        didmount: 1
-      },
-      () => {
-        console.log(this.state.center, "MOUNT")
-      }
-    )
+    this.setState({didmount: 1})
   }
 
   renderMarkers(map, maps) {
-    console.log(this.state.center, "")
     let marker = new maps.Marker({
       // position: this.state.center,
       map,
       title: "Hello There"
     })
-    console.log(marker, "turn off warning")
   }
 
   handleMapChanged() {
@@ -122,7 +107,6 @@ class SingleLocationMap extends React.Component {
   }
 
   render() {
-    console.log("propsss ", this.props)
     const { lat, lng } = this.state
     const { latitude, longitude } = this.props
     const places = [<PlaceMarker lat={latitude} lng={longitude} />]

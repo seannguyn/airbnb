@@ -8,7 +8,6 @@ class Overview extends React.Component {
   render() {
     var amenites = []
     const { accommodation, guest } = this.props
-    console.log("OVERVIEW", accommodation)
     amenites.push(
       <div key={uuid.v4()} className="col-3">
         <div className="row">

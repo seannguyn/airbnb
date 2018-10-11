@@ -16,7 +16,6 @@ export class PlaceMarker extends Component {
   }
 
   clickTooltip(dispatch, accommodation) {
-    console.log("open info",accommodation);
 
     dispatch({
       type: 'OPEN_INFO_WINDOW',

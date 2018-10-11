@@ -126,13 +126,11 @@ class MyBookings extends Component {
         })
 
       for (let j = 0; j < reviews.length; j++) {
-        // console.log("CP: ", tempPastStay[i].accommodation, reviews[j].accommodation)
         if (
           tempPastStay[i].accommodation === reviews[j].accommodation &&
           tempPastStay[i].id === reviews[j].booking &&
           reviews[j].user === currentUser[0].user_id
         ) {
-          // tempRequireReviewList.push(tempPastStay[i]);
           isReviewed = true
         }
       }
@@ -211,7 +209,6 @@ class MyBookings extends Component {
     if (futureStay.length > 0) {
       nextStay = futureStay[0]
     }
-    console.log("EARLIEST BOOKING...",earliestBooking,nextStay);
     const { classes } = this.props
     if (logged_in === false) {
       return <Forbidden />

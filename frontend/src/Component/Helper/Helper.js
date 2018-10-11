@@ -60,10 +60,8 @@ export function findDateRange(startDate, endDate) {
 
   if (startM === endM) {
     string = string.concat(startM, " ", startD, " - ", endD)
-    console.log(string, "findDateRange")
   } else {
     string = string.concat(startM, " ", startD, " - ", endM, " ", endD)
-    console.log(string, "findDateRange")
   }
 
   return string

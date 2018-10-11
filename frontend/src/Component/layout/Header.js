@@ -88,7 +88,6 @@ class Header extends Component {
   }
 
   handleLogOut(dispatch) {
-    console.log("")
     window.localStorage.removeItem("currentUser")
     dispatch({ type: "LOGOUT" })
     this.handleClose()

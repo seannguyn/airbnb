@@ -29,8 +29,6 @@ class ImageInput extends React.Component {
       file: e.target.files[0]
     })
 
-    console.log("upload child", e.target.files[0])
-
     if (this.props.imgId) {
       this.props.onChang(
         URL.createObjectURL(e.target.files[0]),
@@ -45,7 +43,6 @@ class ImageInput extends React.Component {
 
   deletePic(fileURL, file, imgId) {
     if (this.props.imgId) {
-      console.log("delete pic", fileURL, file, imgId)
       this.props.onClick(fileURL, file, imgId)
       this.props.onPresentSnackbar('error',"Delete Successful")
     }
@@ -54,7 +51,6 @@ class ImageInput extends React.Component {
   render() {
     // send back the file, delete from the parent state
     const { fileURL, file, imgId } = this.state
-    console.log("FROM IMAGE INPUT: ", fileURL)
 
     return (
       <div

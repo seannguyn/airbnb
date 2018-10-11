@@ -88,7 +88,6 @@ export class Map extends Component {
 
   render() {
     const { accommodation } = this.props
-    // console.log("accomoodation: ", accommodation)
     return (
       <Consumer>
         {value => {

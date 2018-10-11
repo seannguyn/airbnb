@@ -52,8 +52,6 @@ class AccommodationDetailContext extends React.Component {
     }
 
     this.setState({ minDateSet: minDateSet })
-    // console.log(tempBookedPeriods,"booked period");
-    // console.log(this.state.minDateSet,"min date");
     this.setState({ booking: tempBookedPeriods })
   }
 
@@ -94,9 +92,7 @@ class AccommodationDetailContext extends React.Component {
 
     // axios images
     const res5 = await axios.get(`/accommodationImage/?accommodation=${id}`)
-    this.setState({ images: res5.data }, () => {
-      console.log("WE HAVE IMAGE", this.state.images)
-    })
+    this.setState({ images: res5.data })
   }
 
   render() {

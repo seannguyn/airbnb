@@ -104,8 +104,6 @@ class SearchSection extends React.Component {
 
     const res = await axios.get(url)
 
-    console.log("SUBMITTED", res.data)
-
     dispatch({
       type: "SEARCH",
       payload: { AllHostingList: res.data, HouseList: HouseList }

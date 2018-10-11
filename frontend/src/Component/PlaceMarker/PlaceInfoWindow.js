@@ -33,7 +33,6 @@ export class PlaceInfoWindow extends Component {
       accommodation,
       address
     } = this.props
-    console.log("PLACE INFO INWDOES PROPS: ", this.props)
     const avgRating = 0
     if (reviews !== undefined) starCalculator(reviews)
     let settings = {

@@ -10,7 +10,6 @@ const reducer = (state, action) => {
 
   switch (action.type) {
     case "DELETE_HOUSE":
-      console.log("deleting house", action.payload)
       return {
         HouseList: state.HouseList.filter(
           eachHouse => eachHouse.id !== action.payload
@@ -18,15 +17,12 @@ const reducer = (state, action) => {
       };
 
     case "ADD_HOUSE":
-      console.log("ADD_HOUSE")
-
       return {
         ...state,
         HouseList: action.payload
       };
 
     case "EDIT_HOUSE":
-      console.log("edit house")
       return {
         ...state,
         HouseList: state.HouseList.map(
@@ -38,7 +34,6 @@ const reducer = (state, action) => {
       };
 
     case "LOGIN":
-      console.log("login user login")
       return {
         ...state,
         currentUser: [action.payload],
@@ -102,7 +97,6 @@ const reducer = (state, action) => {
       };
 
     case 'REPLY_SENT':
-      console.log("SEND.....");
       return {
         ...state,
         newRequest: state.newRequest.filter((request) => request.id !== action.payload.singleRequest.id),
@@ -110,7 +104,6 @@ const reducer = (state, action) => {
       };
 
     case 'NEW_REQUEST':
-      console.log("SEND.....");
       return {
         ...state,
         newRequest: [...state.newRequest, action.payload],
