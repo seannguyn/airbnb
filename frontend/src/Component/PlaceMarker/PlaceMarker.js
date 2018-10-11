@@ -5,6 +5,7 @@ import "../../Styles/PlaceMarker.css"
 import findImagesByAccommID from "../../utils/findImagesByAccommID"
 import axios from "axios"
 import chosen from "../../assets/img/icons/chosen.png"
+import {Consumer} from "../../Context"
 
 export class PlaceMarker extends Component {
   constructor(props) {
@@ -14,12 +15,20 @@ export class PlaceMarker extends Component {
     }
   }
 
-  clickTooltip() {
-    this.setState({ showTooltip: !this.state.showTooltip })
+  clickTooltip(dispatch, accommodation) {
+    console.log("open info",accommodation);
+
+    dispatch({
+      type: 'OPEN_INFO_WINDOW',
+      payload: accommodation
+    })
   }
 
-  closeWindow() {
-    this.setState({ showTooltip: false })
+  closeWindow(dispatch) {
+    dispatch({
+      type: 'CLOSE_INFO_WINDOW',
+      payload: -1
+    })
   }
 
   async componentDidMount() {
@@ -39,7 +48,7 @@ export class PlaceMarker extends Component {
           err = error.response
         })
     }
-    
+
     if (err == null && reviews.length > 0) {
       this.setState({ reviews: reviews })
     }
@@ -50,7 +59,7 @@ export class PlaceMarker extends Component {
   }
 
   render() {
-    const { showTooltip, reviews, images } = this.state
+    const { reviews, images } = this.state
     const {
       lat,
       lng,
@@ -63,58 +72,65 @@ export class PlaceMarker extends Component {
     } = this.props
 
     return (
-      <React.Fragment>
-        {accommodationChosen !== undefined ? (
-          <Marker
-            className="map-price-container"
-            markerWithLabel={window.MarkerWithLabel}
-            position={{
-              lat: parseFloat(lat),
-              lng: parseFloat(lng)
-            }}
-            defaultIcon={chosen}
-            onClick={this.clickTooltip.bind(this)}
-            label={`${price}`}
-          >
-            {showTooltip && (
-              <PlaceInfoWindow
-                description={description}
-                name={name}
-                price={price}
-                reviews={reviews}
-                images={images}
-                accommodation={accommodation}
-                address={address}
-                closeWindow={this.closeWindow.bind(this)}
-              />
-            )}
-          </Marker>
-        ) : (
-          <Marker
-            className="map-price-container"
-            markerWithLabel={window.MarkerWithLabel}
-            position={{
-              lat: parseFloat(lat),
-              lng: parseFloat(lng)
-            }}
-            onClick={this.clickTooltip.bind(this)}
-            label={`${price}`}
-          >
-            {showTooltip && (
-              <PlaceInfoWindow
-                description={description}
-                name={name}
-                price={price}
-                reviews={reviews}
-                images={images}
-                accommodation={accommodation}
-                address={address}
-                closeWindow={this.closeWindow.bind(this)}
-              />
-            )}
-          </Marker>
-        )}
-      </React.Fragment>
+      <Consumer>
+        {value => {
+          const {dispatch,inforWindow} = value;
+          return (
+            <React.Fragment>
+              {accommodationChosen !== undefined ? (
+                <Marker
+                  className="map-price-container"
+                  markerWithLabel={window.MarkerWithLabel}
+                  position={{
+                    lat: parseFloat(lat),
+                    lng: parseFloat(lng)
+                  }}
+                  defaultIcon={chosen}
+                  onClick={this.clickTooltip.bind(this, dispatch, accommodation)}
+                  label={`${price}`}
+                >
+                  { inforWindow === accommodation && images !== undefined  ? (
+                    <PlaceInfoWindow
+                      description={description}
+                      name={name}
+                      price={price}
+                      reviews={reviews}
+                      images={images}
+                      accommodation={accommodation}
+                      address={address}
+                      closeWindow={this.closeWindow.bind(this, dispatch)}
+                    />
+                ): null}
+                </Marker>
+              ) : (
+                <Marker
+                  className="map-price-container"
+                  markerWithLabel={window.MarkerWithLabel}
+                  position={{
+                    lat: parseFloat(lat),
+                    lng: parseFloat(lng)
+                  }}
+                  onClick={this.clickTooltip.bind(this, dispatch, accommodation)}
+                  label={`${price}`}
+                >
+                  {inforWindow === accommodation && images !== undefined && (
+                    <PlaceInfoWindow
+                      description={description}
+                      name={name}
+                      price={price}
+                      reviews={reviews}
+                      images={images}
+                      accommodation={accommodation}
+                      address={address}
+                      closeWindow={this.closeWindow.bind(this, dispatch)}
+                    />
+                  )}
+                </Marker>
+              )}
+            </React.Fragment>
+          )
+        }}
+      </Consumer>
     )
   }
 }

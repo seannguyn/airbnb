@@ -214,7 +214,7 @@ class BookingView(viewsets.ModelViewSet):
         if host is not None:
             queryset = queryset.filter(hosting=host)
 
-        return queryset
+        return queryset.order_by('date_start')
 
 
 """ get all the reviews """

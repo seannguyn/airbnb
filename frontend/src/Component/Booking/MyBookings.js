@@ -207,6 +207,11 @@ class MyBookings extends Component {
       logged_in,
       status
     } = this.state
+    var nextStay = null
+    if (futureStay.length > 0) {
+      nextStay = futureStay[0]
+    }
+    console.log("EARLIEST BOOKING...",earliestBooking,nextStay);
     const { classes } = this.props
     if (logged_in === false) {
       return <Forbidden />
@@ -224,14 +229,14 @@ class MyBookings extends Component {
       return (
         <React.Fragment>
           <center>
-            {!isEmpty(earliestBooking) ? (
+            {nextStay !== null ? (
               <div>
                 <center>
                   <h1>Next Stay</h1>
                 </center>
                 <Booking
-                  key={earliestBooking.id}
-                  booking={earliestBooking}
+                  key={nextStay.id}
+                  booking={nextStay}
                   history={this.props.history}
                 />
               </div>

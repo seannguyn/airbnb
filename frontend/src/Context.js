@@ -168,15 +168,24 @@ const reducer = (state, action) => {
       };
 
     case "OPEN_INFO_WINDOW":
-    
-      return {
-        ...state
+      if (state.inforWindow === action.payload) {
+        return {
+          ...state,
+          inforWindow: -1
+        }
+      } else {
+        return {
+          ...state,
+          inforWindow: action.payload
+        }
       }
+
 
     case "CLOSE_INFO_WINDOW":
 
       return {
-        ...state
+        ...state,
+        inforWindow: action.payload
       }
 
     default:
