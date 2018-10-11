@@ -78,8 +78,8 @@ class BookRequestSerializer(serializers.ModelSerializer):
 
         # EMAIL SENDING
         systemEmail = db['portBnB'].find_one( { "email" : "comp3900project3@gmail.com" } )
-
-        message = 'Subject: {}\n\n{}'.format(instance.title, instance.reply)
+        officialTitle ="Re portBnB: " + instance.title
+        message = 'Subject: {}\n\n{}'.format(officialTitle, instance.reply)
 
         # Login email
         server = smtplib.SMTP('smtp.gmail.com', 587)

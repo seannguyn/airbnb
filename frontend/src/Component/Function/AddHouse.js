@@ -101,14 +101,11 @@ class AddHouse extends Component {
       carpark: false,
       description: "",
 
-      error_title: false,
-      error_number: false,
-      error_street: false,
-      error_city: false,
-      error_state: false,
       error_Accommodation_Type: false,
+      error_bed: false,
       error_bedroom: false,
       error_bathroom: false,
+      error_title: false,
 
       error: {
         title: "",
@@ -125,15 +122,22 @@ class AddHouse extends Component {
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value })
+    this.setState({
+      [e.target.name]: e.target.value,
+      error_Accommodation_Type: false,
+      error_bed: false,
+      error_bedroom: false,
+      error_bathroom: false,
+      error_title: false,
+     })
   }
 
   onCheck(e) {
-    this.setState({ [e.target.name]: e.target.checked })
+    this.setState({ [e.target.name]: e.target.checked, error_Accommodation_Type:false })
   }
 
   errorCheck(current) {
-    const { Accommodation_Type } = current
+    const { Accommodation_Type,bed,bedroom,bathroom,title,address } = current
     // const {id, user, Accommodation_Type, number, street, city, state} = current;
     // const {bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
 
@@ -146,8 +150,36 @@ class AddHouse extends Component {
       })
       flag = true
     }
+    if (bedroom < 0 || bedroom === "") {
+      this.setState({
+        error_bedroom: true
+      })
+      flag = true
+    }
+    if (bathroom < 0 || bathroom === "") {
+      this.setState({
+        error_bathroom: true
+      })
+      flag = true
+    }
+    if (bed < 0 || bed === "") {
+      this.setState({
+        error_bed: true
+      })
+      flag = true
+    }
+    if (title.length === 0) {
+      this.setState({
+        error_title: true
+      })
+      flag = true
+    }
+    if (address.length === 0) {
+      flag = true
+    }
 
     if (flag === true) {
+      this.props.onPresentSnackbar('error',"Oops, missing details")
       return true
     } else {
       return false
@@ -178,7 +210,7 @@ class AddHouse extends Component {
 
       Accomodation_Type: this.state.Accommodation_Type,
 
-      address: address.toLowerCase(),
+      address: address,
       latitude: latitude,
       longitude: longitude,
 
@@ -330,6 +362,7 @@ class AddHouse extends Component {
                   </Typography>
                   <FormControl margin="normal" required fullWidth>
                     <TextField
+                      error={this.state.error_bedroom}
                       label="Bedroom"
                       value={bedroom}
                       onChange={this.onChange.bind(this)}
@@ -339,6 +372,7 @@ class AddHouse extends Component {
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <TextField
+                      error={this.state.error_bed}
                       label="Bed"
                       value={bed}
                       onChange={this.onChange.bind(this)}
@@ -348,6 +382,7 @@ class AddHouse extends Component {
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <TextField
+                      error={this.state.error_bathroom}
                       label="Bathroom"
                       value={bathroom}
                       onChange={this.onChange.bind(this)}
@@ -415,6 +450,7 @@ class AddHouse extends Component {
                     />
                   </FormControl>
                   <Button
+                    disabled={this.state.address.length > 0 ? false:true}
                     type="submit"
                     fullWidth
                     variant="raised"
