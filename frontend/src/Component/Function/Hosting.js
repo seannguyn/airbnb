@@ -1,25 +1,25 @@
-import React from "react"
-import axios from "axios"
-import { Link } from "react-router-dom"
-import Review from "../Review/Review"
+import React from 'react'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import Review from '../Review/Review'
 
 // Material UI components
-import Card from "Component/Card/Card.jsx"
-import CardBody from "Component/Card/CardBody.jsx"
-import CardHeader from "Component/Card/CardHeader.jsx"
-import CardFooter from "Component/Card/CardFooter.jsx"
-import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle"
-import { withStyles } from "@material-ui/core/styles"
-import CardContent from "@material-ui/core/CardContent"
+import Card from 'Component/Card/Card.jsx'
+import CardBody from 'Component/Card/CardBody.jsx'
+import CardHeader from 'Component/Card/CardHeader.jsx'
+import CardFooter from 'Component/Card/CardFooter.jsx'
+import dashboardStyle from 'assets/jss/material-dashboard-pro-react/views/dashboardStyle'
+import { withStyles } from '@material-ui/core/styles'
+import CardContent from '@material-ui/core/CardContent'
 
 // Image Slider
-import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx"
-import Carousel from "react-slick"
-import "../../Styles/ImageSlide.css"
+import carouselStyle from 'assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx'
+import Carousel from 'react-slick'
+import '../../Styles/ImageSlide.css'
 
 // Rating
-import like from "../../assets/img/icons/like.png"
-import like_empty from "../../assets/img/icons/like_empty.png"
+import like from '../../assets/img/icons/like.png'
+import like_empty from '../../assets/img/icons/like_empty.png'
 
 // const styles = {
 //   card: {
@@ -37,7 +37,7 @@ class Hosting extends React.Component {
       showHosting: false,
       reviews: {},
       seeReviews: false,
-      id: "",
+      id: '',
       images: []
     }
   }
@@ -93,7 +93,7 @@ class Hosting extends React.Component {
       this.setState({ reviews: reviews })
     }
 
-    const images = await axios.get("/accommodationImage/")
+    const images = await axios.get('/accommodationImage/')
     this.findImagesByAccommID(images.data, this.props.house.id)
   }
 
@@ -104,7 +104,7 @@ class Hosting extends React.Component {
     const { images, reviews } = this.state
     const avgRating = this.starCalculator(reviews)
     const { classes } = this.props
-    let Rating = require("react-rating")
+    let Rating = require('react-rating')
     let settings = {
       dots: true,
       infinite: true,
@@ -126,14 +126,14 @@ class Hosting extends React.Component {
     })
 
     return (
-      <div style={{ padding: "1rem" }}>
+      <div style={{ padding: '1rem' }}>
         <Card
           product
           className={classes.cardHover}
-          style={{ width: "20vw", height: "22vw" }}
+          style={{ width: '20vw', height: '22vw' }}
         >
           <Link to={`/accommodations/${id}`}>
-            <CardHeader style={{ marginBottom: "0rem" }} image>
+            <CardHeader style={{ marginBottom: '0rem' }} image>
               <Carousel {...settings} dots={false}>
                 {images.length !== 0 ? (
                   imagesDiv
@@ -157,7 +157,7 @@ class Hosting extends React.Component {
                 <i
                   onClick={this.handleExpand.bind(this)}
                   className="fas fa-sort-down"
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: 'pointer' }}
                 />
               </h4>
               {/* <p className={classes.cardProductDesciprion}> */}
@@ -202,7 +202,7 @@ class Hosting extends React.Component {
                       key={review.id}
                       accommodation={review.accommodation}
                       star={review.star}
-                      user={review.user}
+                      user={review.username}
                       review={review.review}
                       text="Close"
                       closeReview={this.showReview.bind(this)}

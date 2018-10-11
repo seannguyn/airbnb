@@ -1,28 +1,28 @@
 import React from 'react'
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
-import 'react-dates/initialize';
-import { DateRangePicker } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
-import moment from 'moment';
-import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import withStyles from '@material-ui/core/styles/withStyles'
+import 'react-dates/initialize'
+import { DateRangePicker } from 'react-dates'
+import 'react-dates/lib/css/_datepicker.css'
+import moment from 'moment'
+import Button from '@material-ui/core/Button'
 import isBeforeDay from './utils/isBeforeDay'
-import isAfterDay from './utils/isAfterDay';
-import {Consumer} from '../../Context.js';
-import Divider from '@material-ui/core/Divider';
-import GuestSelect from './GuestSelect';
+import isAfterDay from './utils/isAfterDay'
+import { Consumer } from '../../Context.js'
+import Divider from '@material-ui/core/Divider'
+import GuestSelect from './GuestSelect'
 import Price from './Price'
 import HeaderPrice from './HeaderPrice'
 import RequestFormDialog from './RequestFormDialog'
 
 const styles = theme => ({
   paper: {
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
       .spacing.unit * 3}px`,
-    width: "relative"
+    width: 'relative'
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -31,7 +31,7 @@ const styles = theme => ({
     height: 60
   },
   form: {
-    width: "100%", // Fix IE11 issue.
+    width: '100%', // Fix IE11 issue.
     marginTop: theme.spacing.unit
   },
   submit: {
@@ -60,15 +60,15 @@ class BookingPaper extends React.Component {
       guest: 1,
 
       price: {
-        pricePerNight: "",
-        daysDiff: "",
-        promotion: ""
+        pricePerNight: '',
+        daysDiff: '',
+        promotion: ''
       },
 
       accommodation: {},
       currentHost: {},
 
-      dialogOpen: false,
+      dialogOpen: false
     }
   }
 
@@ -76,13 +76,13 @@ class BookingPaper extends React.Component {
     this.setState({
       dialogOpen: true
     })
-  };
+  }
 
   closeRequestDialog() {
     this.setState({
       dialogOpen: false
     })
-  };
+  }
 
   // check if object is empty
   isEmpty = obj => {
@@ -110,17 +110,17 @@ class BookingPaper extends React.Component {
     const { currentUser } = nextProps.context
 
     if (currentUser.length !== 0 && this.state.booking === true) {
-      console.log("Component will receive props", currentUser)
-      let tempStartDate = moment(this.state.startDate).format("YYYY-MM-DD")
-      let tempEndDate = moment(this.state.endDate).format("YYYY-MM-DD")
+      console.log('Component will receive props', currentUser)
+      let tempStartDate = moment(this.state.startDate).format('YYYY-MM-DD')
+      let tempEndDate = moment(this.state.endDate).format('YYYY-MM-DD')
 
       // let stayPeriod = this.state.endDate.diff(this.state.startDate, 'days');
 
       // Find the date user have to pay by
       var now = moment()
-      let daysDiff = now.diff(this.state.startDate, "days")
-      now.subtract(daysDiff / 2, "days")
-      let paidDate = moment(now).format("YYYY-MM-DD")
+      let daysDiff = now.diff(this.state.startDate, 'days')
+      now.subtract(daysDiff / 2, 'days')
+      let paidDate = moment(now).format('YYYY-MM-DD')
 
       const newDetail = {
         startDate: tempStartDate,
@@ -172,22 +172,22 @@ class BookingPaper extends React.Component {
     if (this.isEmpty(this.props.context.currentUser[0]) === true) {
       // open login diaglog
       dispatch({
-        type: "OPEN_DIALOG",
+        type: 'OPEN_DIALOG',
         payload: {
           open: true,
           login: true
         }
       })
     } else {
-      let tempStartDate = moment(this.state.startDate).format("YYYY-MM-DD")
-      let tempEndDate = moment(this.state.endDate).format("YYYY-MM-DD")
-      let stayPeriod = this.state.endDate.diff(this.state.startDate, "days")
+      let tempStartDate = moment(this.state.startDate).format('YYYY-MM-DD')
+      let tempEndDate = moment(this.state.endDate).format('YYYY-MM-DD')
+      let stayPeriod = this.state.endDate.diff(this.state.startDate, 'days')
 
       // Find the date user have to pay by
       var now = moment()
-      let daysDiff = now.diff(this.state.startDate, "days")
-      now.subtract(daysDiff / 2, "days")
-      let paidDate = moment(now).format("YYYY-MM-DD")
+      let daysDiff = now.diff(this.state.startDate, 'days')
+      now.subtract(daysDiff / 2, 'days')
+      let paidDate = moment(now).format('YYYY-MM-DD')
 
       const newDetail = {
         startDate: tempStartDate,
@@ -213,10 +213,10 @@ class BookingPaper extends React.Component {
   }
 
   goToPayment(booker, newDetail) {
-    console.log("NOT YET", this.props.booking_id)
+    console.log('NOT YET', this.props.booking_id)
     this.props.history.push({
       pathname: `/overallbooking/reserve/${newDetail.currentHost.id}`,
-      search: "?query=abc",
+      search: '?query=abc',
       state: {
         detail: newDetail,
         booker: booker,
@@ -228,9 +228,9 @@ class BookingPaper extends React.Component {
 
   handleGuest(ops, num) {
     const limit = 5
-    if (ops === "-" && num > 1) {
+    if (ops === '-' && num > 1) {
       this.setState({ guest: parseFloat(num) - 1 })
-    } else if (ops === "+" && num < limit) {
+    } else if (ops === '+' && num < limit) {
       this.setState({ guest: parseFloat(num) + 1 })
     }
   }
@@ -239,23 +239,27 @@ class BookingPaper extends React.Component {
     const { classes } = this.props
     var daysDiff = 0
     var totalPrice = this.props.currentHost.price
-    var caption = "per night"
+    var caption = 'per night'
     var promotion = 0.1
-    console.log(this.props, "booking paper props")
+    // console.log(this.props, "booking paper props")
     if (this.state.startDate !== null && this.state.endDate !== null) {
-      daysDiff = this.state.endDate.diff(this.state.startDate, "days")
+      daysDiff = this.state.endDate.diff(this.state.startDate, 'days')
       totalPrice = parseFloat(this.props.currentHost.price) * daysDiff
-      caption = "total"
+      caption = 'total'
     }
 
     const book =
-      (this.state.startDate !== null && this.state.endDate !== null
+      this.state.startDate !== null && this.state.endDate !== null
         ? false
-        : true)
-    const hostID = this.props.accommodation.user;
+        : true
+    const hostID = this.props.accommodation.user
     return (
       <div>
-        <RequestFormDialog open={this.state.dialogOpen} handleClose={this.closeRequestDialog.bind(this)} host={hostID}/>
+        <RequestFormDialog
+          open={this.state.dialogOpen}
+          handleClose={this.closeRequestDialog.bind(this)}
+          host={hostID}
+        />
         <Consumer>
           {value => {
             const { dispatch } = value
@@ -302,10 +306,15 @@ class BookingPaper extends React.Component {
                     }
                   }}
                   focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                  onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                  onFocusChange={focusedInput =>
+                    this.setState({ focusedInput })
+                  } // PropTypes.func.isRequired,
                   isDayBlocked={this.props.isDayBlocked}
                   isOutsideRange={day =>
-                    isBeforeDay(day, moment(this.props.currentHost.date_start)) ||
+                    isBeforeDay(
+                      day,
+                      moment(this.props.currentHost.date_start)
+                    ) ||
                     isBeforeDay(day, moment()) ||
                     isAfterDay(day, this.state.minDate) ||
                     isAfterDay(day, moment(this.props.currentHost.date_end))
@@ -320,7 +329,8 @@ class BookingPaper extends React.Component {
                   handleGuest={this.handleGuest.bind(this)}
                 />
 
-                {this.state.startDate !== null && this.state.endDate !== null ? (
+                {this.state.startDate !== null &&
+                this.state.endDate !== null ? (
                   <Price
                     pricePerNight={parseFloat(this.props.currentHost.price)}
                     daysDiff={daysDiff}
@@ -366,7 +376,8 @@ class BookingPaper extends React.Component {
                   variant="contained"
                   color="primary"
                   fullWidth
-                  onClick={this.openRequestDialog}>
+                  onClick={this.openRequestDialog}
+                >
                   Message a request
                 </Button>
               </Paper>

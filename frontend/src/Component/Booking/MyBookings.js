@@ -1,13 +1,13 @@
-import React, { Component } from "react"
-import axios from "axios"
-import Booking from "./Booking"
-import moment from "moment"
+import React, { Component } from 'react'
+import axios from 'axios'
+import Booking from './Booking'
+import moment from 'moment'
 // import Popup from "reactjs-popup";
-import Forbidden from "../layout/Forbidden"
-import "../../Styles/Popup.css"
-import { withStyles } from "@material-ui/core/styles"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import isEmpty from "../../utils/isEmpty.js"
+import Forbidden from '../layout/Forbidden'
+import '../../Styles/Popup.css'
+import { withStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import isEmpty from '../../utils/isEmpty.js'
 
 // Rating
 // import Rating from 'react-rating'
@@ -92,7 +92,7 @@ class MyBookings extends Component {
     let earliestBookingTime = moment(dates[0].date_start).diff(moment())
     let earliestBooking
     for (let i = 0; i < dates.length; i++) {
-      let diff = moment(dates[i].date_start).diff(moment(), "minutes")
+      let diff = moment(dates[i].date_start).diff(moment(), 'minutes')
       if (diff < earliestBookingTime) earliestBooking = dates[i]
     }
     return earliestBooking
@@ -100,13 +100,12 @@ class MyBookings extends Component {
 
   // find the past bookings that need to reviews
   requireReview = async pastStay => {
-    console.log("PAST: ", pastStay)
     let isReviewed = false,
       tempRequireReviewList = [],
       tempPastStay = []
 
     const { requireReviewList } = this.state,
-      currentUser = JSON.parse(localStorage.getItem("currentUser"))
+      currentUser = JSON.parse(localStorage.getItem('currentUser'))
 
     for (let i = 0; i < pastStay.length; i++) {
       const res = await axios.get(
@@ -115,7 +114,6 @@ class MyBookings extends Component {
       pastStay[i].accommodation = res.data.accommodation
       tempPastStay.push(pastStay[i])
     }
-    console.log("TEMPAST STAY: ", tempPastStay)
     for (let i = 0; i < tempPastStay.length; i++) {
       let reviews = []
       await axios
@@ -141,7 +139,6 @@ class MyBookings extends Component {
       if (isReviewed === false) {
         tempRequireReviewList.push(tempPastStay[i])
         tempPastStay[i].isReviewed = false
-        console.log("ADDDD: ", tempPastStay[i])
       } else {
         isReviewed = false
         tempPastStay[i].isReviewed = true
@@ -154,19 +151,18 @@ class MyBookings extends Component {
   }
 
   async shouldComponentUpdate(nextProps, nextState) {
-    const logged_in = localStorage.getItem("currentUser")
+    const logged_in = localStorage.getItem('currentUser')
 
     if (logged_in !== null && this.state.mounted === false) {
       this.setState({
         logged_in: true,
         mounted: true
       })
-      localStorage.getItem("currentUser") &&
+      localStorage.getItem('currentUser') &&
         this.setState({
-          currentUser: JSON.parse(localStorage.getItem("currentUser"))
+          currentUser: JSON.parse(localStorage.getItem('currentUser'))
         })
-      const user = JSON.parse(localStorage.getItem("currentUser"))
-      console.log("USER BOOKING", user)
+      const user = JSON.parse(localStorage.getItem('currentUser'))
       //       this.setState({currentUser: user});
       // Get all bookings and find that current user booked
       const res2 = await axios.get(`/booking/?booker=${user[0].user_id}`)
@@ -181,16 +177,15 @@ class MyBookings extends Component {
   }
 
   async componentDidMount() {
-    const logged_in = localStorage.getItem("currentUser")
+    const logged_in = localStorage.getItem('currentUser')
 
     if (logged_in !== null) {
       this.setState({ logged_in: true })
-      localStorage.getItem("currentUser") &&
+      localStorage.getItem('currentUser') &&
         this.setState({
-          currentUser: JSON.parse(localStorage.getItem("currentUser"))
+          currentUser: JSON.parse(localStorage.getItem('currentUser'))
         })
-      const user = JSON.parse(localStorage.getItem("currentUser"))
-      console.log("USER BOOKING", user)
+      const user = JSON.parse(localStorage.getItem('currentUser'))
 
       const res2 = await axios.get(`/booking/?booker=${user[0].user_id}`)
 
@@ -268,7 +263,7 @@ class MyBookings extends Component {
               ? futureStay.map(booking => {
                   return (
                     <div key={booking.id}>
-                      <div style={{ padding: "1rem" }}>
+                      <div style={{ padding: '1rem' }}>
                         <center>
                           <Booking
                             key={booking.id}
@@ -287,18 +282,18 @@ class MyBookings extends Component {
             {currentStay.length !== 0 ? <h1>Current</h1> : null}
           </div>
 
-          {requireReviewList.length !== 0
-            ?
-          <center>
-            <h1>In The Past</h1>
-          </center> : null }
+          {requireReviewList.length !== 0 ? (
+            <center>
+              <h1>In The Past</h1>
+            </center>
+          ) : null}
 
           <div className="row">
             {requireReviewList.length !== 0
               ? requireReviewList.map(booking => {
                   return (
                     <div key={booking.id}>
-                      <div key={booking.id} style={{ padding: "1rem" }}>
+                      <div key={booking.id} style={{ padding: '1rem' }}>
                         <center>
                           <Booking
                             key={booking.id}
@@ -322,4 +317,4 @@ class MyBookings extends Component {
     }
   }
 }
-export default withStyles(styles)(MyBookings);
+export default withStyles(styles)(MyBookings)
