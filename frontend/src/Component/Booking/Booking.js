@@ -181,15 +181,15 @@ class Booking extends Component {
       review: comment,
       date_posted: moment().format("YYYY-MM-DD")
     }
-    await axios.post("http://localhost:8000/reviews/", newReview)
+    await axios.post("/reviews/", newReview)
 
     // update review count
     const reviewCount = await axios.get(
-      `http://localhost:8000/reviewCounter/${requireReviewItem.accommodation}/`
+      `/reviewCounter/${requireReviewItem.accommodation}/`
     )
     var newCount = reviewCount.data.count + 1
     await axios.patch(
-      `http://localhost:8000/reviewCounter/${requireReviewItem.accommodation}/`,
+      `/reviewCounter/${requireReviewItem.accommodation}/`,
       { count: newCount }
     )
 
