@@ -4,9 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { withSnackbar } from 'notistack';
+import {withSnackbar} from 'notistack';
 import {Consumer} from '../../Context'
 
 const styles = theme => ({
@@ -14,39 +14,39 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   dialogPaper: {
-        minHeight: '40vh',
-        maxHeight: '40vh',
-        minWidth: '60vh',
-        maxWidth: '60vh',
-    },
+    minHeight: '40vh',
+    maxHeight: '40vh',
+    minWidth: '60vh',
+    maxWidth: '60vh',
+  },
 });
 
 class ReplyDialog extends React.Component {
 
 
-constructor(props) {
-  super(props)
-  this.state = {
-    content: '',
-  }
-}
-
   handleClose = () => {
     this.props.handleOpenReplyForm();
   };
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      content: '',
+    }
+  }
+
   handleSend(dispatch) {
 
     const {reply} = this.props;
-    var newMail = {
+    let newMail = {
       email: reply.sender,
       title: reply.title,
       content: this.state.content,
-    }
-    this.props.sendReply(newMail,dispatch)
+    };
+    this.props.sendReply(newMail, dispatch)
     // axios back to server
 
-    this.props.onPresentSnackbar('success','Reply sent');
+    this.props.onPresentSnackbar('success', 'Reply sent');
   }
 
   onChange(e) {
@@ -56,8 +56,8 @@ constructor(props) {
   }
 
   render() {
-    const {classes} = this.props
-    const disable = (this.state.content.length === 0 ? true : false)
+    const {classes} = this.props;
+    const disable = (this.state.content.length === 0);
     return (
       <Consumer>
         {value => {
@@ -69,11 +69,12 @@ constructor(props) {
                 onClose={this.handleClose}
                 aria-labelledby="form-dialog-title"
                 maxWidth='lg'
-                classes={{ paper: classes.dialogPaper }}
+                classes={{paper: classes.dialogPaper}}
               >
                 <DialogContent>
-                  <Typography style={{width: '100%', marginBottom:'10px'}} variant="headline">{this.props.reply.title}</Typography>
-                  <Typography style={{width: '100%', marginBottom:'10px'}}>{this.props.reply.content}</Typography>
+                  <Typography style={{width: '100%', marginBottom: '10px'}}
+                              variant="headline">{this.props.reply.title}</Typography>
+                  <Typography style={{width: '100%', marginBottom: '10px'}}>{this.props.reply.content}</Typography>
                   <TextField
                     className={classes.textField}
                     label="Enter message here"
@@ -88,7 +89,8 @@ constructor(props) {
                   <Button onClick={this.handleClose} color="secondary" variant="contained">
                     Cancel
                   </Button>
-                  <Button disabled={disable} onClick={this.handleSend.bind(this,dispatch)} color="primary" variant="contained">
+                  <Button disabled={disable} onClick={this.handleSend.bind(this, dispatch)} color="primary"
+                          variant="contained">
                     Send
                   </Button>
                 </DialogActions>
@@ -112,6 +114,6 @@ ReplyDialog.defaultProps = {
     reply: "yes you can",
     toHost: 1,
   }
-}
+};
 
 export default withSnackbar(withStyles(styles)(ReplyDialog));

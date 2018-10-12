@@ -27,7 +27,7 @@ const styles = theme => ({
 
 class AccommodationDetail extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       accomDetail: {},
       currentHost: {},
@@ -78,8 +78,8 @@ class AccommodationDetail extends Component {
   }
 
   render() {
-    const { classes, accommodation } = this.props
-    const { longitude, latitude, id } = accommodation
+    const { classes, accommodation } = this.props;
+    const { longitude, latitude, id } = accommodation;
 
     // IMAGES ======
     let settings = {
@@ -208,6 +208,4 @@ class AccommodationDetail extends Component {
 
 // <img src="http://www.designdeveloprealize.com/wp-content/uploads/2018/03/high-resolution-house-photos-inside-high-resolution-house-pictures-house-interior.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
 
-export default withStyles(styles, carouselStyle, dashboardStyle)(
-  AccommodationDetail
-)
+export default withStyles(styles, carouselStyle, dashboardStyle)(AccommodationDetail)

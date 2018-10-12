@@ -2,7 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 
-import Review from '../Review/Review'
+import ReviewPreview from '../Popup/ReviewPreview'
+
 // Material UI components
 import Card from 'Component/Card/Card.jsx'
 import CardBody from 'Component/Card/CardBody.jsx'
@@ -10,7 +11,7 @@ import CardHeader from 'Component/Card/CardHeader.jsx'
 import CardFooter from 'Component/Card/CardFooter.jsx'
 import dashboardStyle from 'assets/jss/material-dashboard-pro-react/views/dashboardStyle'
 import {withStyles} from '@material-ui/core/styles'
-import CardContent from '@material-ui/core/CardContent'
+
 // Image Slider
 import carouselStyle from 'assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx'
 import Carousel from 'react-slick'
@@ -20,24 +21,8 @@ import Rating from 'react-rating'
 import like from '../../assets/img/icons/like.png'
 import like_empty from '../../assets/img/icons/like_empty.png'
 
-// const styles = {
-//   card: {
-//     maxWidth: 300,
-//   },
-//   media: {
-//     height: 140,
-//   },
-// };
 
 class Hosting extends React.Component {
-
-  handleExpand = () => {
-    this.setState({showHosting: !this.state.showHosting})
-  };
-
-  handleExpandReviews = () => {
-    this.setState({seeReviews: !this.state.seeReviews})
-  };
 
   showReview = () => {
     this.setState({seeReviews: !this.state.seeReviews})
@@ -67,7 +52,6 @@ class Hosting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showHosting: false,
       reviews: {},
       seeReviews: false,
       id: '',
@@ -100,7 +84,7 @@ class Hosting extends React.Component {
   render() {
     const {house, SingleHost, classes} = this.props;
     const {images, reviews} = this.state;
-    const id = house;
+    const {id} = house;
 
     let settings = {
       dots: true,
@@ -113,18 +97,16 @@ class Hosting extends React.Component {
 
     const EmptyImage = () => {
       return (
-        <div>
           <img
             src="http://www.vanislandrealty.com/inc/snippets/default/property-search/img/no-image.jpg"
             height="150"
             width="345"
-            alt="noimage"
+            alt="empty"
           />
-        </div>
       )
     };
 
-    const ImageDivs = () => {
+    const ImageCarousel = () => {
       // Map image in images array to div
       let imagesDiv = [];
       images.map(image => {
@@ -135,7 +117,11 @@ class Hosting extends React.Component {
         );
         return 0
       });
-      return imagesDiv
+      return (
+        <Carousel {...settings} dots={false}>
+          {imagesDiv}
+        </Carousel>
+      )
     };
 
     const ReviewSummary = () => {
@@ -143,13 +129,13 @@ class Hosting extends React.Component {
       return (
         <div>
           <Rating
-            readonly="true"
+            readonly={true}
             initialRating={avgRating}
             emptySymbol={<img src={like_empty} className="icon" alt="emptyicon"/>}
             fullSymbol={<img src={like} className="icon" alt="fullicon"/>}
           />
           <br/>
-          <Link to="" onClick={this.handleExpandReviews}>
+          <Link to="" onClick={this.showReview}>
             {avgRating > 0 ? <h5>{reviews.length} Reviews</h5> : null}
           </Link>
         </div>
@@ -159,17 +145,15 @@ class Hosting extends React.Component {
     return (
       <div style={{padding: '1rem'}}>
         <Card
-          product="true"
+          product={true}
           className={classes.cardHover}
           style={{width: '20vw', height: '22vw'}}>
 
-          <Link to={`/accommodations/${id}`}>
-            <CardHeader style={{marginBottom: '0rem'}} image>
-              <Carousel {...settings} dots={false}>
-                {images.length === 0 ? <EmptyImage/> : ImageDivs(images)}
-              </Carousel>
-            </CardHeader>
-          </Link>
+          <CardHeader style={{marginBottom: '0rem'}} image>
+            <Link to={`/accommodations/${id}`}>
+              {images.length === 0 ? <EmptyImage/> : <ImageCarousel/>}
+            </Link>
+          </CardHeader>
 
           <CardBody>
             <div className={classes.cardHoverUnder}>
@@ -177,33 +161,18 @@ class Hosting extends React.Component {
                 {house.address}
               </h4>
               <h4>{house.Accomodation_Type}</h4>
-              <ReviewSummary />
-
-              {this.state.seeReviews ? (
-                <CardContent>
-                  {reviews.map(review => (
-                    <Review
-                      key={review.id}
-                      accommodation={review.accommodation}
-                      star={review.star}
-                      user={review.username}
-                      review={review.review}
-                      text="Close"
-                      closeReview={this.showReview}
-                    />
-                  ))}
-                </CardContent>
-              ) : null}
+              <ReviewSummary/>
+              <ReviewPreview
+                open={this.state.seeReviews}
+                handleClose={this.showReview}
+                reviews={reviews}
+              />
             </div>
           </CardBody>
 
           <CardFooter product>
             <div className={classes.price}>
-              {/* <Typography gutterBottom variant="headline" component="h6"> */}
-              <h4>
-                ${SingleHost.price}/night
-              </h4>
-              {/* </Typography> */}
+              <h4>${SingleHost.price}/night</h4>
             </div>
           </CardFooter>
         </Card>

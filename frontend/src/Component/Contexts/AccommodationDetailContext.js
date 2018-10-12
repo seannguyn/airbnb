@@ -7,7 +7,7 @@ import moment from "moment"
 
 class AccommodationDetailContext extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       accommodation: {},
       accommodationHosting: {},
@@ -20,17 +20,17 @@ class AccommodationDetailContext extends React.Component {
 
   // find dates between 2 dates
   datesInPeriod = (startDate, endDate) => {
-    var dates = []
+    let dates = [];
 
-    var currDate = startDate,
-      lastDate = endDate
-    dates.push(currDate.clone())
+    let currDate = startDate,
+      lastDate = endDate;
+    dates.push(currDate.clone());
     while (currDate.add(1, "days").diff(lastDate) < 0) {
       dates.push(currDate.clone())
     }
-    dates.push(lastDate.clone())
+    dates.push(lastDate.clone());
     return dates
-  }
+  };
 
   // the calendar will block dates that been booked
   blockBookedPeriod(bookingList) {
@@ -56,24 +56,26 @@ class AccommodationDetailContext extends React.Component {
   }
 
   async componentDidMount() {
-    const { id } = this.props.match.params
+    const { id } = this.props.match.params;
 
-    const res1 = await axios.get(`/accommodation/${id}/`)
-    this.setState({ accommodation: res1.data })
+    const res1 = await axios.get(`/accommodation/${id}/`);
+    this.setState({ accommodation: res1.data });
 
-    const res2 = await axios.get(`/accommodationHosting/?accomm=${id}`)
-    this.setState({ accommodationHosting: res2.data[0] })
+    const res2 = await axios.get(`/accommodationHosting/?accomm=${id}`);
+    this.setState({ accommodationHosting: res2.data[0] });
 
     const res3 = await axios.get(
       `/booking/?host=${this.state.accommodationHosting.id}`
-    )
+    );
     this.blockBookedPeriod(res3.data)
 
     // axios review, pass review down
-    var reviews = []
-    var err
+    let reviews = [];
+    let err;
 
-    const count = await axios.get(`/reviewCounter/${id}/`)
+    const count = await axios.get(`/reviewCounter/${id}/`);
+
+    console.log("review count: ", count);
 
     if (count.data.count > 0) {
       await axios
@@ -91,7 +93,7 @@ class AccommodationDetailContext extends React.Component {
     }
 
     // axios images
-    const res5 = await axios.get(`/accommodationImage/?accommodation=${id}`)
+    const res5 = await axios.get(`/accommodationImage/?accommodation=${id}`);
     this.setState({ images: res5.data })
   }
 

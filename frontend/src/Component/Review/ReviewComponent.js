@@ -18,11 +18,11 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: 200
   }
-})
+});
 
 class ReviewComponent extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       currentPage: 1,
       perPage: 5,
@@ -38,8 +38,8 @@ class ReviewComponent extends React.Component {
   }
 
   averageRating(review) {
-    if (review.length === 0) return 0
-    var total = 0
+    if (review.length === 0) return 0;
+    let total = 0;
     for (var i = 0; i < review.length; i++) {
       total += review[i].star
     }
