@@ -49,7 +49,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'user', 'username', 'accommodation', 'booking', 'star', 'review', 'date_posted')
+        fields = ('id', 'user', 'username','accommodation', 'booking', 'star', 'review', 'date_posted')
 
 
 class UserInfoSerializer(serializers.ModelSerializer):

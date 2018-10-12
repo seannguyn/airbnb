@@ -33,7 +33,7 @@ library.add(
   faLaptop,
   faCreditCard,
   faCheck
-)
+);
 
 class App extends Component {
 
