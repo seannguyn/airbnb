@@ -49,7 +49,6 @@ class OverallBooking extends React.Component {
 
     if (this.props.location.state.booking_id > 0) {
       const { booking_id, booking } = this.props.location.state
-      console.log("GOTCHA", booking_id, booking)
       const date_free = enumerateDaysBetweenDates(
         booking.date_start,
         booking.date_end
@@ -99,7 +98,6 @@ class OverallBooking extends React.Component {
     // * REMOVE FROM SEARCH DB
 
     const booking = await axios.post("/booking/", newBooking)
-    console.log("SUCCESSFully Booking", booking.data)
 
     this.props.history.push({
       pathname: `/overallbooking/payment/${detail.currentHost.id}`,
@@ -201,7 +199,7 @@ class OverallBooking extends React.Component {
                   </TabContainer>
                 </SwipeableViews>
               </div>
-              <div className="col-4" style={{ border: "3px solid green" }}>
+              <div className="col-4">
                 <BookingInfo price={price} detail={detail} />
               </div>
             </div>

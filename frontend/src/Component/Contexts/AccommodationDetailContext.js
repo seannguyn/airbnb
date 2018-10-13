@@ -7,7 +7,7 @@ import moment from "moment"
 
 class AccommodationDetailContext extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       accommodation: {},
       accommodationHosting: {},
@@ -20,17 +20,17 @@ class AccommodationDetailContext extends React.Component {
 
   // find dates between 2 dates
   datesInPeriod = (startDate, endDate) => {
-    var dates = []
+    let dates = [];
 
-    var currDate = startDate,
-      lastDate = endDate
-    dates.push(currDate.clone())
+    let currDate = startDate,
+      lastDate = endDate;
+    dates.push(currDate.clone());
     while (currDate.add(1, "days").diff(lastDate) < 0) {
       dates.push(currDate.clone())
     }
-    dates.push(lastDate.clone())
+    dates.push(lastDate.clone());
     return dates
-  }
+  };
 
   // the calendar will block dates that been booked
   blockBookedPeriod(bookingList) {
@@ -52,34 +52,49 @@ class AccommodationDetailContext extends React.Component {
     }
 
     this.setState({ minDateSet: minDateSet })
-    // console.log(tempBookedPeriods,"booked period");
-    // console.log(this.state.minDateSet,"min date");
     this.setState({ booking: tempBookedPeriods })
   }
 
   async componentDidMount() {
-    const { id } = this.props.match.params
+    const { id } = this.props.match.params;
 
-    const res1 = await axios.get(`/accommodation/${id}/`)
-    this.setState({ accommodation: res1.data })
+    const res1 = await axios.get(`/accommodation/${id}/`);
+    this.setState({ accommodation: res1.data });
 
-    const res2 = await axios.get(`/accommodationHosting/?accomm=${id}`)
-    this.setState({ accommodationHosting: res2.data[0] })
+    const res2 = await axios.get(`/accommodationHosting/?accomm=${id}`);
+    this.setState({ accommodationHosting: res2.data[0] });
 
     const res3 = await axios.get(
       `/booking/?host=${this.state.accommodationHosting.id}`
-    )
+    );
     this.blockBookedPeriod(res3.data)
 
     // axios review, pass review down
-    const res4 = await axios.get(`/accommodation/${id}/reviews/`)
-    this.setState({ reviews: res4.data })
+    let reviews = [];
+    let err;
+
+    const count = await axios.get(`/reviewCounter/${id}/`);
+
+    console.log("review count: ", count);
+
+    if (count.data.count > 0) {
+      await axios
+        .get(`/accommodation/${id}/reviews/`)
+        .then(response => {
+          reviews = response.data
+        })
+        .catch(error => {
+          err = error.response
+        })
+    }
+
+    if (err == null && reviews.length > 0) {
+      this.setState({ reviews: reviews })
+    }
 
     // axios images
-    const res5 = await axios.get(`/accommodationImage/?accommodation=${id}`)
-    this.setState({ images: res5.data }, () => {
-      console.log("WE HAVE IMAGE", this.state.images)
-    })
+    const res5 = await axios.get(`/accommodationImage/?accommodation=${id}`);
+    this.setState({ images: res5.data })
   }
 
   render() {

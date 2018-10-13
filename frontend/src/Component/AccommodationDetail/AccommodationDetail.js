@@ -27,7 +27,7 @@ const styles = theme => ({
 
 class AccommodationDetail extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       accomDetail: {},
       currentHost: {},
@@ -78,11 +78,8 @@ class AccommodationDetail extends Component {
   }
 
   render() {
-    // console.log("props acom detail: ", this.state);
-    const { classes, accommodation } = this.props
-    const { longitude, latitude, id } = accommodation
-    // const {Accommodation_Type, area, bathroom,
-    //         bedroom, bedroom_master, carpark, kitchen, description} = this.state.accomDetail;
+    const { classes, accommodation } = this.props;
+    const { longitude, latitude, id } = accommodation;
 
     // IMAGES ======
     let settings = {
@@ -107,8 +104,6 @@ class AccommodationDetail extends Component {
     })
     // IMAGES ======
 
-    // const {bathroom,bedroom,kitchen,carpark,description} = this.state.accomDetail
-    // const {currentHost} = this.state;
     const isDayBlocked = day =>
       this.props.booking.filter(d => d.isSame(day, "day")).length > 0
     const { status } = this.state
@@ -138,7 +133,7 @@ class AccommodationDetail extends Component {
                 <div className="container">
                   <div className="row" />
                   <div className="row">
-                    <div className="col-8" style={{ border: "2px solid blue" }}>
+                    <div className="col-8">
                       <div className="description">
                         <h4>Title: {title}</h4>
                       </div>
@@ -186,7 +181,7 @@ class AccommodationDetail extends Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-8" style={{ border: "2px solid blue" }}>
+                    <div className="col-8">
                       <Maps
                         latitude={latitude}
                         longitude={longitude}
@@ -196,7 +191,7 @@ class AccommodationDetail extends Component {
                     <div className="col-4" />
                   </div>
                   <div className="row">
-                    <div className="col-8" style={{ border: "2px solid blue" }}>
+                    <div className="col-8">
                       <ReviewComponent review={this.props.reviews} />
                     </div>
                     <div className="col-4" />
@@ -213,6 +208,4 @@ class AccommodationDetail extends Component {
 
 // <img src="http://www.designdeveloprealize.com/wp-content/uploads/2018/03/high-resolution-house-photos-inside-high-resolution-house-pictures-house-interior.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
 
-export default withStyles(styles, carouselStyle, dashboardStyle)(
-  AccommodationDetail
-)
+export default withStyles(styles, carouselStyle, dashboardStyle)(AccommodationDetail)

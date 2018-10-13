@@ -1,13 +1,13 @@
-import React from "react"
-import TextField from "@material-ui/core/TextField"
-import Paginate from "./Paginate"
-import ReviewRow from "./ReviewRow"
-import { withStyles } from "@material-ui/core/styles"
-import Divider from "@material-ui/core/Divider"
-import SearchHeadline from "./SearchHeadline"
-import uuid from "uuid"
-import like from "../../assets/img/icons/like.png"
-import like_empty from "../../assets/img/icons/like_empty.png"
+import React from 'react'
+import TextField from '@material-ui/core/TextField'
+import Paginate from './Paginate'
+import ReviewRow from './ReviewRow'
+import { withStyles } from '@material-ui/core/styles'
+import Divider from '@material-ui/core/Divider'
+import SearchHeadline from './SearchHeadline'
+import uuid from 'uuid'
+import like from '../../assets/img/icons/like.png'
+import like_empty from '../../assets/img/icons/like_empty.png'
 
 const styles = theme => ({
   progress: {
@@ -31,15 +31,15 @@ class ReviewComponent extends React.Component {
       ),
       filteredReview: [],
       filtering: false,
-      searchKey: "",
-      searchKeyFixed: "",
+      searchKey: '',
+      searchKeyFixed: '',
       rating: this.averageRating(props.review)
     }
   }
 
   averageRating(review) {
     if (review.length === 0) return 0
-    var total = 0
+    let total = 0
     for (var i = 0; i < review.length; i++) {
       total += review[i].star
     }
@@ -81,8 +81,8 @@ class ReviewComponent extends React.Component {
       totalPage: Math.round(
         parseInt(this.props.review.length, 10) / parseInt(5, 10) + 0.5
       ),
-      searchKeyFixed: "",
-      searchKey: ""
+      searchKeyFixed: '',
+      searchKey: ''
     })
   }
 
@@ -112,7 +112,7 @@ class ReviewComponent extends React.Component {
   render() {
     const { classes } = this.props
     const { currentPage, perPage } = this.state
-    let Rating = require("react-rating")
+    let Rating = require('react-rating')
 
     // const totalPage = Math.round(parseInt(this.props.review.length, 10) /  parseInt(perPage, 10)+0.5)
     var review = []
@@ -125,7 +125,7 @@ class ReviewComponent extends React.Component {
         return (
           <div
             key={uuid.v4()}
-            style={{ marginTop: "10px", marginBottom: "10px" }}
+            style={{ marginTop: '10px', marginBottom: '10px' }}
           >
             <ReviewRow review={r} />
             <Divider />
@@ -156,7 +156,7 @@ class ReviewComponent extends React.Component {
         return (
           <div
             key={uuid.v4()}
-            style={{ marginTop: "10px", marginBottom: "10px" }}
+            style={{ marginTop: '10px', marginBottom: '10px' }}
           >
             <ReviewRow review={r} />
             <Divider />
@@ -198,7 +198,9 @@ class ReviewComponent extends React.Component {
                   onChange={this.onChange.bind(this)}
                   margin="normal"
                   name="searchKey"
-                  value={this.state.searchKey}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
                 />
               </form>
             </div>

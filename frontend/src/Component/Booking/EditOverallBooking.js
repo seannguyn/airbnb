@@ -63,8 +63,6 @@ class EditOverallBooking extends React.Component {
   render() {
     const { theme } = this.props
 
-    console.log(this.props.location.state, "PROCESS PAYMENT")
-
     if (typeof this.props.location.state !== "undefined") {
       const { detail, booker, booking } = this.props.location.state
       const price = (

@@ -27,15 +27,15 @@ export default class ReviewPopup extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false })
-  }
+  };
 
   handleReviewOnChange = value => {
     this.setState({ star: value })
-  }
+  };
 
   handleTextFieldChange = e => {
     this.setState({ comment: e.target.value })
-  }
+  };
 
   componentDidMount() {
     localStorage.getItem("currentUser") &&

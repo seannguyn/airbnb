@@ -97,23 +97,13 @@ class EditHouse extends Component {
       carpark: "",
       description: "",
 
-      error_number: false,
-      error_street: false,
-      error_city: false,
-      error_state: false,
+
       error_Accommodation_Type: false,
       error_bedroom: false,
       error_bathroom: false,
+      error_bed: false,
+      error_title: false,
 
-      error: {
-        number: "",
-        street: "",
-        city: "",
-        state: "",
-        Accommodation_Type: "",
-        bedroom: "",
-        bathroom: ""
-      },
     }
     setTimeout(() => {
       this.setState({
@@ -124,7 +114,6 @@ class EditHouse extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (nextState.status === 1) {
-      console.log("Should Component update", this.props, nextProps)
 
       const { HouseList, currentUser } = this.props
       const { id } = this.props
@@ -172,7 +161,14 @@ class EditHouse extends Component {
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value })
+    this.setState({
+      [e.target.name]: e.target.value,
+      error_Accommodation_Type: false,
+      error_bed: false,
+      error_bedroom: false,
+      error_bathroom: false,
+      error_title: false,
+     })
   }
 
   onCheck(e) {
@@ -180,9 +176,8 @@ class EditHouse extends Component {
   }
 
   errorCheck(current) {
-    const { Accommodation_Type } = current
-    // const {id, user, Accommodation_Type, number, street, city, state, title} = current;
-    // const {bed,bedroom,bathroom,kitchen,gym,pool,carpark,description} = current;
+    const { Accommodation_Type,bed,bedroom,bathroom,title } = current
+
 
     var flag = false
 
@@ -193,8 +188,33 @@ class EditHouse extends Component {
       })
       flag = true
     }
+    if (bedroom <= 0 || bedroom === "") {
+      this.setState({
+        error_bedroom: true
+      })
+      flag = true
+    }
+    if (bathroom <= 0 || bathroom === "") {
+      this.setState({
+        error_bathroom: true
+      })
+      flag = true
+    }
+    if (bed <= 0 || bed === "") {
+      this.setState({
+        error_bed: true
+      })
+      flag = true
+    }
+    if (title.length === 0) {
+      this.setState({
+        error_title: true
+      })
+      flag = true
+    }
 
     if (flag === true) {
+      this.props.onPresentSnackbar('error',"Oops, missing details")
       return true
     } else {
       return false
@@ -238,8 +258,6 @@ class EditHouse extends Component {
       description: description
     }
 
-    console.log(editHouse)
-
     // const res = await axios.put(`${id}`,editHouse)
     const { token } = this.state.currentUser //GET TOKEN FROM CURRENT USER
     await axios.put(`/accommodation/${id}/`, editHouse, {
@@ -251,15 +269,11 @@ class EditHouse extends Component {
     dispatch({ type: "EDIT_HOUSE", payload: editHouse })
 
     this.setState({
+      error_Accommodation_Type: false,
       error_bed: false,
       error_bedroom: false,
       error_bathroom: false,
-
-      error: {
-        bed: "",
-        bedroom: "",
-        bathroom: ""
-      },
+      error_title: false,
     }, () => {
       this.props.onPresentSnackbar('success','Information Saved')
     })
@@ -279,7 +293,6 @@ class EditHouse extends Component {
       carpark,
       description
     } = this.state
-    console.log(Accommodation_Type, "accomm type")
     const { classes } = this.props
     return (
       <Consumer>
@@ -358,6 +371,7 @@ class EditHouse extends Component {
                     </Typography>
                     <FormControl margin="normal" required fullWidth>
                       <TextField
+                        error={this.state.error_bedroom}
                         label="Bedroom"
                         value={bedroom}
                         onChange={this.onChange.bind(this)}
@@ -367,6 +381,7 @@ class EditHouse extends Component {
                     </FormControl>
                     <FormControl margin="normal" required fullWidth>
                       <TextField
+                        error={this.state.error_bed}
                         label="Bed"
                         value={bed}
                         onChange={this.onChange.bind(this)}
@@ -376,6 +391,7 @@ class EditHouse extends Component {
                     </FormControl>
                     <FormControl margin="normal" required fullWidth>
                       <TextField
+                        error={this.state.error_bathroom}
                         label="Bathroom"
                         value={bathroom}
                         onChange={this.onChange.bind(this)}

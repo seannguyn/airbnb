@@ -22,7 +22,6 @@ class ContextApi extends React.Component {
 
           var hasHost = []
           var i
-          console.log("MY HOSTING LIST", myHostingList, id)
           for (i = 0; i < myHostingList.length; i++) {
             if (
               parseInt(myHostingList[i].accommodation, 10) === parseInt(id, 10)

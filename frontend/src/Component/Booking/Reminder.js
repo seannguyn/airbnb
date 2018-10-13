@@ -30,27 +30,21 @@ class Reminder extends React.Component {
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
+                  Check in and checkout on time
                 </Typography>
               </ExpansionPanelDetails>
               <Divider />
               <Divider />
               <ExpansionPanelDetails>
                 <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
+                  Be respectful to the premise
                 </Typography>
               </ExpansionPanelDetails>
               <Divider />
               <Divider />
               <ExpansionPanelDetails>
                 <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
+                  If there is anything, contact us or the host
                 </Typography>
               </ExpansionPanelDetails>
             </ExpansionPanel>

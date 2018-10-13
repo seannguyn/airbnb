@@ -33,7 +33,6 @@ export class PlaceInfoWindow extends Component {
       accommodation,
       address
     } = this.props
-    console.log("PLACE INFO INWDOES PROPS: ", this.props)
     const avgRating = 0
     if (reviews !== undefined) starCalculator(reviews)
     let settings = {
@@ -56,7 +55,7 @@ export class PlaceInfoWindow extends Component {
     })
 
     return (
-      <InfoWindow onCloseClick={this.props.closeWindow}>
+      <InfoWindow onClose={this.onInfoWindowClose}>
         <div>
           <h1>{name}</h1>
           <p>{description}</p>

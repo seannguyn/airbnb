@@ -55,6 +55,10 @@ const styles = theme => ({
   bigAvatar: {
     width: 60,
     height: 60
+  },
+  portBnBTitle: {
+    textDecoration: 'none',
+    color: 'black'
   }
 })
 
@@ -84,7 +88,6 @@ class Header extends Component {
   }
 
   handleLogOut(dispatch) {
-    console.log("")
     window.localStorage.removeItem("currentUser")
     dispatch({ type: "LOGOUT" })
     this.handleClose()
@@ -98,11 +101,14 @@ class Header extends Component {
     dispatch({ type: "OPEN_DIALOG", payload: { open: true, login: false } })
   }
 
+  homePage() {
+
+  }
+
   render() {
     const { classes } = this.props
     const { anchorEl } = this.state
     const open = Boolean(anchorEl)
-
     return (
       <Consumer>
         {value => {
@@ -127,6 +133,7 @@ class Header extends Component {
                     >
                       <MenuIcon />
                     </IconButton>
+
                     
                     <Typography
                       style={{ flex: 1 }}
@@ -147,6 +154,7 @@ class Header extends Component {
                         ABOUT US
                       </Button> 
                     </Link>   
+
                     {logged_in === true ? (
                       <div>
                         <Avatar
@@ -155,6 +163,7 @@ class Header extends Component {
                           aria-haspopup="true"
                           onClick={this.handleMenu}
                           color="inherit"
+                          style={{ cursor: 'pointer' }}
                         >
                           <PersonIcon />
                         </Avatar>

@@ -1,16 +1,16 @@
 import React from "react"
-import { Consumer } from "../../Context.js"
+import {Consumer} from "../../Context.js"
 import AllHosting from "../Function/AllHosting"
 import SearchSection from "../Search/SearchSection"
 import MapList from "../Search/MapList"
-import { withStyles } from "@material-ui/core/styles"
-import { Map } from "../GoogleMap/Maps.js"
+import {withStyles} from "@material-ui/core/styles"
+import {Map} from "../GoogleMap/Maps.js"
 
-const styles = theme => ({})
+const styles = theme => ({});
 
 class AllHostingContext extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       display: "list"
     }
@@ -26,9 +26,8 @@ class AllHostingContext extends React.Component {
     return (
       <Consumer>
         {value => {
-          const { AllHostingList, HouseList } = value
-
-          var rendering = []
+          const {AllHostingList, HouseList} = value;
+          let rendering = [];
 
           if (this.state.display === "list") {
             rendering.push(
@@ -42,14 +41,14 @@ class AllHostingContext extends React.Component {
           } else {
             rendering.push(
               <h1 key="map">
-                <Map />
+                <Map/>
               </h1>
             )
           }
 
           return (
             <div>
-              <SearchSection />
+              <SearchSection/>
               <MapList
                 display={this.state.display}
                 changeDisplay={this.changeDisplay.bind(this)}

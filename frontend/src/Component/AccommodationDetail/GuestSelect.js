@@ -52,7 +52,6 @@ class GuestSelect extends React.Component {
   }
 
   handleGuest(ops, num) {
-    console.log(ops)
     this.props.handleGuest(ops, num)
   }
 

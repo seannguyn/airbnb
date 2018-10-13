@@ -71,7 +71,6 @@ class ConfirmOverallBooking extends React.Component {
   render() {
     const { theme } = this.props
 
-    console.log(this.props.location.state, "PROCESS PAYMENT")
     const { value } = this.state
     if (typeof this.props.location.state !== "undefined") {
       const { detail } = this.props.location.state

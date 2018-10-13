@@ -1,20 +1,20 @@
 import React from "react"
-// import AllHostingContext from '../Contexts/AllHostingContext'
 import Hosting from "./Hosting"
-import { withStyles } from "@material-ui/core/styles"
+import {withStyles} from "@material-ui/core/styles"
 
 const styles = theme => ({
   search: {
     margin: theme.spacing.unit * 2
   }
-})
+});
 
 class AllHosting extends React.Component {
+
   getData(SingleHost) {
-    const { HouseList } = this.props
-    let i = 0
-    var house
-    for (i = 0; i < HouseList.length; i++) {
+    const {HouseList} = this.props;
+
+    let house;
+    for (let i = 0; i < HouseList.length; i++) {
       if (HouseList[i].id === SingleHost.accommodation) {
         house = HouseList[i]
       }
@@ -29,9 +29,9 @@ class AllHosting extends React.Component {
   }
 
   render() {
-    const SingleHosting = this.props.AllHostingList.map(SingleHost =>
-      this.getData(SingleHost)
-    )
+    const SingleHosting = this.props.AllHostingList
+      .map(SingleHost => this.getData(SingleHost));
+
     return (
       <React.Fragment>
         <div className="row">{SingleHosting}</div>
@@ -40,4 +40,4 @@ class AllHosting extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(AllHosting)
+export default withStyles(styles, {withTheme: true})(AllHosting)

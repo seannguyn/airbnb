@@ -29,12 +29,8 @@ const styles = theme => ({
     padding: theme.spacing.unit,
     width: "90%",
     height: "90%"
-    // position:'fixed',
-    // margin:'0',
-    // top:'0',
-    // left:'0',
   }
-})
+});
 
 class Main extends React.Component {
   render() {
@@ -44,23 +40,23 @@ class Main extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
             <Switch>
-              <Route exact path="/" component={AllHostingContext}></Route>
-              <Route exact path="/aboutus" component={AboutUs}></Route>
-              <Route exact path="/myhouses" component={MyHouses}></Route>
-              <Route exact path="/editHouse/:id" component={ContextApi}></Route>
-              <Route exact path="/addHouse" component={AddHouseContext}></Route>
+              <Route exact path="/" component={AllHostingContext}/>
+              <Route exact path="/aboutus" component={AboutUs}/>
+              <Route exact path="/myhouses" component={MyHouses}/>
+              <Route exact path="/editHouse/:id" component={ContextApi}/>
+              <Route exact path="/addHouse" component={AddHouseContext}/>
 
-              <Route exact path="/accommodations/:id" component={AccommodationDetailContext}></Route>
-              <Route exact path="/mybookings" component={MyBookings}></Route>
-              <Route exact path="/overallbooking/reserve/:id" component={ReserveOverallBooking}></Route>
-              <Route exact path="/overallbooking/payment/:id" component={EditOverallBooking}></Route>
-              <Route exact path="/overallbooking/confirm/:id" component={ConfirmOverallBooking}></Route>
+              <Route exact path="/accommodations/:id" component={AccommodationDetailContext}/>
+              <Route exact path="/mybookings" component={MyBookings}/>
+              <Route exact path="/overallbooking/reserve/:id" component={ReserveOverallBooking}/>
+              <Route exact path="/overallbooking/payment/:id" component={EditOverallBooking}/>
+              <Route exact path="/overallbooking/confirm/:id" component={ConfirmOverallBooking}/>
 
-              <Route exact path="/bookingRequest" component={BookingRequest}></Route>
+              <Route exact path="/bookingRequest" component={BookingRequest}/>
 
               <Route exact path="/map" component={Map}/>
 
-              <Route component={NotFound}></Route>
+              <Route component={NotFound}/>
 
           <Route exact path="/map" component={Map} />
 

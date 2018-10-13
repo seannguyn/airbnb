@@ -214,7 +214,7 @@ class BookingView(viewsets.ModelViewSet):
         if host is not None:
             queryset = queryset.filter(hosting=host)
 
-        return queryset
+        return queryset.order_by('date_start')
 
 
 """ get all the reviews """
@@ -280,7 +280,6 @@ class Users(viewsets.ModelViewSet):
     """ This would get all users """
     def get_queryset(self):
         queryset = UserInfo.objects.all()
-        print("FOES DD", queryset)
         # user_pk = None
         # if self.kwargs:
         #     user_pk = self.kwargs['pk']
@@ -290,11 +289,9 @@ class Users(viewsets.ModelViewSet):
         #     queryset = queryset.filter(user=user_pk)
         #     user = UserInfo.objects.get(pk=user_pk)
         #     print("USERNAME: ", user.user.username, type(user.user.username))
-        print("FOES DD", queryset)
         return queryset
 
     # def get(self, request, pk, format=None):
-    #     print("FUCK")
     #     myHostObject = self.get_object(pk)
     #     serializer = self.serializer_class(myHostObject)
     #     return Response(serializer.data)
@@ -371,7 +368,6 @@ class SearchHostingViews(viewsets.ModelViewSet):
             queryset = queryset.filter(price__gte=price_lower)
 
         if date_start is not None and date_end is not None:
-            print()
             begin = datetime.strptime(date_start, '%Y-%m-%d')
             endin = datetime.strptime(date_end, '%Y-%m-%d')
 
