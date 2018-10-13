@@ -133,19 +133,28 @@ class Header extends Component {
                     >
                       <MenuIcon />
                     </IconButton>
-                      <Typography
-                        style={{ flex: 1, cursor: 'pointer' }}
-                        className={classNames(!logged_in && classes.transparent)}
-                        variant="title"
-                        color="inherit"
-                        noWrap
-                        onClick={this.homePage.bind(this)}
-                      >
-                        <Link to="/" className={classes.portBnBTitle}>
-                          portBnB
-                        </Link>
-                      </Typography>
-                    <Button color="inherit">About us</Button>
+
+                    
+                    <Typography
+                      style={{ flex: 1 }}
+                      className={classNames(!logged_in && classes.transparent)}
+                      variant="title"
+                      color="inherit"
+                      noWrap
+                    >
+                      <Link to="/">
+                        <Button color="inherit">  
+                          portbnb
+                        </Button> 
+                      </Link>
+                    </Typography>
+                    
+                    <Link to="/aboutus">
+                      <Button color="inherit">  
+                        ABOUT US
+                      </Button> 
+                    </Link>   
+
                     {logged_in === true ? (
                       <div>
                         <Avatar
