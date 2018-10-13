@@ -127,6 +127,7 @@ class Header extends Component {
                     >
                       <MenuIcon />
                     </IconButton>
+                    
                     <Typography
                       style={{ flex: 1 }}
                       className={classNames(!logged_in && classes.transparent)}
@@ -134,9 +135,18 @@ class Header extends Component {
                       color="inherit"
                       noWrap
                     >
-                      portBnB
+                      <Link to="/">
+                        <Button color="inherit">  
+                          portbnb
+                        </Button> 
+                      </Link>
                     </Typography>
-                    <Button color="inherit">About us</Button>
+                    
+                    <Link to="/aboutus">
+                      <Button color="inherit">  
+                        ABOUT US
+                      </Button> 
+                    </Link>   
                     {logged_in === true ? (
                       <div>
                         <Avatar
