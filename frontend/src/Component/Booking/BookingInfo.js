@@ -1,20 +1,20 @@
-import React from "react"
+import React from 'react'
 
-import Paper from "@material-ui/core/Paper"
-import Typography from "@material-ui/core/Typography"
-import withStyles from "@material-ui/core/styles/withStyles"
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import withStyles from '@material-ui/core/styles/withStyles'
 
-import Divider from "@material-ui/core/Divider"
-import PeopleIcon from "@material-ui/icons/People"
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward"
+import Divider from '@material-ui/core/Divider'
+import PeopleIcon from '@material-ui/icons/People'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 
 const styles = theme => ({
   paper: {
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
       .spacing.unit * 3}px`,
-    width: "relative"
+    width: 'relative'
   },
   typo: {
     marginBottom: theme.spacing.unit,
@@ -26,7 +26,7 @@ const styles = theme => ({
 
 class BookingInfo extends React.Component {
   render() {
-    const { classes, price } = this.props
+    const { classes, price, firstImage } = this.props
     const { guest, startDate, endDate, accommodation } = this.props.detail
     return (
       <Paper className={classes.paper}>
@@ -36,11 +36,27 @@ class BookingInfo extends React.Component {
               {accommodation.title}
             </Typography>
             <Typography align="left" className={classes.typo} variant="caption">
-              Entire {accommodation.Accomodation_Type} in{" "}
+              Entire {accommodation.Accomodation_Type} in{' '}
               {accommodation.addr_city}
             </Typography>
           </div>
-          <div className="col-6" style={{ border: "2px solid red" }} />
+          <div className="col-6">
+            {firstImage ? (
+              <img
+                src={firstImage.a_image}
+                height="60"
+                width="120"
+                alt="hostingimg"
+              />
+            ) : (
+              <img
+                src="https://vignette.wikia.nocookie.net/max-steel-reboot/images/7/72/No_Image_Available.gif/revision/latest?cb=20130902173013"
+                height="60"
+                width="120"
+                alt="hostingimg"
+              />
+            )}
+          </div>
         </div>
         <Divider />
 

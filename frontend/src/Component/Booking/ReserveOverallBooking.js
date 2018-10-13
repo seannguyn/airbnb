@@ -1,28 +1,28 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/core/styles"
-import SwipeableViews from "react-swipeable-views"
-import AppBar from "@material-ui/core/AppBar"
-import Tabs from "@material-ui/core/Tabs"
-import Tab from "@material-ui/core/Tab"
-import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
-import CheckIcon from "@material-ui/icons/Check"
-import BookingInfo from "../Booking/BookingInfo"
-import Price from "../AccommodationDetail/Price"
-import Divider from "@material-ui/core/Divider"
-import Overview from "../Booking/Overview"
-import Days from "../Booking/Days"
-import Amenities from "../Booking/Amenities"
-import Reminder from "../Booking/Reminder"
-import "react-credit-cards/es/styles-compiled.css"
-import axios from "axios"
-import { withSnackbar } from "notistack"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import SwipeableViews from 'react-swipeable-views'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import CheckIcon from '@material-ui/icons/Check'
+import BookingInfo from '../Booking/BookingInfo'
+import Price from '../AccommodationDetail/Price'
+import Divider from '@material-ui/core/Divider'
+import Overview from '../Booking/Overview'
+import Days from '../Booking/Days'
+import Amenities from '../Booking/Amenities'
+import Reminder from '../Booking/Reminder'
+import 'react-credit-cards/es/styles-compiled.css'
+import axios from 'axios'
+import { withSnackbar } from 'notistack'
 import {
   enumerateDaysBetweenDates,
   removeString,
   concatString
-} from "../Helper/Helper"
+} from '../Helper/Helper'
 
 function TabContainer({ children, dir }) {
   return (
@@ -45,7 +45,7 @@ class OverallBooking extends React.Component {
   }
 
   async postBooking(detail, booker) {
-    const note = "hello"
+    const note = 'hello'
 
     if (this.props.location.state.booking_id > 0) {
       const { booking_id, booking } = this.props.location.state
@@ -67,7 +67,7 @@ class OverallBooking extends React.Component {
       )
 
       await axios.delete(`/booking/${booking_id}/`)
-      alert("Delete OLD BOOKING successfully")
+      alert('Delete OLD BOOKING successfully')
     }
 
     const newBooking = {
@@ -97,11 +97,11 @@ class OverallBooking extends React.Component {
     )
     // * REMOVE FROM SEARCH DB
 
-    const booking = await axios.post("/booking/", newBooking)
+    const booking = await axios.post('/booking/', newBooking)
 
     this.props.history.push({
       pathname: `/overallbooking/payment/${detail.currentHost.id}`,
-      search: "?query=abc",
+      search: '?query=abc',
       state: {
         detail: detail,
         booker: booker,
@@ -109,14 +109,14 @@ class OverallBooking extends React.Component {
       }
     })
 
-    this.props.onPresentSnackbar("success", "Booking has been reserved")
+    this.props.onPresentSnackbar('success', 'Booking has been reserved')
   }
 
   render() {
     const { theme } = this.props
-
-    if (typeof this.props.location.state !== "undefined") {
-      const { detail, booker } = this.props.location.state
+    console.log('PROPS: ', this.props)
+    if (typeof this.props.location.state !== 'undefined') {
+      const { detail, booker, firstImage } = this.props.location.state
       const price = (
         <Price
           pricePerNight={parseFloat(detail.price.pricePerNight)}
@@ -187,7 +187,7 @@ class OverallBooking extends React.Component {
 
                     <Divider />
 
-                    <div className="row" style={{ marginTop: "20px" }}>
+                    <div className="row" style={{ marginTop: '20px' }}>
                       <Button
                         variant="contained"
                         color="primary"
@@ -200,7 +200,11 @@ class OverallBooking extends React.Component {
                 </SwipeableViews>
               </div>
               <div className="col-4">
-                <BookingInfo price={price} detail={detail} />
+                <BookingInfo
+                  price={price}
+                  detail={detail}
+                  firstImage={firstImage}
+                />
               </div>
             </div>
           </div>

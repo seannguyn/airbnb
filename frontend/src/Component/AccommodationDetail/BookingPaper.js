@@ -218,7 +218,8 @@ class BookingPaper extends React.Component {
         detail: newDetail,
         booker: booker,
         booking_id: this.props.booking_id,
-        booking: this.props.booking
+        booking: this.props.booking,
+        firstImage: this.props.firstImage
       }
     })
   }

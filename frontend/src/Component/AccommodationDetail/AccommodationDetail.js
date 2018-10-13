@@ -1,18 +1,18 @@
-import React, { Component } from "react"
-import "react-dates/initialize"
-import "react-dates/lib/css/_datepicker.css"
-import isAfterDay from "./utils/isAfterDay"
-import { Consumer } from "../../Context.js"
-import BookingPaper from "./BookingPaper"
-import { withStyles } from "@material-ui/core/styles"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import ReviewComponent from "../Review/ReviewComponent"
+import React, { Component } from 'react'
+import 'react-dates/initialize'
+import 'react-dates/lib/css/_datepicker.css'
+import isAfterDay from './utils/isAfterDay'
+import { Consumer } from '../../Context.js'
+import BookingPaper from './BookingPaper'
+import { withStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import ReviewComponent from '../Review/ReviewComponent'
 // Image Slider
-import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle"
-import carouselStyle from "assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx"
-import Carousel from "react-slick"
-import "../../Styles/ImageSlide.css"
-import Maps from "../GoogleMap/Maps"
+import dashboardStyle from 'assets/jss/material-dashboard-pro-react/views/dashboardStyle'
+import carouselStyle from 'assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx'
+import Carousel from 'react-slick'
+import '../../Styles/ImageSlide.css'
+import Maps from '../GoogleMap/Maps'
 
 const styles = theme => ({
   progress: {
@@ -27,7 +27,7 @@ const styles = theme => ({
 
 class AccommodationDetail extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       accomDetail: {},
       currentHost: {},
@@ -78,8 +78,8 @@ class AccommodationDetail extends Component {
   }
 
   render() {
-    const { classes, accommodation } = this.props;
-    const { longitude, latitude, id } = accommodation;
+    const { classes, accommodation } = this.props
+    const { longitude, latitude, id } = accommodation
 
     // IMAGES ======
     let settings = {
@@ -93,7 +93,8 @@ class AccommodationDetail extends Component {
 
     // Map image in images array to div
 
-    let imagesDiv = []
+    let imagesDiv = [],
+      firstImage = this.props.images[0]
     this.props.images.map(image => {
       imagesDiv.push(
         <div key={image.id}>
@@ -105,7 +106,7 @@ class AccommodationDetail extends Component {
     // IMAGES ======
 
     const isDayBlocked = day =>
-      this.props.booking.filter(d => d.isSame(day, "day")).length > 0
+      this.props.booking.filter(d => d.isSame(day, 'day')).length > 0
     const { status } = this.state
     const {
       bathroom,
@@ -168,7 +169,7 @@ class AccommodationDetail extends Component {
                       </div>
                     </div>
                     <div className="col-4">
-                      <div style={{ paddingTop: "3rem" }}>
+                      <div style={{ paddingTop: '3rem' }}>
                         <BookingPaper
                           isDayBlocked={isDayBlocked}
                           minDateSet={this.props.minDateSet}
@@ -176,6 +177,7 @@ class AccommodationDetail extends Component {
                           currentHost={this.props.accommodationHosting}
                           history={this.props.history}
                           accommodation={this.props.accommodation}
+                          firstImage={firstImage}
                         />
                       </div>
                     </div>
@@ -208,4 +210,6 @@ class AccommodationDetail extends Component {
 
 // <img src="http://www.designdeveloprealize.com/wp-content/uploads/2018/03/high-resolution-house-photos-inside-high-resolution-house-pictures-house-interior.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
 
-export default withStyles(styles, carouselStyle, dashboardStyle)(AccommodationDetail)
+export default withStyles(styles, carouselStyle, dashboardStyle)(
+  AccommodationDetail
+)
