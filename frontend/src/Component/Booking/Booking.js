@@ -274,7 +274,7 @@ class Booking extends Component {
         <Card
           product
           className={classes.cardHover}
-          style={{ width: "20vw", height: "25vw" }}
+          style={{ width: "20vw", height: "20vw" }}
         >
           <CardHeader
             style={{ marginBottom: "-5rem" }}
