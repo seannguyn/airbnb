@@ -75,8 +75,6 @@ class AccommodationDetailContext extends React.Component {
 
     const count = await axios.get(`/reviewCounter/${id}/`);
 
-    console.log("review count: ", count);
-
     if (count.data.count > 0) {
       await axios
         .get(`/accommodation/${id}/reviews/`)

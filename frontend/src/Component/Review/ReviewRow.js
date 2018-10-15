@@ -41,8 +41,6 @@ class ReviewRow extends React.Component {
     const year = new Date(this.props.review.date_posted).getFullYear()
     const month_year = month + ' ' + year
 
-    console.log("USERNAME: ", this.props.review)
-
     return (
       <Consumer>
         {value => {

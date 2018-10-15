@@ -16,7 +16,7 @@ class Payment extends React.Component {
     }
   }
 
-  submitPayment() {
+  async submitPayment() {
     const { booking } = this.props
     const paidBooking = {
       id: booking.id,
@@ -28,16 +28,20 @@ class Payment extends React.Component {
       guest: booking.guest,
       note: "Paid pp..."
     }
-    axios.put(`/booking/${booking.id}/`, paidBooking)
+    await axios.put(`/booking/${booking.id}/`, paidBooking)
 
     const { detail, booker } = this.props
+
+    // axios images
+    const image = await axios.get(`/accommodationImage/?accommodation=${detail.accommodation.id}`);
 
     this.props.previous.history.push({
       pathname: `/overallbooking/confirm/${detail.currentHost.id}`,
       search: "?query=abc",
       state: {
         detail: detail,
-        booker: booker
+        booker: booker,
+        firstImage: image.data[0]
       }
     })
   }

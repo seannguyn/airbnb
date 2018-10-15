@@ -67,7 +67,6 @@ class OverallBooking extends React.Component {
       )
 
       await axios.delete(`/booking/${booking_id}/`)
-      alert('Delete OLD BOOKING successfully')
     }
 
     const newBooking = {
@@ -105,7 +104,8 @@ class OverallBooking extends React.Component {
       state: {
         detail: detail,
         booker: booker,
-        booking: booking.data
+        booking: booking.data,
+        firstImage: this.props.location.state.firstImage
       }
     })
 

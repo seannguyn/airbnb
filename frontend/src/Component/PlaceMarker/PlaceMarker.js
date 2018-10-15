@@ -67,7 +67,8 @@ export class PlaceMarker extends Component {
       description,
       accommodation,
       address,
-      accommodationChosen
+      accommodationChosen,
+      Accomodation_Type
     } = this.props
 
     return (
@@ -96,6 +97,7 @@ export class PlaceMarker extends Component {
                       reviews={reviews}
                       images={images}
                       accommodation={accommodation}
+                      Accomodation_Type={Accomodation_Type}
                       address={address}
                       closeWindow={this.closeWindow.bind(this, dispatch)}
                     />
@@ -120,6 +122,7 @@ export class PlaceMarker extends Component {
                       reviews={reviews}
                       images={images}
                       accommodation={accommodation}
+                      Accomodation_Type={Accomodation_Type}
                       address={address}
                       closeWindow={this.closeWindow.bind(this, dispatch)}
                     />

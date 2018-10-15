@@ -97,7 +97,6 @@ class Booking extends Component {
 
   handleDelete = async id => {
     await axios.delete(`/booking/${id}/`)
-    alert("Delete successfully - reload page")
     const { accommodation } = this.state
     const date_free = enumerateDaysBetweenDates(
       this.props.booking.date_start,
@@ -150,17 +149,6 @@ class Booking extends Component {
     this.setState({ booking: tempBookedPeriods })
   }
 
-  // find this accomm's images
-  findImagesByAccommID = (images, accommID) => {
-    const retImages = []
-    for (let i = 0; i < images.length; i++) {
-      if (accommID === images[i].accommodation) {
-        retImages.push(images[i])
-      }
-    }
-    return retImages
-  }
-
   handleReviewPopup = () => {
     this.setState({
       openReviewPopup: !this.state.openReviewPopup
@@ -205,9 +193,8 @@ class Booking extends Component {
     const accommID = res.data.accommodation
     this.setState({ currentAccommodationID: accommID })
 
-    let images = await axios.get(`/accommodationImage/`)
-    images = this.findImagesByAccommID(images.data, accommID)
-    this.setState({ images: images })
+    const images = await axios.get(`/accommodationImage/?accommodation=${accommID}`);
+    this.setState({ images: images.data })
 
     const res1 = await axios.get(
       `/accommodationHosting/${this.props.booking.hosting}/`
@@ -374,6 +361,7 @@ class Booking extends Component {
             accommodation={this.state.accommodation}
             booking_id={this.props.booking.id}
             booking={this.props.booking}
+            firstImage={this.state.images[0]}
           />
         </Card>
       </React.Fragment>

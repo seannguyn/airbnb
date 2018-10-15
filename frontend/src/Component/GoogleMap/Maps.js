@@ -107,11 +107,12 @@ export class Map extends Component {
                       lat={placeMarker.lat}
                       lng={placeMarker.lng}
                       price={placeMarker.price}
-                      name={placeMarker.title}
+                      name={placeMarker.name}
                       description={placeMarker.description}
                       accommodation={placeMarker.id}
                       address={placeMarker.address}
                       accommodationChosen={accommodation}
+                      Accomodation_Type={placeMarker.Accomodation_Type}
                     />
                   )
                 }
@@ -124,10 +125,11 @@ export class Map extends Component {
                     lat={placeMarker.lat}
                     lng={placeMarker.lng}
                     price={placeMarker.price}
-                    name={placeMarker.title}
+                    name={placeMarker.name}
                     description={placeMarker.description}
                     accommodation={placeMarker.id}
                     address={placeMarker.address}
+                    Accomodation_Type={placeMarker.Accomodation_Type}
                   />
                 )
               }

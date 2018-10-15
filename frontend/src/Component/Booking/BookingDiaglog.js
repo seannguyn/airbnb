@@ -60,6 +60,7 @@ class BookingDiaglog extends React.Component {
                   accommodation={this.props.accommodation}
                   booking_id={this.props.booking_id}
                   booking={this.props.booking}
+                  firstImage={this.props.firstImage}
                 />
               </Paper>
             </Dialog>

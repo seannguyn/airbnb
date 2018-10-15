@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography"
 // Image Slider
 import Carousel from "react-slick"
 import "../../Styles/ImageSlide.css"
-
+import axios from 'axios'
 import api from "../Services/api"
 import findImagesByAccommID from "../../utils/findImagesByAccommID"
 
@@ -51,8 +51,8 @@ class House extends React.Component {
     }
 
     if (deletable === true) {
-      alert("can delete")
-      // dispatch({type:'DELETE_HOUSE',payload:id})
+      await axios.delete(`/accommodation/${id}`)
+      dispatch({type:'DELETE_HOUSE',payload:id})
     } else {
       alert("cant delete, have hosting")
     }
@@ -70,6 +70,8 @@ class House extends React.Component {
   render() {
     const { address } = this.props.houseDetail
     const {
+      title,
+      Accomodation_Type,
       bedroom,
       bed,
       bathroom,
@@ -147,6 +149,7 @@ class House extends React.Component {
                 </CardHeader>
                 <CardBody>
                   <CardContent>
+                    <h2 className={classes.cardProductTitle} style={{margin:'15px'}}>{title}</h2>
                     <Typography gutterBottom variant="headline" component="h2">
                       {address}{" "}
                       <i
@@ -155,6 +158,7 @@ class House extends React.Component {
                         style={{ cursor: "pointer" }}
                       />
                     </Typography>
+                    <h4 align="center" style={{margin:'15px'}}>{Accomodation_Type}</h4>
                   </CardContent>
                   {this.isMyHouse === true && this.isHosting === true ? (
                     <Link

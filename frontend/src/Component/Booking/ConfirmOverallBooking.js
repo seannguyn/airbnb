@@ -171,7 +171,6 @@ class ConfirmOverallBooking extends React.Component {
                   <TabContainer dir={theme.direction}>
                     <div
                       className="container"
-                      style={{ border: "3px solid red" }}
                     >
                       <h1>YOU HAVE PAID</h1>
 
@@ -186,7 +185,6 @@ class ConfirmOverallBooking extends React.Component {
                   <TabContainer dir={theme.direction}>
                     <div
                       className="container"
-                      style={{ border: "3px solid red" }}
                     >
                       <h1>YAY, You're going on a trip :D</h1>
                     </div>
@@ -199,8 +197,8 @@ class ConfirmOverallBooking extends React.Component {
                   </TabContainer>
                 </SwipeableViews>
               </div>
-              <div className="col-4" style={{ border: "3px solid green" }}>
-                <BookingInfo price={price} detail={detail} />
+              <div className="col-4">
+                <BookingInfo price={price} detail={detail} firstImage={this.props.location.state.firstImage}/>
               </div>
             </div>
           </div>

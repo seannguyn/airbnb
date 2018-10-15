@@ -76,12 +76,17 @@ class MyBookings extends Component {
       }
     }
 
+    if(tempPastStay.length > 0) {
+      this.setState({
+        pastStay: tempPastStay
+      })
+    }
+
     if (futureStay.length === 0 && tempFutureStay.length > 0) {
       const earliestBooking = this.findEarliest(tempFutureStay)
       this.setState({
         futureStay: tempFutureStay,
         currentStay: tempCurrentStay,
-        pastStay: tempPastStay,
         earliestBooking: earliestBooking
       })
     }
@@ -116,14 +121,17 @@ class MyBookings extends Component {
     }
     for (let i = 0; i < tempPastStay.length; i++) {
       let reviews = []
-      await axios
-        .get(`/accommodation/${tempPastStay[i].accommodation}/reviews/`)
-        .then(response => {
-          reviews = response.data
-        })
-        .catch(error => {
-          reviews = []
-        })
+      const count = await axios.get(`/reviewCounter/${tempPastStay[i].accommodation}/`)
+      if (count.data.count > 0) {
+        await axios
+          .get(`/accommodation/${tempPastStay[i].accommodation}/reviews/`)
+          .then(response => {
+            reviews = response.data
+          })
+          .catch(error => {
+            reviews = []
+          })
+      }
 
       for (let j = 0; j < reviews.length; j++) {
         if (

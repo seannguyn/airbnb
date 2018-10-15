@@ -77,8 +77,9 @@ export default class ReviewPopup extends React.Component {
               margin="dense"
               id="name"
               label="Comment"
-              type="email"
+              type="text"
               fullWidth
+              multiline
               onChange={this.handleTextFieldChange}
             />
           </DialogContent>

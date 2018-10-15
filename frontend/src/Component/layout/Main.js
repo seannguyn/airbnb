@@ -27,8 +27,8 @@ const styles = theme => ({
   content: {
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit,
-    width: "90%",
-    height: "90%"
+    width: "100%",
+    height: "100%"
   }
 });
 

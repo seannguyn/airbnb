@@ -135,11 +135,8 @@ class AccommodationDetail extends Component {
                   <div className="row" />
                   <div className="row">
                     <div className="col-8">
-                      <div className="description">
-                        <h4>Title: {title}</h4>
-                      </div>
-                      <div className="description">
-                        <h4>Description: {description}</h4>
+                      <div className="description" style={{margin:'20px'}}>
+                        <h3>{title}</h3>
                       </div>
                       <div className="row">
                         <i className="fas fa-door-open"> {bedroom} bedrooms</i>
@@ -166,6 +163,10 @@ class AccommodationDetail extends Component {
                             )}
                           </Carousel>
                         </div>
+                      </div>
+                      <div className="description">
+                        <h4>Description</h4> <br/>
+                        <h4>{description}</h4>
                       </div>
                     </div>
                     <div className="col-4">
