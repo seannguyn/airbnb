@@ -317,7 +317,7 @@ class MyBookings extends Component {
                 })
               : null}
           </div>
-          <div className="row">
+          <div className="container">
             {myBookings.length !== 0 ? null : (
               <p>You have not booked any accommodation with us</p>
             )}

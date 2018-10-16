@@ -138,7 +138,7 @@ class AccommodationDetail extends Component {
                       <div className="description" style={{margin:'20px'}}>
                         <h3>{title}</h3>
                       </div>
-                      <div className="row">
+                      <div className="row" style={{margin:'20px'}}>
                         <i className="fas fa-door-open"> {bedroom} bedrooms</i>
                         &#160;
                         <i className="fas fa-bed"> {bed} bed</i>

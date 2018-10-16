@@ -120,7 +120,8 @@ class Hosting extends Component {
       date_free: date_free,
       price: price,
       guest: guest,
-      location: res.data.address
+      location: res.data.address,
+      Accomodation_Type: res.data.Accomodation_Type,
     }
 
     await axios.post("/search/", searchAccommodation).catch(error => {

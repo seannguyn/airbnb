@@ -354,12 +354,16 @@ class SearchHostingViews(viewsets.ModelViewSet):
         price_lower = self.request.query_params.get('price_lower', None)
         guest = self.request.query_params.get('guest', None)
         location = self.request.query_params.get('location', None)
+        Accommodation_Type = self.request.query_params.get('Accommodation_Type', None)
 
         if guest is not None:
             queryset = queryset.filter(guest__gte=guest)
 
         if location is not None:
             queryset = queryset.filter(location__icontains=location)
+
+        if Accommodation_Type is not None:
+            queryset = queryset.filter(Accomodation_Type__icontains=Accommodation_Type)
 
         if price_upper is not None:
             queryset = queryset.filter(price__lte=price_upper)

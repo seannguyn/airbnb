@@ -7,6 +7,14 @@ from django.db import models
 
 # Create your models here.
 
+ACCOMMODATION_TYPES = (
+    ('Room', 'Room'),
+    ('Studio', 'Studio'),
+    ('Apartment', 'Apartment'),
+    ('House', 'House'),
+    ('Villa', 'Villa'),
+)
+
 class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -15,13 +23,6 @@ class UserInfo(models.Model):
 
 
 class Accommodation(models.Model):
-    ACCOMMODATION_TYPES = (
-        ('Room', 'Room'),
-        ('Studio', 'Studio'),
-        ('Apartment', 'Apartment'),
-        ('House', 'House'),
-        ('Villa', 'Villa'),
-    )
 
     STATES = (
         ('NSW', 'NSW'),
@@ -119,6 +120,7 @@ class Search(models.Model):
     price = models.PositiveIntegerField(blank=False, default=100)
     guest = models.IntegerField(blank=False, default=1)
     location = models.CharField(blank=False, max_length=100, default='default')
+    Accomodation_Type = models.CharField(blank=False, max_length=100, choices=ACCOMMODATION_TYPES, default="House")
 
 
 class ReviewCount(models.Model):
