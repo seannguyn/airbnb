@@ -1,14 +1,13 @@
 import React from "react"
+import {Map} from "../GoogleMap/Maps.js"
+
+import Button from "@material-ui/core/Button/Button";
+
 import {Consumer} from "../../Context.js"
 import AllHosting from "../Function/AllHosting"
 import SearchSection from "../Search/SearchSection"
-import MapList from "../Search/MapList"
-import {withStyles} from "@material-ui/core/styles"
-import {Map} from "../GoogleMap/Maps.js"
 
-const styles = theme => ({});
-
-class AllHostingContext extends React.Component {
+export default class AllHostingContext extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,43 +22,61 @@ class AllHostingContext extends React.Component {
   }
 
   render() {
+    const {display} = this.state;
+
+    const btnProps = {
+      className: "mx-3",
+      size: "large",
+      variant: "contained",
+    };
+
+    const MapListSwitch = () => {
+      return (
+        <div className="row align-self-center">
+          <Button
+            {...btnProps}
+            color={display === "list" ? "secondary" : "default"}
+            onClick={this.changeDisplay.bind(this, "list")}
+          >
+            List
+          </Button>
+
+          <Button
+            {...btnProps}
+            color={display === "map" ? "secondary" : "default"}
+            onClick={this.changeDisplay.bind(this, "map")}
+          >
+            Map
+          </Button>
+        </div>
+      )
+    };
+
     return (
       <Consumer>
         {value => {
           const {AllHostingList, HouseList} = value;
-          let rendering = [];
-
-          if (this.state.display === "list") {
-            rendering.push(
-              <AllHosting
-                key="list"
-                history={this.props.history}
-                AllHostingList={AllHostingList}
-                HouseList={HouseList}
-              />
-            )
-          } else {
-            rendering.push(
-              <div className="container" key="map">
-                <Map/>
-              </div>
-            )
-          }
 
           return (
-            <div>
+
+            <div className="d-flex p-2 flex-column justify-content-center">
               <SearchSection/>
-              <MapList
-                display={this.state.display}
-                changeDisplay={this.changeDisplay.bind(this)}
-              />
-              {rendering}
+
+              <MapListSwitch/>
+
+              {this.state.display === "list"
+                ? <AllHosting
+                  key="list"
+                  history={this.props.history}
+                  AllHostingList={AllHostingList}
+                  HouseList={HouseList}/>
+                : <Map/>
+              }
             </div>
+
           )
         }}
       </Consumer>
     )
   }
 }
-
-export default withStyles(styles)(AllHostingContext)

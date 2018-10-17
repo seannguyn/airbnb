@@ -1,9 +1,7 @@
 import React from "react"
 import axios from "axios"
 import moment from "moment"
-import PropTypes from "prop-types"
 
-import {withStyles} from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import TextField from "@material-ui/core/TextField"
@@ -142,130 +140,130 @@ export default class SearchSection extends React.Component {
         {value => {
           const {dispatch, searchStatus, AllHostingList, HouseList} = value;
           return (
-            <div className="d-flex flex-row justify-content-center my-5">
+            <div className="d-inline-flex justify-content-center my-5">
 
-                <Paper className="d-inline-flex" elevation={1}>
-                  <div className="container mx-5">
-                    <Typography className="mt-1" align="center" component="h2" variant="display3" gutterBottom>
-                      Find your next stay
-                    </Typography>
+              <Paper className="d-inline-flex" elevation={1}>
+                <div className="container mx-5">
+                  <Typography className="mt-1" align="center" component="h2" variant="display3" gutterBottom>
+                    Find your next stay
+                  </Typography>
 
-                    <form onSubmit={this.onSubmit.bind(this, dispatch, HouseList)}>
-                      <div className="row">
-                        <div className="col-12">
-                          <TextField
-                            label="Location"
-                            value={this.state.location}
-                            onChange={this.handleChange("location")}
-                            margin="normal"
-                            variant="outlined"
-                            type="text"
-                            fullWidth
-                          />
-                        </div>
+                  <form onSubmit={this.onSubmit.bind(this, dispatch, HouseList)}>
+                    <div className="row">
+                      <div className="col-12">
+                        <TextField
+                          label="Location"
+                          value={this.state.location}
+                          onChange={this.handleChange("location")}
+                          margin="normal"
+                          variant="outlined"
+                          type="text"
+                          fullWidth
+                        />
                       </div>
+                    </div>
 
-                      <div className="row mt-2">
-                        <div className="col-6">
-                          <FormControl fullWidth>
-                            <InputLabel htmlFor="accom-type">Accommodation type</InputLabel>
-                            <Select
-                              value={Accommodation_Type}
-                              onChange={this.handleChange("Accommodation_Type")}
-                              inputProps={{
-                                name: "Accommodation_Type",
-                                id: "accom-type"
-                              }}
-                            >
-                              <MenuItem value="Room">Room</MenuItem>
-                              <MenuItem value="Studio">Studio</MenuItem>
-                              <MenuItem value="House">House</MenuItem>
-                              <MenuItem value="Apartment">Apartment</MenuItem>
-                              <MenuItem value="Villa">Villa</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </div>
+                    <div className="row mt-2">
+                      <div className="col-6">
+                        <FormControl fullWidth>
+                          <InputLabel htmlFor="accom-type">Accommodation type</InputLabel>
+                          <Select
+                            value={Accommodation_Type}
+                            onChange={this.handleChange("Accommodation_Type")}
+                            inputProps={{
+                              name: "Accommodation_Type",
+                              id: "accom-type"
+                            }}
+                          >
+                            <MenuItem value="Room">Room</MenuItem>
+                            <MenuItem value="Studio">Studio</MenuItem>
+                            <MenuItem value="House">House</MenuItem>
+                            <MenuItem value="Apartment">Apartment</MenuItem>
+                            <MenuItem value="Villa">Villa</MenuItem>
+                          </Select>
+                        </FormControl>
                       </div>
+                    </div>
 
-                      <div className="row">
-                        <div className="col-6">
-                          <TextField
-                            label="Min price"
-                            name="price_lower"
-                            error={this.state.error}
-                            value={this.state.price_lower}
-                            onChange={this.handleChange("price_lower")}
-                            margin="normal"
-                            variant="outlined"
-                            type="number"
-                            fullWidth
-                          />
-                        </div>
-                        <div className="col-6">
-                          <TextField
-                            label="Max price"
-                            name="price_upper"
-                            error={this.state.error}
-                            value={this.state.price_upper}
-                            onChange={this.handleChange("price_upper")}
-                            margin="normal"
-                            variant="outlined"
-                            type="number"
-                            fullWidth
-                          />
-                        </div>
+                    <div className="row">
+                      <div className="col-6">
+                        <TextField
+                          label="Min price"
+                          name="price_lower"
+                          error={this.state.error}
+                          value={this.state.price_lower}
+                          onChange={this.handleChange("price_lower")}
+                          margin="normal"
+                          variant="outlined"
+                          type="number"
+                          fullWidth
+                        />
                       </div>
-
-                      <div className="row">
-                        <div className="col-6">
-                          <GuestSelect
-                            guest={this.state.guest}
-                            handleGuest={this.handleGuest.bind(this)}
-                          />
-                        </div>
-                        <div className="col-6">
-                          <DateRangePicker
-                            startDate={this.state.startDate}
-                            startDateId="1"
-                            endDateId="2"
-                            endDate={this.state.endDate}
-                            onDatesChange={({startDate, endDate}) => this.setState({startDate, endDate})}
-                            focusedInput={this.state.focusedInput}
-                            onFocusChange={focusedInput => this.setState({focusedInput})}
-                            showClearDates={true}
-                            minimumNights={2}
-                          />
-                        </div>
+                      <div className="col-6">
+                        <TextField
+                          label="Max price"
+                          name="price_upper"
+                          error={this.state.error}
+                          value={this.state.price_upper}
+                          onChange={this.handleChange("price_upper")}
+                          margin="normal"
+                          variant="outlined"
+                          type="number"
+                          fullWidth
+                        />
                       </div>
+                    </div>
 
-                      <br/>
-                      <Divider/>
-
-                      <div className="row justify-content-center mt-3">
-                        <div className="col-6">
-                          <Button color="primary" variant="contained" type="submit"
-                                  fullWidth disabled={disabledSearch}>
-                            Search
-                          </Button>
-                        </div>
+                    <div className="row">
+                      <div className="col-6">
+                        <GuestSelect
+                          guest={this.state.guest}
+                          handleGuest={this.handleGuest.bind(this)}
+                        />
                       </div>
-                    </form>
-                  </div>
-                </Paper>
+                      <div className="col-6">
+                        <DateRangePicker
+                          startDate={this.state.startDate}
+                          startDateId="1"
+                          endDateId="2"
+                          endDate={this.state.endDate}
+                          onDatesChange={({startDate, endDate}) => this.setState({startDate, endDate})}
+                          focusedInput={this.state.focusedInput}
+                          onFocusChange={focusedInput => this.setState({focusedInput})}
+                          showClearDates={true}
+                          minimumNights={2}
+                        />
+                      </div>
+                    </div>
 
-                <Divider/>
+                    <br/>
+                    <Divider/>
 
-                <SearchStatus
-                  search={searchStatus}
-                  location={location}
-                  startDate={startDate}
-                  endDate={endDate}
-                  price_lower={price_lower}
-                  price_upper={price_upper}
-                  guest={guest}
-                  Accommodation_Type={Accommodation_Type}
-                  accommNum={AllHostingList.length}
-                />
+                    <div className="row justify-content-center mt-3">
+                      <div className="col-6">
+                        <Button color="primary" variant="contained" type="submit"
+                                fullWidth disabled={disabledSearch}>
+                          Search
+                        </Button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </Paper>
+
+              <Divider/>
+
+              <SearchStatus
+                search={searchStatus}
+                location={location}
+                startDate={startDate}
+                endDate={endDate}
+                price_lower={price_lower}
+                price_upper={price_upper}
+                guest={guest}
+                Accommodation_Type={Accommodation_Type}
+                accommNum={AllHostingList.length}
+              />
             </div>
           )
         }}
@@ -273,7 +271,3 @@ export default class SearchSection extends React.Component {
     )
   }
 }
-
-SearchSection.propTypes = {
-  classes: PropTypes.object.isRequired
-};
