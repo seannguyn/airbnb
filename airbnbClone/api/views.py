@@ -1,42 +1,32 @@
-from django.shortcuts import render
 # from api.serializers import UserSerializer
 
-from django.contrib.auth.models import User
-from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search, ReviewCount, BookRequest
-from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer,BookingSerializer, ReviewSerializer, UserInfoSerializer, SearchSerializer, ReviewCountSerializer,BookRequestSerializer
-from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-from datetime import datetime, timedelta
-from django.http import HttpResponse, HttpResponseNotFound, Http404
-from api import views
-from .functions import compareDate
-import operator
 import functools
-from django.db.models import Q
+import operator
+from datetime import datetime, timedelta
+
 # Facebook
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from rest_auth.social_serializers import TwitterLoginSerializer
-from rest_auth.registration.views import SocialLoginView
-
-#Twitter
+# Twitter
 from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
+from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search, \
+    ReviewCount, BookRequest
+from api.serializers import AccommodationSerializer, AccommodationImageSerializer, AccommodationHostingSerializer, \
+    BookingSerializer, ReviewSerializer, UserInfoSerializer, SearchSerializer, ReviewCountSerializer, \
+    BookRequestSerializer
+from django.db.models import Q
+from django.http import Http404
 from rest_auth.registration.views import SocialLoginView
 from rest_auth.social_serializers import TwitterLoginSerializer
-
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, generics
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import action, api_view, permission_classes
+from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.status import (
-    HTTP_400_BAD_REQUEST,
-    HTTP_404_NOT_FOUND,
-    HTTP_200_OK
-)
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.decorators import action, api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
+from .functions import compareDate
 
 
 class FacebookLogin(SocialLoginView):
@@ -70,6 +60,8 @@ class AccommodationView(viewsets.ModelViewSet):
 
 
 """ Get accomodation review """
+
+
 class AccommodationView(viewsets.ModelViewSet):
     queryset = Accommodation.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
@@ -132,6 +124,7 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     """ handling PUT request and backend validation"""
+
     def update(self, request, pk, format=None):
 
         new_date_start = request.data['date_start']
@@ -139,7 +132,7 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         new_price = request.data['price']
         new_description = request.data['description']
 
-        myHostObject = AccommodationHosting.objects.get(pk=pk) #self.get_object(pk)
+        myHostObject = AccommodationHosting.objects.get(pk=pk)  # self.get_object(pk)
 
         myHostObject.date_start = new_date_start
         myHostObject.date_end = new_date_end
@@ -152,6 +145,7 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     """ handling POST request backend validation"""
+
     def create(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
 
@@ -187,7 +181,6 @@ class AccommodationHostingView(viewsets.ModelViewSet):
 
         return queryset_2
 
-
     # user_pk = self.kwargs['user_pk']
 
     #     if user_pk is not None:
@@ -197,8 +190,8 @@ class AccommodationHostingView(viewsets.ModelViewSet):
 
     #         return queryset
 
-class BookingView(viewsets.ModelViewSet):
 
+class BookingView(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
 
@@ -218,6 +211,8 @@ class BookingView(viewsets.ModelViewSet):
 
 
 """ get all the reviews """
+
+
 class GetReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
 
@@ -230,8 +225,9 @@ class GetReviews(viewsets.ModelViewSet):
 
 """ GET the reviews made by an user """
 """ GET /users/{user_id}/reviews """
-class UserReviews(viewsets.ModelViewSet):
 
+
+class UserReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
@@ -250,13 +246,14 @@ class UserReviews(viewsets.ModelViewSet):
 
 """ Get reviews for a specific accommodation """
 """ GET accommodation/{accomodation_pk}/reviews/ """
-class AccomodationReviews(viewsets.ModelViewSet):
 
+
+class AccomodationReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        queryset = Review.objects.all() #initialise queryset
+        queryset = Review.objects.all()  # initialise queryset
         accommodation_pk = self.kwargs['accommodation_pk']
 
         if accommodation_pk is not None:
@@ -270,14 +267,14 @@ class AccomodationReviews(viewsets.ModelViewSet):
 
 """ GET all current users """
 """ /users/ """
-class Users(viewsets.ModelViewSet):
 
+
+class Users(viewsets.ModelViewSet):
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
 
-
-
     """ This would get all users """
+
     def get_queryset(self):
         queryset = UserInfo.objects.all()
         # user_pk = None
@@ -311,11 +308,13 @@ class Users(viewsets.ModelViewSet):
 
 
 """ Custom authentication - return Token, username and email """
+
+
 class CustomAuthToken(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
-                                         context={'request': request})
+                                           context={'request': request})
         print("DATA: ", request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
@@ -328,6 +327,7 @@ class CustomAuthToken(ObtainAuthToken):
             'username': user.username
         })
 
+
 class SearchViews(viewsets.ModelViewSet):
     queryset = Search.objects.all()
     # queryset = Accomodation.objects.filter(user__username__exact="sean")
@@ -336,6 +336,7 @@ class SearchViews(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Search.objects.all()
         return queryset
+
 
 class SearchHostingViews(viewsets.ModelViewSet):
     queryset = Search.objects.all()
@@ -371,24 +372,24 @@ class SearchHostingViews(viewsets.ModelViewSet):
             begin = datetime.strptime(date_start, '%Y-%m-%d')
             endin = datetime.strptime(date_end, '%Y-%m-%d')
 
-            delta = endin - begin         # timedelta
+            delta = endin - begin  # timedelta
 
             y = []
             for i in range(delta.days + 1):
                 x = begin + timedelta(i)
-                y.append(str(x.date())+",")
+                y.append(str(x.date()) + ",")
 
             print(y)
 
             condition = functools.reduce(operator.and_, [Q(date_free__icontains=day) for day in y])
             queryset = queryset.filter(condition)
 
-
         newQ = list(queryset.values_list('accommodation', flat=True))
         print(newQ)
         queryset_accommodation = queryset_accommodation.filter(accommodation__in=set(newQ))
 
         return queryset_accommodation
+
 
 class ReviewCountViews(viewsets.ModelViewSet):
     queryset = ReviewCount.objects.all()
@@ -398,6 +399,7 @@ class ReviewCountViews(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = ReviewCount.objects.all()
         return queryset
+
 
 class BookRequestViews(viewsets.ModelViewSet):
     queryset = BookRequest.objects.all()
