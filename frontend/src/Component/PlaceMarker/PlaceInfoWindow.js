@@ -24,7 +24,7 @@ import starCalculator from "../../utils/starCalculator"
 export class PlaceInfoWindow extends Component {
   render() {
     const {
-      description,
+      Accomodation_Type,
       name,
       price,
       reviews,
@@ -33,8 +33,8 @@ export class PlaceInfoWindow extends Component {
       accommodation,
       address
     } = this.props
-    const avgRating = 0
-    if (reviews !== undefined) starCalculator(reviews)
+    var avgRating = 0
+    if (reviews !== undefined) avgRating = starCalculator(reviews)
     let settings = {
       dots: true,
       infinite: true,
@@ -57,9 +57,6 @@ export class PlaceInfoWindow extends Component {
     return (
       <InfoWindow onClose={this.onInfoWindowClose}>
         <div>
-          <h1>{name}</h1>
-          <p>{description}</p>
-          <span>${price}</span>
           <Card
             product
             className={classes.cardHover}
@@ -85,13 +82,10 @@ export class PlaceInfoWindow extends Component {
             </Link>
             <CardBody>
               <div className={classes.cardHoverUnder}>
-                <Link to={`/accommodations/${accommodation}`}>
-                  <h4 className={classes.cardProductTitle}>
-                    {address}
-                    {/* <i onClick={this.handleExpand.bind(this)} className="fas fa-sort-down" style={{cursor: 'pointer'}}/> */}
-                  </h4>
-                </Link>
-                {/* <p className={classes.cardProductDesciprion}> */}
+
+                <h2 className={classes.cardProductTitle} style={{margin:'15px'}}>{name}</h2>
+                <h4 className={classes.cardProductTitle} style={{margin:'10px'}}>{address}</h4>
+                <h4>{Accomodation_Type}</h4>
 
                 {reviews !== undefined ? (
                   <div>
@@ -105,14 +99,7 @@ export class PlaceInfoWindow extends Component {
                         <img src={like} className="icon" alt="full" />
                       }
                     />
-                    <Link
-                      to=""
-                      onClick={() =>
-                        this.setState({ seeReviews: !this.state.seeReviews })
-                      }
-                    >
-                      ({reviews.length})
-                    </Link>
+
                   </div>
                 ) : (
                   <Rating

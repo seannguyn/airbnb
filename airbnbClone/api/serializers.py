@@ -63,7 +63,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
 class SearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Search
-        fields = ('accommodation', 'date_free', 'price', 'guest', 'location')
+        fields = ('accommodation', 'date_free', 'price', 'guest', 'location', 'Accomodation_Type')
 
 
 class ReviewCountSerializer(serializers.ModelSerializer):

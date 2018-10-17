@@ -30,7 +30,7 @@ class MyHouses extends Component {
             }
 
             return (
-              <React.Fragment>
+              <div className="container">
                 <h1>My Houses</h1>
                 <Link to="/addHouse">
                   <Button variant="raised" color="primary">
@@ -47,7 +47,7 @@ class MyHouses extends Component {
                     />
                   ))}
                 </div>
-              </React.Fragment>
+              </div>
             )
           }
         }}

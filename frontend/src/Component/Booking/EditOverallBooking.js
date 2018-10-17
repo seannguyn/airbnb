@@ -64,7 +64,7 @@ class EditOverallBooking extends React.Component {
     const { theme } = this.props
 
     if (typeof this.props.location.state !== "undefined") {
-      const { detail, booker, booking } = this.props.location.state
+      const { detail, booker, booking, firstImage } = this.props.location.state
       const price = (
         <Price
           pricePerNight={parseFloat(detail.price.pricePerNight)}
@@ -154,7 +154,6 @@ class EditOverallBooking extends React.Component {
                   <TabContainer dir={theme.direction}>
                     <div
                       className="container"
-                      style={{ border: "3px solid red" }}
                     >
                       <Payment
                         booking={booking}
@@ -179,8 +178,8 @@ class EditOverallBooking extends React.Component {
                   </TabContainer>
                 </SwipeableViews>
               </div>
-              <div className="col-4" style={{ border: "3px solid green" }}>
-                <BookingInfo price={price} detail={detail} />
+              <div className="col-4">
+                <BookingInfo price={price} detail={detail} firstImage={firstImage} />
               </div>
             </div>
           </div>
@@ -190,6 +189,10 @@ class EditOverallBooking extends React.Component {
       return <h1>Illegal to refresh</h1>
     }
   }
+}
+
+EditOverallBooking.defaultProps = {
+  firstImage:{}
 }
 
 export default withStyles(styles, { withTheme: true })(EditOverallBooking)

@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography"
 import Avatar from "@material-ui/core/Avatar"
 import Chip from "@material-ui/core/Chip"
 import PlaceIcon from "@material-ui/icons/Place"
+import HomeIcon from "@material-ui/icons/Home"
 import FaceIcon from "@material-ui/icons/Face"
 import DateRangeIcon from "@material-ui/icons/DateRange"
 import AssessmentIcon from "@material-ui/icons/Assessment"
@@ -57,10 +58,14 @@ class SearchStatus extends React.Component {
       endDate,
       price_lower,
       price_upper,
-      search
+      search,
+      Accommodation_Type
     } = nextProps
     var params = 0
     if (location.length > 0) {
+      params += 1
+    }
+    if (Accommodation_Type.length > 0) {
       params += 1
     }
     if (startDate !== null && endDate !== null) {
@@ -85,9 +90,26 @@ class SearchStatus extends React.Component {
       endDate,
       guest,
       price_lower,
-      price_upper
+      price_upper,
+      Accommodation_Type,
     } = this.props
     var chips = []
+    if (Accommodation_Type.length > 0) {
+      chips.push(
+        <Chip
+          key="type"
+          label={Accommodation_Type}
+          color="secondary"
+          avatar={
+            <Avatar>
+              <HomeIcon />
+            </Avatar>
+          }
+          variant="outlined"
+          className={classes.chip}
+        />
+      )
+    }
     if (location.length > 0) {
       chips.push(
         <Chip
@@ -194,12 +216,12 @@ class SearchStatus extends React.Component {
     const { classes } = this.props
 
     const chips = this.makechip(classes)
-
     if (this.props.search === true) {
       return (
         <Consumer>
           {value => {
             const { dispatch, HouseList } = value
+
             return (
               <div className="row">
                 <div className="col-12">
@@ -250,7 +272,8 @@ SearchStatus.defaultProps = {
   endDate: null,
   guest: 0,
   price_lower: "",
-  price_upper: ""
+  price_upper: "",
+  Accommodation_Type: "",
 }
 
 export default withStyles(styles)(SearchStatus)

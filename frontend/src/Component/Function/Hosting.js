@@ -158,7 +158,7 @@ class Hosting extends React.Component {
         <Card
           product={true}
           className={classes.cardHover}
-          style={{ width: '20vw', height: '22vw' }}
+          style={{ width: '20vw', height: '24vw' }}
         >
           <CardHeader style={{ marginBottom: '0rem' }} image>
             <Link to={`/accommodations/${id}`}>
@@ -168,9 +168,10 @@ class Hosting extends React.Component {
 
           <CardBody>
             <div className={classes.cardHoverUnder}>
-              <h4 className={classes.cardProductTitle}>{house.address}</h4>
+              <h2 className={classes.cardProductTitle} style={{margin:'15px'}}>{house.title}</h2>
+              <h4 className={classes.cardProductTitle} style={{margin:'10px'}}>{house.address}</h4>
               <h4>{house.Accomodation_Type}</h4>
-              <ReviewSummary />
+              <ReviewSummary/>
               <ReviewPreview
                 open={this.state.seeReviews}
                 handleClose={this.showReview}
@@ -179,7 +180,7 @@ class Hosting extends React.Component {
             </div>
           </CardBody>
 
-          <CardFooter product>
+          <CardFooter product style={{marginTop:'10px'}}>
             <div className={classes.price}>
               <h4>
                 ${SingleHost.price}

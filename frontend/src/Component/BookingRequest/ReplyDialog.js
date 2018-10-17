@@ -72,9 +72,9 @@ class ReplyDialog extends React.Component {
                 classes={{paper: classes.dialogPaper}}
               >
                 <DialogContent>
-                  <Typography style={{width: '100%', marginBottom: '10px'}}
+                  <Typography style={{width: '100%', marginBottom: '10px', fontSize:'30px'}}
                               variant="headline">{this.props.reply.title}</Typography>
-                  <Typography style={{width: '100%', marginBottom: '10px'}}>{this.props.reply.content}</Typography>
+                            <Typography style={{width: '100%', marginBottom: '10px', fontSize:'20px'}}>{this.props.reply.content}</Typography>
                   <TextField
                     className={classes.textField}
                     label="Enter message here"

@@ -11,7 +11,8 @@ export function addPlaceMaker(AllHostingList, HouseList) {
           price: AllHostingList[i].price,
           name: HouseList[j].title,
           description: HouseList[j].description,
-          address: HouseList[j].address
+          address: HouseList[j].address,
+          Accomodation_Type: HouseList[j].Accomodation_Type
         }
         places.push(info)
       }

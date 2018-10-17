@@ -51,7 +51,7 @@ class ImageInput extends React.Component {
   render() {
     // send back the file, delete from the parent state
     const { fileURL, file, imgId } = this.state
-
+    console.log("fileURL", fileURL);
     return (
       <div
         id="home_images"
@@ -76,14 +76,15 @@ class ImageInput extends React.Component {
               <div className="va-middle text-center">
                 <div className="img__icon-plus-grey img-center" />
                 <div className="text-gray space-top-2">
-                  <input
+                  {fileURL === undefined ? <div><input
                     onChange={this.uploadPic.bind(this)}
                     type="file"
                     name="imgInput"
                     className="imgInput"
                     tabIndex="-1"
                   />
-                  <span>Add Photo</span>
+                <span>Add Photo</span> </div> : null}
+
                   <br />
                   <img
                     height="150px"
@@ -92,13 +93,14 @@ class ImageInput extends React.Component {
                     alt="images"
                   />
                   <br />
+                  {fileURL === undefined ? null :
                   <button
                     style={{ height: "25px", width: "60px" }}
                     onClick={this.deletePic.bind(this, fileURL, file, imgId)}
                     className="btn btn-danger"
                   >
                     X
-                  </button>
+                  </button>}
                 </div>
               </div>
             </div>

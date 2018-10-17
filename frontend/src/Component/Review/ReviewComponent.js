@@ -58,7 +58,8 @@ class ReviewComponent extends React.Component {
     var filteredReview = []
 
     for (var i = 0; i < review.length; i++) {
-      if (review[i].review.includes(searchKey)) {
+      const normalizeReview = review[i].review.toLowerCase()
+      if (normalizeReview.includes(searchKey.toLowerCase())) {
         filteredReview.push(review[i])
       }
     }

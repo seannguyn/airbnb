@@ -444,6 +444,7 @@ class AddHouse extends Component {
                     <TextField
                       label="Description"
                       value={description}
+                      multiline
                       onChange={this.onChange.bind(this)}
                       name="description"
                       type="text"

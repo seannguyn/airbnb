@@ -18,11 +18,10 @@ class CardForm extends React.Component {
   state = {
     value: 0,
     error: false,
-    card_number: "4900000000000000",
-    name: "sean",
-    valid: "12/12",
-    cvc: "555",
-    focus: "name"
+    card_number: "",
+    name: "",
+    valid: "",
+    cvc: "",
   }
 
   errorCheck(credit) {
@@ -54,6 +53,7 @@ class CardForm extends React.Component {
 
   onChange(e) {
     this.setState({ error: false })
+    console.log("here", e.target.name, e.target.value);
     if (e.target.name === "valid" && e.target.value.length <= 5) {
       if (e.target.value.length === 1) {
         if (e.target.value > 1) {
@@ -87,7 +87,7 @@ class CardForm extends React.Component {
       cvc: this.state.cvc
     }
 
-    this.props.onChange(credit)
+    // this.props.onChange(credit)
   }
 
   onFocus(focus) {
@@ -136,7 +136,7 @@ class CardForm extends React.Component {
                   onChange={this.onChange.bind(this)}
                   onFocus={this.onFocus.bind(this, "number")}
                   InputLabelProps={{ shrink: true }}
-                  type="number"
+                  type="text"
                 />
               </FormControl>
               <FormControl

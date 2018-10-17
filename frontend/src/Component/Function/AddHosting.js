@@ -67,12 +67,23 @@ class Hosting extends Component {
       startDate: {},
       endDate: {},
 
-      error: {}
+      error_guest: false,
+      error_price: false,
     }
   }
 
   //set State when changing text
   onChange = e => {
+    if (e.target.name === "guest") {
+      this.setState({
+        error_guest: e.target.value <= 0 ? true : false,
+      })
+    }
+    if (e.target.name === "price") {
+      this.setState({
+        error_price: e.target.value <= 0 ? true : false,
+      })
+    }
     this.setState({ [e.target.name]: e.target.value })
   }
 
@@ -109,7 +120,8 @@ class Hosting extends Component {
       date_free: date_free,
       price: price,
       guest: guest,
-      location: res.data.address
+      location: res.data.address,
+      Accomodation_Type: res.data.Accomodation_Type,
     }
 
     await axios.post("/search/", searchAccommodation).catch(error => {
@@ -130,7 +142,7 @@ class Hosting extends Component {
     )
 
     dispatch({ type: "HOSTING", payload: postHosting.data })
-
+    window.location.reload()
     this.props.history.push("/myHouses")
 
     this.props.onPresentSnackbar("success", "Accommodation is live")
@@ -144,8 +156,10 @@ class Hosting extends Component {
       check_in,
       check_out,
       date_start,
-      date_end
+      date_end,
+      guest,
     } = this.state
+    const disable = price === "" || guest <= 0 ? true : false;
     return (
       <Consumer>
         {value => {
@@ -238,9 +252,25 @@ class Hosting extends Component {
                     margin="normal"
                     required
                     fullWidth
+                    style={{ marginBottom: "15px" }}>
+                    <TextField
+                      error={this.state.error_guest}
+                      label="Guest"
+                      value={guest}
+                      onChange={this.onChange.bind(this)}
+                      name="guest"
+                      type="number"
+                      className={classes.textField}
+                    />
+                  </FormControl>
+                  <FormControl
+                    margin="normal"
+                    required
+                    fullWidth
                     style={{ marginBottom: "15px" }}
                   >
                     <TextField
+                      error={this.state.error_price}
                       label="price"
                       value={price}
                       onChange={this.onChange.bind(this)}
@@ -269,6 +299,7 @@ class Hosting extends Component {
                     variant="raised"
                     color="primary"
                     className={classes.submit}
+                    disabled={disable}
                   >
                     Host this accommodation
                   </Button>

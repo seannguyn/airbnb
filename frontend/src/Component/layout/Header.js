@@ -20,6 +20,7 @@ import MenuItem from "@material-ui/core/MenuItem"
 import Menu from "@material-ui/core/Menu"
 import LoginDialog from "./LoginDialog"
 import green from "@material-ui/core/colors/green"
+import {withRouter} from 'react-router-dom';
 
 const customColor = createMuiTheme({
   palette: {
@@ -102,7 +103,11 @@ class Header extends Component {
   }
 
   homePage() {
+    this.props.history.push('/')
+  }
 
+  aboutus() {
+    this.props.history.push('/aboutus')
   }
 
   render() {
@@ -112,7 +117,7 @@ class Header extends Component {
     return (
       <Consumer>
         {value => {
-          const { dispatch, sidebar_show, logged_in } = value
+          const { dispatch, sidebar_show, logged_in, currentUser } = value
           return (
             <div>
               <MuiThemeProvider theme={customColor}>
@@ -134,7 +139,7 @@ class Header extends Component {
                       <MenuIcon />
                     </IconButton>
 
-                    
+
                     <Typography
                       style={{ flex: 1 }}
                       className={classNames(!logged_in && classes.transparent)}
@@ -142,18 +147,11 @@ class Header extends Component {
                       color="inherit"
                       noWrap
                     >
-                      <Link to="/">
-                        <Button color="inherit">  
-                          portbnb
-                        </Button> 
-                      </Link>
+
+                      <Typography onClick={this.homePage.bind(this)} style={{ fontSize: '25px', cursor:'pointer' }}>portbnb</Typography>
                     </Typography>
-                    
-                    <Link to="/aboutus">
-                      <Button color="inherit">  
-                        ABOUT US
-                      </Button> 
-                    </Link>   
+
+                    {logged_in === true ? <Typography style={{ fontSize: '15px' }}>{currentUser[0].username}</Typography> : null}
 
                     {logged_in === true ? (
                       <div>
@@ -167,6 +165,7 @@ class Header extends Component {
                         >
                           <PersonIcon />
                         </Avatar>
+
                         <Menu
                           id="menu-appbar"
                           anchorEl={anchorEl}
@@ -218,4 +217,4 @@ class Header extends Component {
     )
   }
 }
-export default withStyles(styles, { withTheme: true })(Header)
+export default withRouter(withStyles(styles, { withTheme: true })(Header))

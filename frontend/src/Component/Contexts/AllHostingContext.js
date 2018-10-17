@@ -40,9 +40,9 @@ class AllHostingContext extends React.Component {
             )
           } else {
             rendering.push(
-              <h1 key="map">
+              <div className="container" key="map">
                 <Map/>
-              </h1>
+              </div>
             )
           }
 

@@ -33,9 +33,9 @@ class AllHosting extends React.Component {
       .map(SingleHost => this.getData(SingleHost));
 
     return (
-      <React.Fragment>
+      <div className="container">
         <div className="row">{SingleHosting}</div>
-      </React.Fragment>
+      </div>
     )
   }
 }

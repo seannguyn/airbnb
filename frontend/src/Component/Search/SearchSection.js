@@ -14,6 +14,9 @@ import GuestSelect from "../AccommodationDetail/GuestSelect"
 import axios from "axios"
 import { Consumer } from "../../Context.js"
 import SearchStatus from "./SearchStatus"
+import InputLabel from "@material-ui/core/InputLabel"
+import MenuItem from "@material-ui/core/MenuItem"
+import Select from "@material-ui/core/Select"
 
 const styles = theme => ({
   root: {
@@ -37,6 +40,7 @@ class SearchSection extends React.Component {
       price_upper: "",
 
       guest: 1,
+      Accommodation_Type: "",
 
       startDate: null,
       endDate: null,
@@ -85,12 +89,13 @@ class SearchSection extends React.Component {
     const tempStartDate = moment(this.state.startDate).format("YYYY-MM-DD")
     const tempEndDate = moment(this.state.endDate).format("YYYY-MM-DD")
 
-    // "https://localhost:8000/search/?start=2018-11-4&end=2018-11-8"
-    // "https://localhost:8000/search/?price_lower=12&price_upper=13"
     var url = `/searchHosting/?guest=${this.state.guest}`
 
     if (this.state.location.length > 0) {
       url = url.concat(`&location=${this.state.location}`)
+    }
+    if (this.state.Accommodation_Type.length > 0) {
+      url = url.concat(`&Accommodation_Type=${this.state.Accommodation_Type}`)
     }
     if (this.state.price_lower.length > 0) {
       url = url.concat(`&price_lower=${this.state.price_lower}`)
@@ -116,6 +121,7 @@ class SearchSection extends React.Component {
       price_upper: "",
 
       guest: 1,
+      Accommodation_Type: "",
 
       startDate: null,
       endDate: null,
@@ -130,13 +136,15 @@ class SearchSection extends React.Component {
       startDate,
       endDate,
       price_lower,
-      price_upper
+      price_upper,
+      Accommodation_Type
     } = this.state
     // || price_lower.length > 0 || price_upper.length > 0 || (startDate === null && endDate === null) || (startDate !== null && endDate !== null)
     if (
       location.length > 0 ||
       price_lower.length > 0 ||
-      price_upper.length > 0
+      price_upper.length > 0 ||
+      Accommodation_Type.length > 0
     ) {
       if (
         (startDate === null && endDate === null) ||
@@ -162,13 +170,13 @@ class SearchSection extends React.Component {
       endDate,
       price_lower,
       price_upper,
-      guest
+      guest,
+      Accommodation_Type,
     } = this.state
     return (
       <Consumer>
         {value => {
           const { dispatch, searchStatus, AllHostingList, HouseList } = value
-
           return (
             <div>
               <div className="container">
@@ -198,6 +206,28 @@ class SearchSection extends React.Component {
                                 type="text"
                                 fullWidth
                               />
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-6">
+                              <InputLabel htmlFor="accom-type" style={{marginLeft: '20px', marginTop: '20px'}}>Accommodation Type</InputLabel>
+                              <Select
+                                value={Accommodation_Type}
+                                inputProps={{
+                                  name: "Accommodation_Type",
+                                  id: "accom-type"
+                                }}
+                                onChange={this.handleChange("Accommodation_Type")}
+                                fullWidth
+                                className={classes.textField}
+                                style={{marginTop:'5px'}}
+                              >
+                                <MenuItem value="Room">Room</MenuItem>
+                                <MenuItem value="Studio">Studio</MenuItem>
+                                <MenuItem value="House">House</MenuItem>
+                                <MenuItem value="Apartment">Apartment</MenuItem>
+                                <MenuItem value="Villa">Villa</MenuItem>
+                              </Select>
                             </div>
                           </div>
                           <div className="row">
@@ -289,6 +319,7 @@ class SearchSection extends React.Component {
                 price_lower={price_lower}
                 price_upper={price_upper}
                 guest={guest}
+                Accommodation_Type={Accommodation_Type}
                 accommNum={AllHostingList.length}
               />
             </div>
