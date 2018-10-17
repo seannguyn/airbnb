@@ -80,12 +80,12 @@ class CardForm extends React.Component {
       this.setState({ [e.target.name]: e.target.value })
     }
 
-    const credit = {
-      card_number: this.state.card_number,
-      name: this.state.name,
-      valid: this.state.valid,
-      cvc: this.state.cvc
-    }
+    // const credit = {
+    //   card_number: this.state.card_number,
+    //   name: this.state.name,
+    //   valid: this.state.valid,
+    //   cvc: this.state.cvc
+    // }
 
     // this.props.onChange(credit)
   }

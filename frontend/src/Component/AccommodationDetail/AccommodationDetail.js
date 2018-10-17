@@ -120,12 +120,14 @@ class AccommodationDetail extends Component {
         {value => {
           if (status === 0) {
             return (
-              <div>
-                <CircularProgress
-                  className={classes.progress}
-                  color="primary"
-                  size={50}
-                />
+              <div class="row">
+                <div class="col-md-2 col-md-offset-5">
+                  <CircularProgress
+                    className={classes.progress}
+                    color="primary"
+                    size={50}
+                  />
+                </div>
               </div>
             )
           } else {

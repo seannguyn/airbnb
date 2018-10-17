@@ -11,7 +11,7 @@ export default class AllHostingContext extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      display: "list"
+      display: "list",
     }
   }
 
@@ -61,7 +61,6 @@ export default class AllHostingContext extends React.Component {
 
             <div className="d-flex p-2 flex-column justify-content-center">
               <SearchSection/>
-
               <MapListSwitch/>
 
               {this.state.display === "list"
