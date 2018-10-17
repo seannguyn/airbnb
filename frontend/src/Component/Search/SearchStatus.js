@@ -224,7 +224,7 @@ class SearchStatus extends React.Component {
             const {dispatch, HouseList} = value
 
             return (
-              <div className="row">
+              <div className="row mt-3">
                 <div className="col-12">
                   <div>
                     <Paper className={classes.root} elevation={1}>
