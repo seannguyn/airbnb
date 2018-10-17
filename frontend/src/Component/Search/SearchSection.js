@@ -22,7 +22,9 @@ import GuestSelect from "../AccommodationDetail/GuestSelect"
 import {Consumer} from "../../Context.js"
 import SearchStatus from "./SearchStatus"
 
-export default class SearchSection extends React.Component {
+const styles = theme => ({})
+
+class SearchSection extends React.Component {
   handleChange = name => event => {
     this.setState(
       {[name]: event.target.value},
@@ -277,3 +279,5 @@ export default class SearchSection extends React.Component {
 SearchSection.propTypes = {
   classes: PropTypes.object.isRequired
 };
+
+export default withStyles(styles)(SearchSection);

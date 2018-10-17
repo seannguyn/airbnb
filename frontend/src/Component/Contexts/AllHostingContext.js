@@ -12,7 +12,7 @@ class AllHostingContext extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      display: "list"
+      display: "list",
     }
   }
 
@@ -53,7 +53,9 @@ class AllHostingContext extends React.Component {
                 display={this.state.display}
                 changeDisplay={this.changeDisplay.bind(this)}
               />
-              {rendering}
+            {rendering}
+
+
             </div>
           )
         }}
