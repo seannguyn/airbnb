@@ -10,32 +10,34 @@ const styles = theme => ({
 
 class AllHosting extends React.Component {
 
-  getData(SingleHost) {
+  getAccomDetails(hosting) {
     const {HouseList} = this.props;
-
-    let house;
-    for (let i = 0; i < HouseList.length; i++) {
-      if (HouseList[i].id === SingleHost.accommodation) {
-        house = HouseList[i]
-      }
-    }
+    const house = HouseList.find(house => house.id === hosting.accommodation);
     return (
       <Hosting
-        key={SingleHost.accommodation}
+        key={hosting.accommodation}
         house={house}
-        SingleHost={SingleHost}
+        SingleHost={hosting}
       />
     )
   }
 
   render() {
     const HostingDivs = this.props.AllHostingList
-      .map(hosting => this.getData(hosting));
+      .map(hosting => this.getAccomDetails(hosting));
+
+    const blanks = 5 - HostingDivs.length % 5;
+    console.log(blanks)
+    for (let i = 0; i < blanks; i++) {
+      HostingDivs.push(
+        <div key={i} className="d-inline-block p-1 mx-2" style={{minWidth: '18vw'}}/>
+      )
+    }
 
     return (
-        <div className="d-inline-flex flex-wrap justify-content-center">
-          {HostingDivs}
-        </div>
+      <div className="d-inline-flex flex-wrap justify-content-center">
+        {HostingDivs}
+      </div>
     )
   }
 }

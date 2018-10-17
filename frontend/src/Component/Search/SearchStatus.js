@@ -44,7 +44,7 @@ class SearchStatus extends React.Component {
   }
 
   async clearSearch(dispatch, HouseList) {
-    const allHosting = await axios.get("/accommodationHosting/")
+    const allHosting = await axios.get("/accommodationHosting/");
 
     dispatch({
       type: "CLEAR_SEARCH",
@@ -79,8 +79,8 @@ class SearchStatus extends React.Component {
       params += 1
     }
 
-    if (search === false) return true
-    else if (params === 0) return false
+    if (search === false) return true;
+    else if (params === 0) return false;
     else return true
   }
 
@@ -144,7 +144,7 @@ class SearchStatus extends React.Component {
       )
     }
     if (startDate !== null && endDate !== null) {
-      const date = findDateRange(startDate, endDate)
+      const date = findDateRange(startDate, endDate);
       chips.push(
         <Chip
           key="date"
@@ -161,7 +161,7 @@ class SearchStatus extends React.Component {
       )
     }
     if (price_lower.length > 0 && price_upper.length > 0) {
-      const string = ` $${price_lower} - $${price_upper}`
+      const string = ` $${price_lower} - $${price_upper}`;
       chips.push(
         <Chip
           key="price"
@@ -177,7 +177,7 @@ class SearchStatus extends React.Component {
         />
       )
     } else if (price_lower.length > 0) {
-      const string = `$${price_lower}`
+      const string = `$${price_lower}`;
       chips.push(
         <Chip
           key="price"
@@ -193,7 +193,7 @@ class SearchStatus extends React.Component {
         />
       )
     } else if (price_upper.length > 0) {
-      const string = `$${price_upper}`
+      const string = `$${price_upper}`;
       chips.push(
         <Chip
           key="price"
@@ -214,7 +214,7 @@ class SearchStatus extends React.Component {
   }
 
   render() {
-    const {classes} = this.props
+    const {classes} = this.props;
 
     const chips = this.makechip(classes)
     if (this.props.search === true) {

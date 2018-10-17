@@ -95,7 +95,8 @@ class Hosting extends React.Component {
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
-      arrows: true
+      arrows: true,
+      className: "p-3"
     };
 
     const EmptyImage = () => {
@@ -147,11 +148,10 @@ class Hosting extends React.Component {
     };
 
     return (
-      <div style={{ padding: '1rem' }}>
-        <Card
-          product={true}
-          className={classes.cardHover}
-          style={{ width: '20vw', height: '24vw' }}
+      <div className="mx-2">
+
+        <Card product={true} className={classes.cardHover}
+         style={{ width: '18vw', height: '40vh' }}
         >
           <CardHeader style={{ marginBottom: '0rem' }} image>
             <Link to={`/accommodations/${id}`}>
@@ -182,6 +182,7 @@ class Hosting extends React.Component {
             </div>
           </CardFooter>
         </Card>
+
       </div>
     )
   }
