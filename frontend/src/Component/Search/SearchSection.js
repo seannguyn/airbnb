@@ -1,9 +1,7 @@
 import React from "react"
 import axios from "axios"
 import moment from "moment"
-import PropTypes from "prop-types"
 
-import {withStyles} from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import TextField from "@material-ui/core/TextField"
@@ -22,9 +20,7 @@ import GuestSelect from "../AccommodationDetail/GuestSelect"
 import {Consumer} from "../../Context.js"
 import SearchStatus from "./SearchStatus"
 
-const styles = theme => ({})
-
-class SearchSection extends React.Component {
+export default class SearchSection extends React.Component {
   handleChange = name => event => {
     this.setState(
       {[name]: event.target.value},
@@ -144,7 +140,8 @@ class SearchSection extends React.Component {
         {value => {
           const {dispatch, searchStatus, AllHostingList, HouseList} = value;
           return (
-            <div className="d-flex flex-row justify-content-center my-5">
+            <div className="d-flex justify-content-center my-5">
+              <div className="d-flex flex-column my-5">
 
                 <Paper className="d-inline-flex" elevation={1}>
                   <div className="container mx-5">
@@ -268,6 +265,7 @@ class SearchSection extends React.Component {
                   Accommodation_Type={Accommodation_Type}
                   accommNum={AllHostingList.length}
                 />
+              </div>
             </div>
           )
         }}
@@ -275,9 +273,3 @@ class SearchSection extends React.Component {
     )
   }
 }
-
-SearchSection.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(SearchSection);
