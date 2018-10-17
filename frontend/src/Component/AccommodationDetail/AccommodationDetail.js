@@ -88,7 +88,8 @@ class AccommodationDetail extends Component {
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
-      arrows: true
+      arrows: true,
+      adaptiveHeight: true,
     }
 
     // Map image in images array to div
@@ -120,8 +121,8 @@ class AccommodationDetail extends Component {
         {value => {
           if (status === 0) {
             return (
-              <div class="row">
-                <div class="col-md-2 col-md-offset-5">
+              <div className="row">
+                <div className="col-md-2 col-md-offset-5">
                   <CircularProgress
                     className={classes.progress}
                     color="primary"
@@ -149,6 +150,7 @@ class AccommodationDetail extends Component {
                         &#160;
                       </div>
                       <div className="row">
+                        <div className="col-3"></div>
                         <div className="col-6">
                           <Carousel {...settings} dots={false}>
                             {this.props.images.length !== 0 ? (
@@ -165,6 +167,7 @@ class AccommodationDetail extends Component {
                             )}
                           </Carousel>
                         </div>
+                        <div className="col-3"></div>
                       </div>
                       <div className="description">
                         <h4>Description</h4> <br/>

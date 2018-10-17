@@ -83,7 +83,6 @@ class ReviewComponent extends React.Component {
         parseInt(this.props.review.length, 10) / parseInt(5, 10) + 0.5
       ),
       searchKeyFixed: '',
-      searchKey: ''
     })
   }
 

@@ -15,6 +15,7 @@ import GuestSelect from './GuestSelect'
 import Price from './Price'
 import HeaderPrice from './HeaderPrice'
 import RequestFormDialog from './RequestFormDialog'
+import { withSnackbar } from "notistack"
 
 const styles = theme => ({
   paper: {
@@ -225,12 +226,19 @@ class BookingPaper extends React.Component {
   }
 
   handleGuest(ops, num) {
-    const limit = 5
+    const limit = this.props.currentHost.guest
+    console.log(this.props,"....");
+
+    if (this.state.guest === limit && ops === '+') {
+      this.props.onPresentSnackbar('error','limit of guests reached')
+    }
+
     if (ops === '-' && num > 1) {
       this.setState({ guest: parseFloat(num) - 1 })
     } else if (ops === '+' && num < limit) {
       this.setState({ guest: parseFloat(num) + 1 })
     }
+
   }
 
   render() {
@@ -391,4 +399,4 @@ BookingPaper.defaultProps = {
   booking: {}
 }
 
-export default withStyles(styles)(BookingPaper)
+export default withSnackbar(withStyles(styles)(BookingPaper))

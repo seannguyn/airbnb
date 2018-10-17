@@ -26,7 +26,7 @@ class AppMain extends React.Component {
     return (
       <SnackbarProvider
         maxSnack={4}
-        autoHideDuration={4000}
+        autoHideDuration={1500}
         anchorOrigin={{
           vertical: "top",
           horizontal: "right"
