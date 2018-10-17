@@ -29,13 +29,13 @@ class AllHosting extends React.Component {
   }
 
   render() {
-    const SingleHosting = this.props.AllHostingList
-      .map(SingleHost => this.getData(SingleHost));
+    const HostingDivs = this.props.AllHostingList
+      .map(hosting => this.getData(hosting));
 
     return (
-      <div className="container">
-        <div className="row">{SingleHosting}</div>
-      </div>
+        <div className="d-inline-flex flex-wrap justify-content-center">
+          {HostingDivs}
+        </div>
     )
   }
 }

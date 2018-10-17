@@ -1,6 +1,7 @@
 import React from "react"
-import { withStyles } from "@material-ui/core/styles"
 import classNames from "classnames"
+
+import {withStyles} from "@material-ui/core/styles"
 import ExpansionPanel from "@material-ui/core/ExpansionPanel"
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails"
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary"
@@ -43,28 +44,28 @@ const styles = theme => ({
 class GuestSelect extends React.Component {
   state = {
     expanded: false
-  }
+  };
 
   handleChange = panel => (event, expanded) => {
     this.setState({
       expanded: !this.state.expanded
     })
-  }
+  };
 
   handleGuest(ops, num) {
     this.props.handleGuest(ops, num)
   }
 
   render() {
-    const { classes } = this.props
-    const { expanded } = this.state
+    const {classes} = this.props
+    const {expanded} = this.state
     return (
       <ExpansionPanel
         className={classes.panel}
         expanded={expanded}
         onChange={this.handleChange()}
       >
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
           <div className={classes.column}>
             <Typography className={classes.heading}>
               {this.props.guest} Guest
@@ -80,13 +81,9 @@ class GuestSelect extends React.Component {
 
           <div className={classNames(classes.column)}>
             <Typography className={classes.typo} variant="headline">
-              <AddCircleIcon
-                onClick={this.handleGuest.bind(this, "+", this.props.guest)}
-              />{" "}
-              {this.props.guest}{" "}
-              <RemoveCircleIcon
-                onClick={this.handleGuest.bind(this, "-", this.props.guest)}
-              />
+              <RemoveCircleIcon onClick={this.handleGuest.bind(this, "-", this.props.guest)}/>
+              {" "}{this.props.guest}{" "}
+              <AddCircleIcon onClick={this.handleGuest.bind(this, "+", this.props.guest)}/>
             </Typography>
           </div>
         </ExpansionPanelDetails>
@@ -95,7 +92,7 @@ class GuestSelect extends React.Component {
             A maximum number of 3 infants are allowed
           </Typography>
         </ExpansionPanelDetails>
-        <Divider />
+        <Divider/>
         <ExpansionPanelActions>
           <Button size="small" color="primary" onClick={this.handleChange()}>
             Close
@@ -105,4 +102,5 @@ class GuestSelect extends React.Component {
     )
   }
 }
+
 export default withStyles(styles)(GuestSelect)

@@ -1,8 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Button from "@material-ui/core/Button"
-import { withStyles } from "@material-ui/core/styles"
-import { Consumer } from "../../Context.js"
+import {withStyles} from "@material-ui/core/styles"
+import {Consumer} from "../../Context.js"
 import axios from "axios"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
@@ -15,7 +15,8 @@ import DateRangeIcon from "@material-ui/icons/DateRange"
 import AssessmentIcon from "@material-ui/icons/Assessment"
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos"
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos"
-import { findDateRange } from "../Helper/Helper"
+import {findDateRange} from "../Helper/Helper"
+
 const styles = theme => ({
   snackbar: {
     margin: theme.spacing.unit
@@ -47,7 +48,7 @@ class SearchStatus extends React.Component {
 
     dispatch({
       type: "CLEAR_SEARCH",
-      payload: { AllHostingList: allHosting.data, HouseList: HouseList }
+      payload: {AllHostingList: allHosting.data, HouseList: HouseList}
     })
   }
 
@@ -102,7 +103,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <HomeIcon />
+              <HomeIcon/>
             </Avatar>
           }
           variant="outlined"
@@ -118,7 +119,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <PlaceIcon />
+              <PlaceIcon/>
             </Avatar>
           }
           variant="outlined"
@@ -134,7 +135,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <FaceIcon />
+              <FaceIcon/>
             </Avatar>
           }
           variant="outlined"
@@ -151,7 +152,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <DateRangeIcon />
+              <DateRangeIcon/>
             </Avatar>
           }
           variant="outlined"
@@ -168,7 +169,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <AssessmentIcon />
+              <AssessmentIcon/>
             </Avatar>
           }
           variant="outlined"
@@ -184,7 +185,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <ArrowForwardIosIcon />
+              <ArrowForwardIosIcon/>
             </Avatar>
           }
           variant="outlined"
@@ -200,7 +201,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <ArrowBackIosIcon />
+              <ArrowBackIosIcon/>
             </Avatar>
           }
           variant="outlined"
@@ -213,14 +214,14 @@ class SearchStatus extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const {classes} = this.props
 
     const chips = this.makechip(classes)
     if (this.props.search === true) {
       return (
         <Consumer>
           {value => {
-            const { dispatch, HouseList } = value
+            const {dispatch, HouseList} = value
 
             return (
               <div className="row">
@@ -257,7 +258,7 @@ class SearchStatus extends React.Component {
         </Consumer>
       )
     } else {
-      return <div />
+      return <div/>
     }
   }
 }

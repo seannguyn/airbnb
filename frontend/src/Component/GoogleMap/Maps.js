@@ -152,7 +152,7 @@ export class Map extends Component {
             })
           }
           return (
-            <div style={{ width: `750px`, height: `750px` }}>
+            <div style={{ width: `100%`, height: `750px` }}>
               <AirbnbMap
                 onMapMounted={this.handleMapMounted.bind(this)}
                 handleMapChanged={this.handleMapChanged.bind(this)}

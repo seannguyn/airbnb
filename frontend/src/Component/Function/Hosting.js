@@ -16,6 +16,7 @@ import { withStyles } from '@material-ui/core/styles'
 import carouselStyle from 'assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx'
 import Carousel from 'react-slick'
 import '../../Styles/ImageSlide.css'
+
 // Rating
 import Rating from 'react-rating'
 import like from '../../assets/img/icons/like.png'
@@ -24,30 +25,30 @@ import like_empty from '../../assets/img/icons/like_empty.png'
 class Hosting extends React.Component {
   showReview = () => {
     this.setState({ seeReviews: !this.state.seeReviews })
-  }
+  };
 
   starCalculator = reviews => {
-    if (reviews.length === 0) return 0
-    let avgRating = 0
+    if (reviews.length === 0) return 0;
+    let avgRating = 0;
     for (let key in reviews) {
       if (reviews.hasOwnProperty(key)) avgRating += reviews[key].star
     }
     return avgRating / reviews.length
-  }
+  };
 
   // find this accomm's images
   findImagesByAccommID = (images, accommID) => {
-    const retImages = []
+    const retImages = [];
     for (let i = 0; i < images.length; i++) {
       if (accommID === images[i].accommodation) {
         retImages.push(images[i])
       }
     }
     this.setState({ images: retImages })
-  }
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       reviews: {},
       seeReviews: false,
@@ -57,16 +58,16 @@ class Hosting extends React.Component {
   }
 
   async componentDidMount() {
-    const { id } = this.props.house
-    let reviews = []
+    const { id } = this.props.house;
+    let reviews = [];
 
-    const count = await axios.get(`/reviewCounter/${id}/`)
+    const count = await axios.get(`/reviewCounter/${id}/`);
 
     if (count.data.count > 0) {
       await axios
         .get(`/accommodation/${id}/reviews/`)
         .then(response => {
-          reviews = response.data
+          reviews = response.data;
           if (reviews.length > 0) this.setState({ reviews: reviews })
         })
         .catch(error => {
@@ -79,14 +80,14 @@ class Hosting extends React.Component {
         })
     }
 
-    const images = await axios.get('/accommodationImage/')
+    const images = await axios.get('/accommodationImage/');
     this.findImagesByAccommID(images.data, this.props.house.id)
   }
 
   render() {
-    const { house, SingleHost, classes } = this.props
-    const { images, reviews } = this.state
-    const { id } = house
+    const { house, SingleHost, classes } = this.props;
+    const { images, reviews } = this.state;
+    const { id } = house;
 
     let settings = {
       dots: true,
@@ -95,7 +96,7 @@ class Hosting extends React.Component {
       slidesToShow: 1,
       slidesToScroll: 1,
       arrows: true
-    }
+    };
 
     const EmptyImage = () => {
       return (
@@ -108,50 +109,42 @@ class Hosting extends React.Component {
           />
         </Carousel>
       )
-    }
+    };
 
     const ImageCarousel = () => {
       // Map image in images array to div
-      let imagesDiv = []
+      let imagesDiv = [];
       images.map(image => {
         imagesDiv.push(
           <div key={image.id}>
-            <img
-              src={image.a_image}
-              height="150"
-              width="345"
-              alt="hostingimg"
-            />
+            <img src={image.a_image} height="150" width="345" alt="hostingimg"/>
           </div>
-        )
+        );
         return 0
-      })
+      });
       return (
-        <Carousel {...settings} dots={false}>
-          {imagesDiv}
-        </Carousel>
+        <Carousel {...settings} dots={false}>{imagesDiv}</Carousel>
       )
-    }
+    };
 
     const ReviewSummary = () => {
-      const avgRating = this.starCalculator(reviews)
+      const avgRating = this.starCalculator(reviews);
+      const count = reviews.length;
       return (
         <div>
           <Rating
             readonly={true}
             initialRating={avgRating}
-            emptySymbol={
-              <img src={like_empty} className="icon" alt="emptyicon" />
-            }
+            emptySymbol={<img src={like_empty} className="icon" alt="emptyicon" />}
             fullSymbol={<img src={like} className="icon" alt="fullicon" />}
           />
           <br />
           <Link to="" onClick={this.showReview}>
-            {avgRating > 0 ? <h5>{reviews.length} Reviews</h5> : null}
+            {avgRating > 0 ? <h5>{count} {count > 1 ? "reviews":"review"}</h5> : null}
           </Link>
         </div>
       )
-    }
+    };
 
     return (
       <div style={{ padding: '1rem' }}>
@@ -171,6 +164,7 @@ class Hosting extends React.Component {
               <h2 className={classes.cardProductTitle} style={{margin:'15px'}}>{house.title}</h2>
               <h4 className={classes.cardProductTitle} style={{margin:'10px'}}>{house.address}</h4>
               <h4>{house.Accomodation_Type}</h4>
+
               <ReviewSummary/>
               <ReviewPreview
                 open={this.state.seeReviews}
@@ -183,8 +177,7 @@ class Hosting extends React.Component {
           <CardFooter product style={{marginTop:'10px'}}>
             <div className={classes.price}>
               <h4>
-                ${SingleHost.price}
-                /night
+                ${SingleHost.price}/night
               </h4>
             </div>
           </CardFooter>
