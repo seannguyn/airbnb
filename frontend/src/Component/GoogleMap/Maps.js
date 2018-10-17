@@ -115,6 +115,20 @@ export class Map extends Component {
                       Accomodation_Type={placeMarker.Accomodation_Type}
                     />
                   )
+                } else {
+                  markers.push(
+                    <PlaceMarker
+                      key={placeMarker.id}
+                      lat={placeMarker.lat}
+                      lng={placeMarker.lng}
+                      price={placeMarker.price}
+                      name={placeMarker.name}
+                      description={placeMarker.description}
+                      accommodation={placeMarker.id}
+                      address={placeMarker.address}
+                      Accomodation_Type={placeMarker.Accomodation_Type}
+                    />
+                  )
                 }
               }
               // Render all the accommodations with default placemarker icons

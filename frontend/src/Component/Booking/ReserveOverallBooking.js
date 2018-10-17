@@ -114,7 +114,6 @@ class OverallBooking extends React.Component {
 
   render() {
     const { theme } = this.props
-    console.log('PROPS: ', this.props)
     if (typeof this.props.location.state !== 'undefined') {
       const { detail, booker, firstImage } = this.props.location.state
       const price = (

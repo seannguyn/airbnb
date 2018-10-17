@@ -89,8 +89,6 @@ class SearchSection extends React.Component {
     const tempStartDate = moment(this.state.startDate).format("YYYY-MM-DD")
     const tempEndDate = moment(this.state.endDate).format("YYYY-MM-DD")
 
-    console.log("SEARCH..");
-
     var url = `/searchHosting/?guest=${this.state.guest}`
 
     if (this.state.location.length > 0) {
