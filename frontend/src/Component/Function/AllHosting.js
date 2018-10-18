@@ -30,7 +30,7 @@ class AllHosting extends React.Component {
     const blanks = 5 - HostingDivs.length % 5;
     for (let i = 0; i < blanks; i++)
       HostingDivs.push(
-        <div key={i} className="d-inline-block p-1 mx-2" style={{minWidth: '18vw'}}/>
+        <div key={i} className="d-inline-block p-1 mx-2" style={{minWidth: '20vw'}}/>
       )
 
     return (
