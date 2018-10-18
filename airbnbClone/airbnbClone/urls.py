@@ -14,12 +14,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api import views
-
 from rest_framework import routers
 
+from ..api import views
+
 router = routers.DefaultRouter()
-router.register('accommodation',views.AccommodationView)
+router.register('accommodation', views.AccommodationView)
 
 app_name = 'main'
 
@@ -30,8 +30,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('api/', include('api.urls')),
 
-    path('api/v1/', include('api.urls')), #api urls
+    path('api/v1/', include('api.urls')),  # api urls
     # url(r'^users/', include('api.urls')),
-    path('',include('api.urls')),
+    path('', include('api.urls')),
     # path('api-token-auth/', authviews.obtain_auth_token, name='api-token-auth'),
 ]
