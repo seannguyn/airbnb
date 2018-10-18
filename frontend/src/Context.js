@@ -70,6 +70,7 @@ const reducer = (state, action) => {
         logged_in: false,
         sidebar_show: false,
         currentUser: [],
+        mounted: 0,
       };
 
     case 'OPEN_DIALOG':
