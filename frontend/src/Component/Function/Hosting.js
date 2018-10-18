@@ -153,7 +153,7 @@ class Hosting extends React.Component {
         <Card product={true} className={classes.cardHover}
          style={{ width: '20vw', height: '40vh' }}
         >
-          <CardHeader style={{ marginBottom: '0rem' }} image>
+          <CardHeader image>
             <Link to={`/accommodations/${id}`}>
               {images.length === 0 ? <EmptyImage /> : <ImageCarousel />}
             </Link>
