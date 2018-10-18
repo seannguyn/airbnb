@@ -6,9 +6,9 @@ import ReviewComponent from '../Review/ReviewComponent'
 
 const styles = theme => ({
   dialogPaper: {
-    minHeight: '40vh',
-    maxHeight: '80vh',
-    minWidth: '40vw',
+    minHeight: '90vh',
+    maxHeight: '90vh',
+    minWidth: '60vw',
     maxWidth: '60vw',
   },
 });
