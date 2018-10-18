@@ -1,7 +1,6 @@
 import smtplib
 
-from api.models import Accommodation, AccommodationImage, AccommodationHosting, Booking, Review, UserInfo, Search, \
-    ReviewCount, BookRequest
+from .models import *
 from pymongo import MongoClient
 from rest_framework import serializers
 
