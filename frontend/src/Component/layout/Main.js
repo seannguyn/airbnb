@@ -15,7 +15,6 @@ import ConfirmOverallBooking from '../Booking/ConfirmOverallBooking'
 import BookingRequest from '../BookingRequest/BookingRequest'
 import { Map } from '../GoogleMap/Maps'
 
-
 const styles = theme => ({
   toolbar: {
     display: "flex",

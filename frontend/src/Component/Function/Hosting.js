@@ -96,7 +96,6 @@ class Hosting extends React.Component {
   }
 
   Starred(id, dispatch) {
-    console.log("ENTER...",id);
     dispatch({
       type: 'STAR_ACCOMMODATION',
       payload: id,
@@ -171,7 +170,6 @@ class Hosting extends React.Component {
         {value => {
 
           const {dispatch, starred} = value;
-          console.log("...",dispatch);
           return (
             <div className="mx-2">
 
