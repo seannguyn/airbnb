@@ -27,10 +27,10 @@ class AllHosting extends React.Component {
       .map(hosting => this.getAccomDetails(hosting));
 
     // Fills in the empty space on the last line for left alignment
-    const blanks = 5 - HostingDivs.length % 5;
+    const blanks = 4 - HostingDivs.length % 4;
     for (let i = 0; i < blanks; i++)
       HostingDivs.push(
-        <div key={i} className="d-inline-block p-1 mx-2" style={{minWidth: '18vw'}}/>
+        <div key={i} className="d-inline-block p-1 mx-2" style={{minWidth: '20vw'}}/>
       )
 
     return (

@@ -81,7 +81,6 @@ class House extends React.Component {
       carpark,
       description
     } = this.props.houseDetail
-    const { user } = this.props.houseDetail //-- from houses.js -- user id in each house in houselist
     const { id } = this.props.houseDetail
     const { showDetail, images } = this.state
     const { classes } = this.props
@@ -110,21 +109,14 @@ class House extends React.Component {
       <Consumer>
         {value => {
           const { dispatch } = value
-          const { currentUser, myHostingList } = value
-          if (currentUser[0] !== null) {
-            const { user_id } = currentUser[0]
-            if (user_id === user) {
-              this.isMyHouse = true
-            }
+          const { myHostingList } = value
 
-            let i = 0
-            for (i = 0; i < myHostingList.length; i++) {
-              if (parseInt(myHostingList[i].accommodation, 10) === id) {
-                this.isHosting = true
-                break
-              } else {
-                this.isHosting = false
-              }
+          var isHosting = false;
+          let i = 0
+          for (i = 0; i < myHostingList.length; i++) {
+            if (parseInt(myHostingList[i].accommodation, 10) === id) {
+              isHosting = true
+              break
             }
           }
 
@@ -160,7 +152,7 @@ class House extends React.Component {
                     </Typography>
                     <h4 align="center" style={{margin:'15px'}}>{Accomodation_Type}</h4>
                   </CardContent>
-                  {this.isMyHouse === true && this.isHosting === true ? (
+                  {isHosting === true ? (
                     <Link
                       to={{ pathname: `/editHouse/${id}`, state: { stage: 3 } }}
                     >
