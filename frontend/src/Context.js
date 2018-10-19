@@ -182,6 +182,20 @@ const reducer = (state, action) => {
         inforWindow: action.payload
       }
 
+    case "STAR_ACCOMMODATION":
+
+      return {
+        ...state,
+        starred: [...state.starred, action.payload]
+      }
+
+    case "UNSTAR_ACCOMMODATION":
+
+      return {
+        ...state,
+        starred: state.starred.filter((s) => s !== action.payload)
+      }
+
     default:
       return state
   }
@@ -211,7 +225,8 @@ export class Provider extends Component {
       didmount: 0,
       dispatch: async action => {
         this.setState(state => reducer(state, action))
-      }
+      },
+      starred: [],
     }
   }
 

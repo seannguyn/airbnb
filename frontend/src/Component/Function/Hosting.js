@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 import ReviewPreview from '../Popup/ReviewPreview'
+import { Consumer } from "../../Context"
 
 // Material UI components
 import Card from 'Component/Card/Card.jsx'
@@ -11,6 +12,8 @@ import CardHeader from 'Component/Card/CardHeader.jsx'
 import CardFooter from 'Component/Card/CardFooter.jsx'
 import dashboardStyle from 'assets/jss/material-dashboard-pro-react/views/dashboardStyle'
 import { withStyles } from '@material-ui/core/styles'
+import StarIcon from '@material-ui/icons/Star'
+import StarBorderIcon from '@material-ui/icons/StarBorder'
 
 // Image Slider
 import carouselStyle from 'assets/jss/material-kit-pro-react/views/componentsSections/carouselStyle.jsx'
@@ -53,7 +56,8 @@ class Hosting extends React.Component {
       reviews: {},
       seeReviews: false,
       id: '',
-      images: []
+      images: [],
+      isHovering: false
     }
   }
 
@@ -82,6 +86,21 @@ class Hosting extends React.Component {
 
     const images = await axios.get('/accommodationImage/');
     this.findImagesByAccommID(images.data, this.props.house.id)
+  }
+
+  unStarred(id, dispatch) {
+    dispatch({
+      type: 'UNSTAR_ACCOMMODATION',
+      payload: id,
+    })
+  }
+
+  Starred(id, dispatch) {
+    console.log("ENTER...",id);
+    dispatch({
+      type: 'STAR_ACCOMMODATION',
+      payload: id,
+    })
   }
 
   render() {
@@ -148,42 +167,56 @@ class Hosting extends React.Component {
     };
 
     return (
-      <div className="mx-2">
+      <Consumer>
+        {value => {
 
-        <Card product={true} className={classes.cardHover}
-         style={{ width: '20vw', height: '40vh' }}
-        >
-          <CardHeader image>
-            <Link to={`/accommodations/${id}`}>
-              {images.length === 0 ? <EmptyImage /> : <ImageCarousel />}
-            </Link>
-          </CardHeader>
+          const {dispatch, starred} = value;
+          console.log("...",dispatch);
+          return (
+            <div className="mx-2">
 
-          <CardBody>
-            <div className={classes.cardHoverUnder}>
-              <h2 className={classes.cardProductTitle} style={{margin:'15px'}}>{house.title}</h2>
-              <h4 className={classes.cardProductTitle} style={{margin:'10px'}}>{house.address}</h4>
-              <h4>{house.Accomodation_Type}</h4>
+              <Card product={true} className={classes.cardHover}
+               style={{ width: '20vw', height: '40vh' }}
+              >
+                <CardHeader image>
+                  <Link to={`/accommodations/${id}`}>
+                    {images.length === 0 ? <EmptyImage /> : <ImageCarousel />}
+                  </Link>
+                </CardHeader>
 
-              <ReviewSummary/>
-              <ReviewPreview
-                open={this.state.seeReviews}
-                handleClose={this.showReview}
-                reviews={reviews}
-              />
+                <CardBody>
+                  <div className={classes.cardHoverUnder}>
+                    <h2 className={classes.cardProductTitle} style={{margin:'15px'}}>{house.title}</h2>
+                    <h4 className={classes.cardProductTitle} style={{margin:'10px'}}>{house.address}</h4>
+                    <h4>{house.Accomodation_Type}</h4>
+
+                    <ReviewSummary/>
+                    <ReviewPreview
+                      open={this.state.seeReviews}
+                      handleClose={this.showReview}
+                      reviews={reviews}
+                    />
+                  </div>
+                </CardBody>
+
+                <CardFooter product style={{marginTop:'10px', display: 'flex'}}>
+                    <div style={{flex: 1}}>
+                      <h4 >
+                        ${SingleHost.price}/night
+                      </h4>
+                    </div>
+                    <div style={{flex: 1, textAlign: 'right'}} >
+                      {starred.includes(house.id) ? <StarIcon style={{cursor:'pointer', width:'40px', height:'40px'}} onClick={this.unStarred.bind(this, house.id, dispatch)}/> : <StarBorderIcon style={{cursor:'pointer', width:'40px', height:'40px'}} onClick={this.Starred.bind(this, house.id, dispatch)}/> }
+                    </div>
+                </CardFooter>
+              </Card>
+
             </div>
-          </CardBody>
+          )
 
-          <CardFooter product style={{marginTop:'10px'}}>
-            <div className={classes.price}>
-              <h4>
-                ${SingleHost.price}/night
-              </h4>
-            </div>
-          </CardFooter>
-        </Card>
+        }}
+      </Consumer>
 
-      </div>
     )
   }
 }
