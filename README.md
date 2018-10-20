@@ -1,10 +1,7 @@
-# portBnB - An Amazing Accommodation Renting Application
-## Front-End UI: React
-## Back-End: Django REST framework
-
+# portBnB - Accommodation Renting Application
 portBnB is built based on server and client architecture.
-
-**Setup guide**:
+### **Web Stack**: Django & React 
+### **Setup guide**:
 > * Run these commands on terminal from root folder to start the application:
 ```
 pip install -r requirements.txt
