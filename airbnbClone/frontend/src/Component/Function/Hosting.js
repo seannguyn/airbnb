@@ -175,7 +175,7 @@ class Hosting extends React.Component {
             <div className="mx-2">
 
               <Card product={true} className={classes.cardHover}
-               style={{ width: '20vw', height: '40vh' }}
+               style={{ width: '20vw', height: '400px' }}
               >
                 <CardHeader image>
                   <Link to={`/accommodations/${id}`}>
