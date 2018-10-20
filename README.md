@@ -18,6 +18,10 @@ npm start
 ```
 Access http://localhost:3000
 ```
+# SetUp
+
+> * [Setup Video](https://drive.google.com/file/d/1J17CQ7z6d5zfm23Yrj3pBl0Y6W2GwPXL/view?usp=sharing)
+
 # Demo
 ## Authentication
 > * [Sign up](https://drive.google.com/file/d/1GZcmy0qEF4MTVcucJ6pu7BUET4UsDIRL/view?usp=sharing)
