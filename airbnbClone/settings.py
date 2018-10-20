@@ -109,9 +109,10 @@ WSGI_APPLICATION = 'airbnbClone.wsgi.application'
 # for heroku
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('HEROKU_POSTGRESQL_AQUA_URL')
+        default=config('DATABASE_URL')
     )
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -155,6 +156,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BUILD_DIR, 'static')
 ]
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(RES_DIR, 'media')
