@@ -1,14 +1,14 @@
-import React from "react"
+import React from 'react'
 
-import Cards from "react-credit-cards"
-import TextField from "@material-ui/core/TextField"
-import FormControl from "@material-ui/core/FormControl"
-import { withStyles } from "@material-ui/core/styles"
-import Button from "@material-ui/core/Button"
+import Cards from 'react-credit-cards'
+import TextField from '@material-ui/core/TextField'
+import FormControl from '@material-ui/core/FormControl'
+import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
   form: {
-    width: "80%", // Fix IE11 issue.
+    width: '80%', // Fix IE11 issue.
     marginTop: theme.spacing.unit
   }
 })
@@ -16,11 +16,11 @@ const styles = theme => ({
 class CardFormComplete extends React.Component {
   state = {
     error: false,
-    card_number: "4900000000000000",
-    name: "sean",
-    valid: "12/12",
-    cvc: "555",
-    focus: "name"
+    card_number: '4900000000000000',
+    name: 'sean',
+    valid: '12/12',
+    cvc: '555',
+    focus: 'name'
   }
 
   onSubmit(e) {
@@ -39,7 +39,7 @@ class CardFormComplete extends React.Component {
       <div>
         <div className="row">
           <div className="col-6">
-            <div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: '20px' }}>
               <Cards
                 number={card_number}
                 name={name}
@@ -60,7 +60,7 @@ class CardFormComplete extends React.Component {
                 margin="normal"
                 required
                 fullWidth
-                style={{ marginBottom: "10px" }}
+                style={{ marginBottom: '10px' }}
               >
                 <TextField
                   error={error}
@@ -76,7 +76,7 @@ class CardFormComplete extends React.Component {
                 margin="normal"
                 required
                 fullWidth
-                style={{ marginBottom: "10px" }}
+                style={{ marginBottom: '10px' }}
               >
                 <TextField
                   error={error}
@@ -94,7 +94,7 @@ class CardFormComplete extends React.Component {
                     margin="normal"
                     required
                     fullWidth
-                    style={{ marginBottom: "10px" }}
+                    style={{ marginBottom: '10px' }}
                   >
                     <TextField
                       error={error}
@@ -112,7 +112,7 @@ class CardFormComplete extends React.Component {
                     margin="normal"
                     required
                     fullWidth
-                    style={{ marginBottom: "10px" }}
+                    style={{ marginBottom: '10px' }}
                   >
                     <TextField
                       error={error}
@@ -129,7 +129,7 @@ class CardFormComplete extends React.Component {
             </form>
           </div>
         </div>
-        <div className="row" style={{ marginTop: "15px" }}>
+        <div className="row" style={{ marginTop: '15px' }}>
           <Button
             variant="contained"
             color="primary"

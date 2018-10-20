@@ -1,15 +1,15 @@
-import React from "react"
-import { withSnackbar } from "notistack"
-import Cards from "react-credit-cards"
-import TextField from "@material-ui/core/TextField"
-import FormControl from "@material-ui/core/FormControl"
-import { withStyles } from "@material-ui/core/styles"
-import Button from "@material-ui/core/Button"
-import { Link } from "react-router-dom"
+import React from 'react'
+import { withSnackbar } from 'notistack'
+import Cards from 'react-credit-cards'
+import TextField from '@material-ui/core/TextField'
+import FormControl from '@material-ui/core/FormControl'
+import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   form: {
-    width: "80%", // Fix IE11 issue.
+    width: '80%', // Fix IE11 issue.
     marginTop: theme.spacing.unit
   }
 })
@@ -18,10 +18,10 @@ class CardForm extends React.Component {
   state = {
     value: 0,
     error: false,
-    card_number: "",
-    name: "",
-    valid: "",
-    cvc: "",
+    card_number: '',
+    name: '',
+    valid: '',
+    cvc: ''
   }
 
   errorCheck(credit) {
@@ -48,35 +48,34 @@ class CardForm extends React.Component {
       this.props.submitPayment()
     }
 
-    this.props.onPresentSnackbar("success", "Payment is successful")
+    this.props.onPresentSnackbar('success', 'Payment is successful')
   }
 
   onChange(e) {
     this.setState({ error: false })
-    console.log("here", e.target.name, e.target.value);
-    if (e.target.name === "valid" && e.target.value.length <= 5) {
+    if (e.target.name === 'valid' && e.target.value.length <= 5) {
       if (e.target.value.length === 1) {
         if (e.target.value > 1) {
-          this.setState({ [e.target.name]: "0" + e.target.value + "/" })
+          this.setState({ [e.target.name]: '0' + e.target.value + '/' })
         } else {
           this.setState({ [e.target.name]: e.target.value })
         }
       } else if (e.target.value.length === 2) {
         if (this.state.valid.length === 3) {
-          this.setState({ [e.target.name]: "" })
+          this.setState({ [e.target.name]: '' })
         } else {
-          this.setState({ [e.target.name]: e.target.value + "/" })
+          this.setState({ [e.target.name]: e.target.value + '/' })
         }
       } else if (e.target.value.length >= 3) {
         this.setState({ [e.target.name]: e.target.value })
       } else {
         this.setState({ [e.target.name]: e.target.value })
       }
-    } else if (e.target.name === "cvc" && e.target.value.length <= 4) {
+    } else if (e.target.name === 'cvc' && e.target.value.length <= 4) {
       this.setState({ [e.target.name]: e.target.value })
-    } else if (e.target.name === "card_number" && e.target.value.length <= 16) {
+    } else if (e.target.name === 'card_number' && e.target.value.length <= 16) {
       this.setState({ [e.target.name]: e.target.value })
-    } else if (e.target.name === "name") {
+    } else if (e.target.name === 'name') {
       this.setState({ [e.target.name]: e.target.value })
     }
 
@@ -105,7 +104,7 @@ class CardForm extends React.Component {
       <div>
         <div className="row">
           <div className="col-6">
-            <div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: '20px' }}>
               <Cards
                 number={card_number}
                 name={name}
@@ -126,7 +125,7 @@ class CardForm extends React.Component {
                 margin="normal"
                 required
                 fullWidth
-                style={{ marginBottom: "10px" }}
+                style={{ marginBottom: '10px' }}
               >
                 <TextField
                   error={error}
@@ -134,7 +133,7 @@ class CardForm extends React.Component {
                   name="card_number"
                   value={card_number}
                   onChange={this.onChange.bind(this)}
-                  onFocus={this.onFocus.bind(this, "number")}
+                  onFocus={this.onFocus.bind(this, 'number')}
                   InputLabelProps={{ shrink: true }}
                   type="text"
                 />
@@ -143,7 +142,7 @@ class CardForm extends React.Component {
                 margin="normal"
                 required
                 fullWidth
-                style={{ marginBottom: "10px" }}
+                style={{ marginBottom: '10px' }}
               >
                 <TextField
                   error={error}
@@ -151,7 +150,7 @@ class CardForm extends React.Component {
                   name="name"
                   value={name}
                   onChange={this.onChange.bind(this)}
-                  onFocus={this.onFocus.bind(this, "name")}
+                  onFocus={this.onFocus.bind(this, 'name')}
                   InputLabelProps={{ shrink: true }}
                   type="text"
                 />
@@ -162,7 +161,7 @@ class CardForm extends React.Component {
                     margin="normal"
                     required
                     fullWidth
-                    style={{ marginBottom: "10px" }}
+                    style={{ marginBottom: '10px' }}
                   >
                     <TextField
                       error={error}
@@ -170,7 +169,7 @@ class CardForm extends React.Component {
                       name="valid"
                       value={valid}
                       onChange={this.onChange.bind(this)}
-                      onFocus={this.onFocus.bind(this, "expiry")}
+                      onFocus={this.onFocus.bind(this, 'expiry')}
                       InputLabelProps={{ shrink: true }}
                       type="text"
                     />
@@ -181,7 +180,7 @@ class CardForm extends React.Component {
                     margin="normal"
                     required
                     fullWidth
-                    style={{ marginBottom: "10px" }}
+                    style={{ marginBottom: '10px' }}
                   >
                     <TextField
                       error={error}
@@ -189,7 +188,7 @@ class CardForm extends React.Component {
                       name="cvc"
                       value={cvc}
                       onChange={this.onChange.bind(this)}
-                      onFocus={this.onFocus.bind(this, "cvc")}
+                      onFocus={this.onFocus.bind(this, 'cvc')}
                       InputLabelProps={{ shrink: true }}
                       type="number"
                     />
@@ -199,7 +198,7 @@ class CardForm extends React.Component {
             </form>
           </div>
         </div>
-        <div className="row" style={{ marginTop: "15px" }}>
+        <div className="row" style={{ marginTop: '15px' }}>
           <Button
             variant="contained"
             color="primary"
