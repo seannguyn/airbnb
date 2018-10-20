@@ -52,7 +52,6 @@ class AccommodationView(viewsets.ModelViewSet):
 
         user = self.request.query_params.get('user', None)
 
-        print("get user")
         if user is not None:
             queryset = queryset.filter(user=user)
 
@@ -77,7 +76,7 @@ class AccommodationView(viewsets.ModelViewSet):
 
         user = self.request.query_params.get('user', None)
         id = self.request.query_params.get('id', None)
-        print("get user")
+
         if user is not None:
             queryset = queryset.filter(user=user)
 
@@ -104,19 +103,8 @@ class AccommodationImageView(viewsets.ModelViewSet):
 
 class AccommodationHostingView(viewsets.ModelViewSet):
     queryset = AccommodationHosting.objects.all()
-    # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
 
-    # def get_object(self, pk):
-    #     try:
-    #         return AccommodationHosting.objects.get(pk=pk)
-    #     except AccommodationHosting.DoesNotExist:
-    #         raise Http404
-
-    # def get(self, request, pk, format=None):
-    #     myHostObject = self.get_object(pk)
-    #     serializer = self.serializer_class(myHostObject)
-    #     return Response(serializer.data)
     def get(self, request):
         pk = request.GET.get('pk')
         myHostObject = AccommodationHosting.objects.get(pk=pk)
@@ -142,7 +130,6 @@ class AccommodationHostingView(viewsets.ModelViewSet):
         myHostObject.save()
 
         return Response(request.data, status=status.HTTP_200_OK)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     """ handling POST request backend validation"""
 
@@ -164,10 +151,8 @@ class AccommodationHostingView(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """ allow rest api to filter by submissions """
-        print("TO ACC HOST QUEYR")
         queryset_1 = Accommodation.objects.all()
         queryset_2 = AccommodationHosting.objects.all()
-        print("GET REQUEST OKOKOKOK ")
 
         user = self.request.query_params.get('user', None)
         accomm = self.request.query_params.get('accomm', None)
@@ -180,15 +165,6 @@ class AccommodationHostingView(viewsets.ModelViewSet):
             queryset_2 = queryset_2.filter(accommodation=accomm)
 
         return queryset_2
-
-    # user_pk = self.kwargs['user_pk']
-
-    #     if user_pk is not None:
-    #         queryset = queryset.filter(user=user_pk)
-    #         if not queryset:
-    #             raise Http404('Review does not exist for this accommodation')
-
-    #         return queryset
 
 
 class BookingView(viewsets.ModelViewSet):
@@ -211,8 +187,6 @@ class BookingView(viewsets.ModelViewSet):
 
 
 """ get all the reviews """
-
-
 class GetReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
 
@@ -225,8 +199,6 @@ class GetReviews(viewsets.ModelViewSet):
 
 """ GET the reviews made by an user """
 """ GET /users/{user_id}/reviews """
-
-
 class UserReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
@@ -246,8 +218,6 @@ class UserReviews(viewsets.ModelViewSet):
 
 """ Get reviews for a specific accommodation """
 """ GET accommodation/{accomodation_pk}/reviews/ """
-
-
 class AccomodationReviews(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
@@ -267,8 +237,6 @@ class AccomodationReviews(viewsets.ModelViewSet):
 
 """ GET all current users """
 """ /users/ """
-
-
 class Users(viewsets.ModelViewSet):
     queryset = UserInfo.objects.all()
     serializer_class = UserInfoSerializer
@@ -277,45 +245,15 @@ class Users(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = UserInfo.objects.all()
-        # user_pk = None
-        # if self.kwargs:
-        #     user_pk = self.kwargs['pk']
-
-        # if user_pk is not None:
-        #     """ return username if /users/id exist """
-        #     queryset = queryset.filter(user=user_pk)
-        #     user = UserInfo.objects.get(pk=user_pk)
-        #     print("USERNAME: ", user.user.username, type(user.user.username))
         return queryset
 
-    # def get(self, request, pk, format=None):
-    #     myHostObject = self.get_object(pk)
-    #     serializer = self.serializer_class(myHostObject)
-    #     return Response(serializer.data)
-
-    # def get_object(self):
-    #     print("FICL")
-    #     # pk = request.GET.get('pk')
-    #     # myHostObject = AccommodationHosting.objects.get(pk=pk)
-    #     # serializer = self.serializer_class(myHostObject)
-    #     # return Response(serializer.data)
-    #     return 1
-
-    # def get_queryset(self):
-    #     """ get the current login user """
-    #     user = self.request.user
-    #     return UserInfo.objects.filter(user=user)
-
-
+   
 """ Custom authentication - return Token, username and email """
-
-
 class CustomAuthToken(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
-        print("DATA: ", request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
 
@@ -330,7 +268,6 @@ class CustomAuthToken(ObtainAuthToken):
 
 class SearchViews(viewsets.ModelViewSet):
     queryset = Search.objects.all()
-    # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = SearchSerializer
 
     def get_queryset(self):
@@ -340,7 +277,6 @@ class SearchViews(viewsets.ModelViewSet):
 
 class SearchHostingViews(viewsets.ModelViewSet):
     queryset = Search.objects.all()
-    # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = AccommodationHostingSerializer
 
     def get_queryset(self):
@@ -383,13 +319,10 @@ class SearchHostingViews(viewsets.ModelViewSet):
                 x = begin + timedelta(i)
                 y.append(str(x.date()) + ",")
 
-            print(y)
-
             condition = functools.reduce(operator.and_, [Q(date_free__icontains=day) for day in y])
             queryset = queryset.filter(condition)
 
         newQ = list(queryset.values_list('accommodation', flat=True))
-        print(newQ)
         queryset_accommodation = queryset_accommodation.filter(accommodation__in=set(newQ))
 
         return queryset_accommodation
@@ -397,7 +330,6 @@ class SearchHostingViews(viewsets.ModelViewSet):
 
 class ReviewCountViews(viewsets.ModelViewSet):
     queryset = ReviewCount.objects.all()
-    # queryset = Accomodation.objects.filter(user__username__exact="sean")
     serializer_class = ReviewCountSerializer
 
     def get_queryset(self):
