@@ -17,6 +17,7 @@ from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 RES_DIR = os.path.join(BASE_DIR, 'res')
 BUILD_DIR = os.path.join(BASE_DIR, 'frontend', 'build')
 
@@ -145,7 +146,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BUILD_DIR, 'static')
+    os.path.join(BUILD_DIR, 'static'),
+    STATIC_DIR
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
