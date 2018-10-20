@@ -30,9 +30,4 @@ class Migration(migrations.Migration):
             model_name='userinfo',
             name='location',
         ),
-        migrations.AlterField(
-            model_name='accommodation',
-            name='id',
-            field=models.CharField(editable=False, max_length=100, primary_key=True, serialize=False),
-        ),
     ]
