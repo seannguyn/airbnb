@@ -1,8 +1,8 @@
-import React from "react"
-import { Consumer } from "../../Context.js"
-import EditOverAll from "../Function/EditOverAll"
-import EditHosting from "../Function/EditHosting"
-import AddHosting from "../Function/AddHosting"
+import React from 'react'
+import { Consumer } from '../../Context.js'
+import EditOverAll from '../Function/EditOverAll'
+import EditHosting from '../Function/EditHosting'
+import AddHosting from '../Function/AddHosting'
 
 class ContextApi extends React.Component {
   render() {

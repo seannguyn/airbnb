@@ -1,11 +1,11 @@
-import React from "react"
-import { withStyles } from "@material-ui/core/styles"
-import IconButton from "@material-ui/core/IconButton"
-import FirstPageIcon from "@material-ui/icons/FirstPage"
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft"
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight"
-import Typography from "@material-ui/core/Typography"
-import LastPageIcon from "@material-ui/icons/LastPage"
+import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import IconButton from '@material-ui/core/IconButton'
+import FirstPageIcon from '@material-ui/icons/FirstPage'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import Typography from '@material-ui/core/Typography'
+import LastPageIcon from '@material-ui/icons/LastPage'
 const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
@@ -26,14 +26,14 @@ class Paginate extends React.Component {
             disabled={this.props.currentPage === 1}
             onClick={this.props.firstPage}
           >
-            {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
+            {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
           </IconButton>
           <IconButton
             aria-label="Previous Page"
             disabled={this.props.currentPage === 1}
             onClick={this.props.prevPage}
           >
-            {theme.direction === "rtl" ? (
+            {theme.direction === 'rtl' ? (
               <KeyboardArrowRight />
             ) : (
               <KeyboardArrowLeft />
@@ -44,7 +44,7 @@ class Paginate extends React.Component {
             disabled={this.props.currentPage === this.props.totalPage}
             onClick={this.props.nextPage}
           >
-            {theme.direction === "rtl" ? (
+            {theme.direction === 'rtl' ? (
               <KeyboardArrowLeft />
             ) : (
               <KeyboardArrowRight />
@@ -55,7 +55,7 @@ class Paginate extends React.Component {
             disabled={this.props.currentPage === this.props.totalPage}
             onClick={this.props.lastPage}
           >
-            {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
+            {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
           </IconButton>
           <Typography style={{ margin: theme.spacing.unit }} variant="caption">
             Page {this.props.currentPage} of {this.props.totalPage}

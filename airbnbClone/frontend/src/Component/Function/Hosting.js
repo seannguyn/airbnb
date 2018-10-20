@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 import ReviewPreview from '../Popup/ReviewPreview'
-import { Consumer } from "../../Context"
+import { Consumer } from '../../Context'
 
 // Material UI components
 import Card from 'Component/Card/Card.jsx'
@@ -28,30 +28,30 @@ import like_empty from '../../assets/img/icons/like_empty.png'
 class Hosting extends React.Component {
   showReview = () => {
     this.setState({ seeReviews: !this.state.seeReviews })
-  };
+  }
 
   starCalculator = reviews => {
-    if (reviews.length === 0) return 0;
-    let avgRating = 0;
+    if (reviews.length === 0) return 0
+    let avgRating = 0
     for (let key in reviews) {
       if (reviews.hasOwnProperty(key)) avgRating += reviews[key].star
     }
     return avgRating / reviews.length
-  };
+  }
 
   // find this accomm's images
   findImagesByAccommID = (images, accommID) => {
-    const retImages = [];
+    const retImages = []
     for (let i = 0; i < images.length; i++) {
       if (accommID === images[i].accommodation) {
         retImages.push(images[i])
       }
     }
     this.setState({ images: retImages })
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       reviews: {},
       seeReviews: false,
@@ -62,16 +62,16 @@ class Hosting extends React.Component {
   }
 
   async componentDidMount() {
-    const { id } = this.props.house;
-    let reviews = [];
+    const { id } = this.props.house
+    let reviews = []
 
-    const count = await axios.get(`/reviewCounter/${id}/`);
+    const count = await axios.get(`/reviewCounter/${id}/`)
 
     if (count.data.count > 0) {
       await axios
         .get(`/accommodation/${id}/reviews/`)
         .then(response => {
-          reviews = response.data;
+          reviews = response.data
           if (reviews.length > 0) this.setState({ reviews: reviews })
         })
         .catch(error => {
@@ -84,29 +84,28 @@ class Hosting extends React.Component {
         })
     }
 
-    const images = await axios.get('/accommodationImage/');
+    const images = await axios.get('/accommodationImage/')
     this.findImagesByAccommID(images.data, this.props.house.id)
   }
 
   unStarred(id, dispatch) {
     dispatch({
       type: 'UNSTAR_ACCOMMODATION',
-      payload: id,
+      payload: id
     })
   }
 
   Starred(id, dispatch) {
-    console.log("ENTER...",id);
     dispatch({
       type: 'STAR_ACCOMMODATION',
-      payload: id,
+      payload: id
     })
   }
 
   render() {
-    const { house, SingleHost, classes } = this.props;
-    const { images, reviews } = this.state;
-    const { id } = house;
+    const { house, SingleHost, classes } = this.props
+    const { images, reviews } = this.state
+    const { id } = house
 
     let settings = {
       dots: true,
@@ -115,8 +114,8 @@ class Hosting extends React.Component {
       slidesToShow: 1,
       slidesToScroll: 1,
       arrows: true,
-      className: "p-3"
-    };
+      className: 'p-3'
+    }
 
     const EmptyImage = () => {
       return (
@@ -129,48 +128,62 @@ class Hosting extends React.Component {
           />
         </Carousel>
       )
-    };
+    }
 
+    // Map image in images array to div for image slider
     const ImageCarousel = () => {
-      // Map image in images array to div
-      let imagesDiv = [];
+      let imagesDiv = []
       images.map(image => {
         imagesDiv.push(
           <div key={image.id}>
-            <img src={image.a_image} height="150" width="345" alt="hostingimg"/>
+            <img
+              src={image.a_image}
+              height="150"
+              width="345"
+              alt="hostingimg"
+            />
           </div>
-        );
+        )
         return 0
-      });
+      })
       return (
-        <Carousel {...settings} dots={false}>{imagesDiv}</Carousel>
+        <Carousel {...settings} dots={false}>
+          {imagesDiv}
+        </Carousel>
       )
-    };
+    }
 
+    // Review with star rating
     const ReviewSummary = () => {
-      const avgRating = this.starCalculator(reviews);
-      const count = reviews.length;
+      const avgRating = this.starCalculator(reviews)
+      const count = reviews.length
       return (
         <div>
           <Rating
             readonly={true}
             initialRating={avgRating}
-            emptySymbol={<img src={like_empty} className="icon" alt="emptyicon" />}
+            emptySymbol={
+              <img src={like_empty} className="icon" alt="emptyicon" />
+            }
             fullSymbol={<img src={like} className="icon" alt="fullicon" />}
           />
           <br />
           <Link to="" onClick={this.showReview}>
-            {avgRating > 0 ? <h5>{count} {count > 1 ? "reviews":"review"}</h5> : null}
+            {avgRating > 0 ? (
+              <h5>
+                {count} {count > 1 ? 'reviews' : 'review'}
+              </h5>
+            ) : null}
           </Link>
         </div>
       )
-    };
+    }
 
     return (
       <Consumer>
         {value => {
           const {dispatch, starred} = value;
-          console.log("...",dispatch);
+
           return (
             <div className="mx-2">
 
@@ -185,11 +198,21 @@ class Hosting extends React.Component {
 
                 <CardBody>
                   <div className={classes.cardHoverUnder}>
-                    <h2 className={classes.cardProductTitle} style={{margin:'15px'}}>{house.title}</h2>
-                    <h4 className={classes.cardProductTitle} style={{margin:'10px'}}>{house.address}</h4>
+                    <h2
+                      className={classes.cardProductTitle}
+                      style={{ margin: '15px' }}
+                    >
+                      {house.title}
+                    </h2>
+                    <h4
+                      className={classes.cardProductTitle}
+                      style={{ margin: '10px' }}
+                    >
+                      {house.address}
+                    </h4>
                     <h4>{house.Accomodation_Type}</h4>
 
-                    <ReviewSummary/>
+                    <ReviewSummary />
                     <ReviewPreview
                       open={this.state.seeReviews}
                       handleClose={this.showReview}
@@ -198,20 +221,41 @@ class Hosting extends React.Component {
                   </div>
                 </CardBody>
 
-                <CardFooter product style={{marginTop:'10px', display: 'flex'}}>
-                    <div style={{flex: 1}}>
-                      <h4 >
-                        ${SingleHost.price}/night
-                      </h4>
-                    </div>
-                    <div style={{flex: 1, textAlign: 'right'}} >
-                      {starred.includes(house.id) ? <StarIcon style={{cursor:'pointer', width:'40px', height:'40px'}} onClick={this.unStarred.bind(this, house.id, dispatch)}/> : <StarBorderIcon style={{cursor:'pointer', width:'40px', height:'40px'}} onClick={this.Starred.bind(this, house.id, dispatch)}/> }
-                    </div>
+                <CardFooter
+                  product
+                  style={{ marginTop: '10px', display: 'flex' }}
+                >
+                  <div style={{ flex: 1 }}>
+                    <h4>
+                      ${SingleHost.price}
+                      /night
+                    </h4>
+                  </div>
+                  <div style={{ flex: 1, textAlign: 'right' }}>
+                    {starred.includes(house.id) ? (
+                      <StarIcon
+                        style={{
+                          cursor: 'pointer',
+                          width: '40px',
+                          height: '40px'
+                        }}
+                        onClick={this.unStarred.bind(this, house.id, dispatch)}
+                      />
+                    ) : (
+                      <StarBorderIcon
+                        style={{
+                          cursor: 'pointer',
+                          width: '40px',
+                          height: '40px'
+                        }}
+                        onClick={this.Starred.bind(this, house.id, dispatch)}
+                      />
+                    )}
+                  </div>
                 </CardFooter>
               </Card>
             </div>
           )
-
         }}
       </Consumer>
     )

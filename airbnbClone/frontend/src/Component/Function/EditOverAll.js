@@ -1,14 +1,14 @@
-import React from "react"
-import EditHouse from "./EditHouse.js"
-import Images from "./Images.js"
-import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/core/styles"
-import SwipeableViews from "react-swipeable-views"
-import AppBar from "@material-ui/core/AppBar"
-import Tabs from "@material-ui/core/Tabs"
-import Tab from "@material-ui/core/Tab"
-import Typography from "@material-ui/core/Typography"
-import Forbidden from "../layout/Forbidden"
+import React from 'react'
+import EditHouse from './EditHouse.js'
+import Images from './Images.js'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import SwipeableViews from 'react-swipeable-views'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Typography from '@material-ui/core/Typography'
+import Forbidden from '../layout/Forbidden'
 
 function TabContainer({ children, dir }) {
   return (
@@ -25,14 +25,14 @@ TabContainer.propTypes = {
 
 const styles = theme => ({
   layout: {
-    width: "auto",
-    display: "block", // Fix IE11 issue.
+    width: 'auto',
+    display: 'block', // Fix IE11 issue.
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
       width: 700,
-      marginLeft: "auto",
-      marginRight: "auto"
+      marginLeft: 'auto',
+      marginRight: 'auto'
     }
   }
 })
@@ -74,7 +74,7 @@ class EditOverAll extends React.Component {
           <AppBar
             position="static"
             color="default"
-            style={{ marginBottom: "15px" }}
+            style={{ marginBottom: '15px' }}
           >
             <Tabs
               value={swipe}
@@ -90,7 +90,7 @@ class EditOverAll extends React.Component {
           </AppBar>
           <main className={classes.layout}>
             <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
               index={swipe}
               onChangeIndex={this.switchIndex.bind(this)}
             >

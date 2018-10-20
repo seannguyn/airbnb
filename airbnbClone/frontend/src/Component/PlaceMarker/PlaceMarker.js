@@ -1,11 +1,11 @@
-import React, { Component } from "react"
-import { Marker } from "react-google-maps"
-import PlaceInfoWindow from "./PlaceInfoWindow"
-import "../../Styles/PlaceMarker.css"
-import findImagesByAccommID from "../../utils/findImagesByAccommID"
-import axios from "axios"
-import chosen from "../../assets/img/icons/chosen.png"
-import {Consumer} from "../../Context"
+import React, { Component } from 'react'
+import { Marker } from 'react-google-maps'
+import PlaceInfoWindow from './PlaceInfoWindow'
+import '../../Styles/PlaceMarker.css'
+import findImagesByAccommID from '../../utils/findImagesByAccommID'
+import axios from 'axios'
+import chosen from '../../assets/img/icons/chosen.png'
+import { Consumer } from '../../Context'
 
 export class PlaceMarker extends Component {
   constructor(props) {
@@ -16,7 +16,6 @@ export class PlaceMarker extends Component {
   }
 
   clickTooltip(dispatch, accommodation) {
-
     dispatch({
       type: 'OPEN_INFO_WINDOW',
       payload: accommodation
@@ -52,7 +51,7 @@ export class PlaceMarker extends Component {
       this.setState({ reviews: reviews })
     }
 
-    const images = await axios.get("/accommodationImage/")
+    const images = await axios.get('/accommodationImage/')
     const retImages = findImagesByAccommID(images.data, accommodation)
     this.setState({ images: retImages })
   }
@@ -74,7 +73,7 @@ export class PlaceMarker extends Component {
     return (
       <Consumer>
         {value => {
-          const {dispatch,inforWindow} = value;
+          const { dispatch, inforWindow } = value
           return (
             <React.Fragment>
               {accommodationChosen !== undefined ? (
@@ -86,10 +85,14 @@ export class PlaceMarker extends Component {
                     lng: parseFloat(lng)
                   }}
                   defaultIcon={chosen}
-                  onClick={this.clickTooltip.bind(this, dispatch, accommodation)}
+                  onClick={this.clickTooltip.bind(
+                    this,
+                    dispatch,
+                    accommodation
+                  )}
                   label={`${price}`}
                 >
-                  { inforWindow === accommodation && images !== undefined  ? (
+                  {inforWindow === accommodation && images !== undefined ? (
                     <PlaceInfoWindow
                       description={description}
                       name={name}
@@ -101,7 +104,7 @@ export class PlaceMarker extends Component {
                       address={address}
                       closeWindow={this.closeWindow.bind(this, dispatch)}
                     />
-                ): null}
+                  ) : null}
                 </Marker>
               ) : (
                 <Marker
@@ -111,22 +114,27 @@ export class PlaceMarker extends Component {
                     lat: parseFloat(lat),
                     lng: parseFloat(lng)
                   }}
-                  onClick={this.clickTooltip.bind(this, dispatch, accommodation)}
+                  onClick={this.clickTooltip.bind(
+                    this,
+                    dispatch,
+                    accommodation
+                  )}
                   label={`${price}`}
                 >
-                  {inforWindow === accommodation && images !== undefined && (
-                    <PlaceInfoWindow
-                      description={description}
-                      name={name}
-                      price={price}
-                      reviews={reviews}
-                      images={images}
-                      accommodation={accommodation}
-                      Accomodation_Type={Accomodation_Type}
-                      address={address}
-                      closeWindow={this.closeWindow.bind(this, dispatch)}
-                    />
-                  )}
+                  {inforWindow === accommodation &&
+                    images !== undefined && (
+                      <PlaceInfoWindow
+                        description={description}
+                        name={name}
+                        price={price}
+                        reviews={reviews}
+                        images={images}
+                        accommodation={accommodation}
+                        Accomodation_Type={Accomodation_Type}
+                        address={address}
+                        closeWindow={this.closeWindow.bind(this, dispatch)}
+                      />
+                    )}
                 </Marker>
               )}
             </React.Fragment>

@@ -82,7 +82,7 @@ class ReviewComponent extends React.Component {
       totalPage: Math.round(
         parseInt(this.props.review.length, 10) / parseInt(5, 10) + 0.5
       ),
-      searchKeyFixed: '',
+      searchKeyFixed: ''
     })
   }
 

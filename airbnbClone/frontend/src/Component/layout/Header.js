@@ -1,41 +1,41 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
-import { Link } from "react-router-dom"
-import { Consumer } from "../../Context.js"
-import classNames from "classnames"
+import { Link } from 'react-router-dom'
+import { Consumer } from '../../Context.js'
+import classNames from 'classnames'
 import {
   withStyles,
   createMuiTheme,
   MuiThemeProvider
-} from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
-import PersonIcon from "@material-ui/icons/Person"
-import Button from "@material-ui/core/Button"
-import Avatar from "@material-ui/core/Avatar"
-import MenuItem from "@material-ui/core/MenuItem"
-import Menu from "@material-ui/core/Menu"
-import LoginDialog from "./LoginDialog"
-import green from "@material-ui/core/colors/green"
-import {withRouter} from 'react-router-dom';
+} from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import PersonIcon from '@material-ui/icons/Person'
+import Button from '@material-ui/core/Button'
+import Avatar from '@material-ui/core/Avatar'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
+import LoginDialog from './LoginDialog'
+import green from '@material-ui/core/colors/green'
+import { withRouter } from 'react-router-dom'
 
 const customColor = createMuiTheme({
   palette: {
     primary: green,
     secondary: {
-      main: "#ffffff"
+      main: '#ffffff'
     }
   }
 })
 
 const styles = theme => ({
   appBar: {
-    border: "none",
+    border: 'none',
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     })
@@ -45,10 +45,10 @@ const styles = theme => ({
     marginRight: 36
   },
   hide: {
-    display: "none"
+    display: 'none'
   },
   transparent: {
-    marginLeft: "50px"
+    marginLeft: '50px'
   },
   avatar: {
     margin: 10
@@ -64,7 +64,6 @@ const styles = theme => ({
 })
 
 class Header extends Component {
-
   signOut = () => {
     window.localStorage.clear()
   }
@@ -76,7 +75,7 @@ class Header extends Component {
 
   handleDrawerOpen(dispatch) {
     dispatch({
-      type: "TOGGLE_SIDEBAR"
+      type: 'TOGGLE_SIDEBAR'
     })
   }
 
@@ -89,17 +88,17 @@ class Header extends Component {
   }
 
   handleLogOut(dispatch) {
-    window.localStorage.removeItem("currentUser")
-    dispatch({ type: "LOGOUT" })
+    window.localStorage.removeItem('currentUser')
+    dispatch({ type: 'LOGOUT' })
     this.handleClose()
   }
 
   handleDialogSignin(dispatch) {
-    dispatch({ type: "OPEN_DIALOG", payload: { open: true, login: true } })
+    dispatch({ type: 'OPEN_DIALOG', payload: { open: true, login: true } })
   }
 
   handleDialogSignup(dispatch) {
-    dispatch({ type: "OPEN_DIALOG", payload: { open: true, login: false } })
+    dispatch({ type: 'OPEN_DIALOG', payload: { open: true, login: false } })
   }
 
   homePage() {
@@ -139,7 +138,6 @@ class Header extends Component {
                       <MenuIcon />
                     </IconButton>
 
-
                     <Typography
                       style={{ flex: 1 }}
                       className={classNames(!logged_in && classes.transparent)}
@@ -147,17 +145,25 @@ class Header extends Component {
                       color="inherit"
                       noWrap
                     >
-
-                      <Typography onClick={this.homePage.bind(this)} style={{ fontSize: '25px', cursor:'pointer' }}>portbnb</Typography>
+                      <Typography
+                        onClick={this.homePage.bind(this)}
+                        style={{ fontSize: '25px', cursor: 'pointer' }}
+                      >
+                        portbnb
+                      </Typography>
                     </Typography>
 
-                    {logged_in === true ? <Typography style={{ fontSize: '15px' }}>{currentUser[0].username}</Typography> : null}
+                    {logged_in === true ? (
+                      <Typography style={{ fontSize: '15px' }}>
+                        {currentUser[0].username}
+                      </Typography>
+                    ) : null}
 
                     {logged_in === true ? (
                       <div>
                         <Avatar
                           className={classNames(classes.avatar)}
-                          aria-owns={open ? "menu-appbar" : null}
+                          aria-owns={open ? 'menu-appbar' : null}
                           aria-haspopup="true"
                           onClick={this.handleMenu}
                           color="inherit"
@@ -170,12 +176,12 @@ class Header extends Component {
                           id="menu-appbar"
                           anchorEl={anchorEl}
                           anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right"
+                            vertical: 'top',
+                            horizontal: 'right'
                           }}
                           transformOrigin={{
-                            vertical: "top",
-                            horizontal: "right"
+                            vertical: 'top',
+                            horizontal: 'right'
                           }}
                           open={open}
                           onClose={this.handleClose}
@@ -183,7 +189,7 @@ class Header extends Component {
                           <Link to="/">
                             <MenuItem
                               onClick={this.handleLogOut.bind(this, dispatch)}
-                              style={{ color: "red" }}
+                              style={{ color: 'red' }}
                             >
                               Log out
                             </MenuItem>

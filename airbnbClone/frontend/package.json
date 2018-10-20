@@ -47,7 +47,7 @@
     "slick-carousel": "^1.8.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"cd .. && cd airbnbClone && python manage.py makemigrations api && python manage.py migrate && python manage.py runserver\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

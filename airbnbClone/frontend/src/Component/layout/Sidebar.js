@@ -1,10 +1,10 @@
-import React from "react"
+import React from 'react'
 // import PropTypes from 'prop-types'
-import { withStyles } from "@material-ui/core/styles"
-import Drawer from "@material-ui/core/Drawer"
+import { withStyles } from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
 // import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import Items from "./Items"
-import { Consumer } from "../../Context"
+import Items from './Items'
+import { Consumer } from '../../Context'
 
 const styles = theme => ({})
 

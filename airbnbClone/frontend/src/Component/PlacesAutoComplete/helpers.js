@@ -1,11 +1,11 @@
 const isObject = val => {
-  return typeof val === "object" && val !== null
+  return typeof val === 'object' && val !== null
 }
 
 export const classnames = (...args) => {
   const classes = []
   args.forEach(arg => {
-    if (typeof arg === "string") {
+    if (typeof arg === 'string') {
       classes.push(arg)
     } else if (isObject(arg)) {
       Object.keys(arg).forEach(key => {
@@ -14,9 +14,9 @@ export const classnames = (...args) => {
         }
       })
     } else {
-      throw new Error("`classnames` only accepts string or object as arguments")
+      throw new Error('`classnames` only accepts string or object as arguments')
     }
   })
 
-  return classes.join(" ")
+  return classes.join(' ')
 }

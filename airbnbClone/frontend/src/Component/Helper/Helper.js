@@ -1,34 +1,34 @@
-import moment from "moment"
+import moment from 'moment'
 
 const monthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec"
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
 ]
 
 export function enumerateDaysBetweenDates(startDate, endDate) {
-  var dates = ""
+  var dates = ''
 
   var currDate = moment(startDate)
   var lastDate = moment(endDate)
 
-  dates = dates.concat(moment(currDate).format("YYYY-MM-DD"), ",")
+  dates = dates.concat(moment(currDate).format('YYYY-MM-DD'), ',')
 
-  while (currDate.add(1, "days").diff(lastDate) < 0) {
-    let tempDate = moment(currDate).format("YYYY-MM-DD")
-    dates = dates.concat(tempDate, ",")
+  while (currDate.add(1, 'days').diff(lastDate) < 0) {
+    let tempDate = moment(currDate).format('YYYY-MM-DD')
+    dates = dates.concat(tempDate, ',')
   }
 
-  dates = dates.concat(moment(lastDate).format("YYYY-MM-DD"), ",")
+  dates = dates.concat(moment(lastDate).format('YYYY-MM-DD'), ',')
 
   return dates
 }
@@ -36,7 +36,7 @@ export function enumerateDaysBetweenDates(startDate, endDate) {
 export function removeString(period_1, start, end) {
   const period_2 = enumerateDaysBetweenDates(start, end)
 
-  const ret = period_1.replace(period_2, "")
+  const ret = period_1.replace(period_2, '')
 
   return ret
 }
@@ -47,10 +47,10 @@ export function concatString(dates, string) {
 }
 
 export function findDateRange(startDate, endDate) {
-  var string = ""
+  var string = ''
 
-  let tempStartDate = moment(startDate).format("YYYY-MM-DD")
-  let tempEndDate = moment(endDate).format("YYYY-MM-DD")
+  let tempStartDate = moment(startDate).format('YYYY-MM-DD')
+  let tempEndDate = moment(endDate).format('YYYY-MM-DD')
 
   const startM = monthNames[new Date(tempStartDate).getMonth()]
   const endM = monthNames[new Date(tempEndDate).getMonth()]
@@ -59,9 +59,9 @@ export function findDateRange(startDate, endDate) {
   const endD = new Date(tempEndDate).getDate()
 
   if (startM === endM) {
-    string = string.concat(startM, " ", startD, " - ", endD)
+    string = string.concat(startM, ' ', startD, ' - ', endD)
   } else {
-    string = string.concat(startM, " ", startD, " - ", endM, " ", endD)
+    string = string.concat(startM, ' ', startD, ' - ', endM, ' ', endD)
   }
 
   return string
@@ -71,8 +71,8 @@ export function yyyymmdd(x) {
   var y = x.getFullYear().toString()
   var m = (x.getMonth() + 1).toString()
   var d = x.getDate().toString()
-  d.length === 1 && (d = "0" + d)
-  m.length === 1 && (m = "0" + m)
-  var yyyymmdd = y.concat("-", m, "-", d)
+  d.length === 1 && (d = '0' + d)
+  m.length === 1 && (m = '0' + m)
+  var yyyymmdd = y.concat('-', m, '-', d)
   return yyyymmdd
 }

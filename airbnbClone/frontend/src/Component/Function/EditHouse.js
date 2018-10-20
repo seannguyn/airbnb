@@ -1,21 +1,21 @@
-import React, { Component } from "react"
-import { Consumer } from "../../Context.js"
-import axios from "axios"
-import Paper from "@material-ui/core/Paper"
-import HomeIcon from "@material-ui/icons/Home"
-import { withStyles } from "@material-ui/core/styles"
-import Avatar from "@material-ui/core/Avatar"
-import FormControl from "@material-ui/core/FormControl"
-import Typography from "@material-ui/core/Typography"
-import TextField from "@material-ui/core/TextField"
-import InputLabel from "@material-ui/core/InputLabel"
-import MenuItem from "@material-ui/core/MenuItem"
-import Select from "@material-ui/core/Select"
-import Button from "@material-ui/core/Button"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Checkbox from "@material-ui/core/Checkbox"
-import { withSnackbar } from "notistack"
+import React, { Component } from 'react'
+import { Consumer } from '../../Context.js'
+import axios from 'axios'
+import Paper from '@material-ui/core/Paper'
+import HomeIcon from '@material-ui/icons/Home'
+import { withStyles } from '@material-ui/core/styles'
+import Avatar from '@material-ui/core/Avatar'
+import FormControl from '@material-ui/core/FormControl'
+import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import { withSnackbar } from 'notistack'
 
 const styles = theme => ({
   progress: {
@@ -23,9 +23,9 @@ const styles = theme => ({
   },
   paper: {
     margin: theme.spacing.unit * 4,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: `${theme.spacing.unit}px ${theme.spacing.unit}px ${
       theme.spacing.unit
     }px`
@@ -37,7 +37,7 @@ const styles = theme => ({
     height: 60
   },
   form: {
-    width: "80%", // Fix IE11 issue.
+    width: '80%', // Fix IE11 issue.
     marginTop: theme.spacing.unit
   },
   submit: {
@@ -61,7 +61,7 @@ const styles = theme => ({
     minWidth: 400
   },
   modal: {
-    position: "center",
+    position: 'center',
     width: theme.spacing.unit * 50,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
@@ -78,32 +78,30 @@ class EditHouse extends Component {
 
       currentUser: {},
 
-      id: "",
-      user: "",
-      title: "",
-      Accommodation_Type: "",
+      id: '',
+      user: '',
+      title: '',
+      Accommodation_Type: '',
 
-      number: "",
-      street: "",
-      city: "",
-      state: "",
+      number: '',
+      street: '',
+      city: '',
+      state: '',
 
-      bed: "",
-      bedroom: "",
-      bathroom: "",
-      kitchen: "",
-      gym: "",
-      pool: "",
-      carpark: "",
-      description: "",
-
+      bed: '',
+      bedroom: '',
+      bathroom: '',
+      kitchen: '',
+      gym: '',
+      pool: '',
+      carpark: '',
+      description: '',
 
       error_Accommodation_Type: false,
       error_bedroom: false,
       error_bathroom: false,
       error_bed: false,
-      error_title: false,
-
+      error_title: false
     }
     setTimeout(() => {
       this.setState({
@@ -114,7 +112,6 @@ class EditHouse extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (nextState.status === 1) {
-
       const { HouseList, currentUser } = this.props
       const { id } = this.props
 
@@ -167,8 +164,8 @@ class EditHouse extends Component {
       error_bed: false,
       error_bedroom: false,
       error_bathroom: false,
-      error_title: false,
-     })
+      error_title: false
+    })
   }
 
   onCheck(e) {
@@ -176,31 +173,30 @@ class EditHouse extends Component {
   }
 
   errorCheck(current) {
-    const { Accommodation_Type,bed,bedroom,bathroom,title } = current
-
+    const { Accommodation_Type, bed, bedroom, bathroom, title } = current
 
     var flag = false
 
-    if (Accommodation_Type === "") {
+    if (Accommodation_Type === '') {
       this.setState({
-        error: { Accommodation_Type: "required" },
+        error: { Accommodation_Type: 'required' },
         error_Accommodation_Type: true
       })
       flag = true
     }
-    if (bedroom <= 0 || bedroom === "") {
+    if (bedroom <= 0 || bedroom === '') {
       this.setState({
         error_bedroom: true
       })
       flag = true
     }
-    if (bathroom <= 0 || bathroom === "") {
+    if (bathroom <= 0 || bathroom === '') {
       this.setState({
         error_bathroom: true
       })
       flag = true
     }
-    if (bed <= 0 || bed === "") {
+    if (bed <= 0 || bed === '') {
       this.setState({
         error_bed: true
       })
@@ -214,7 +210,7 @@ class EditHouse extends Component {
     }
 
     if (flag === true) {
-      this.props.onPresentSnackbar('error',"Oops, missing details")
+      this.props.onPresentSnackbar('error', 'Oops, missing details')
       return true
     } else {
       return false
@@ -266,19 +262,21 @@ class EditHouse extends Component {
       }
     })
 
-    dispatch({ type: "EDIT_HOUSE", payload: editHouse })
+    dispatch({ type: 'EDIT_HOUSE', payload: editHouse })
 
-    this.setState({
-      error_Accommodation_Type: false,
-      error_bed: false,
-      error_bedroom: false,
-      error_bathroom: false,
-      error_title: false,
-    }, () => {
-      this.props.onPresentSnackbar('success','Information Saved')
-    })
+    this.setState(
+      {
+        error_Accommodation_Type: false,
+        error_bed: false,
+        error_bedroom: false,
+        error_bathroom: false,
+        error_title: false
+      },
+      () => {
+        this.props.onPresentSnackbar('success', 'Information Saved')
+      }
+    )
   }
-
 
   render() {
     const { status } = this.state
@@ -327,7 +325,7 @@ class EditHouse extends Component {
                       margin="normal"
                       required
                       fullWidth
-                      style={{ marginBottom: "30px" }}
+                      style={{ marginBottom: '30px' }}
                     >
                       <TextField
                         error={this.state.error_title}
@@ -355,8 +353,8 @@ class EditHouse extends Component {
                         value={Accommodation_Type}
                         onChange={this.onChange.bind(this)}
                         inputProps={{
-                          name: "Accommodation_Type",
-                          id: "accom-type"
+                          name: 'Accommodation_Type',
+                          id: 'accom-type'
                         }}
                       >
                         <MenuItem value="Room">Room</MenuItem>

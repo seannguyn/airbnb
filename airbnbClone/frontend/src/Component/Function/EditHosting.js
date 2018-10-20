@@ -1,14 +1,14 @@
-import React, { Component } from "react"
-import { Consumer } from "../../Context.js"
-import axios from "axios"
-import { withStyles } from "@material-ui/core/styles"
-import TextField from "@material-ui/core/TextField"
-import Paper from "@material-ui/core/Paper"
-import { enumerateDaysBetweenDates, yyyymmdd } from "../Helper/Helper"
-import { Link } from "react-router-dom"
-import FormControl from "@material-ui/core/FormControl"
-import Button from "@material-ui/core/Button"
-import { withSnackbar } from "notistack"
+import React, { Component } from 'react'
+import { Consumer } from '../../Context.js'
+import axios from 'axios'
+import { withStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
+import Paper from '@material-ui/core/Paper'
+import { enumerateDaysBetweenDates, yyyymmdd } from '../Helper/Helper'
+import { Link } from 'react-router-dom'
+import FormControl from '@material-ui/core/FormControl'
+import Button from '@material-ui/core/Button'
+import { withSnackbar } from 'notistack'
 
 const styles = theme => ({
   textField: {
@@ -18,15 +18,15 @@ const styles = theme => ({
   },
   paper: {
     margin: theme.spacing.unit * 4,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: `${theme.spacing.unit}px ${theme.spacing.unit}px ${
       theme.spacing.unit
     }px`
   },
   form: {
-    width: "80%", // Fix IE11 issue.
+    width: '80%', // Fix IE11 issue.
     marginTop: theme.spacing.unit
   },
   submit: {
@@ -55,19 +55,19 @@ class EditHosting extends Component {
   constructor() {
     super()
     this.state = {
-      id: "", //accomodation hosting id itself
-      accommodation: "", //accommodation id
-      user: "", //user id
-      date_start: "",
-      date_end: "",
-      check_in: "",
-      check_out: "",
+      id: '', //accomodation hosting id itself
+      accommodation: '', //accommodation id
+      user: '', //user id
+      date_start: '',
+      date_end: '',
+      check_in: '',
+      check_out: '',
       price: 0,
       guest: 2,
-      description: "",
+      description: '',
 
-      date_start_old: "",
-      date_end_old: "",
+      date_start_old: '',
+      date_end_old: '',
       error: false,
       error_price: false,
       error_date: false,
@@ -93,26 +93,25 @@ class EditHosting extends Component {
       deleteDisable = true
     }
 
-    this.setState(
-      {
-        id: result.id,
-        accommodation: result.accommodation,
-        date_start: result.date_start,
-        date_end: result.date_end,
-        date_start_old: new Date(result.date_start),
-        date_end_old: new Date(result.date_end),
-        check_in: result.check_in,
-        check_out: result.check_out,
-        description: result.description,
-        price: result.price,
-        deleteDisable: deleteDisable,
-        date_start_onchange: new Date(result.date_start)
-      })
+    this.setState({
+      id: result.id,
+      accommodation: result.accommodation,
+      date_start: result.date_start,
+      date_end: result.date_end,
+      date_start_old: new Date(result.date_start),
+      date_end_old: new Date(result.date_end),
+      check_in: result.check_in,
+      check_out: result.check_out,
+      description: result.description,
+      price: result.price,
+      deleteDisable: deleteDisable,
+      date_start_onchange: new Date(result.date_start)
+    })
   }
 
   //set State when changing text
   onChange = e => {
-    if (e.target.name === "date_start") {
+    if (e.target.name === 'date_start') {
       let date_start = new Date(e.target.value)
 
       if (date_start > this.state.date_start_old) {
@@ -124,7 +123,7 @@ class EditHosting extends Component {
       this.setState({ date_start_onchange: date_start })
     }
 
-    if (e.target.name === "date_end") {
+    if (e.target.name === 'date_end') {
       let date_end = new Date(e.target.value)
 
       if (
@@ -136,14 +135,14 @@ class EditHosting extends Component {
         this.setState({ error_date: false, error: false })
       }
     }
-    if (e.target.name === "price") {
+    if (e.target.name === 'price') {
       if (e.target.value.length === 0 || e.target.value <= 0) {
         this.setState({ error_price: true, error: true })
       } else {
         this.setState({ error_price: false, error: false })
       }
     }
-    if (e.target.name === "guest") {
+    if (e.target.name === 'guest') {
       if (e.target.value.length === 0 || e.target.value <= 0) {
         this.setState({ error_guest: true, error: true })
       } else {
@@ -186,8 +185,8 @@ class EditHosting extends Component {
     let newEndDate = new Date(date_end)
 
     // DEAL WITH SEARCH DATA
-    var date_free_1 = "",
-      date_free_2 = ""
+    var date_free_1 = '',
+      date_free_2 = ''
     if (newStartDate < this.state.date_start_old) {
       date_free_1 = date_free_1.concat(
         enumerateDaysBetweenDates(
@@ -230,7 +229,6 @@ class EditHosting extends Component {
       guest: guest
     }
 
-
     await axios.patch(`/search/${this.props.id}/`, searchAccommodation)
 
     const { token } = currUser[0] //GET TOKEN FROM CURRENT USER
@@ -239,20 +237,20 @@ class EditHosting extends Component {
         Authorization: { token }
       }
     })
-    dispatch({ type: "EDITHOST", payload: hostingHouse })
+    dispatch({ type: 'EDITHOST', payload: hostingHouse })
 
-    this.props.onPresentSnackbar("success", "Edited Hosting")
+    this.props.onPresentSnackbar('success', 'Edited Hosting')
 
-    this.props.history.push("/myHouses")
+    this.props.history.push('/myHouses')
   }
 
   handleAlternate(id, dispatch, e) {
     e.preventDefault()
 
     axios.delete(`/accommodationHosting/${id}/`).then(res => {
-      dispatch({ type: "DELETE_HOST", payload: id })
+      dispatch({ type: 'DELETE_HOST', payload: id })
     })
-    this.props.onPresentSnackbar("error", "delete hosting")
+    this.props.onPresentSnackbar('error', 'delete hosting')
   }
 
   render() {
@@ -284,12 +282,12 @@ class EditHosting extends Component {
                     margin="normal"
                     required
                     fullWidth
-                    style={{ marginBottom: "15px" }}
+                    style={{ marginBottom: '15px' }}
                   >
                     <TextField
                       error={this.state.error_date}
                       helperText={
-                        this.state.error_date === true ? "Invalid Date" : ""
+                        this.state.error_date === true ? 'Invalid Date' : ''
                       }
                       id="date"
                       name="date_start"
@@ -307,12 +305,12 @@ class EditHosting extends Component {
                     margin="normal"
                     required
                     fullWidth
-                    style={{ marginBottom: "15px" }}
+                    style={{ marginBottom: '15px' }}
                   >
                     <TextField
                       error={this.state.error_date}
                       helperText={
-                        this.state.error_date === true ? "Invalid Date" : ""
+                        this.state.error_date === true ? 'Invalid Date' : ''
                       }
                       id="date"
                       name="date_end"
@@ -330,7 +328,7 @@ class EditHosting extends Component {
                     margin="normal"
                     required
                     fullWidth
-                    style={{ marginBottom: "15px" }}
+                    style={{ marginBottom: '15px' }}
                   >
                     <TextField
                       id="time"
@@ -367,12 +365,12 @@ class EditHosting extends Component {
                     margin="normal"
                     required
                     fullWidth
-                    style={{ marginBottom: "15px" }}
+                    style={{ marginBottom: '15px' }}
                   >
                     <TextField
                       error={this.state.error_price}
                       helperText={
-                        this.state.error_price === true ? "Invalid Price" : ""
+                        this.state.error_price === true ? 'Invalid Price' : ''
                       }
                       label="price"
                       value={price}
@@ -386,12 +384,12 @@ class EditHosting extends Component {
                     margin="normal"
                     required
                     fullWidth
-                    style={{ marginBottom: "15px" }}
+                    style={{ marginBottom: '15px' }}
                   >
                     <TextField
                       error={this.state.error_guest}
                       helperText={
-                        this.state.error_guest === true ? "Invalid Guest" : ""
+                        this.state.error_guest === true ? 'Invalid Guest' : ''
                       }
                       label="Guest"
                       value={guest}
@@ -405,7 +403,7 @@ class EditHosting extends Component {
                     margin="normal"
                     required
                     fullWidth
-                    style={{ marginBottom: "15px" }}
+                    style={{ marginBottom: '15px' }}
                   >
                     <TextField
                       label="description"
@@ -436,7 +434,7 @@ class EditHosting extends Component {
                   >
                     <Link
                       to="/myHouses"
-                      style={{ textDecoration: "none", color: "grey" }}
+                      style={{ textDecoration: 'none', color: 'grey' }}
                     >
                       Stop Hosting this accommodation
                     </Link>

@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import classnames from "classnames";
-import Card from "@material-ui/core/Card";
-import Divider from "@material-ui/core/Divider";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import red from "@material-ui/core/colors/red";
-import BlockIcon from "@material-ui/icons/Block";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import classnames from 'classnames'
+import Card from '@material-ui/core/Card'
+import Divider from '@material-ui/core/Divider'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+import Collapse from '@material-ui/core/Collapse'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
+import red from '@material-ui/core/colors/red'
+import BlockIcon from '@material-ui/icons/Block'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import axios from 'axios'
-import {Consumer} from '../../Context';
+import { Consumer } from '../../Context'
 
 const styles = theme => ({
   card: {
@@ -21,58 +21,61 @@ const styles = theme => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: '56.25%' // 16:9
   },
   actions: {
-    display: "flex"
+    display: 'flex'
   },
   expand: {
-    transform: "rotate(0deg)",
-    transition: theme.transitions.create("transform", {
+    transform: 'rotate(0deg)',
+    transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest
     }),
-    marginLeft: "auto",
-    [theme.breakpoints.up("sm")]: {
+    marginLeft: 'auto',
+    [theme.breakpoints.up('sm')]: {
       marginRight: -8
     }
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: 'rotate(180deg)'
   },
   avatar: {
     backgroundColor: red[500]
   }
-});
+})
 
 class RepliedRequest extends React.Component {
-  state = { expanded: false };
+  state = { expanded: false }
 
   handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
+    this.setState(state => ({ expanded: !state.expanded }))
+  }
 
   async handleDelete(dispatch) {
-
     dispatch({
       type: 'DELETE_REPLIED_REQUEST',
-      payload: {singleRequest: this.props.request}
+      payload: { singleRequest: this.props.request }
     })
 
     await axios.delete(`/bookRequest/${this.props.request.id}/`)
-
   }
 
   render() {
-    const { classes, request } = this.props;
+    const { classes, request } = this.props
 
     return (
       <Consumer>
         {value => {
-          const {dispatch} = value;
+          const { dispatch } = value
           return (
-            <div className="row" style={{margin:'10px'}}>
+            <div className="row" style={{ margin: '10px' }}>
               <Card className={classes.card}>
-                <CardHeader title={<Typography variant="display1">{request.title}</Typography>} subheader={request.date} />
+                <CardHeader
+                  title={
+                    <Typography variant="display1">{request.title}</Typography>
+                  }
+                  subheader={request.date}
+                />
                 <IconButton
                   className={classnames(classes.expand, {
                     [classes.expandOpen]: this.state.expanded
@@ -91,9 +94,11 @@ class RepliedRequest extends React.Component {
                     <Typography variant="headline">
                       {request.content}
                     </Typography>
-                    <Divider style={{ margin: "10px" }} />
-                    <Typography variant="headline" style={{ color: '#F50057' }}>Replied:</Typography>
-                    <Typography variant="headline" style={{ margin: "10px" }}>
+                    <Divider style={{ margin: '10px' }} />
+                    <Typography variant="headline" style={{ color: '#F50057' }}>
+                      Replied:
+                    </Typography>
+                    <Typography variant="headline" style={{ margin: '10px' }}>
                       {request.reply}
                     </Typography>
                   </CardContent>
@@ -103,12 +108,12 @@ class RepliedRequest extends React.Component {
           )
         }}
       </Consumer>
-    );
+    )
   }
 }
 
 RepliedRequest.propTypes = {
   classes: PropTypes.object.isRequired
-};
+}
 
-export default withStyles(styles)(RepliedRequest);
+export default withStyles(styles)(RepliedRequest)

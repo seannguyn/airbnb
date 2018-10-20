@@ -1,21 +1,21 @@
-import React from "react"
-import PropTypes from "prop-types"
-import Button from "@material-ui/core/Button"
-import {withStyles} from "@material-ui/core/styles"
-import {Consumer} from "../../Context.js"
-import axios from "axios"
-import Paper from "@material-ui/core/Paper"
-import Typography from "@material-ui/core/Typography"
-import Avatar from "@material-ui/core/Avatar"
-import Chip from "@material-ui/core/Chip"
-import PlaceIcon from "@material-ui/icons/Place"
-import HomeIcon from "@material-ui/icons/Home"
-import FaceIcon from "@material-ui/icons/Face"
-import DateRangeIcon from "@material-ui/icons/DateRange"
-import AssessmentIcon from "@material-ui/icons/Assessment"
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos"
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos"
-import {findDateRange} from "../Helper/Helper"
+import React from 'react'
+import PropTypes from 'prop-types'
+import Button from '@material-ui/core/Button'
+import { withStyles } from '@material-ui/core/styles'
+import { Consumer } from '../../Context.js'
+import axios from 'axios'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import Avatar from '@material-ui/core/Avatar'
+import Chip from '@material-ui/core/Chip'
+import PlaceIcon from '@material-ui/icons/Place'
+import HomeIcon from '@material-ui/icons/Home'
+import FaceIcon from '@material-ui/icons/Face'
+import DateRangeIcon from '@material-ui/icons/DateRange'
+import AssessmentIcon from '@material-ui/icons/Assessment'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import { findDateRange } from '../Helper/Helper'
 
 const styles = theme => ({
   snackbar: {
@@ -44,11 +44,11 @@ class SearchStatus extends React.Component {
   }
 
   async clearSearch(dispatch, HouseList) {
-    const allHosting = await axios.get("/accommodationHosting/");
+    const allHosting = await axios.get('/accommodationHosting/')
 
     dispatch({
-      type: "CLEAR_SEARCH",
-      payload: {AllHostingList: allHosting.data, HouseList: HouseList}
+      type: 'CLEAR_SEARCH',
+      payload: { AllHostingList: allHosting.data, HouseList: HouseList }
     })
   }
 
@@ -79,8 +79,8 @@ class SearchStatus extends React.Component {
       params += 1
     }
 
-    if (search === false) return true;
-    else if (params === 0) return false;
+    if (search === false) return true
+    else if (params === 0) return false
     else return true
   }
 
@@ -92,7 +92,7 @@ class SearchStatus extends React.Component {
       guest,
       price_lower,
       price_upper,
-      Accommodation_Type,
+      Accommodation_Type
     } = this.props
     var chips = []
     if (Accommodation_Type.length > 0) {
@@ -103,7 +103,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <HomeIcon/>
+              <HomeIcon />
             </Avatar>
           }
           variant="outlined"
@@ -119,7 +119,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <PlaceIcon/>
+              <PlaceIcon />
             </Avatar>
           }
           variant="outlined"
@@ -135,7 +135,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <FaceIcon/>
+              <FaceIcon />
             </Avatar>
           }
           variant="outlined"
@@ -144,7 +144,7 @@ class SearchStatus extends React.Component {
       )
     }
     if (startDate !== null && endDate !== null) {
-      const date = findDateRange(startDate, endDate);
+      const date = findDateRange(startDate, endDate)
       chips.push(
         <Chip
           key="date"
@@ -152,7 +152,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <DateRangeIcon/>
+              <DateRangeIcon />
             </Avatar>
           }
           variant="outlined"
@@ -161,7 +161,7 @@ class SearchStatus extends React.Component {
       )
     }
     if (price_lower.length > 0 && price_upper.length > 0) {
-      const string = ` $${price_lower} - $${price_upper}`;
+      const string = ` $${price_lower} - $${price_upper}`
       chips.push(
         <Chip
           key="price"
@@ -169,7 +169,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <AssessmentIcon/>
+              <AssessmentIcon />
             </Avatar>
           }
           variant="outlined"
@@ -177,7 +177,7 @@ class SearchStatus extends React.Component {
         />
       )
     } else if (price_lower.length > 0) {
-      const string = `$${price_lower}`;
+      const string = `$${price_lower}`
       chips.push(
         <Chip
           key="price"
@@ -185,7 +185,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <ArrowForwardIosIcon/>
+              <ArrowForwardIosIcon />
             </Avatar>
           }
           variant="outlined"
@@ -193,7 +193,7 @@ class SearchStatus extends React.Component {
         />
       )
     } else if (price_upper.length > 0) {
-      const string = `$${price_upper}`;
+      const string = `$${price_upper}`
       chips.push(
         <Chip
           key="price"
@@ -201,7 +201,7 @@ class SearchStatus extends React.Component {
           color="secondary"
           avatar={
             <Avatar>
-              <ArrowBackIosIcon/>
+              <ArrowBackIosIcon />
             </Avatar>
           }
           variant="outlined"
@@ -214,14 +214,14 @@ class SearchStatus extends React.Component {
   }
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props
 
     const chips = this.makechip(classes)
     if (this.props.search === true) {
       return (
         <Consumer>
           {value => {
-            const {dispatch, HouseList} = value
+            const { dispatch, HouseList } = value
 
             return (
               <div className="row mt-3">
@@ -258,7 +258,7 @@ class SearchStatus extends React.Component {
         </Consumer>
       )
     } else {
-      return <div/>
+      return <div />
     }
   }
 }
@@ -268,13 +268,13 @@ SearchStatus.propTypes = {
 }
 
 SearchStatus.defaultProps = {
-  location: "",
+  location: '',
   startDate: null,
   endDate: null,
   guest: 0,
-  price_lower: "",
-  price_upper: "",
-  Accommodation_Type: "",
+  price_lower: '',
+  price_upper: '',
+  Accommodation_Type: ''
 }
 
 export default withStyles(styles)(SearchStatus)
