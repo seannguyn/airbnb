@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 import axios from 'axios';
-axios.defaults.baseURL = '/api';
+axios.defaults.baseURL = 'http://portbnb.herokuapp.com/api';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
