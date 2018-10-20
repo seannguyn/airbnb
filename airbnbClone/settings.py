@@ -13,6 +13,7 @@ import os
 
 import dj_database_url
 import django_heroku
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +21,10 @@ RES_DIR = os.path.join(BASE_DIR, 'res')
 BUILD_DIR = os.path.join(BASE_DIR, 'frontend', 'build')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ue!i-$cs-p!kk$aq6h(&%=1n35jez7=*pispf9va78(6k3e7@a'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -96,7 +97,7 @@ WSGI_APPLICATION = 'airbnbClone.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-#local db
+# local db
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -105,7 +106,11 @@ WSGI_APPLICATION = 'airbnbClone.wsgi.application'
 # }
 
 # for heroku
-DATABASES['default'] =  dj_database_url.config()
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
