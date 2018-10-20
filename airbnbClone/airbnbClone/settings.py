@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -148,7 +149,6 @@ MEDIA_ROOT = os.path.join(RES_DIR, 'media')
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(RES_DIR, "emails")
 
-
 # All other required settings go here
 
 REST_FRAMEWORK = {
@@ -186,6 +186,9 @@ CORS_ALLOW_METHODS = (
     'PUT',
 )
 
-TAWKTO_ID_SITE='<tawkto id site>'
-TAWKTO_API_KEY='<tawkto api key>'
-TAWKTO_IS_SECURE=True
+TAWKTO_ID_SITE = '<tawkto id site>'
+TAWKTO_API_KEY = '<tawkto api key>'
+TAWKTO_IS_SECURE = True
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
