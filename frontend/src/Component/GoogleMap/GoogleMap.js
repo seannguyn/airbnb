@@ -1,9 +1,9 @@
-import React from "react"
+import React from 'react'
 // import Geocode from "react-geocode";
 // import GoogleMapReact from "google-map-react"
-import { withGoogleMap, GoogleMap } from "react-google-maps"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import PlaceMarker from "../PlaceMarker/PlaceMarker"
+import { withGoogleMap, GoogleMap } from 'react-google-maps'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import PlaceMarker from '../PlaceMarker/PlaceMarker'
 // const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 const AirbnbMap = withGoogleMap(props => (
@@ -45,15 +45,14 @@ class SingleLocationMap extends React.Component {
   }
 
   async componentDidMount() {
-
-    this.setState({didmount: 1})
+    this.setState({ didmount: 1 })
   }
 
   renderMarkers(map, maps) {
     let marker = new maps.Marker({
       // position: this.state.center,
       map,
-      title: "Hello There"
+      title: 'Hello There'
     })
   }
 
@@ -87,8 +86,8 @@ class SingleLocationMap extends React.Component {
         lat={50.0515918}
         lng={19.9357531}
         price={20}
-        name={"Hotel"}
-        description={"Hotel desc"}
+        name={'Hotel'}
+        description={'Hotel desc'}
       />
     )
     this.setState({ places: [place] })
@@ -121,7 +120,7 @@ class SingleLocationMap extends React.Component {
         // Important! Always set the container height explicitly
         <div className="container">
           <h1>Destination</h1>
-          <div align="center" style={{ height: "50vh", width: "50%" }}>
+          <div align="center" style={{ height: '50vh', width: '50%' }}>
             <AirbnbMap
               onMapMounted={this.handleMapMounted.bind(this)}
               handleMapChanged={this.handleMapChanged.bind(this)}

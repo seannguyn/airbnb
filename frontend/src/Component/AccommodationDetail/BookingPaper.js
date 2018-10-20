@@ -15,7 +15,7 @@ import GuestSelect from './GuestSelect'
 import Price from './Price'
 import HeaderPrice from './HeaderPrice'
 import RequestFormDialog from './RequestFormDialog'
-import { withSnackbar } from "notistack"
+import { withSnackbar } from 'notistack'
 
 const styles = theme => ({
   paper: {
@@ -93,6 +93,7 @@ class BookingPaper extends React.Component {
     return true
   }
 
+  // find max date for react datepicker to block date properly
   findMax(minDateSet) {
     if (minDateSet.length === 0) {
       return null
@@ -205,9 +206,6 @@ class BookingPaper extends React.Component {
         currentHost: currentHost
       }
       this.goToPayment(this.props.context.currentUser[0].user_id, newDetail)
-      // await axios.post('https://localhost:8000/booking/', newBooking);
-      // const bookedPeriods = this.state.bookedPeriods.concat(this.datesInPeriod(startDate, endDate));
-      // this.setState({bookedPeriods : bookedPeriods});
     }
   }
 
@@ -227,10 +225,10 @@ class BookingPaper extends React.Component {
 
   handleGuest(ops, num) {
     const limit = this.props.currentHost.guest
-    console.log(this.props,"....");
+    console.log(this.props, '....')
 
     if (this.state.guest === limit && ops === '+') {
-      this.props.onPresentSnackbar('error','limit of guests reached')
+      this.props.onPresentSnackbar('error', 'limit of guests reached')
     }
 
     if (ops === '-' && num > 1) {
@@ -238,7 +236,6 @@ class BookingPaper extends React.Component {
     } else if (ops === '+' && num < limit) {
       this.setState({ guest: parseFloat(num) + 1 })
     }
-
   }
 
   render() {

@@ -89,11 +89,10 @@ class AccommodationDetail extends Component {
       slidesToShow: 1,
       slidesToScroll: 1,
       arrows: true,
-      adaptiveHeight: true,
+      adaptiveHeight: true
     }
 
-    // Map image in images array to div
-
+    // Map image in images array to div tto display as slider
     let imagesDiv = [],
       firstImage = this.props.images[0]
     this.props.images.map(image => {
@@ -104,7 +103,6 @@ class AccommodationDetail extends Component {
       )
       return 0
     })
-    // IMAGES ======
 
     const isDayBlocked = day =>
       this.props.booking.filter(d => d.isSame(day, 'day')).length > 0
@@ -138,10 +136,10 @@ class AccommodationDetail extends Component {
                   <div className="row" />
                   <div className="row">
                     <div className="col-8">
-                      <div className="description" style={{margin:'20px'}}>
+                      <div className="description" style={{ margin: '20px' }}>
                         <h3>{title}</h3>
                       </div>
-                      <div className="row" style={{margin:'20px'}}>
+                      <div className="row" style={{ margin: '20px' }}>
                         <i className="fas fa-door-open"> {bedroom} bedrooms</i>
                         &#160;
                         <i className="fas fa-bed"> {bed} bed</i>
@@ -150,7 +148,7 @@ class AccommodationDetail extends Component {
                         &#160;
                       </div>
                       <div className="row">
-                        <div className="col-3"></div>
+                        <div className="col-3" />
                         <div className="col-6">
                           <Carousel {...settings} dots={false}>
                             {this.props.images.length !== 0 ? (
@@ -167,10 +165,10 @@ class AccommodationDetail extends Component {
                             )}
                           </Carousel>
                         </div>
-                        <div className="col-3"></div>
+                        <div className="col-3" />
                       </div>
                       <div className="description">
-                        <h4>Description</h4> <br/>
+                        <h4>Description</h4> <br />
                         <h4>{description}</h4>
                       </div>
                     </div>
@@ -213,8 +211,6 @@ class AccommodationDetail extends Component {
     )
   }
 }
-
-// <img src="http://www.designdeveloprealize.com/wp-content/uploads/2018/03/high-resolution-house-photos-inside-high-resolution-house-pictures-house-interior.jpg" className="img-fluid" alt="Responsive" style={{width:'100%'}}/>
 
 export default withStyles(styles, carouselStyle, dashboardStyle)(
   AccommodationDetail

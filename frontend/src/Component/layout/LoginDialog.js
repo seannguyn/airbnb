@@ -1,35 +1,35 @@
-import React from "react"
-import Button from "@material-ui/core/Button"
-import TextField from "@material-ui/core/TextField"
-import Dialog from "@material-ui/core/Dialog"
-import { Consumer } from "../../Context"
-import Avatar from "@material-ui/core/Avatar"
-import FormControl from "@material-ui/core/FormControl"
-import LockIcon from "@material-ui/icons/LockOutlined"
-import Paper from "@material-ui/core/Paper"
-import Typography from "@material-ui/core/Typography"
-import withStyles from "@material-ui/core/styles/withStyles"
-import Divider from "@material-ui/core/Divider"
-import CloseIcon from "@material-ui/icons/Close"
-import axios from "axios"
-import { withSnackbar } from "notistack"
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Dialog from '@material-ui/core/Dialog'
+import { Consumer } from '../../Context'
+import Avatar from '@material-ui/core/Avatar'
+import FormControl from '@material-ui/core/FormControl'
+import LockIcon from '@material-ui/icons/LockOutlined'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import withStyles from '@material-ui/core/styles/withStyles'
+import Divider from '@material-ui/core/Divider'
+import CloseIcon from '@material-ui/icons/Close'
+import axios from 'axios'
+import { withSnackbar } from 'notistack'
 
 const styles = theme => ({
   layout: {
-    width: "auto",
-    display: "block", // Fix IE11 issue.
+    width: 'auto',
+    display: 'block', // Fix IE11 issue.
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
       width: 600,
-      marginLeft: "auto",
-      marginRight: "auto"
+      marginLeft: 'auto',
+      marginRight: 'auto'
     }
   },
   paper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
       .spacing.unit * 3}px`
   },
@@ -40,7 +40,7 @@ const styles = theme => ({
     height: 60
   },
   form: {
-    width: "100%", // Fix IE11 issue.
+    width: '100%', // Fix IE11 issue.
     marginTop: theme.spacing.unit
   },
   submit: {
@@ -61,36 +61,36 @@ class LoginDialog extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: "",
-      password: "",
-      password_confirm: "",
+      username: '',
+      password: '',
+      password_confirm: '',
       error: {},
       error_bool: false
     }
   }
 
   closeDiaglog(dispatch) {
-    dispatch({ type: "CLOSE_DIALOG" })
+    dispatch({ type: 'CLOSE_DIALOG' })
   }
 
   errorCheck() {
     const { password, password_confirm } = this.state
     if (password.length === 0) {
       this.setState({
-        error: { password: "please enter password" },
+        error: { password: 'please enter password' },
         error_bool: true
       })
       return true
     } else if (password.length < 5) {
       this.setState({
-        error: { password: "password too short (>5)" },
+        error: { password: 'password too short (>5)' },
         error_bool: true
       })
       return true
     }
     if (this.props.Signin_form === false && password !== password_confirm) {
       this.setState({
-        error: { password: "password dont match" },
+        error: { password: 'password dont match' },
         error_bool: true
       })
       return true
@@ -110,18 +110,18 @@ class LoginDialog extends React.Component {
       // dispatch({type:"LOGIN", payload: account});
 
       await axios
-        .post("/api-token-auth/", account)
+        .post('/api-token-auth/', account)
         .then(response => {
           userInfo = response.data
-          dispatch({ type: "LOGIN", payload: response.data })
+          dispatch({ type: 'LOGIN', payload: response.data })
           this.setState({ error: {}, error_bool: false })
           this.loggedInUser(userInfo)
         })
         .catch(error => {
           this.setState({
             error: {
-              username: "Check your username again",
-              password: "Check your password again"
+              username: 'Check your username again',
+              password: 'Check your password again'
             },
             error_bool: true
           })
@@ -132,10 +132,10 @@ class LoginDialog extends React.Component {
         username: username,
         password1: password,
         password2: password_confirm,
-        email: username + "@zmail.com"
+        email: username + '@zmail.com'
       }
       await axios
-        .post("/rest-auth/registration/", newAccount)
+        .post('/rest-auth/registration/', newAccount)
         .then(response => {})
         .catch(error => {
           if (error.response.data.username) {
@@ -147,7 +147,7 @@ class LoginDialog extends React.Component {
           if (error.response.data.password1) {
             this.setState({
               error: {
-                password: "password needs more sophistication",
+                password: 'password needs more sophistication',
                 username: this.state.error.username
               },
               error_bool: true
@@ -160,32 +160,35 @@ class LoginDialog extends React.Component {
         password: password
       }
 
-      await axios.post("/api-token-auth/", account).then(response => {
+      await axios.post('/api-token-auth/', account).then(response => {
         userInfo = response.data
-        dispatch({ type: "LOGIN", payload: response.data })
+        dispatch({ type: 'LOGIN', payload: response.data })
         this.setState({ error: {}, error_bool: false })
         this.loggedInUser(userInfo)
       })
     }
-
   }
 
   loggedInUser(userInfo) {
     var string = 'Welcome '.concat(userInfo.username)
-    this.props.onPresentSnackbar('success',string)
+    this.props.onPresentSnackbar('success', string)
 
     var array = []
     array.push(userInfo)
-    localStorage.setItem("currentUser", JSON.stringify(array))
+    localStorage.setItem('currentUser', JSON.stringify(array))
   }
 
   toggleSignIn(dispatch) {
     this.setState({ error: {}, error_bool: false })
-    dispatch({ type: "TOGGLE_SIGNIN" })
+    dispatch({ type: 'TOGGLE_SIGNIN' })
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value, error_bool: false, error: {} })
+    this.setState({
+      [e.target.name]: e.target.value,
+      error_bool: false,
+      error: {}
+    })
   }
 
   render() {
@@ -204,7 +207,7 @@ class LoginDialog extends React.Component {
             >
               <CloseIcon
                 onClick={this.closeDiaglog.bind(this, dispatch)}
-                style={{ float: "right" }}
+                style={{ float: 'right' }}
               />
               <Paper className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -347,8 +350,6 @@ class LoginDialog extends React.Component {
               </Paper>
             </Dialog>
           )
-
-
         }}
       </Consumer>
     )

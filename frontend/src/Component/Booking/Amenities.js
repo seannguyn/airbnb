@@ -1,9 +1,9 @@
-import React from "react"
+import React from 'react'
 
-import Typography from "@material-ui/core/Typography"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Typography from '@material-ui/core/Typography'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import uuid from "uuid"
+import uuid from 'uuid'
 
 class Amenities extends React.Component {
   render() {
@@ -15,13 +15,13 @@ class Amenities extends React.Component {
           <Typography
             align="center"
             variant="caption"
-            style={{ fontSize: "25px" }}
+            style={{ fontSize: '25px' }}
           >
             <FontAwesomeIcon
               icon="utensils"
               size="xs"
-              style={{ marginRight: "20px" }}
-            />{" "}
+              style={{ marginRight: '20px' }}
+            />{' '}
             kitchen
           </Typography>
         </div>
@@ -33,13 +33,13 @@ class Amenities extends React.Component {
           <Typography
             align="center"
             variant="caption"
-            style={{ fontSize: "25px" }}
+            style={{ fontSize: '25px' }}
           >
             <FontAwesomeIcon
               icon="swimming-pool"
               size="xs"
-              style={{ marginRight: "20px" }}
-            />{" "}
+              style={{ marginRight: '20px' }}
+            />{' '}
             swimming pool
           </Typography>
         </div>
@@ -51,13 +51,13 @@ class Amenities extends React.Component {
           <Typography
             align="center"
             variant="caption"
-            style={{ fontSize: "25px" }}
+            style={{ fontSize: '25px' }}
           >
             <FontAwesomeIcon
               icon="dumbbell"
               size="xs"
-              style={{ marginRight: "20px" }}
-            />{" "}
+              style={{ marginRight: '20px' }}
+            />{' '}
             gym
           </Typography>
         </div>
@@ -69,13 +69,13 @@ class Amenities extends React.Component {
           <Typography
             align="center"
             variant="caption"
-            style={{ fontSize: "25px" }}
+            style={{ fontSize: '25px' }}
           >
             <FontAwesomeIcon
               icon="car"
               size="xs"
-              style={{ marginRight: "20px" }}
-            />{" "}
+              style={{ marginRight: '20px' }}
+            />{' '}
             car park
           </Typography>
         </div>
@@ -83,8 +83,8 @@ class Amenities extends React.Component {
     }
 
     return (
-      <div style={{ marginBottom: "50px" }}>
-        <div className="row" style={{ marginTop: "50px" }}>
+      <div style={{ marginBottom: '50px' }}>
+        <div className="row" style={{ marginTop: '50px' }}>
           <div className="col-12">
             <h1>Amenities</h1>
           </div>

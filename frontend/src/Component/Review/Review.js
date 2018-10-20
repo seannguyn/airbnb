@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 // import axios from "axios"
 
 class Review extends Component {
@@ -11,7 +11,7 @@ class Review extends Component {
     const { /*text, closeReview, */ star, review, user } = this.props
     return (
       <React.Fragment>
-        <div className="container" style={{ background: "#f7f7f7" }}>
+        <div className="container" style={{ background: '#f7f7f7' }}>
           Rating {star}
           <p>
             <b>

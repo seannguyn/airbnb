@@ -9,11 +9,11 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import { withSnackbar } from 'notistack'
-import moment from "moment";
+import moment from 'moment'
 
 class RequestFormDialog extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       user: {},
       email: '',
@@ -24,29 +24,29 @@ class RequestFormDialog extends React.Component {
 
   handleClose = () => {
     this.props.handleClose()
-  };
+  }
 
   async handleSubmit(dispatch, e) {
-    e.preventDefault();
+    e.preventDefault()
 
-    const hostID = this.props.host;
+    const hostID = this.props.host
     const request = {
       title: this.state.title,
-      date: moment().format("DD-MM-YYYY"),
+      date: moment().format('DD-MM-YYYY'),
       content: this.state.content,
       sender: this.state.email,
       toHost: hostID,
       hasReply: false,
       reply: ''
-    };
-    const newRequest = await axios.post('/bookRequest/', request);
+    }
+    const newRequest = await axios.post('/bookRequest/', request)
 
     dispatch({
       type: 'NEW_REQUEST',
       payload: newRequest.data
-    });
+    })
 
-    this.props.handleClose();
+    this.props.handleClose()
     this.props.onPresentSnackbar('success', 'Request Sent to Host')
   }
 
@@ -55,9 +55,9 @@ class RequestFormDialog extends React.Component {
   }
 
   render() {
-    const { email, title, content } = this.state;
+    const { email, title, content } = this.state
     const disabled =
-      email.length === 0 || title.length === 0 || content.length === 0;
+      email.length === 0 || title.length === 0 || content.length === 0
 
     return (
       <Consumer>

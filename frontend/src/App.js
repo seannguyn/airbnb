@@ -1,8 +1,8 @@
-import React, { Component } from "react"
-import { BrowserRouter as Router } from "react-router-dom"
-import { Provider } from "./Context"
-import AppMain from "./AppMain"
-import { library } from "@fortawesome/fontawesome-svg-core"
+import React, { Component } from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { Provider } from './Context'
+import AppMain from './AppMain'
+import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faStroopwafel,
   faBed,
@@ -16,8 +16,8 @@ import {
   faLaptop,
   faCreditCard,
   faCheck
-} from "@fortawesome/free-solid-svg-icons"
-import { fab } from "@fortawesome/free-brands-svg-icons"
+} from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
 
 library.add(
   fab,
@@ -33,10 +33,9 @@ library.add(
   faLaptop,
   faCreditCard,
   faCheck
-);
+)
 
 class App extends Component {
-
   render() {
     return (
       <Provider>

@@ -1,52 +1,49 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import {withStyles} from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import {withSnackbar} from 'notistack';
-import {Consumer} from '../../Context'
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import { withStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
+import { withSnackbar } from 'notistack'
+import { Consumer } from '../../Context'
 
 const styles = theme => ({
   textField: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing.unit
   },
   dialogPaper: {
     minHeight: '40vh',
     maxHeight: '40vh',
     minWidth: '60vh',
-    maxWidth: '60vh',
-  },
-});
+    maxWidth: '60vh'
+  }
+})
 
 class ReplyDialog extends React.Component {
-
-
   handleClose = () => {
-    this.props.handleOpenReplyForm();
-  };
+    this.props.handleOpenReplyForm()
+  }
 
   constructor(props) {
     super(props)
     this.state = {
-      content: '',
+      content: ''
     }
   }
 
   handleSend(dispatch) {
-
-    const {reply} = this.props;
+    const { reply } = this.props
     let newMail = {
       email: reply.sender,
       title: reply.title,
-      content: this.state.content,
-    };
+      content: this.state.content
+    }
     this.props.sendReply(newMail, dispatch)
     // axios back to server
 
-    this.props.onPresentSnackbar('success', 'Reply sent');
+    this.props.onPresentSnackbar('success', 'Reply sent')
   }
 
   onChange(e) {
@@ -56,25 +53,41 @@ class ReplyDialog extends React.Component {
   }
 
   render() {
-    const {classes} = this.props;
-    const disable = (this.state.content.length === 0);
+    const { classes } = this.props
+    const disable = this.state.content.length === 0
     return (
       <Consumer>
         {value => {
-          const {dispatch} = value;
+          const { dispatch } = value
           return (
             <div>
               <Dialog
                 open={true}
                 onClose={this.handleClose}
                 aria-labelledby="form-dialog-title"
-                maxWidth='lg'
-                classes={{paper: classes.dialogPaper}}
+                maxWidth="lg"
+                classes={{ paper: classes.dialogPaper }}
               >
                 <DialogContent>
-                  <Typography style={{width: '100%', marginBottom: '10px', fontSize:'30px'}}
-                              variant="headline">{this.props.reply.title}</Typography>
-                            <Typography style={{width: '100%', marginBottom: '10px', fontSize:'20px'}}>{this.props.reply.content}</Typography>
+                  <Typography
+                    style={{
+                      width: '100%',
+                      marginBottom: '10px',
+                      fontSize: '30px'
+                    }}
+                    variant="headline"
+                  >
+                    {this.props.reply.title}
+                  </Typography>
+                  <Typography
+                    style={{
+                      width: '100%',
+                      marginBottom: '10px',
+                      fontSize: '20px'
+                    }}
+                  >
+                    {this.props.reply.content}
+                  </Typography>
                   <TextField
                     className={classes.textField}
                     label="Enter message here"
@@ -86,11 +99,19 @@ class ReplyDialog extends React.Component {
                   />
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={this.handleClose} color="secondary" variant="contained">
+                  <Button
+                    onClick={this.handleClose}
+                    color="secondary"
+                    variant="contained"
+                  >
                     Cancel
                   </Button>
-                  <Button disabled={disable} onClick={this.handleSend.bind(this, dispatch)} color="primary"
-                          variant="contained">
+                  <Button
+                    disabled={disable}
+                    onClick={this.handleSend.bind(this, dispatch)}
+                    color="primary"
+                    variant="contained"
+                  >
                     Send
                   </Button>
                 </DialogActions>
@@ -99,21 +120,20 @@ class ReplyDialog extends React.Component {
           )
         }}
       </Consumer>
-
-    );
+    )
   }
 }
 
 ReplyDialog.defaultProps = {
   reply: {
     title: 'Re: Request Pet',
-    date: "Oct 4 2018",
-    content: "Can I bring my dog?",
-    sender: "seannguyen5696@gmail.com",
+    date: 'Oct 4 2018',
+    content: 'Can I bring my dog?',
+    sender: 'seannguyen5696@gmail.com',
     hasReply: true,
-    reply: "yes you can",
-    toHost: 1,
+    reply: 'yes you can',
+    toHost: 1
   }
-};
+}
 
-export default withSnackbar(withStyles(styles)(ReplyDialog));
+export default withSnackbar(withStyles(styles)(ReplyDialog))

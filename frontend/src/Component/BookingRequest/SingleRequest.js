@@ -1,21 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import classnames from "classnames";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import red from "@material-ui/core/colors/red";
-import BlockIcon from "@material-ui/icons/Block";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Button from "@material-ui/core/Button";
-import uuid from 'uuid';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import classnames from 'classnames'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+import Collapse from '@material-ui/core/Collapse'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
+import red from '@material-ui/core/colors/red'
+import BlockIcon from '@material-ui/icons/Block'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Button from '@material-ui/core/Button'
+import uuid from 'uuid'
 import ReplyDialog from './ReplyDialog'
-import {Consumer} from '../../Context'
-import axios from 'axios';
+import { Consumer } from '../../Context'
+import axios from 'axios'
 
 const styles = theme => ({
   card: {
@@ -23,46 +23,45 @@ const styles = theme => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: '56.25%' // 16:9
   },
   actions: {
-    display: "flex"
+    display: 'flex'
   },
   expand: {
-    transform: "rotate(0deg)",
-    transition: theme.transitions.create("transform", {
+    transform: 'rotate(0deg)',
+    transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest
     }),
-    marginLeft: "auto",
-    [theme.breakpoints.up("sm")]: {
+    marginLeft: 'auto',
+    [theme.breakpoints.up('sm')]: {
       marginRight: -8
     }
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: 'rotate(180deg)'
   },
   avatar: {
     backgroundColor: red[500]
   }
-});
+})
 
 class SingleRequest extends React.Component {
-  state = { expanded: false, dialog: false };
+  state = { expanded: false, dialog: false }
 
   // need a msg props
 
   handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
+    this.setState(state => ({ expanded: !state.expanded }))
+  }
 
-  handleOpenReplyForm(){
+  handleOpenReplyForm() {
     this.setState({
-      dialog: !this.state.dialog,
+      dialog: !this.state.dialog
     })
   }
 
-  async sendReply(mail,dispatch) {
-
+  async sendReply(mail, dispatch) {
     this.handleOpenReplyForm()
 
     // do it here, sent mail axios etc
@@ -76,60 +75,73 @@ class SingleRequest extends React.Component {
 
     dispatch({
       type: 'REPLY_SENT',
-      payload: {singleRequest: singleRequest}
+      payload: { singleRequest: singleRequest }
     })
 
-    await axios.put(`/bookRequest/${this.props.request.id}/`,singleRequest)
+    await axios.put(`/bookRequest/${this.props.request.id}/`, singleRequest)
   }
 
   async handleDeleteRequest(dispatch) {
-
     dispatch({
       type: 'DELETE_NEW_REQUEST',
-      payload: {singleRequest: this.props.request}
+      payload: { singleRequest: this.props.request }
     })
 
     await axios.delete(`/bookRequest/${this.props.request.id}/`)
   }
 
   render() {
-    const { classes } = this.props;
-    const { request } = this.props;
+    const { classes } = this.props
+    const { request } = this.props
 
     return (
       <Consumer>
         {value => {
-          const {dispatch} = value;
+          const { dispatch } = value
           return (
             <div>
-              {this.state.dialog === true ? <ReplyDialog reply={this.props.request} sendReply={this.sendReply.bind(this)} handleOpenReplyForm={this.handleOpenReplyForm.bind(this)}/> : null}
-              <div className="row" style={{margin:'10px'}}>
+              {this.state.dialog === true ? (
+                <ReplyDialog
+                  reply={this.props.request}
+                  sendReply={this.sendReply.bind(this)}
+                  handleOpenReplyForm={this.handleOpenReplyForm.bind(this)}
+                />
+              ) : null}
+              <div className="row" style={{ margin: '10px' }}>
                 <Card className={classes.card}>
-                  <CardHeader
-                    title={request.title}
-                    subheader={request.date}
-                  />
+                  <CardHeader title={request.title} subheader={request.date} />
 
-                    <IconButton
-                      className={classnames(classes.expand, {
-                        [classes.expandOpen]: this.state.expanded
-                      })}
-                      onClick={this.handleExpandClick}
-                      aria-expanded={this.state.expanded}
-                      aria-label="Show more"
-                    >
-                      <ExpandMoreIcon />
-                    </IconButton>
-                    <Button color="secondary" onClick={this.handleOpenReplyForm.bind(this)}>Reply</Button>
-                    <IconButton aria-label="Share" onClick={this.handleDeleteRequest.bind(this, dispatch)}>
-                      <BlockIcon />
-                    </IconButton>
-                  <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                  <IconButton
+                    className={classnames(classes.expand, {
+                      [classes.expandOpen]: this.state.expanded
+                    })}
+                    onClick={this.handleExpandClick}
+                    aria-expanded={this.state.expanded}
+                    aria-label="Show more"
+                  >
+                    <ExpandMoreIcon />
+                  </IconButton>
+                  <Button
+                    color="secondary"
+                    onClick={this.handleOpenReplyForm.bind(this)}
+                  >
+                    Reply
+                  </Button>
+                  <IconButton
+                    aria-label="Share"
+                    onClick={this.handleDeleteRequest.bind(this, dispatch)}
+                  >
+                    <BlockIcon />
+                  </IconButton>
+                  <Collapse
+                    in={this.state.expanded}
+                    timeout="auto"
+                    unmountOnExit
+                  >
                     <CardContent>
                       <Typography variant="headline">
                         {request.content}
                       </Typography>
-
                     </CardContent>
                   </Collapse>
                 </Card>
@@ -138,13 +150,13 @@ class SingleRequest extends React.Component {
           )
         }}
       </Consumer>
-    );
+    )
   }
 }
 
 SingleRequest.propTypes = {
   classes: PropTypes.object.isRequired
-};
+}
 
 SingleRequest.defaultProps = {
   request: {
@@ -157,4 +169,4 @@ SingleRequest.defaultProps = {
   }
 }
 
-export default withStyles(styles)(SingleRequest);
+export default withStyles(styles)(SingleRequest)

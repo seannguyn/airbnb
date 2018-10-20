@@ -1,6 +1,6 @@
-import React from "react"
-import { Consumer } from "../../Context.js"
-import EditHosting from "../Function/EditHosting.js"
+import React from 'react'
+import { Consumer } from '../../Context.js'
+import EditHosting from '../Function/EditHosting.js'
 
 const EditHostContext = props => {
   const { id } = props.match.params

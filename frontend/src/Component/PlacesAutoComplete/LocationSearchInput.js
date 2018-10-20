@@ -1,14 +1,14 @@
-import React from "react"
-import PlacesAutocomplete from "react-places-autocomplete"
-import { classnames } from "./helpers"
-import "../../Styles/searchLocation.css"
+import React from 'react'
+import PlacesAutocomplete from 'react-places-autocomplete'
+import { classnames } from './helpers'
+import '../../Styles/searchLocation.css'
 
 class SearchBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      address: "",
-      errorMessage: "",
+      address: '',
+      errorMessage: '',
       latitude: null,
       longitude: null,
       isGeocoding: false
@@ -20,7 +20,7 @@ class SearchBar extends React.Component {
       address,
       latitude: null,
       longitude: null,
-      errorMessage: ""
+      errorMessage: ''
     })
   }
 
@@ -33,14 +33,14 @@ class SearchBar extends React.Component {
 
   handleCloseClick = () => {
     this.setState({
-      address: "",
+      address: '',
       latitude: null,
       longitude: null
     })
   }
 
   handleError = (status, clearSuggestions) => {
-    console.log("Error from Google Maps API", status) // eslint-disable-line no-console
+    console.log('Error from Google Maps API', status) // eslint-disable-line no-console
     this.setState({ errorMessage: status }, () => {
       clearSuggestions()
     })
@@ -71,8 +71,8 @@ class SearchBar extends React.Component {
                 <div className="Demo__search-input-container">
                   <input
                     {...getInputProps({
-                      placeholder: "Search Places...",
-                      className: "Demo__search-input"
+                      placeholder: 'Search Places...',
+                      className: 'Demo__search-input'
                     })}
                   />
                   {this.state.address.length > 0 && (
@@ -87,8 +87,8 @@ class SearchBar extends React.Component {
                 {suggestions.length > 0 && (
                   <div className="Demo__autocomplete-container">
                     {suggestions.map(suggestion => {
-                      const className = classnames("Demo__suggestion-item", {
-                        "Demo__suggestion-item--active": suggestion.active
+                      const className = classnames('Demo__suggestion-item', {
+                        'Demo__suggestion-item--active': suggestion.active
                       })
 
                       return (
@@ -98,7 +98,7 @@ class SearchBar extends React.Component {
                         >
                           <strong>
                             {suggestion.formattedSuggestion.mainText}
-                          </strong>{" "}
+                          </strong>{' '}
                           <small>
                             {suggestion.formattedSuggestion.secondaryText}
                           </small>
