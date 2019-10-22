@@ -36,7 +36,7 @@ MarkupSafe==1.0
 mccabe==0.6.1
 oauthlib==2.1.0
 pendulum==2.0.3
-Pillow==5.2.0
+Pillow==6.2.0
 psycopg2==2.7.5
 pycodestyle==2.3.1
 pycparser==2.18
